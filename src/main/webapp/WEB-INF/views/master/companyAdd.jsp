@@ -94,7 +94,7 @@
 										<label class="col-form-label col-lg-2" for="compImg">Company
 											Image:</label>
 										<div class="col-lg-10">
-											<input type="file" class="form-control" id="compImg">
+											<input type="file" class="form-control" id="compImg" name="compImg">
 
 											<span class="validation-invalid-label" id="error_compImg"
 												style="display: none;">This field is required.</span>
@@ -102,10 +102,10 @@
 									</div>
 
 									<div class="form-group row">
-										<label class="col-form-label col-lg-2">Any Remark:</label>
+										<label class="col-form-label col-lg-2" for="remark">Any Remark:</label>
 										<div class="col-lg-10">
 											<textarea rows="3" cols="3" class="form-control"
-												placeholder="Any Remark" onchange="trim(this)"></textarea>
+												placeholder="Any Remark" onchange="trim(this)" id="remark" name="remark"></textarea>
 										</div>
 									</div>
 
