@@ -49,7 +49,21 @@ var DatatableButtonsHtml5 = function() {
                     'copyHtml5',
                     'excelHtml5',
                     'csvHtml5',
-                    'pdfHtml5'
+                    'pdfHtml5',
+                    
+                    {
+                        extend: 'print',
+                        text: 'Print',
+                        className: 'btn btn-light',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'colvis',
+                        text: '<i class="icon-three-bars"></i>',
+                        className: 'btn btn-light btn-icon dropdown-toggle'
+                    }
                 ]
             }
         });
