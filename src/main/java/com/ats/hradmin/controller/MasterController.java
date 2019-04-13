@@ -1,5 +1,7 @@
 package com.ats.hradmin.controller;
  
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,8 +13,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.ats.hradmin.common.Constants;
+import com.ats.hradmin.common.FormValidation;
+import com.ats.hradmin.model.Company; 
  
  
 @Controller
@@ -26,9 +33,17 @@ public class MasterController {
 	 
 		try {
 			 
+			 
+			Company[] company = Constants.getRestTemplate().getForObject(Constants.url + "/getCompanyList",
+					Company[].class);
 
+			List<Company> compList = new ArrayList<Company>(Arrays.asList(company));
+			
+			System.out.println(compList);
+			System.out.println("asdfsdf");
+			
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 		return model;
 	}
@@ -41,6 +56,11 @@ public class MasterController {
 		try {
 			HttpSession session = request.getSession();
 			 
+			String compName = request.getParameter("compName");
+			
+			Boolean ret = FormValidation.Validaton(compName, "mobile");
+			
+			System.out.println( ret );
 
 		} catch (Exception e) {
 			e.printStackTrace();

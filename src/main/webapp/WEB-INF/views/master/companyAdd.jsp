@@ -83,7 +83,7 @@
 											name:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
-												placeholder="Enter Company Name" id="compName" autocomplete="off"
+												placeholder="Enter Company Name" id="compName" name="compName" autocomplete="off"
 												onchange="trim(this)"> <span
 												class="validation-invalid-label" id="error_compName"
 												style="display: none;">This field is required.</span>
