@@ -46,7 +46,8 @@
 					</div>
 
 					<div class="breadcrumb justify-content-center">
-						<a href="${pageContext.request.contextPath}/locationAdd" class="breadcrumb-elements-item"> Add Location </a>
+						<a href="${pageContext.request.contextPath}/locationAdd"
+							class="breadcrumb-elements-item"> Add Location </a>
 
 					</div>
 
@@ -113,12 +114,14 @@
 							id="printtable1">
 							<thead>
 								<tr class="bg-blue">
+
+									<th width="10%">Sr. No.</th>
 									<th>Location Name</th>
 									<th>Location Short Name</th>
 									<th>Contact Person</th>
 									<th>Contact Person No.</th>
 									<th>Contact Person Email</th>
-									<th class="text-center">Actions</th>
+									<th width="10%" class="text-center">Actions</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -127,6 +130,7 @@
 								<c:forEach items="${locationList}" var="locationList"
 									varStatus="count">
 									<tr>
+										<td>${count.index+1}</td>
 										<td>${locationList.locName}</td>
 										<td>${locationList.locNameShort}</td>
 										<td>${locationList.locHrContactPerson}</td>

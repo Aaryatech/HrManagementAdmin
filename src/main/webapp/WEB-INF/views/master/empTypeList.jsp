@@ -37,10 +37,18 @@
 							<a href="index.html" class="breadcrumb-item"><i
 								class="icon-home2 mr-2"></i> Home</a> <span
 								class="breadcrumb-item active">Dashboard</span>
+
 						</div>
+
 
 						<a href="#" class="header-elements-toggle text-default d-md-none"><i
 							class="icon-more"></i></a>
+					</div>
+
+					<div class="breadcrumb justify-content-center">
+						<a href="${pageContext.request.contextPath}/empTypeAdd"
+							class="breadcrumb-elements-item"> Add Employee Type </a>
+
 					</div>
 
 
@@ -56,7 +64,7 @@
 				<!-- Highlighting rows and columns -->
 				<div class="card">
 					<div class="card-header header-elements-inline">
-						<h5 class="card-title">Company List</h5>
+						<h5 class="card-title">Employee Type List</h5>
 						<div class="header-elements">
 							<div class="list-icons">
 								<a class="list-icons-item" data-action="collapse"></a>
@@ -76,7 +84,7 @@
 							</button>
 							<span class="font-weight-semibold">Oh snap!</span>
 							<%
-								session.removeAttribute("errorMsg");
+								out.println(session.getAttribute("errorMsg"));
 							%>
 						</div>
 
@@ -94,7 +102,7 @@
 							</button>
 							<span class="font-weight-semibold">Well done!</span>
 							<%
-								session.removeAttribute("successMsg");
+								out.println(session.getAttribute("successMsg"));
 							%>
 						</div>
 						<%
@@ -106,36 +114,27 @@
 							id="printtable1">
 							<thead>
 								<tr class="bg-blue">
-									<th width="10%">Sr.no</th>
-									<th>Company Name</th>
-									<!-- <th>Company Name</th>
-								<th>Company Name</th>
-								<th>Company Name</th>
-								<th>Company Name</th> -->
-									<th class="text-center" width="10%">Actions</th>
+									<th width="10%">Sr. No.</th>
+									<th>Type Name</th>
+									<th>Short Name</th>
+									<th >Remark</th>
+
+									<th width="10%" class="text-center">Actions</th>
 								</tr>
 							</thead>
 							<tbody>
 
 
-								<c:forEach items="${compList}" var="compList" varStatus="count">
+								<c:forEach items="${empTypelist}" var="empTypelist"
+									varStatus="count">
 									<tr>
+
 										<td>${count.index+1}</td>
-										<td>${compList.companyName}</td>
-										<%-- <td>${compList.companyName}</td>
-									<td>${compList.companyName}</td>
-									<td>${compList.companyName}</td>
-									<td>${compList.companyName}</td> --%>
-										<%-- <td><c:choose>
-											<c:when test="${compList.isActive==1}">
-												<span class="badge badge-success">Active</span>
-											</c:when>
-											<c:otherwise>
-												<span class="badge badge-secondary">Inactive</span>
-											</c:otherwise>
+										<td>${empTypelist.empTypeName}</td>
+										<td>${empTypelist.empTypeShortName}</td>
+										<td>${empTypelist.empTypeRemarks}</td>
 
 
-										</c:choose></td> --%>
 										<td class="text-center">
 											<div class="list-icons">
 												<div class="dropdown">
@@ -145,10 +144,10 @@
 
 													<div class="dropdown-menu dropdown-menu-right">
 														<a
-															href="${pageContext.request.contextPath}/editCompany?compId=${compList.exVar1}"
+															href="${pageContext.request.contextPath}/editEmpType?empTypeId=${empTypelist.exVar1}"
 															class="dropdown-item"><i class="icon-pencil7"></i>Edit</a>
 														<a
-															href="${pageContext.request.contextPath}/deleteCompany?compId=${compList.exVar1}"
+															href="${pageContext.request.contextPath}/deleteEmpType?empTypeId=${empTypelist.exVar1}"
 															class="dropdown-item"><i class="icon-trash"></i>
 															Delete</a>
 													</div>

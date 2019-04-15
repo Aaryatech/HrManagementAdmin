@@ -22,3 +22,18 @@
 					</ul>
 				</div>
 			</div>
+			
+	<script>
+			jQuery('.numbersOnly').keyup(function () { 
+	            this.value = this.value.replace(/[^0-9\.]/g,'');
+	        });
+	        jQuery('.alphaonly').keyup(function () { 
+	            this.value = this.value.replace(/[^a-zA-Z\s]+$/,'');
+	        });
+	        jQuery('.alhanumeric').keyup(function () { 
+	            this.value = this.value.replace(/[^a-zA-Z0-9\-\s]+$/,'');
+	        });
+	        jQuery('.dob').keyup(function () { 
+	            this.value = this.value.replace(/[^a-zA-Z0-9\-\s]+$/,'');
+	        });
+	</script>		

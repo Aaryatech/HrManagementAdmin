@@ -40,6 +40,8 @@ public class EmpType {
 	
 	private String exVar3;
 
+	private boolean isError; 
+	
 	public int getEmpTypeId() {
 		return empTypeId;
 	}
@@ -191,6 +193,15 @@ public class EmpType {
 	public void setExVar3(String exVar3) {
 		this.exVar3 = exVar3;
 	}
+ 
+
+	public boolean isError() {
+		return isError;
+	}
+
+	public void setError(boolean isError) {
+		this.isError = isError;
+	}
 
 	@Override
 	public String toString() {
@@ -200,7 +211,7 @@ public class EmpType {
 				+ ", empTypeAccess=" + empTypeAccess + ", delStatus=" + delStatus + ", isActive=" + isActive
 				+ ", makerUserId=" + makerUserId + ", makerEnterDatetime=" + makerEnterDatetime + ", exInt1=" + exInt1
 				+ ", exInt2=" + exInt2 + ", exInt3=" + exInt3 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2
-				+ ", exVar3=" + exVar3 + "]";
+				+ ", exVar3=" + exVar3 + ", isError=" + isError + "]";
 	}
 	
 	
