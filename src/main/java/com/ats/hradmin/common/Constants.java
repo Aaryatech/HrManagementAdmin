@@ -7,6 +7,8 @@ public class Constants {
  
 	public static final String url="http://localhost:8096/";
 	public static RestTemplate rest = new RestTemplate();
+	public static final String imageSaveUrl = "/home/lenovo/Downloads/apache-tomcat-8.5.37/webapps/media/gallery/";
+	public static String[] values = { "jpg", "jpeg", "gif", "png" };
 	
 	 public static RestTemplate getRestTemplate() {
 		rest=new RestTemplate();

@@ -64,7 +64,7 @@
 
 						<div class="card">
 							<div class="card-header header-elements-inline">
-								<h6 class="card-title">Add Company</h6>
+								<h6 class="card-title">Edit Company</h6>
 								<div class="header-elements">
 									<div class="list-icons">
 										<a class="list-icons-item" data-action="collapse"></a>  
@@ -74,7 +74,7 @@
 
 							<div class="card-body">
 								<form
-									action="${pageContext.request.contextPath}/submitInsertCompany"
+									action="${pageContext.request.contextPath}/submitEditCompany"
 									id="submitInsertCompany" method="post"
 									enctype="multipart/form-data">
 									<div class="form-group row">
@@ -83,7 +83,7 @@
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Enter Company Name" id="compName" name="compName" autocomplete="off"
-												onchange="trim(this)"> <span
+												onchange="trim(this)" value="${editCompany.companyName}"> <span
 												class="validation-invalid-label" id="error_compName"
 												style="display: none;">This field is required.</span>
 										</div>
@@ -97,6 +97,7 @@
  											<!-- * Only jpg,gif,png * Best image size is 369px × 64px -->
 											<span class="validation-invalid-label" id="error_compImg"
 												style="display: none;">This field is required.</span>
+												<input type="hidden"  id="imageName" name="imageName"   value="${editCompany.companyLogo}">
 										</div>
 									</div>
 
@@ -104,7 +105,7 @@
 										<label class="col-form-label col-lg-2" for="remark">Any Remark:</label>
 										<div class="col-lg-10">
 											<textarea rows="3" cols="3" class="form-control"
-												placeholder="Any Remark" onchange="trim(this)" id="remark" name="remark"></textarea>
+												placeholder="Any Remark" onchange="trim(this)" id="remark" name="remark">${editCompany.companyRemarks}</textarea>
 										</div>
 									</div>
 
@@ -187,7 +188,7 @@
 					$("#error_compName").hide()
 				}
 
-				if (!$("#compImg").val()) {
+				if (!$("#imageName").val()) {
 
 					isError = true;
 

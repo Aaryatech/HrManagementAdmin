@@ -8,7 +8,7 @@ public class Company {
 	
 	private String companyLogo;
 	
-	private int companyRemarks;
+	private String companyRemarks;
 	
 	private int delStatus;
 	
@@ -54,11 +54,11 @@ public class Company {
 		this.companyLogo = companyLogo;
 	}
 
-	public int getCompanyRemarks() {
+	public String getCompanyRemarks() {
 		return companyRemarks;
 	}
 
-	public void setCompanyRemarks(int companyRemarks) {
+	public void setCompanyRemarks(String companyRemarks) {
 		this.companyRemarks = companyRemarks;
 	}
 
