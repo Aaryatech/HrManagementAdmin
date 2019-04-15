@@ -8,6 +8,8 @@ public class Location {
 	
 	private String locNameShort;
 	
+	private int compId;
+	
 	private String locShortAddress;
 	
 	private String locHrContactPerson;
@@ -182,10 +184,18 @@ public class Location {
 		this.exVar3 = exVar3;
 	}
 
+	public int getCompId() {
+		return compId;
+	}
+
+	public void setCompId(int compId) {
+		this.compId = compId;
+	}
+
 	@Override
 	public String toString() {
-		return "Location [locId=" + locId + ", locName=" + locName + ", locNameShort=" + locNameShort
-				+ ", locShortAddress=" + locShortAddress + ", locHrContactPerson=" + locHrContactPerson
+		return "Location [locId=" + locId + ", locName=" + locName + ", locNameShort=" + locNameShort + ", compId="
+				+ compId + ", locShortAddress=" + locShortAddress + ", locHrContactPerson=" + locHrContactPerson
 				+ ", locHrContactNumber=" + locHrContactNumber + ", locHrContactEmail=" + locHrContactEmail
 				+ ", locRemarks=" + locRemarks + ", delStatus=" + delStatus + ", isActive=" + isActive
 				+ ", makerUserId=" + makerUserId + ", makerEnterDatetime=" + makerEnterDatetime + ", exInt1=" + exInt1

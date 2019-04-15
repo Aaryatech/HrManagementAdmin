@@ -37,10 +37,17 @@
 							<a href="index.html" class="breadcrumb-item"><i
 								class="icon-home2 mr-2"></i> Home</a> <span
 								class="breadcrumb-item active">Dashboard</span>
+
 						</div>
+
 
 						<a href="#" class="header-elements-toggle text-default d-md-none"><i
 							class="icon-more"></i></a>
+					</div>
+
+					<div class="breadcrumb justify-content-center">
+						<a href="${pageContext.request.contextPath}/locationAdd" class="breadcrumb-elements-item"> Add Location </a>
+
 					</div>
 
 
@@ -76,7 +83,7 @@
 							</button>
 							<span class="font-weight-semibold">Oh snap!</span>
 							<%
-								session.removeAttribute("errorMsg");
+								out.println(session.getAttribute("errorMsg"));
 							%>
 						</div>
 
@@ -94,7 +101,7 @@
 							</button>
 							<span class="font-weight-semibold">Well done!</span>
 							<%
-								session.removeAttribute("successMsg");
+								out.println(session.getAttribute("successMsg"));
 							%>
 						</div>
 						<%
@@ -106,34 +113,26 @@
 							id="printtable1">
 							<thead>
 								<tr class="bg-blue">
-									<th>Company Name</th>
-									<!-- <th>Company Name</th>
-								<th>Company Name</th>
-								<th>Company Name</th>
-								<th>Company Name</th> -->
+									<th>Location Name</th>
+									<th>Location Short Name</th>
+									<th>Contact Person</th>
+									<th>Contact Person No.</th>
+									<th>Contact Person Email</th>
 									<th class="text-center">Actions</th>
 								</tr>
 							</thead>
 							<tbody>
 
 
-								<c:forEach items="${compList}" var="compList" varStatus="count">
+								<c:forEach items="${locationList}" var="locationList"
+									varStatus="count">
 									<tr>
-										<td>${compList.companyName}</td>
-										<%-- <td>${compList.companyName}</td>
-									<td>${compList.companyName}</td>
-									<td>${compList.companyName}</td>
-									<td>${compList.companyName}</td> --%>
-										<%-- <td><c:choose>
-											<c:when test="${compList.isActive==1}">
-												<span class="badge badge-success">Active</span>
-											</c:when>
-											<c:otherwise>
-												<span class="badge badge-secondary">Inactive</span>
-											</c:otherwise>
+										<td>${locationList.locName}</td>
+										<td>${locationList.locNameShort}</td>
+										<td>${locationList.locHrContactPerson}</td>
+										<td>${locationList.locHrContactNumber}</td>
+										<td>${locationList.locHrContactEmail}</td>
 
-
-										</c:choose></td> --%>
 										<td class="text-center">
 											<div class="list-icons">
 												<div class="dropdown">
@@ -143,10 +142,10 @@
 
 													<div class="dropdown-menu dropdown-menu-right">
 														<a
-															href="${pageContext.request.contextPath}/editCompany?compId=${compList.exVar1}"
+															href="${pageContext.request.contextPath}/editLocation?locId=${locationList.exVar1}"
 															class="dropdown-item"><i class="icon-pencil7"></i>Edit</a>
 														<a
-															href="${pageContext.request.contextPath}/deleteCompany?compId=${compList.exVar1}"
+															href="${pageContext.request.contextPath}/deleteLocation?locId=${locationList.exVar1}"
 															class="dropdown-item"><i class="icon-trash"></i>
 															Delete</a>
 													</div>

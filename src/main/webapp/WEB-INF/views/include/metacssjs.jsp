@@ -61,6 +61,8 @@
 		<script src="${pageContext.request.contextPath}/resources/global_assets/js/demo_pages/datatables_extension_fixed_columns.js"></script>
 		<script src="${pageContext.request.contextPath}/resources/global_assets/js/demo_pages/datatables_extension_buttons_html5.js"></script>
 		<script src="${pageContext.request.contextPath}/resources/global_assets/js/demo_pages/datatables_extension_buttons_print.js"></script>
+		<script src="${pageContext.request.contextPath}/resources/global_assets/js/demo_pages/extra_sweetalert.js"></script>
+		
 	<script>
 	 // Export options - column selector
     

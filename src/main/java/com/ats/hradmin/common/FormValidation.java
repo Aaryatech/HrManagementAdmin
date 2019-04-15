@@ -14,7 +14,7 @@ public class FormValidation {
 
 				if (type.equals("email")) {
 
-					String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+					String ePattern = "^([A-Za-z0-9_\\-\\.])+\\@([A-Za-z0-9_\\-\\.])+\\.([A-Za-z]{2,4})$";
 					java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
 					java.util.regex.Matcher m = p.matcher(str);
 
@@ -27,7 +27,7 @@ public class FormValidation {
 				}
 				if (type.equals("mobile")) {
 
-					String ePattern = "^[0-9]{10}$";
+					String ePattern = "^[1-9]{1}[0-9]{9}$";
 					java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
 					java.util.regex.Matcher m = p.matcher(str);
 					if (m.matches()) {
