@@ -26,6 +26,7 @@ import com.ats.hradmin.model.Company;
 import com.ats.hradmin.model.EmpType;
 import com.ats.hradmin.model.EmployeDoc;
 import com.ats.hradmin.model.EmployeeCategory;
+import com.ats.hradmin.model.EmployeeDepartment;
 import com.ats.hradmin.model.Info;
 import com.ats.hradmin.model.Location;
 
@@ -36,7 +37,8 @@ public class MasterController {
 	Company editCompany = new Company();
 	Location editLocation = new Location();
 	EmpType editEmpType = new EmpType();
-	EmployeeCategory editEmpCategory = new EmployeeCategory();
+	EmployeeCategory editEmpCategory = new EmployeeCategory(); 
+	EmployeeDepartment editEmployeeDepartment = new  EmployeeDepartment();
 	
 	@RequestMapping(value = "/companyAdd", method = RequestMethod.GET)
 	public ModelAndView companyAdd(HttpServletRequest request, HttpServletResponse response) {
@@ -913,6 +915,210 @@ public class MasterController {
 		}
 
 		return "redirect:/showEmpCatList";
+	}
+	
+	@RequestMapping(value = "/empDeptAdd", method = RequestMethod.GET)
+	public ModelAndView empDeptAdd(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("master/empDeptAdd");
+
+		try {
+
+			 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+	}
+	
+	@RequestMapping(value = "/submitInsertEmpDept", method = RequestMethod.POST)
+	public String submitInsertEmpDept(HttpServletRequest request, HttpServletResponse response) {
+
+		HttpSession session = request.getSession();
+
+		try {
+
+			Date date = new Date();
+			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
+			String deptName = request.getParameter("deptName");
+			String deptShortName = request.getParameter("deptShortName"); 
+			String remark = request.getParameter("remark");
+			
+			Boolean ret = false;
+
+			if (FormValidation.Validaton(deptName, "") == true) {
+
+				ret = true; 
+			}
+			if (FormValidation.Validaton(deptShortName, "") == true) {
+
+				ret = true; 
+			}
+			 
+
+			if (ret == false) {
+
+				EmployeeDepartment employeeDepartment = new EmployeeDepartment();
+
+				
+				employeeDepartment.setEmpDeptName(deptName);
+				employeeDepartment.setEmpDeptShortName(deptShortName); 
+				employeeDepartment.setEmpDeptRemarks(remark);
+				employeeDepartment.setIsActive(1);
+				employeeDepartment.setDelStatus(1);
+				employeeDepartment.setMakerUserId(1);
+				employeeDepartment.setCompanyId(1);  
+				employeeDepartment.setMakerEnterDatetime(sf.format(date));
+
+				EmployeeDepartment res = Constants.getRestTemplate().postForObject(Constants.url + "/saveEmpDept", employeeDepartment,
+						EmployeeDepartment.class);
+
+				if (res.isError()==false) {
+					session.setAttribute("successMsg", "Record Insert Successfully");
+				} else {
+					session.setAttribute("errorMsg", "Failed to Insert Record");
+				}
+
+			} else {
+				session.setAttribute("errorMsg", "Failed to Insert Record");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.setAttribute("errorMsg", "Failed to Insert Record");
+		}
+
+		return "redirect:/showEmpDeptList";
+	}
+	
+	@RequestMapping(value = "/showEmpDeptList", method = RequestMethod.GET)
+	public ModelAndView showEmpDeptList(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("master/empDeptList");
+
+		try {
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("compId", 1);
+			EmployeeDepartment[] employeeDepartment = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpDeptList", map,
+					EmployeeDepartment[].class);
+
+			List<EmployeeDepartment> employeeDepartmentlist = new ArrayList<EmployeeDepartment>(Arrays.asList(employeeDepartment));
+
+			for (int i = 0; i < employeeDepartmentlist.size(); i++) {
+
+				employeeDepartmentlist.get(i).setExVar1(FormValidation.Encrypt(String.valueOf(employeeDepartmentlist.get(i).getEmpDeptId())));
+			}
+
+			model.addObject("deptList", employeeDepartmentlist);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+	}
+	
+	@RequestMapping(value = "/deleteEmpDept", method = RequestMethod.GET)
+	public String deleteEmpDept(HttpServletRequest request, HttpServletResponse response) {
+
+		HttpSession session = request.getSession();
+		try {
+			String base64encodedString = request.getParameter("deptId");
+			String deptId = FormValidation.DecodeKey(base64encodedString);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("empDeptId", deptId);
+			Info info = Constants.getRestTemplate().postForObject(Constants.url + "/deleteEmpDept", map, Info.class);
+
+			if (info.isError() == false) {
+				session.setAttribute("successMsg", "Deleted Successfully");
+			} else {
+				session.setAttribute("errorMsg", "Failed to Delete");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.setAttribute("errorMsg", "Failed to Delete");
+		}
+		return "redirect:/showEmpDeptList";
+	}
+	
+	@RequestMapping(value = "/editEmpDept", method = RequestMethod.GET)
+	public ModelAndView editEmpDept(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("master/empDeptEdit");
+
+		try {
+			String base64encodedString = request.getParameter("deptId");
+			String deptId = FormValidation.DecodeKey(base64encodedString);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("empDeptId", deptId);
+			editEmployeeDepartment = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpDeptById", map,
+					EmployeeDepartment.class);
+			model.addObject("editEmpDept", editEmployeeDepartment);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+	}
+	
+	@RequestMapping(value = "/submitEditEmpDept", method = RequestMethod.POST)
+	public String submitEditEmpDept(HttpServletRequest request, HttpServletResponse response) {
+
+		HttpSession session = request.getSession();
+
+		try {
+
+			Date date = new Date();
+			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
+			String deptName = request.getParameter("deptName");
+			String deptShortName = request.getParameter("deptShortName"); 
+			String remark = request.getParameter("remark");
+			
+			Boolean ret = false;
+
+			if (FormValidation.Validaton(deptName, "") == true) {
+
+				ret = true; 
+			}
+			if (FormValidation.Validaton(deptShortName, "") == true) {
+
+				ret = true; 
+			}
+			 
+
+			if (ret == false) {
+
+				 
+				editEmployeeDepartment.setEmpDeptName(deptName);
+				editEmployeeDepartment.setEmpDeptShortName(deptShortName); 
+				editEmployeeDepartment.setEmpDeptRemarks(remark); 
+				editEmployeeDepartment.setMakerUserId(1);
+				editEmployeeDepartment.setCompanyId(1);  
+				editEmployeeDepartment.setMakerEnterDatetime(sf.format(date));
+
+				EmployeeDepartment res = Constants.getRestTemplate().postForObject(Constants.url + "/saveEmpDept", editEmployeeDepartment,
+						EmployeeDepartment.class);
+
+				if (res.isError()==false) {
+					session.setAttribute("successMsg", "Record Updeted Successfully");
+				} else {
+					session.setAttribute("errorMsg", "Failed to Updeted Record");
+				}
+
+			} else {
+				session.setAttribute("errorMsg", "Failed to Updeted Record");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.setAttribute("errorMsg", "Failed to Updeted Record");
+		}
+
+		return "redirect:/showEmpDeptList";
 	}
 
 }
