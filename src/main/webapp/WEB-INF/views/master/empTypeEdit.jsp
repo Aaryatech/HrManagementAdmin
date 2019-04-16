@@ -6,6 +6,7 @@
 <head>
 
 <jsp:include page="/WEB-INF/views/include/metacssjs.jsp"></jsp:include>
+<c:url var="getSubmoduleList" value="/getSubmoduleList" />
 </head>
 
 <body>
@@ -180,7 +181,7 @@
 											</label>
 										</div>
 									</div>
-
+ 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="remark">Remark
 											: </label>
@@ -191,8 +192,133 @@
 
 										</div>
 									</div>
+									 
+									<table
+										class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic1  datatable-button-print-columns1"
+										id="printtable1">
+										<thead>
+											<tr class="bg-blue">
+												<th width="10%">Sr. No.</th>
+												<th>Module Name</th>
+												<th width="10%" style="text-align: center;">View</th>
+												<th width="10%" style="text-align: center;">Add</th>
+												<th width="10%" style="text-align: center;">Edit</th>
+												<th width="10%" style="text-align: center;">Delete</th>
+											</tr>
+										</thead>
+										<tbody>
 
-									Remaining assign role
+
+											<c:forEach items="${allModuleList}" var="allModuleList"
+																		varStatus="count">
+																		<tr>
+																			<td><b><c:out value="${count.index+1}" /> </b><input
+																				type="checkbox" id="header${allModuleList.moduleId}"
+																				name="header${allModuleList.moduleId}"
+																				class="select_all"
+																				onclick="checkSubmodule(${allModuleList.moduleId})"
+																				value="0"></td>
+																			<td colspan="5">${allModuleList.iconDiv} &nbsp; <b><c:out
+																						value="${allModuleList.moduleName}" /></b></td>
+																		</tr>
+
+																		<c:forEach
+																			items="${allModuleList.accessRightSubModuleList}"
+																			var="allSubModuleList">
+																			<tr>
+																				<td></td>
+																				<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<c:out
+																						value="${allSubModuleList.subModulName}" /></td>
+																				<td style="text-align: center;"><c:choose>
+																						<c:when test="${allSubModuleList.view==1}">
+																							<input type="checkbox"
+																								id="${allSubModuleList.subModuleId}view${allSubModuleList.moduleId}"
+																								class="check${allModuleList.moduleId} tochecksinglecheckbox"
+																								name="${allSubModuleList.subModuleId}view${allSubModuleList.moduleId}"
+																								value="1"
+																								onclick="changeValue(1,${allSubModuleList.subModuleId},${allSubModuleList.moduleId})"
+																								checked>
+																						</c:when>
+																						<c:otherwise>
+																							<input type="checkbox"
+																								id="${allSubModuleList.subModuleId}view${allSubModuleList.moduleId}"
+																								class="check${allModuleList.moduleId} tochecksinglecheckbox"
+																								name="${allSubModuleList.subModuleId}view${allSubModuleList.moduleId}"
+																								value="0"
+																								onclick="changeValue(1,${allSubModuleList.subModuleId},${allSubModuleList.moduleId})">
+																						</c:otherwise>
+																					</c:choose></td>
+																				<td style="text-align: center;"><c:choose>
+																						<c:when test="${allSubModuleList.addApproveConfig==1}">
+																							<input type="checkbox"
+																								id="${allSubModuleList.subModuleId}add${allSubModuleList.moduleId}"
+																								class="check${allModuleList.moduleId} tochecksinglecheckbox"
+																								name="${allSubModuleList.subModuleId}add${allSubModuleList.moduleId}"
+																								value="1"
+																								onclick="changeValue(2,${allSubModuleList.subModuleId},${allSubModuleList.moduleId})"
+																								checked>
+																						</c:when>
+																						<c:otherwise>
+																							<input type="checkbox"
+																								id="${allSubModuleList.subModuleId}add${allSubModuleList.moduleId}"
+																								class="check${allModuleList.moduleId} tochecksinglecheckbox"
+																								name="${allSubModuleList.subModuleId}add${allSubModuleList.moduleId}"
+																								value="0"
+																								onclick="changeValue(2,${allSubModuleList.subModuleId},${allSubModuleList.moduleId})">
+																						</c:otherwise>
+																					</c:choose></td>
+																				<td style="text-align: center;"><c:choose>
+																						<c:when test="${allSubModuleList.editReject==1}">
+																							<input type="checkbox"
+																								class="check${allModuleList.moduleId} tochecksinglecheckbox"
+																								id="${allSubModuleList.subModuleId}edit${allSubModuleList.moduleId}"
+																								name="${allSubModuleList.subModuleId}edit${allSubModuleList.moduleId}"
+																								value="1"
+																								onclick="changeValue(3,${allSubModuleList.subModuleId},${allSubModuleList.moduleId})"
+																								checked>
+																						</c:when>
+																						<c:otherwise>
+																							<input type="checkbox"
+																								class="check${allModuleList.moduleId} tochecksinglecheckbox"
+																								id="${allSubModuleList.subModuleId}edit${allSubModuleList.moduleId}"
+																								name="${allSubModuleList.subModuleId}edit${allSubModuleList.moduleId}"
+																								value="0"
+																								onclick="changeValue(3,${allSubModuleList.subModuleId},${allSubModuleList.moduleId})">
+																						</c:otherwise>
+																					</c:choose></td>
+																				<td style="text-align: center;"><c:choose>
+																						<c:when test="${allSubModuleList.deleteRejectApprove==1}">
+																							<input type="checkbox"
+																								class="check${allModuleList.moduleId} tochecksinglecheckbox"
+																								id="${allSubModuleList.subModuleId}delete${allSubModuleList.moduleId}"
+																								name="${allSubModuleList.subModuleId}delete${allSubModuleList.moduleId}"
+																								value="1"
+																								onclick="changeValue(4,${allSubModuleList.subModuleId},${allSubModuleList.moduleId})"
+																								checked>
+																						</c:when>
+																						<c:otherwise>
+																							<input type="checkbox"
+																								class="check${allModuleList.moduleId} tochecksinglecheckbox"
+																								id="${allSubModuleList.subModuleId}delete${allSubModuleList.moduleId}"
+																								name="${allSubModuleList.subModuleId}delete${allSubModuleList.moduleId}"
+																								value="0"
+																								onclick="changeValue(4,${allSubModuleList.subModuleId},${allSubModuleList.moduleId})">
+																						</c:otherwise>
+																					</c:choose></td>
+																			</tr>
+																		</c:forEach>
+
+																	</c:forEach>
+
+										</tbody>
+									</table>
+									<div class="form-group row">
+										<div class="col-lg-10"> 
+											<span class="validation-invalid-label"
+												id="error_checkbox" style="display: none;">Check Minimum One Checkbox</span>
+										</div>
+									</div>
+									<br>
 
 									<div class="form-group row mb-0">
 										<div class="col-lg-10 ml-lg-auto">
@@ -224,7 +350,98 @@
 
 	</div>
 	<!-- /page content -->
+<script>
+			function checkSubmodule(moduleId) {
+				
+				 
+				$.getJSON('${getSubmoduleList}', {
+					moduleId : moduleId,
+					ajax : 'true',
 
+				}, function(data) { 
+					 
+					
+					if(document.getElementById("header"+moduleId).checked == true){
+						
+						for(var i=0 ; i<data.length; i++){
+							 
+							document.getElementById(data[i]+"view"+moduleId).checked=true;
+							 document.getElementById(data[i]+"add"+moduleId).checked=true;
+							 document.getElementById(data[i]+"edit"+moduleId).checked=true;
+							 document.getElementById(data[i]+"delete"+moduleId).checked=true;
+							 document.getElementById(data[i]+"view"+moduleId).value=1;
+							 document.getElementById(data[i]+"add"+moduleId).value=1;
+							 document.getElementById(data[i]+"edit"+moduleId).value=1;
+							 document.getElementById(data[i]+"delete"+moduleId).value=1;
+						}
+						 
+					 }else{
+						 for(var i=0 ; i<data.length; i++){
+								
+								document.getElementById(data[i]+"view"+moduleId).checked=false;
+								 document.getElementById(data[i]+"add"+moduleId).checked=false;
+								 document.getElementById(data[i]+"edit"+moduleId).checked=false;
+								 document.getElementById(data[i]+"delete"+moduleId).checked=false;
+								 document.getElementById(data[i]+"view"+moduleId).value=0;
+								 document.getElementById(data[i]+"add"+moduleId).value=0;
+								 document.getElementById(data[i]+"edit"+moduleId).value=0;
+								 document.getElementById(data[i]+"delete"+moduleId).value=0;
+							}
+					 }
+				
+				});
+ 
+				 
+			}
+			
+			function changeValue(type,subModuleId,moduleId) {
+				 
+				 
+							 if(type==1){
+								 if(document.getElementById(subModuleId+"view"+moduleId).checked == true){
+									 
+									 document.getElementById(subModuleId+"view"+moduleId).value=1;
+									 
+								 }else{
+									 
+									 document.getElementById(subModuleId+"view"+moduleId).value=0;
+								 }
+								
+							 }else if(type==2){
+								 if(document.getElementById(subModuleId+"add"+moduleId).checked == true){
+									 
+								 	document.getElementById(subModuleId+"add"+moduleId).value=1;
+								 }else{
+									 document.getElementById(subModuleId+"add"+moduleId).value=0;
+								 }
+							 }else if(type==3){
+								 if(document.getElementById(subModuleId+"edit"+moduleId).checked == true){
+									 
+									 document.getElementById(subModuleId+"edit"+moduleId).value=1;
+									 
+								 }else{
+									 
+									 document.getElementById(subModuleId+"edit"+moduleId).value=0;
+									 
+								 }
+								 
+							 }else if(type==4){
+								 
+								 if(document.getElementById(subModuleId+"delete"+moduleId).checked == true){
+									 
+									 document.getElementById(subModuleId+"delete"+moduleId).value=1;
+									 
+								 }else{
+									 
+									 document.getElementById(subModuleId+"delete"+moduleId).value=0;
+									 
+								 }
+								 
+							 }
+							  
+			}
+			
+		</script>
 	<script>
 		function trim(el) {
 			el.value = el.value.replace(/(^\s*)|(\s*$)/gi, ""). // removes leading and trailing spaces
@@ -259,6 +476,20 @@
 					$("#error_empShortName").hide()
 				}
 
+				//tochecksinglecheckbox
+				var checkboxes = $("input[type='checkbox']");
+				
+				if (!checkboxes.is(":checked")) {
+
+					isError = true;
+
+					$("#error_checkbox").show()
+
+				} else {
+					$("#error_checkbox").hide()
+				}
+				
+				
 				if (!isError) {
 
 					var x = confirm("Do you really want to submit the form?");

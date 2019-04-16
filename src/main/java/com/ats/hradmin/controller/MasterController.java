@@ -17,18 +17,22 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import com.ats.hradmin.common.Constants;
 import com.ats.hradmin.common.FormValidation;
 import com.ats.hradmin.common.VpsImageUpload;
+import com.ats.hradmin.model.AccessRightModule;
+import com.ats.hradmin.model.AccessRightSubModule;
 import com.ats.hradmin.model.Company;
 import com.ats.hradmin.model.EmpType;
-import com.ats.hradmin.model.EmployeDoc;
 import com.ats.hradmin.model.EmployeeCategory;
 import com.ats.hradmin.model.EmployeeDepartment;
 import com.ats.hradmin.model.Info;
-import com.ats.hradmin.model.Location;
+import com.ats.hradmin.model.Location; 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 @Scope("session")
@@ -37,9 +41,10 @@ public class MasterController {
 	Company editCompany = new Company();
 	Location editLocation = new Location();
 	EmpType editEmpType = new EmpType();
-	EmployeeCategory editEmpCategory = new EmployeeCategory(); 
-	EmployeeDepartment editEmployeeDepartment = new  EmployeeDepartment();
-	
+	EmployeeCategory editEmpCategory = new EmployeeCategory();
+	EmployeeDepartment editEmployeeDepartment = new EmployeeDepartment();
+	List<AccessRightModule> moduleList = new ArrayList<>();
+
 	@RequestMapping(value = "/companyAdd", method = RequestMethod.GET)
 	public ModelAndView companyAdd(HttpServletRequest request, HttpServletResponse response) {
 
@@ -508,10 +513,44 @@ public class MasterController {
 
 		try {
 
+			AccessRightModule[] accessRightModule = Constants.getRestTemplate()
+					.getForObject(Constants.url + "/getModuleAndSubModuleList", AccessRightModule[].class);
+
+			moduleList = new ArrayList<AccessRightModule>(Arrays.asList(accessRightModule));
+
+			model.addObject("moduleList", moduleList);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return model;
+	}
+
+	@RequestMapping(value = "/getSubmoduleList", method = RequestMethod.GET)
+	public @ResponseBody List<Integer> getSubmoduleList(HttpServletRequest request, HttpServletResponse response) {
+
+		List<Integer> list = new ArrayList<>();
+		try {
+
+			int moduleId = Integer.parseInt(request.getParameter("moduleId"));
+			// System.out.println(moduleId);
+			for (int i = 0; i < moduleList.size(); i++) {
+
+				if (moduleList.get(i).getModuleId() == moduleId) {
+
+					for (int j = 0; j < moduleList.get(i).getAccessRightSubModuleList().size(); j++) {
+
+						list.add(moduleList.get(i).getAccessRightSubModuleList().get(j).getSubModuleId());
+					}
+					break;
+				}
+			}
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return list;
+
 	}
 
 	@RequestMapping(value = "/submitInsertEmpType", method = RequestMethod.POST)
@@ -521,6 +560,8 @@ public class MasterController {
 
 		try {
 
+			List<AccessRightModule> moduleJsonList = new ArrayList<>();
+
 			Date date = new Date();
 			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
@@ -528,7 +569,7 @@ public class MasterController {
 			String empShortName = request.getParameter("empShortName");
 			int comoffallowed = Integer.parseInt(request.getParameter("comoffallowed"));
 			String remark = request.getParameter("remark");
-			
+
 			Boolean ret = false;
 
 			if (FormValidation.Validaton(empTypeName, "") == true) {
@@ -541,7 +582,6 @@ public class MasterController {
 				ret = true;
 				System.out.println("locShortName" + ret);
 			}
-			 
 
 			if (ret == false) {
 
@@ -549,7 +589,7 @@ public class MasterController {
 
 				empType.setEmpTypeName(empTypeName);
 				empType.setEmpTypeShortName(empShortName);
-				empType.setCompOffRequestAllowed(comoffallowed); 
+				empType.setCompOffRequestAllowed(comoffallowed);
 				empType.setIsActive(1);
 				empType.setDelStatus(1);
 				empType.setMakerUserId(1);
@@ -558,11 +598,109 @@ public class MasterController {
 				empType.setEmpTypeAccess("");
 				empType.setMakerEnterDatetime(sf.format(date));
 
-				EmpType res = Constants.getRestTemplate().postForObject(Constants.url + "/saveEmpType", empType,
-						EmpType.class);
+				for (int i = 0; i < moduleList.size(); i++) {
 
-				if (res.isError()==false) {
-					session.setAttribute("successMsg", "Record Insert Successfully");
+					AccessRightModule moduleJson = new AccessRightModule();
+					int isPresent = 0;
+
+					List<AccessRightSubModule> subModuleJsonList = new ArrayList<>();
+
+					for (int j = 0; j < moduleList.get(i).getAccessRightSubModuleList().size(); j++) {
+
+						AccessRightSubModule subModuleJson = new AccessRightSubModule();
+
+						String view = request
+								.getParameter(moduleList.get(i).getAccessRightSubModuleList().get(j).getSubModuleId()
+										+ "view" + moduleList.get(i).getModuleId());
+
+						try {
+							if (view.equals("1")) {
+								isPresent = 1;
+
+								subModuleJson.setView(Integer.parseInt(view));
+								subModuleJson.setSubModuleId(
+										moduleList.get(i).getAccessRightSubModuleList().get(j).getSubModuleId());
+								subModuleJson.setModuleId(moduleList.get(i).getModuleId());
+								subModuleJson.setSubModulName(
+										moduleList.get(i).getAccessRightSubModuleList().get(j).getSubModulName());
+								subModuleJson.setSubModuleDesc(
+										moduleList.get(i).getAccessRightSubModuleList().get(j).getSubModuleDesc());
+								subModuleJson.setSubModuleMapping(
+										moduleList.get(i).getAccessRightSubModuleList().get(j).getSubModuleMapping());
+								subModuleJson.setOrderBy(
+										moduleList.get(i).getAccessRightSubModuleList().get(j).getOrderBy());
+
+								try {
+									int add = Integer.parseInt(request.getParameter(
+											moduleList.get(i).getAccessRightSubModuleList().get(j).getSubModuleId()
+													+ "add" + moduleList.get(i).getModuleId()));
+									subModuleJson.setAddApproveConfig(add);
+								} catch (Exception e) {
+									subModuleJson.setAddApproveConfig(0);
+								}
+
+								try {
+									int edit = Integer.parseInt(request.getParameter(
+											moduleList.get(i).getAccessRightSubModuleList().get(j).getSubModuleId()
+													+ "edit" + moduleList.get(i).getModuleId()));
+									subModuleJson.setEditReject(edit);
+								} catch (Exception e) {
+									subModuleJson.setEditReject(0);
+								}
+
+								try {
+									int delete = Integer.parseInt(request.getParameter(
+											moduleList.get(i).getAccessRightSubModuleList().get(j).getSubModuleId()
+													+ "delete" + moduleList.get(i).getModuleId()));
+									subModuleJson.setDeleteRejectApprove(delete);
+								} catch (Exception e) {
+									subModuleJson.setDeleteRejectApprove(0);
+								}
+
+								subModuleJsonList.add(subModuleJson);
+
+							}
+						} catch (Exception e) {
+
+						}
+
+					}
+
+					if (isPresent == 1) {
+						moduleJson.setModuleId(moduleList.get(i).getModuleId());
+						moduleJson.setModuleName(moduleList.get(i).getModuleName());
+						moduleJson.setModuleDesc(moduleList.get(i).getModuleDesc());
+						moduleJson.setOrderBy(moduleList.get(i).getOrderBy());
+						moduleJson.setAccessRightSubModuleList(subModuleJsonList);
+						moduleJsonList.add(moduleJson);
+					}
+
+				}
+
+				if (moduleJsonList != null && !moduleJsonList.isEmpty()) {
+
+					ObjectMapper mapper = new ObjectMapper();
+					try {
+
+						String newsLetterJSON = mapper.writeValueAsString(moduleJsonList);
+
+						System.out.println("JSON  " + newsLetterJSON);
+						empType.setEmpTypeAccess(newsLetterJSON);
+
+					} catch (JsonProcessingException e) {
+
+						e.printStackTrace();
+					}
+
+					EmpType res = Constants.getRestTemplate().postForObject(Constants.url + "/saveEmpType", empType,
+							EmpType.class);
+
+					if (res.isError() == false) {
+						session.setAttribute("successMsg", "Record Insert Successfully");
+					} else {
+						session.setAttribute("errorMsg", "Failed to Insert Record");
+					}
+
 				} else {
 					session.setAttribute("errorMsg", "Failed to Insert Record");
 				}
@@ -605,7 +743,7 @@ public class MasterController {
 		}
 		return model;
 	}
-	
+
 	@RequestMapping(value = "/deleteEmpType", method = RequestMethod.GET)
 	public String deleteEmpType(HttpServletRequest request, HttpServletResponse response) {
 
@@ -629,7 +767,7 @@ public class MasterController {
 		}
 		return "redirect:/showEmpTypeList";
 	}
-	
+
 	@RequestMapping(value = "/editEmpType", method = RequestMethod.GET)
 	public ModelAndView editEmpType(HttpServletRequest request, HttpServletResponse response) {
 
@@ -645,12 +783,73 @@ public class MasterController {
 					EmpType.class);
 			model.addObject("editEmpType", editEmpType);
 
+			List<AccessRightModule> moduleJsonList = new ArrayList<AccessRightModule>();
+			
+			try {
+				
+				AccessRightModule[] moduleJson = null;
+				ObjectMapper mapper = new ObjectMapper();
+				moduleJson = mapper.readValue(editEmpType.getEmpTypeAccess(), AccessRightModule[].class);
+						moduleJsonList = new ArrayList<AccessRightModule>(Arrays.asList(moduleJson));
+						
+			}catch(Exception e) {
+				 
+			}
+			
+
+			AccessRightModule[] accessRightModule = Constants.getRestTemplate()
+					.getForObject(Constants.url + "/getModuleAndSubModuleList", AccessRightModule[].class);
+
+			moduleList = new ArrayList<AccessRightModule>(Arrays.asList(accessRightModule));
+
+			for (int i = 0; i < moduleList.size(); i++) {
+
+				for (int j = 0; j < moduleJsonList.size(); j++) {
+
+					if (moduleList.get(i).getModuleId() == moduleJsonList.get(j).getModuleId()) {
+
+						System.out.println("match Module " + moduleList.get(i).getModuleName());
+
+						for (int k = 0; k < moduleList.get(i).getAccessRightSubModuleList().size(); k++) {
+
+							for (int m = 0; m < moduleJsonList.get(j).getAccessRightSubModuleList().size(); m++) {
+
+								if (moduleList.get(i).getAccessRightSubModuleList().get(k)
+										.getSubModuleId() == moduleJsonList.get(j).getAccessRightSubModuleList().get(m)
+												.getSubModuleId()) {
+
+									moduleList.get(i).getAccessRightSubModuleList().get(k)
+											.setAddApproveConfig(moduleJsonList.get(j).getAccessRightSubModuleList()
+													.get(m).getAddApproveConfig());
+									moduleList.get(i).getAccessRightSubModuleList().get(k).setView(
+											moduleJsonList.get(j).getAccessRightSubModuleList().get(m).getView());
+									moduleList.get(i).getAccessRightSubModuleList().get(k).setEditReject(
+											moduleJsonList.get(j).getAccessRightSubModuleList().get(m).getEditReject());
+									moduleList.get(i).getAccessRightSubModuleList().get(k)
+											.setDeleteRejectApprove(moduleJsonList.get(j).getAccessRightSubModuleList()
+													.get(m).getDeleteRejectApprove());
+									break;
+								}
+
+							}
+
+						}
+
+						break;
+					}
+
+				}
+
+			}
+			model.addObject("allModuleList", moduleList);
+			model.addObject("moduleJsonList", moduleJsonList);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return model;
 	}
-	
+
 	@RequestMapping(value = "/submitEditEmpType", method = RequestMethod.POST)
 	public String submitEditEmpType(HttpServletRequest request, HttpServletResponse response) {
 
@@ -658,6 +857,8 @@ public class MasterController {
 
 		try {
 
+			List<AccessRightModule> moduleJsonList = new ArrayList<>();
+			
 			Date date = new Date();
 			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
@@ -665,41 +866,138 @@ public class MasterController {
 			String empShortName = request.getParameter("empShortName");
 			int comoffallowed = Integer.parseInt(request.getParameter("comoffallowed"));
 			String remark = request.getParameter("remark");
-			
+
 			Boolean ret = false;
 
 			if (FormValidation.Validaton(empTypeName, "") == true) {
 
 				ret = true;
-				 
+
 			}
 			if (FormValidation.Validaton(empShortName, "") == true) {
 
 				ret = true;
-				 
+
 			}
-			 
 
 			if (ret == false) {
 
-				 
-
 				editEmpType.setEmpTypeName(empTypeName);
 				editEmpType.setEmpTypeShortName(empShortName);
-				editEmpType.setCompOffRequestAllowed(comoffallowed);  
+				editEmpType.setCompOffRequestAllowed(comoffallowed);
 				editEmpType.setCompanyId(1);
 				editEmpType.setEmpTypeRemarks(remark);
 				editEmpType.setEmpTypeAccess("");
 				editEmpType.setMakerEnterDatetime(sf.format(date));
+				
+				for (int i = 0; i < moduleList.size(); i++) {
 
-				EmpType res = Constants.getRestTemplate().postForObject(Constants.url + "/saveEmpType", editEmpType,
-						EmpType.class);
+					AccessRightModule moduleJson = new AccessRightModule();
+					int isPresent = 0;
 
-				if (res.isError()==false) {
-					session.setAttribute("successMsg", "Record Updated Successfully");
-				} else {
-					session.setAttribute("errorMsg", "Failed to Updated Record");
+					List<AccessRightSubModule> subModuleJsonList = new ArrayList<>();
+
+					for (int j = 0; j < moduleList.get(i).getAccessRightSubModuleList().size(); j++) {
+
+						AccessRightSubModule subModuleJson = new AccessRightSubModule();
+
+						String view = request
+								.getParameter(moduleList.get(i).getAccessRightSubModuleList().get(j).getSubModuleId()
+										+ "view" + moduleList.get(i).getModuleId());
+
+						try {
+							if (view.equals("1")) {
+								isPresent = 1;
+
+								subModuleJson.setView(Integer.parseInt(view));
+								subModuleJson.setSubModuleId(
+										moduleList.get(i).getAccessRightSubModuleList().get(j).getSubModuleId());
+								subModuleJson.setModuleId(moduleList.get(i).getModuleId());
+								subModuleJson.setSubModulName(
+										moduleList.get(i).getAccessRightSubModuleList().get(j).getSubModulName());
+								subModuleJson.setSubModuleDesc(
+										moduleList.get(i).getAccessRightSubModuleList().get(j).getSubModuleDesc());
+								subModuleJson.setSubModuleMapping(
+										moduleList.get(i).getAccessRightSubModuleList().get(j).getSubModuleMapping());
+								subModuleJson.setOrderBy(
+										moduleList.get(i).getAccessRightSubModuleList().get(j).getOrderBy());
+
+								try {
+									int add = Integer.parseInt(request.getParameter(
+											moduleList.get(i).getAccessRightSubModuleList().get(j).getSubModuleId()
+													+ "add" + moduleList.get(i).getModuleId()));
+									subModuleJson.setAddApproveConfig(add);
+								} catch (Exception e) {
+									subModuleJson.setAddApproveConfig(0);
+								}
+
+								try {
+									int edit = Integer.parseInt(request.getParameter(
+											moduleList.get(i).getAccessRightSubModuleList().get(j).getSubModuleId()
+													+ "edit" + moduleList.get(i).getModuleId()));
+									subModuleJson.setEditReject(edit);
+								} catch (Exception e) {
+									subModuleJson.setEditReject(0);
+								}
+
+								try {
+									int delete = Integer.parseInt(request.getParameter(
+											moduleList.get(i).getAccessRightSubModuleList().get(j).getSubModuleId()
+													+ "delete" + moduleList.get(i).getModuleId()));
+									subModuleJson.setDeleteRejectApprove(delete);
+								} catch (Exception e) {
+									subModuleJson.setDeleteRejectApprove(0);
+								}
+
+								subModuleJsonList.add(subModuleJson);
+
+							}
+						} catch (Exception e) {
+
+						}
+
+					}
+
+					if (isPresent == 1) {
+						moduleJson.setModuleId(moduleList.get(i).getModuleId());
+						moduleJson.setModuleName(moduleList.get(i).getModuleName());
+						moduleJson.setModuleDesc(moduleList.get(i).getModuleDesc());
+						moduleJson.setOrderBy(moduleList.get(i).getOrderBy());
+						moduleJson.setAccessRightSubModuleList(subModuleJsonList);
+						moduleJsonList.add(moduleJson);
+					}
+
 				}
+
+				
+				if (moduleJsonList != null && !moduleJsonList.isEmpty()) {
+
+					ObjectMapper mapper = new ObjectMapper();
+					try {
+
+						String newsLetterJSON = mapper.writeValueAsString(moduleJsonList);
+
+						System.out.println("JSON  " + newsLetterJSON);
+						editEmpType.setEmpTypeAccess(newsLetterJSON);
+
+					} catch (JsonProcessingException e) {
+
+						e.printStackTrace();
+					}
+					
+					EmpType res = Constants.getRestTemplate().postForObject(Constants.url + "/saveEmpType", editEmpType,
+							EmpType.class);
+
+					if (res.isError() == false) {
+						session.setAttribute("successMsg", "Record Updated Successfully");
+					} else {
+						session.setAttribute("errorMsg", "Failed to Updated Record");
+					}
+
+				} else {
+					session.setAttribute("errorMsg", "Failed to Insert Record");
+				}
+				 
 
 			} else {
 				session.setAttribute("errorMsg", "Failed to Updated Record");
@@ -712,7 +1010,7 @@ public class MasterController {
 
 		return "redirect:/showEmpTypeList";
 	}
-	
+
 	@RequestMapping(value = "/employeeCatAdd", method = RequestMethod.GET)
 	public ModelAndView employeeCatAdd(HttpServletRequest request, HttpServletResponse response) {
 
@@ -720,13 +1018,12 @@ public class MasterController {
 
 		try {
 
-			 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return model;
 	}
-	
+
 	@RequestMapping(value = "/submitInsertEmpCat", method = RequestMethod.POST)
 	public String submitInsertEmpCat(HttpServletRequest request, HttpServletResponse response) {
 
@@ -738,38 +1035,37 @@ public class MasterController {
 			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
 			String catName = request.getParameter("catName");
-			String catShortName = request.getParameter("catShortName"); 
+			String catShortName = request.getParameter("catShortName");
 			String remark = request.getParameter("remark");
-			
+
 			Boolean ret = false;
 
 			if (FormValidation.Validaton(catName, "") == true) {
 
-				ret = true; 
+				ret = true;
 			}
 			if (FormValidation.Validaton(catShortName, "") == true) {
 
-				ret = true; 
+				ret = true;
 			}
-			 
 
 			if (ret == false) {
 
 				EmployeeCategory employeeCategory = new EmployeeCategory();
 
 				employeeCategory.setEmpCatName(catName);
-				employeeCategory.setEmpCatShortName(catShortName); 
-				employeeCategory.setEmpCatRemarks(remark); 
+				employeeCategory.setEmpCatShortName(catShortName);
+				employeeCategory.setEmpCatRemarks(remark);
 				employeeCategory.setIsActive(1);
 				employeeCategory.setDelStatus(1);
 				employeeCategory.setMakerUserId(1);
-				employeeCategory.setCompanyId(1);  
+				employeeCategory.setCompanyId(1);
 				employeeCategory.setMakerEnterDatetime(sf.format(date));
 
-				EmployeeCategory res = Constants.getRestTemplate().postForObject(Constants.url + "/saveEmpCategory", employeeCategory,
-						EmployeeCategory.class);
+				EmployeeCategory res = Constants.getRestTemplate().postForObject(Constants.url + "/saveEmpCategory",
+						employeeCategory, EmployeeCategory.class);
 
-				if (res.isError()==false) {
+				if (res.isError() == false) {
 					session.setAttribute("successMsg", "Record Insert Successfully");
 				} else {
 					session.setAttribute("errorMsg", "Failed to Insert Record");
@@ -786,7 +1082,7 @@ public class MasterController {
 
 		return "redirect:/showEmpCatList";
 	}
-	
+
 	@RequestMapping(value = "/showEmpCatList", method = RequestMethod.GET)
 	public ModelAndView showEmpCatList(HttpServletRequest request, HttpServletResponse response) {
 
@@ -796,14 +1092,16 @@ public class MasterController {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("compId", 1);
-			EmployeeCategory[] employeeCategory = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpCategoryList", map,
-					EmployeeCategory[].class);
+			EmployeeCategory[] employeeCategory = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getEmpCategoryList", map, EmployeeCategory[].class);
 
-			List<EmployeeCategory> employeeCategorylist = new ArrayList<EmployeeCategory>(Arrays.asList(employeeCategory));
+			List<EmployeeCategory> employeeCategorylist = new ArrayList<EmployeeCategory>(
+					Arrays.asList(employeeCategory));
 
 			for (int i = 0; i < employeeCategorylist.size(); i++) {
 
-				employeeCategorylist.get(i).setExVar1(FormValidation.Encrypt(String.valueOf(employeeCategorylist.get(i).getEmpCatId())));
+				employeeCategorylist.get(i)
+						.setExVar1(FormValidation.Encrypt(String.valueOf(employeeCategorylist.get(i).getEmpCatId())));
 			}
 
 			model.addObject("empCatList", employeeCategorylist);
@@ -813,7 +1111,7 @@ public class MasterController {
 		}
 		return model;
 	}
-	
+
 	@RequestMapping(value = "/deleteEmpCategory", method = RequestMethod.GET)
 	public String deleteEmpCategory(HttpServletRequest request, HttpServletResponse response) {
 
@@ -824,7 +1122,8 @@ public class MasterController {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("empCatId", empCatId);
-			Info info = Constants.getRestTemplate().postForObject(Constants.url + "/deleteEmpCategory", map, Info.class);
+			Info info = Constants.getRestTemplate().postForObject(Constants.url + "/deleteEmpCategory", map,
+					Info.class);
 
 			if (info.isError() == false) {
 				session.setAttribute("successMsg", "Deleted Successfully");
@@ -837,7 +1136,7 @@ public class MasterController {
 		}
 		return "redirect:/showEmpCatList";
 	}
-	
+
 	@RequestMapping(value = "/editEmpCategory", method = RequestMethod.GET)
 	public ModelAndView editEmpCategory(HttpServletRequest request, HttpServletResponse response) {
 
@@ -858,7 +1157,7 @@ public class MasterController {
 		}
 		return model;
 	}
-	
+
 	@RequestMapping(value = "/submitEditEmpCat", method = RequestMethod.POST)
 	public String submitEditEmpCat(HttpServletRequest request, HttpServletResponse response) {
 
@@ -870,36 +1169,33 @@ public class MasterController {
 			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
 			String catName = request.getParameter("catName");
-			String catShortName = request.getParameter("catShortName"); 
+			String catShortName = request.getParameter("catShortName");
 			String remark = request.getParameter("remark");
-			
+
 			Boolean ret = false;
 
 			if (FormValidation.Validaton(catName, "") == true) {
 
-				ret = true; 
+				ret = true;
 			}
 			if (FormValidation.Validaton(catShortName, "") == true) {
 
-				ret = true; 
+				ret = true;
 			}
-			 
 
 			if (ret == false) {
 
-				 
-
 				editEmpCategory.setEmpCatName(catName);
-				editEmpCategory.setEmpCatShortName(catShortName); 
-				editEmpCategory.setEmpCatRemarks(remark);  
+				editEmpCategory.setEmpCatShortName(catShortName);
+				editEmpCategory.setEmpCatRemarks(remark);
 				editEmpCategory.setMakerUserId(1);
-				editEmpCategory.setCompanyId(1);  
+				editEmpCategory.setCompanyId(1);
 				editEmpCategory.setMakerEnterDatetime(sf.format(date));
 
-				EmployeeCategory res = Constants.getRestTemplate().postForObject(Constants.url + "/saveEmpCategory", editEmpCategory,
-						EmployeeCategory.class);
+				EmployeeCategory res = Constants.getRestTemplate().postForObject(Constants.url + "/saveEmpCategory",
+						editEmpCategory, EmployeeCategory.class);
 
-				if (res.isError()==false) {
+				if (res.isError() == false) {
 					session.setAttribute("successMsg", "Record Update Successfully");
 				} else {
 					session.setAttribute("errorMsg", "Failed to Update Record");
@@ -916,7 +1212,7 @@ public class MasterController {
 
 		return "redirect:/showEmpCatList";
 	}
-	
+
 	@RequestMapping(value = "/empDeptAdd", method = RequestMethod.GET)
 	public ModelAndView empDeptAdd(HttpServletRequest request, HttpServletResponse response) {
 
@@ -924,13 +1220,12 @@ public class MasterController {
 
 		try {
 
-			 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return model;
 	}
-	
+
 	@RequestMapping(value = "/submitInsertEmpDept", method = RequestMethod.POST)
 	public String submitInsertEmpDept(HttpServletRequest request, HttpServletResponse response) {
 
@@ -942,39 +1237,37 @@ public class MasterController {
 			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
 			String deptName = request.getParameter("deptName");
-			String deptShortName = request.getParameter("deptShortName"); 
+			String deptShortName = request.getParameter("deptShortName");
 			String remark = request.getParameter("remark");
-			
+
 			Boolean ret = false;
 
 			if (FormValidation.Validaton(deptName, "") == true) {
 
-				ret = true; 
+				ret = true;
 			}
 			if (FormValidation.Validaton(deptShortName, "") == true) {
 
-				ret = true; 
+				ret = true;
 			}
-			 
 
 			if (ret == false) {
 
 				EmployeeDepartment employeeDepartment = new EmployeeDepartment();
 
-				
 				employeeDepartment.setEmpDeptName(deptName);
-				employeeDepartment.setEmpDeptShortName(deptShortName); 
+				employeeDepartment.setEmpDeptShortName(deptShortName);
 				employeeDepartment.setEmpDeptRemarks(remark);
 				employeeDepartment.setIsActive(1);
 				employeeDepartment.setDelStatus(1);
 				employeeDepartment.setMakerUserId(1);
-				employeeDepartment.setCompanyId(1);  
+				employeeDepartment.setCompanyId(1);
 				employeeDepartment.setMakerEnterDatetime(sf.format(date));
 
-				EmployeeDepartment res = Constants.getRestTemplate().postForObject(Constants.url + "/saveEmpDept", employeeDepartment,
-						EmployeeDepartment.class);
+				EmployeeDepartment res = Constants.getRestTemplate().postForObject(Constants.url + "/saveEmpDept",
+						employeeDepartment, EmployeeDepartment.class);
 
-				if (res.isError()==false) {
+				if (res.isError() == false) {
 					session.setAttribute("successMsg", "Record Insert Successfully");
 				} else {
 					session.setAttribute("errorMsg", "Failed to Insert Record");
@@ -991,7 +1284,7 @@ public class MasterController {
 
 		return "redirect:/showEmpDeptList";
 	}
-	
+
 	@RequestMapping(value = "/showEmpDeptList", method = RequestMethod.GET)
 	public ModelAndView showEmpDeptList(HttpServletRequest request, HttpServletResponse response) {
 
@@ -1001,14 +1294,16 @@ public class MasterController {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("compId", 1);
-			EmployeeDepartment[] employeeDepartment = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpDeptList", map,
-					EmployeeDepartment[].class);
+			EmployeeDepartment[] employeeDepartment = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getEmpDeptList", map, EmployeeDepartment[].class);
 
-			List<EmployeeDepartment> employeeDepartmentlist = new ArrayList<EmployeeDepartment>(Arrays.asList(employeeDepartment));
+			List<EmployeeDepartment> employeeDepartmentlist = new ArrayList<EmployeeDepartment>(
+					Arrays.asList(employeeDepartment));
 
 			for (int i = 0; i < employeeDepartmentlist.size(); i++) {
 
-				employeeDepartmentlist.get(i).setExVar1(FormValidation.Encrypt(String.valueOf(employeeDepartmentlist.get(i).getEmpDeptId())));
+				employeeDepartmentlist.get(i).setExVar1(
+						FormValidation.Encrypt(String.valueOf(employeeDepartmentlist.get(i).getEmpDeptId())));
 			}
 
 			model.addObject("deptList", employeeDepartmentlist);
@@ -1018,7 +1313,7 @@ public class MasterController {
 		}
 		return model;
 	}
-	
+
 	@RequestMapping(value = "/deleteEmpDept", method = RequestMethod.GET)
 	public String deleteEmpDept(HttpServletRequest request, HttpServletResponse response) {
 
@@ -1042,7 +1337,7 @@ public class MasterController {
 		}
 		return "redirect:/showEmpDeptList";
 	}
-	
+
 	@RequestMapping(value = "/editEmpDept", method = RequestMethod.GET)
 	public ModelAndView editEmpDept(HttpServletRequest request, HttpServletResponse response) {
 
@@ -1063,7 +1358,7 @@ public class MasterController {
 		}
 		return model;
 	}
-	
+
 	@RequestMapping(value = "/submitEditEmpDept", method = RequestMethod.POST)
 	public String submitEditEmpDept(HttpServletRequest request, HttpServletResponse response) {
 
@@ -1075,35 +1370,33 @@ public class MasterController {
 			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
 			String deptName = request.getParameter("deptName");
-			String deptShortName = request.getParameter("deptShortName"); 
+			String deptShortName = request.getParameter("deptShortName");
 			String remark = request.getParameter("remark");
-			
+
 			Boolean ret = false;
 
 			if (FormValidation.Validaton(deptName, "") == true) {
 
-				ret = true; 
+				ret = true;
 			}
 			if (FormValidation.Validaton(deptShortName, "") == true) {
 
-				ret = true; 
+				ret = true;
 			}
-			 
 
 			if (ret == false) {
 
-				 
 				editEmployeeDepartment.setEmpDeptName(deptName);
-				editEmployeeDepartment.setEmpDeptShortName(deptShortName); 
-				editEmployeeDepartment.setEmpDeptRemarks(remark); 
+				editEmployeeDepartment.setEmpDeptShortName(deptShortName);
+				editEmployeeDepartment.setEmpDeptRemarks(remark);
 				editEmployeeDepartment.setMakerUserId(1);
-				editEmployeeDepartment.setCompanyId(1);  
+				editEmployeeDepartment.setCompanyId(1);
 				editEmployeeDepartment.setMakerEnterDatetime(sf.format(date));
 
-				EmployeeDepartment res = Constants.getRestTemplate().postForObject(Constants.url + "/saveEmpDept", editEmployeeDepartment,
-						EmployeeDepartment.class);
+				EmployeeDepartment res = Constants.getRestTemplate().postForObject(Constants.url + "/saveEmpDept",
+						editEmployeeDepartment, EmployeeDepartment.class);
 
-				if (res.isError()==false) {
+				if (res.isError() == false) {
 					session.setAttribute("successMsg", "Record Updeted Successfully");
 				} else {
 					session.setAttribute("errorMsg", "Failed to Updeted Record");

@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%><%@ taglib
+	uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 
 <jsp:include page="/WEB-INF/views/include/metacssjs.jsp"></jsp:include>
+<c:url var="getSubmoduleList" value="/getSubmoduleList" />
 </head>
 
 <body>
@@ -170,8 +172,81 @@
 
 										</div>
 									</div>
+ 
+									<table
+										class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic1  datatable-button-print-columns1"
+										id="printtable1">
+										<thead>
+											<tr class="bg-blue">
+												<th width="10%">Sr. No.</th>
+												<th>Module Name</th>
+												<th width="10%" style="text-align: center;">View</th>
+												<th width="10%" style="text-align: center;">Add</th>
+												<th width="10%" style="text-align: center;">Edit</th>
+												<th width="10%" style="text-align: center;">Delete</th>
+											</tr>
+										</thead>
+										<tbody>
 
-									Remaining assign role
+
+											<c:forEach items="${moduleList}" var="moduleList"
+												varStatus="count">
+												<tr>
+
+													<td>${count.index+1}&nbsp;&nbsp;<input type="checkbox"
+														id="header${moduleList.moduleId}"
+														name="header${moduleList.moduleId}" class="select_all"
+														onclick="checkSubmodule(${moduleList.moduleId})" value="0"></td>
+													<td colspan="5">${moduleList.iconDiv} &nbsp; <b>${moduleList.moduleName}</b></td>
+
+												</tr>
+
+												<c:forEach items="${moduleList.accessRightSubModuleList}"
+													var="subModuleList">
+													<tr>
+
+														<td></td>
+														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${subModuleList.subModulName}</td>
+														<td style="text-align: center;"><input
+															type="checkbox"
+															id="${subModuleList.subModuleId}view${subModuleList.moduleId}"
+															class="check${subModuleList.moduleId}"
+															name="${subModuleList.subModuleId}view${subModuleList.moduleId}"
+															value="0"
+															onclick="changeValue(1,${subModuleList.subModuleId},${subModuleList.moduleId})"></td>
+														<td style="text-align: center;"><input
+															type="checkbox"
+															id="${subModuleList.subModuleId}add${subModuleList.moduleId}"
+															class="check${allModuleList.moduleId}"
+															name="${subModuleList.subModuleId}add${subModuleList.moduleId}"
+															value="0"
+															onclick="changeValue(2,${subModuleList.subModuleId},${subModuleList.moduleId})"></td>
+														<td style="text-align: center;"><input
+															type="checkbox" class="check${allModuleList.moduleId}"
+															id="${subModuleList.subModuleId}edit${subModuleList.moduleId}"
+															name="${subModuleList.subModuleId}edit${subModuleList.moduleId}"
+															value="0"
+															onclick="changeValue(3,${subModuleList.subModuleId},${subModuleList.moduleId})"></td>
+														<td style="text-align: center;"><input
+															type="checkbox" class="check${allModuleList.moduleId}"
+															id="${subModuleList.subModuleId}delete${subModuleList.moduleId}"
+															name="${subModuleList.subModuleId}delete${subModuleList.moduleId}"
+															value="0"
+															onclick="changeValue(4,${subModuleList.subModuleId},${subModuleList.moduleId})"></td>
+													</tr>
+
+												</c:forEach>
+											</c:forEach>
+
+										</tbody>
+									</table>
+									<div class="form-group row">
+										<div class="col-lg-10">
+											<span class="validation-invalid-label" id="error_checkbox"
+												style="display: none;">Check Minimum One Checkbox</span>
+										</div>
+									</div>
+									<br>
 
 									<div class="form-group row mb-0">
 										<div class="col-lg-10 ml-lg-auto">
@@ -203,6 +278,99 @@
 
 	</div>
 	<!-- /page content -->
+
+	<script>
+			function checkSubmodule(moduleId) {
+				
+				 
+				$.getJSON('${getSubmoduleList}', {
+					moduleId : moduleId,
+					ajax : 'true',
+
+				}, function(data) { 
+					 
+					
+					if(document.getElementById("header"+moduleId).checked == true){
+						
+						for(var i=0 ; i<data.length; i++){
+							 
+							document.getElementById(data[i]+"view"+moduleId).checked=true;
+							 document.getElementById(data[i]+"add"+moduleId).checked=true;
+							 document.getElementById(data[i]+"edit"+moduleId).checked=true;
+							 document.getElementById(data[i]+"delete"+moduleId).checked=true;
+							 document.getElementById(data[i]+"view"+moduleId).value=1;
+							 document.getElementById(data[i]+"add"+moduleId).value=1;
+							 document.getElementById(data[i]+"edit"+moduleId).value=1;
+							 document.getElementById(data[i]+"delete"+moduleId).value=1;
+						}
+						 
+					 }else{
+						 for(var i=0 ; i<data.length; i++){
+								
+								document.getElementById(data[i]+"view"+moduleId).checked=false;
+								 document.getElementById(data[i]+"add"+moduleId).checked=false;
+								 document.getElementById(data[i]+"edit"+moduleId).checked=false;
+								 document.getElementById(data[i]+"delete"+moduleId).checked=false;
+								 document.getElementById(data[i]+"view"+moduleId).value=0;
+								 document.getElementById(data[i]+"add"+moduleId).value=0;
+								 document.getElementById(data[i]+"edit"+moduleId).value=0;
+								 document.getElementById(data[i]+"delete"+moduleId).value=0;
+							}
+					 }
+				
+				});
+ 
+				 
+			}
+			
+			function changeValue(type,subModuleId,moduleId) {
+				 
+				 
+							 if(type==1){
+								 if(document.getElementById(subModuleId+"view"+moduleId).checked == true){
+									 
+									 document.getElementById(subModuleId+"view"+moduleId).value=1;
+									 
+								 }else{
+									 
+									 document.getElementById(subModuleId+"view"+moduleId).value=0;
+								 }
+								
+							 }else if(type==2){
+								 if(document.getElementById(subModuleId+"add"+moduleId).checked == true){
+									 
+								 	document.getElementById(subModuleId+"add"+moduleId).value=1;
+								 }else{
+									 document.getElementById(subModuleId+"add"+moduleId).value=0;
+								 }
+							 }else if(type==3){
+								 if(document.getElementById(subModuleId+"edit"+moduleId).checked == true){
+									 
+									 document.getElementById(subModuleId+"edit"+moduleId).value=1;
+									 
+								 }else{
+									 
+									 document.getElementById(subModuleId+"edit"+moduleId).value=0;
+									 
+								 }
+								 
+							 }else if(type==4){
+								 
+								 if(document.getElementById(subModuleId+"delete"+moduleId).checked == true){
+									 
+									 document.getElementById(subModuleId+"delete"+moduleId).value=1;
+									 
+								 }else{
+									 
+									 document.getElementById(subModuleId+"delete"+moduleId).value=0;
+									 
+								 }
+								 
+							 }
+							  
+			}
+			
+		</script>
 
 	<script>
 		function trim(el) {
@@ -237,7 +405,18 @@
 				} else {
 					$("#error_empShortName").hide()
 				}
- 
+				
+				var checkboxes = $("input[type='checkbox']");
+				
+				if (!checkboxes.is(":checked")) {
+
+					isError = true;
+
+					$("#error_checkbox").show()
+
+				} else {
+					$("#error_checkbox").hide()
+				}
 
 				if (!isError) {
 
