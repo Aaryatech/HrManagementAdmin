@@ -56,6 +56,9 @@
 							<ul class="nav nav-group-sub" data-submenu-title="Layouts">
 								 
 								<li class="nav-item"><a href="${pageContext.request.contextPath}/showCompanyList" class="nav-link">Company List</a></li> 
+								<li class="nav-item"><a href="${pageContext.request.contextPath}/showLocationList" class="nav-link">Location List</a></li>
+								<li class="nav-item"><a href="${pageContext.request.contextPath}/showEmpTypeList" class="nav-link">Employee Type List</a></li> 
+								 
 							</ul>
 						</li>
 						<li class="nav-item nav-item-submenu">

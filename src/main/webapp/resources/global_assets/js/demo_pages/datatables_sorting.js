@@ -30,7 +30,7 @@ var DatatableSorting = function() {
             columnDefs: [{ 
                 orderable: false,
                 width: 100,
-                targets: [ 5 ]
+                targets: [1 ]
             }],
             dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
             language: {
@@ -44,7 +44,7 @@ var DatatableSorting = function() {
 
         // Default ordering example
         $('.datatable-sorting').DataTable({
-            order: [3, "desc"]
+            order: [1, "asc"]
         });
 
 
@@ -62,7 +62,7 @@ var DatatableSorting = function() {
             }, {
                 orderable: false,
                 width: '100px',
-                targets: [5]
+                targets: [1]
             }]
         });
 

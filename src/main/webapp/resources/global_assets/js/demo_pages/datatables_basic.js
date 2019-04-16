@@ -30,7 +30,7 @@ var DatatableBasic = function() {
             columnDefs: [{ 
                 orderable: false,
                 width: 100,
-                targets: [ 5 ]
+                targets: [ 0]
             }],
             dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
             language: {
@@ -60,7 +60,7 @@ var DatatableBasic = function() {
         // Scrollable datatable
         var table = $('.datatable-scroll-y').DataTable({
             autoWidth: true,
-            scrollY: 300
+            scrollY: 500
         });
 
         // Resize scrollable table when sidebar width changes

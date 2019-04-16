@@ -30,7 +30,7 @@ var DatatableAdvanced = function() {
             columnDefs: [{ 
                 orderable: false,
                 width: 100,
-                targets: [ 5 ]
+                targets: [0 ]
             }],
             dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
             language: {
@@ -43,7 +43,7 @@ var DatatableAdvanced = function() {
 
         // Datatable 'length' options
         $('.datatable-show-all').DataTable({
-            lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]]
+            lengthMenu: [[100, 150, 200, -1], [100, 150, 200, "All"]]
         });
 
         // DOM positioning
@@ -78,7 +78,7 @@ var DatatableAdvanced = function() {
                     },
                     targets: 0
                 },
-                { visible: false, targets: [ 3 ] }
+                { visible: false, targets: [ 1 ] }
             ]
         });
     };

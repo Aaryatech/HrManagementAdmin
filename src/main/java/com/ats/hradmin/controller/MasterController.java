@@ -25,6 +25,7 @@ import com.ats.hradmin.common.VpsImageUpload;
 import com.ats.hradmin.model.Company;
 import com.ats.hradmin.model.EmpType;
 import com.ats.hradmin.model.EmployeDoc;
+import com.ats.hradmin.model.EmployeeCategory;
 import com.ats.hradmin.model.Info;
 import com.ats.hradmin.model.Location;
 
@@ -35,6 +36,7 @@ public class MasterController {
 	Company editCompany = new Company();
 	Location editLocation = new Location();
 	EmpType editEmpType = new EmpType();
+	EmployeeCategory editEmpCategory = new EmployeeCategory();
 	
 	@RequestMapping(value = "/companyAdd", method = RequestMethod.GET)
 	public ModelAndView companyAdd(HttpServletRequest request, HttpServletResponse response) {
@@ -707,6 +709,210 @@ public class MasterController {
 		}
 
 		return "redirect:/showEmpTypeList";
+	}
+	
+	@RequestMapping(value = "/employeeCatAdd", method = RequestMethod.GET)
+	public ModelAndView employeeCatAdd(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("master/employeeCatAdd");
+
+		try {
+
+			 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+	}
+	
+	@RequestMapping(value = "/submitInsertEmpCat", method = RequestMethod.POST)
+	public String submitInsertEmpCat(HttpServletRequest request, HttpServletResponse response) {
+
+		HttpSession session = request.getSession();
+
+		try {
+
+			Date date = new Date();
+			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
+			String catName = request.getParameter("catName");
+			String catShortName = request.getParameter("catShortName"); 
+			String remark = request.getParameter("remark");
+			
+			Boolean ret = false;
+
+			if (FormValidation.Validaton(catName, "") == true) {
+
+				ret = true; 
+			}
+			if (FormValidation.Validaton(catShortName, "") == true) {
+
+				ret = true; 
+			}
+			 
+
+			if (ret == false) {
+
+				EmployeeCategory employeeCategory = new EmployeeCategory();
+
+				employeeCategory.setEmpCatName(catName);
+				employeeCategory.setEmpCatShortName(catShortName); 
+				employeeCategory.setEmpCatRemarks(remark); 
+				employeeCategory.setIsActive(1);
+				employeeCategory.setDelStatus(1);
+				employeeCategory.setMakerUserId(1);
+				employeeCategory.setCompanyId(1);  
+				employeeCategory.setMakerEnterDatetime(sf.format(date));
+
+				EmployeeCategory res = Constants.getRestTemplate().postForObject(Constants.url + "/saveEmpCategory", employeeCategory,
+						EmployeeCategory.class);
+
+				if (res.isError()==false) {
+					session.setAttribute("successMsg", "Record Insert Successfully");
+				} else {
+					session.setAttribute("errorMsg", "Failed to Insert Record");
+				}
+
+			} else {
+				session.setAttribute("errorMsg", "Failed to Insert Record");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.setAttribute("errorMsg", "Failed to Insert Record");
+		}
+
+		return "redirect:/showEmpCatList";
+	}
+	
+	@RequestMapping(value = "/showEmpCatList", method = RequestMethod.GET)
+	public ModelAndView showEmpCatList(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("master/empCatList");
+
+		try {
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("compId", 1);
+			EmployeeCategory[] employeeCategory = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpCategoryList", map,
+					EmployeeCategory[].class);
+
+			List<EmployeeCategory> employeeCategorylist = new ArrayList<EmployeeCategory>(Arrays.asList(employeeCategory));
+
+			for (int i = 0; i < employeeCategorylist.size(); i++) {
+
+				employeeCategorylist.get(i).setExVar1(FormValidation.Encrypt(String.valueOf(employeeCategorylist.get(i).getEmpCatId())));
+			}
+
+			model.addObject("empCatList", employeeCategorylist);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+	}
+	
+	@RequestMapping(value = "/deleteEmpCategory", method = RequestMethod.GET)
+	public String deleteEmpCategory(HttpServletRequest request, HttpServletResponse response) {
+
+		HttpSession session = request.getSession();
+		try {
+			String base64encodedString = request.getParameter("catId");
+			String empCatId = FormValidation.DecodeKey(base64encodedString);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("empCatId", empCatId);
+			Info info = Constants.getRestTemplate().postForObject(Constants.url + "/deleteEmpCategory", map, Info.class);
+
+			if (info.isError() == false) {
+				session.setAttribute("successMsg", "Deleted Successfully");
+			} else {
+				session.setAttribute("errorMsg", "Failed to Delete");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.setAttribute("errorMsg", "Failed to Delete");
+		}
+		return "redirect:/showEmpCatList";
+	}
+	
+	@RequestMapping(value = "/editEmpCategory", method = RequestMethod.GET)
+	public ModelAndView editEmpCategory(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("master/empCatEdit");
+
+		try {
+			String base64encodedString = request.getParameter("catId");
+			String catId = FormValidation.DecodeKey(base64encodedString);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("empCatId", catId);
+			editEmpCategory = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpCategoryById", map,
+					EmployeeCategory.class);
+			model.addObject("editEmpCategory", editEmpCategory);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+	}
+	
+	@RequestMapping(value = "/submitEditEmpCat", method = RequestMethod.POST)
+	public String submitEditEmpCat(HttpServletRequest request, HttpServletResponse response) {
+
+		HttpSession session = request.getSession();
+
+		try {
+
+			Date date = new Date();
+			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
+			String catName = request.getParameter("catName");
+			String catShortName = request.getParameter("catShortName"); 
+			String remark = request.getParameter("remark");
+			
+			Boolean ret = false;
+
+			if (FormValidation.Validaton(catName, "") == true) {
+
+				ret = true; 
+			}
+			if (FormValidation.Validaton(catShortName, "") == true) {
+
+				ret = true; 
+			}
+			 
+
+			if (ret == false) {
+
+				 
+
+				editEmpCategory.setEmpCatName(catName);
+				editEmpCategory.setEmpCatShortName(catShortName); 
+				editEmpCategory.setEmpCatRemarks(remark);  
+				editEmpCategory.setMakerUserId(1);
+				editEmpCategory.setCompanyId(1);  
+				editEmpCategory.setMakerEnterDatetime(sf.format(date));
+
+				EmployeeCategory res = Constants.getRestTemplate().postForObject(Constants.url + "/saveEmpCategory", editEmpCategory,
+						EmployeeCategory.class);
+
+				if (res.isError()==false) {
+					session.setAttribute("successMsg", "Record Update Successfully");
+				} else {
+					session.setAttribute("errorMsg", "Failed to Update Record");
+				}
+
+			} else {
+				session.setAttribute("errorMsg", "Failed to Update Record");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.setAttribute("errorMsg", "Failed to Update Record");
+		}
+
+		return "redirect:/showEmpCatList";
 	}
 
 }

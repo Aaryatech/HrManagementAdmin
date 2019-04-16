@@ -32,7 +32,7 @@ public class EmployeeCategory {
 	
 	private String exVar3;
 
-	
+	private boolean isError;
 
 	public int getEmpCatId() {
 		return empCatId;
@@ -214,13 +214,25 @@ public class EmployeeCategory {
 
 
 
+	public boolean isError() {
+		return isError;
+	}
+
+
+
+	public void setError(boolean isError) {
+		this.isError = isError;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "EmployeeCategory [empCatId=" + empCatId + ", companyId=" + companyId + ", empCatName=" + empCatName
 				+ ", empCatShortName=" + empCatShortName + ", empCatRemarks=" + empCatRemarks + ", delStatus="
 				+ delStatus + ", isActive=" + isActive + ", makerUserId=" + makerUserId + ", makerEnterDatetime="
 				+ makerEnterDatetime + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exInt3=" + exInt3 + ", exVar1="
-				+ exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3 + "]";
+				+ exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3 + ", isError=" + isError + "]";
 	}
 	
 	

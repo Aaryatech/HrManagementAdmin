@@ -31,7 +31,7 @@ var DatatableResponsive = function() {
             columnDefs: [{ 
                 orderable: false,
                 width: 100,
-                targets: [ 5 ]
+                targets: [ 1 ]
             }],
             dom: '<"datatable-header"fl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
             language: {
@@ -62,11 +62,11 @@ var DatatableResponsive = function() {
                 },
                 { 
                     width: "100px",
-                    targets: [6]
+                    targets: [1]
                 },
                 { 
                     orderable: false,
-                    targets: [6]
+                    targets: [1]
                 }
             ],
             order: [1, 'asc']
@@ -89,11 +89,11 @@ var DatatableResponsive = function() {
                 },
                 { 
                     width: "100px",
-                    targets: [5]
+                    targets: [1]
                 },
                 { 
                     orderable: false,
-                    targets: [5]
+                    targets: [1]
                 }
             ]
         });
@@ -115,11 +115,11 @@ var DatatableResponsive = function() {
                 },
                 { 
                     width: "100px",
-                    targets: [6]
+                    targets: [1]
                 },
                 { 
                     orderable: false,
-                    targets: [6]
+                    targets: [1]
                 }
             ],
             order: [1, 'asc']

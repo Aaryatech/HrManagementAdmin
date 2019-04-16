@@ -46,8 +46,8 @@
 					</div>
 
 					<div class="breadcrumb justify-content-center">
-						<a href="${pageContext.request.contextPath}/locationAdd"
-							class="breadcrumb-elements-item"> Add Location </a>
+						<a href="${pageContext.request.contextPath}/employeeCatAdd"
+							class="breadcrumb-elements-item"> Add Employee Category </a>
 
 					</div>
 
@@ -64,7 +64,7 @@
 				<!-- Highlighting rows and columns -->
 				<div class="card">
 					<div class="card-header header-elements-inline">
-						<h5 class="card-title">Location List</h5>
+						<h5 class="card-title">Employee Category List</h5>
 						<div class="header-elements">
 							<div class="list-icons">
 								<a class="list-icons-item" data-action="collapse"></a>
@@ -114,28 +114,26 @@
 							id="printtable1">
 							<thead>
 								<tr class="bg-blue">
-
 									<th width="10%">Sr. No.</th>
-									<th>Location Name</th>
-									<th>Location Short Name</th>
-									<th>Contact Person</th>
-									<th>Contact Person No.</th>
-									<th>Contact Person Email</th>
+									<th>Category Name</th>
+									<th>Short Name</th>
+									<th >Remark</th>
+
 									<th width="10%" class="text-center">Actions</th>
 								</tr>
 							</thead>
 							<tbody>
 
 
-								<c:forEach items="${locationList}" var="locationList"
+								<c:forEach items="${empCatList}" var="empCatList"
 									varStatus="count">
 									<tr>
+
 										<td>${count.index+1}</td>
-										<td>${locationList.locName}</td>
-										<td>${locationList.locNameShort}</td>
-										<td>${locationList.locHrContactPerson}</td>
-										<td>${locationList.locHrContactNumber}</td>
-										<td>${locationList.locHrContactEmail}</td>
+										<td>${empCatList.empCatName}</td>
+										<td>${empCatList.empCatShortName}</td>
+										<td>${empCatList.empCatRemarks}</td>
+
 
 										<td class="text-center">
 											<div class="list-icons">
@@ -146,10 +144,10 @@
 
 													<div class="dropdown-menu dropdown-menu-right">
 														<a
-															href="${pageContext.request.contextPath}/editLocation?locId=${locationList.exVar1}"
+															href="${pageContext.request.contextPath}/editEmpCategory?catId=${empCatList.exVar1}"
 															class="dropdown-item"><i class="icon-pencil7"></i>Edit</a>
 														<a
-															href="${pageContext.request.contextPath}/deleteLocation?locId=${locationList.exVar1}"
+															href="${pageContext.request.contextPath}/deleteEmpCategory?catId=${empCatList.exVar1}"
 															class="dropdown-item"><i class="icon-trash"></i>
 															Delete</a>
 													</div>
