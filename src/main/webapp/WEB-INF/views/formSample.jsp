@@ -101,9 +101,11 @@
 									</div>
 
 									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="select2">Your message:</label>
+										<label class="col-form-label col-lg-2" for="select2">Your
+											message:</label>
 										<div class="col-lg-10">
-											<select name="select2" data-placeholder="Select a State..." id="select2"
+											<select name="select2" data-placeholder="Select a State..."
+												id="select2"
 												class="form-control form-control-select2 select2-hidden-accessible"
 												required="" data-fouc="" tabindex="-1" aria-hidden="true">
 												<option></option>
@@ -128,15 +130,16 @@
 									</div>
 
 									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="styled_file">Styled file
-											uploader <span class="text-danger">*</span>
+										<label class="col-form-label col-lg-2" for="styled_file">Styled
+											file uploader <span class="text-danger">*</span>
 										</label>
 										<div class="col-lg-9">
 											<div class="uniform-uploader">
 												<input type="file" name="styled_file"
-													class="form-input-styled" required="" data-fouc="" id="styled_file"><span
-													class="filename" style="user-select: none;">No file
-													selected</span><span class="action btn bg-blue legitRipple"
+													class="form-input-styled" required="" data-fouc=""
+													id="styled_file"><span class="filename"
+													style="user-select: none;">No file selected</span><span
+													class="action btn bg-blue legitRipple"
 													style="user-select: none;">Choose File</span>
 											</div>
 											<label id="styled_file-error"
@@ -146,7 +149,28 @@
 									</div>
 
 
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2">Date:</label>
+										<div class="col-lg-10">
+											<input type="text" class="form-control datepickerclass "
+												value="21-04-2019">
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2">Date Range:</label>
+										<div class="col-lg-10">
+											<input type="text" class="form-control daterange-basic_new "
+												value="21-04-2019 - 21-05-2019">
+												 
+										</div>
+									</div>
 
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2">Color:</label>
+										<div class="col-lg-10">
+											<input type="text" class="form-control colorpicker-show-input" data-preferred-format="hex" value="#f75d1c" data-fouc>
+										</div>
+									</div>
 									<div class="form-group row mb-0">
 										<div class="col-lg-10 ml-lg-auto">
 											<button type="submit" class="btn btn-light legitRipple">
@@ -801,6 +825,27 @@
 
 	</div>
 	<!-- /page content -->
-
+	<script type="text/javascript">
+		// Single picker
+		$('.datepickerclass').daterangepicker({
+			singleDatePicker : true,
+			selectMonths : true,
+			selectYears : true,
+			locale : {
+				format : 'DD-MM-YYYY'
+			}
+		});
+		
+		//daterange-basic_new
+		  // Basic initialization
+        $('.daterange-basic_new').daterangepicker({
+            applyClass: 'bg-slate-600',
+            cancelClass: 'btn-light',
+           	locale : {
+   				format : 'DD-MM-YYYY'
+   			}
+        });
+		
+	</script>
 </body>
 </html>
