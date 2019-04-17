@@ -198,7 +198,8 @@
 										<label class="col-form-label col-lg-2">Date Range:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control daterange-basic_new "
-												value="21-04-2019 @ 21-05-2019" name="dateRange"
+												name="dateRange"
+												value="${editHoliday.holidayFromdt} to ${editHoliday.holidayTodt} "
 												data-placeholder="Select Date" id="dateRange">
 
 										</div>
@@ -213,7 +214,7 @@
 										<div class="col-lg-10">
 											<textarea rows="3" cols="3" class="form-control"
 												placeholder="Any Remark for Holiday" onchange="trim(this)"
-												id="holidayRemark" name="holidayRemark"></textarea>
+												id="holidayRemark" name="holidayRemark">${editHoliday.holidayRemark}</textarea>
 
 										</div>
 									</div>
