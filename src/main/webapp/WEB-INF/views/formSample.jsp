@@ -160,7 +160,7 @@
 										<label class="col-form-label col-lg-2">Date Range:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control daterange-basic_new "
-												value="21-04-2019 - 21-05-2019">
+												value="21-04-2019 @ 21-05-2019">
 												 
 										</div>
 									</div>
@@ -840,9 +840,11 @@
 		  // Basic initialization
         $('.daterange-basic_new').daterangepicker({
             applyClass: 'bg-slate-600',
+           
             cancelClass: 'btn-light',
            	locale : {
-   				format : 'DD-MM-YYYY'
+   				format : 'DD-MM-YYYY',
+   			 separator: ' to '
    			}
         });
 		
