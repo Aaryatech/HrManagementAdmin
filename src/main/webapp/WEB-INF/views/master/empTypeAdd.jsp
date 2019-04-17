@@ -240,6 +240,7 @@
 
 										</tbody>
 									</table>
+									<span class="form-text text-muted">* If Want To Access Add, Edit,Delete Then View Access is Compulsory</span>
 									<div class="form-group row">
 										<div class="col-lg-10">
 											<span class="validation-invalid-label" id="error_checkbox"

@@ -188,7 +188,7 @@
 										<div class="col-lg-10">
 											<textarea rows="3" cols="3" class="form-control"
 												placeholder="Any Remark" onchange="trim(this)" id="remark"
-												name="remark"></textarea>
+												name="remark">${editEmpType.empTypeRemarks}</textarea>
 
 										</div>
 									</div>
@@ -312,6 +312,7 @@
 
 										</tbody>
 									</table>
+									<span class="form-text text-muted">* If Want To Access Add, Edit,Delete Then View Access is Compulsory</span>
 									<div class="form-group row">
 										<div class="col-lg-10"> 
 											<span class="validation-invalid-label"

@@ -702,7 +702,7 @@ public class MasterController {
 					}
 
 				} else {
-					session.setAttribute("errorMsg", "Failed to Insert Record");
+					session.setAttribute("errorMsg", "Select Minimum One View Access.");
 				}
 
 			} else {
@@ -995,7 +995,7 @@ public class MasterController {
 					}
 
 				} else {
-					session.setAttribute("errorMsg", "Failed to Insert Record");
+					session.setAttribute("errorMsg", "Select Minimum One View Access.");
 				}
 				 
 
