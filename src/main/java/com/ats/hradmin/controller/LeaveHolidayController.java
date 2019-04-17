@@ -30,6 +30,7 @@ import com.ats.hradmin.leave.model.CalenderYear;
 import com.ats.hradmin.leave.model.GetHoliday;
 import com.ats.hradmin.leave.model.Holiday;
 import com.ats.hradmin.model.Company;
+import com.ats.hradmin.model.Info;
 import com.ats.hradmin.model.Location;
 
 @Controller
@@ -250,6 +251,104 @@ public class LeaveHolidayController {
 			e.printStackTrace();
 		}
 		return model;
+	}
+
+	@RequestMapping(value = "/submitEditHoliday", method = RequestMethod.POST)
+	public String submitEditHoliday(HttpServletRequest request, HttpServletResponse response) {
+
+		HttpSession session = request.getSession();
+
+		try {
+
+			String dateRange = request.getParameter("dateRange");
+			String[] arrOfStr = dateRange.split("to", 2);
+			System.out.println("111" + arrOfStr[0].toString().trim());
+			System.out.println("222" + arrOfStr[1].toString().trim());
+
+			String holidayRemark = request.getParameter("holidayRemark");
+
+			int calYrId = Integer.parseInt(request.getParameter("calYrId"));
+			int companyId = Integer.parseInt(request.getParameter("companyId"));
+
+			int locId = Integer.parseInt(request.getParameter("locId"));
+
+			int holidayId = 0;
+			try {
+				holidayId = Integer.parseInt(request.getParameter("holidayId"));
+			} catch (Exception e) {
+				holidayId = 0;
+			}
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date now = new Date();
+			String curDate = dateFormat.format(new Date());
+			String dateTime = dateFormat.format(now);
+
+			Boolean ret = false;
+
+			if (FormValidation.Validaton(dateRange, "") == true) {
+
+				ret = true;
+				System.out.println("holidayFromdt" + ret);
+			}
+
+			if (FormValidation.Validaton(holidayRemark, "") == true) {
+
+				ret = true;
+				System.out.println("holidayRemark" + ret);
+			}
+
+			if (ret == false) {
+
+				editHoliday.setCalYrId(calYrId);
+				editHoliday.setCompanyId(companyId);
+				editHoliday.setHolidayFromdt(DateConvertor.convertToYMD(arrOfStr[0].toString().trim()));
+				editHoliday.setHolidayTodt(DateConvertor.convertToYMD(arrOfStr[1].toString().trim()));
+				editHoliday.setHolidayRemark(holidayRemark);
+				editHoliday.setLocId(locId);
+
+				Holiday res = Constants.getRestTemplate().postForObject(Constants.url + "/saveHoliday", editHoliday,
+						Holiday.class);
+
+				if (res != null) {
+					session.setAttribute("successMsg", "Record Update Successfully");
+				} else {
+					session.setAttribute("errorMsg", "Failed to Update Record");
+				}
+
+			} else {
+				session.setAttribute("errorMsg", "Failed to Update Record");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.setAttribute("errorMsg", "Failed to Update Record");
+		}
+
+		return "redirect:/showHolidayList";
+	}
+
+	@RequestMapping(value = "/deleteHoliday", method = RequestMethod.GET)
+	public String deleteHoliday(HttpServletRequest request, HttpServletResponse response) {
+
+		HttpSession session = request.getSession();
+		try {
+			String base64encodedString = request.getParameter("holidayId");
+			String holidayId = FormValidation.DecodeKey(base64encodedString);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("holidayId", holidayId);
+			Info info = Constants.getRestTemplate().postForObject(Constants.url + "/deleteHoliday", map, Info.class);
+
+			if (info.isError() == false) {
+				session.setAttribute("successMsg", "Deleted Successfully");
+			} else {
+				session.setAttribute("errorMsg", "Failed to Delete");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.setAttribute("errorMsg", "Failed to Delete");
+		}
+		return "redirect:/showHolidayList";
 	}
 
 }

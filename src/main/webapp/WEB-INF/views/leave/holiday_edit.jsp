@@ -71,7 +71,7 @@
 
 						<div class="card">
 							<div class="card-header header-elements-inline">
-								<h6 class="card-title">Add Holiday</h6>
+								<h6 class="card-title">Edit Holiday</h6>
 								<div class="header-elements">
 									<div class="list-icons">
 										<a class="list-icons-item" data-action="collapse"></a>
@@ -117,7 +117,7 @@
 								%>
 
 								<form
-									action="${pageContext.request.contextPath}/submitInsertHoliday"
+									action="${pageContext.request.contextPath}/submitEditHoliday"
 									id="submitInsertHoliday" method="post">
 
 									<div class="form-group row">
@@ -285,7 +285,7 @@
 		}
 		$(document).ready(function($) {
 
-			$("#submitInsertHoliday").submit(function(e) {
+			$("#submitEditHoliday").submit(function(e) {
 				var isError = false;
 				var errMsg = "";
 

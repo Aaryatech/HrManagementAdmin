@@ -199,7 +199,9 @@
 										<div class="col-lg-10">
 											<input type="text" class="form-control daterange-basic_new "
 												value="21-04-2019 @ 21-05-2019" name="dateRange"
-												data-placeholder="Select Date" id="dateRange">
+												data-placeholder="Select Date" id="dateRange"> <span
+												class="validation-invalid-label" id="error_Range"
+												style="display: none;">This field is required.</span>
 
 										</div>
 									</div>
@@ -318,14 +320,14 @@
 					$("#error_calendar").hide()
 				}
 
-				if (!$("#prsnName").val()) {
+				if (!$("#dateRange").val()) {
 
 					isError = true;
 
-					$("#error_prsnName").show()
+					$("#error_Range").show()
 
 				} else {
-					$("#error_prsnName").hide()
+					$("#error_Range").hide()
 				}
 
 				if (!isError) {
