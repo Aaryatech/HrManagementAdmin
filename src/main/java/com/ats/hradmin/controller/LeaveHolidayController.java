@@ -232,7 +232,7 @@ public class LeaveHolidayController {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("companyId", 1);
-			map.add("locId", 1);
+			map.add("locIdList", 1);
 
 			GetHoliday[] holListArray = Constants.getRestTemplate().postForObject(Constants.url + "/getHolidayList",
 					map, GetHoliday[].class);
