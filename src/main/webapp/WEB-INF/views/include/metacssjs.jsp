@@ -41,6 +41,7 @@
 	<script src="${pageContext.request.contextPath}/resources/global_assets/js/plugins/notifications/jgrowl.min.js"></script>
 		<!-- Theme JS files -->
 	<script src="${pageContext.request.contextPath}/resources/global_assets/js/plugins/forms/inputs/inputmask.js"></script>
+		<script src="${pageContext.request.contextPath}/resources/global_assets/js/plugins/extensions/jquery_ui/interactions.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/global_assets/js/plugins/forms/selects/select2.min.js"></script>
 
  
@@ -75,7 +76,7 @@
 		<%-- <script src="${pageContext.request.contextPath}/resources/global_assets/js/demo_pages/extra_sweetalert.js"></script> --%>
 		<script src="${pageContext.request.contextPath}/resources/global_assets/js/demo_pages/picker_date.js"></script>
 			<script src="${pageContext.request.contextPath}/resources/global_assets/js/demo_pages/picker_color.js"></script>
-		
+			<script src="${pageContext.request.contextPath}/resources/global_assets/js/demo_pages/form_select2.js"></script>
 	<script>
 	 // Export options - column selector
     

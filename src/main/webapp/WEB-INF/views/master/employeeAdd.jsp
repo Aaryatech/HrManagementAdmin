@@ -118,12 +118,12 @@
 								%>
 
 								<form
-									action="${pageContext.request.contextPath}/submitInsertEmp"
-									id="submitInsertEmp" method="post">
+									action="${pageContext.request.contextPath}/submitInsertEmployeeUserInfo"
+									id="submitInsertEmp" method="post" enctype="multipart/form-data">
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="empCode">
 											Employee Code : *</label>
-										<div class="col-lg-10">
+										<div class="col-lg-2">
 											<input type="text" class="form-control"
 												placeholder="Employee Code" id="empCode" name="empCode"
 												autocomplete="off" onchange="trim(this)"> <span
@@ -131,35 +131,60 @@
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
+									
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="profilePic">
+											Profile Pic : </label>
+										<div class="col-lg-9">
+											<div class="uniform-uploader">
+												<input type="file" name="profilePic"
+													class="form-input-styled" data-fouc="" id="profilePic"><span
+													class="filename" style="user-select: none;">No file
+													selected</span><span class="action btn bg-blue legitRipple"
+													style="user-select: none;">Choose File</span>
+											</div>
+										</div>
+									</div>
+									
+								<!-- 	<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="profilePic">	Profile Pic 
+											:</label>
+										<div class="col-lg-10">
+											<input type="file" class="form-control" id="profilePic"
+												name="profilePic" accept=".jpg,.png,.gif">
+											* Only jpg,gif,png * Best image size is 369px × 64px
+											<span
+													class="filename" style="user-select: none;">
+													</span>
+										</div>
+									</div>
+									 -->
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="fname">
-											First Name : *</label>
-										<div class="col-lg-10">
+											Employee Name : *</label>
+										<div class="col-lg-3">
 											<input type="text" class="form-control  "
 												placeholder="First Name" id="fname" name="fname"
 												autocomplete="off" onchange="trim(this)"> <span
 												class="validation-invalid-label" id="error_fname"
 												style="display: none;">This field is required.</span>
 										</div>
-									</div>
-
-									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="mname">
-											Middle Name : *</label>
-										<div class="col-lg-10">
+									
+									
+										
+										<div class="col-lg-3">
 											<input type="text" class="form-control  "
 												placeholder="Middle Name" id="mname" name="mname"
 												autocomplete="off" onchange="trim(this)"> <span
 												class="validation-invalid-label" id="error_mname"
 												style="display: none;">This field is required.</span>
 										</div>
-									</div>
+									
 
-									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="sname">
-											Surname Name : *</label>
-										<div class="col-lg-10">
+									
+										
+										<div class="col-lg-3">
 											<input type="text" class="form-control  "
 												placeholder="Surname Name" id="sname" name="sname"
 												autocomplete="off" onchange="trim(this)"> <span
@@ -170,7 +195,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="locId">
-											Select Location : *</label>
+											 Location : *</label>
 										<div class="col-lg-10">
 											<select name="locId" data-placeholder="Select Location"
 												id="locId"
@@ -189,7 +214,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="catId">
-											Select Category : *</label>
+											 Category : *</label>
 										<div class="col-lg-10">
 											<select name="catId" data-placeholder="Select Category"
 												id="catId"
@@ -208,7 +233,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="typeId">
-											Select Type : *</label>
+											 Type : *</label>
 										<div class="col-lg-10">
 											<select name="typeId" data-placeholder="Select Type"
 												id="typeId"
@@ -227,7 +252,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="deptId">
-											Select Department : *</label>
+											 Department : *</label>
 										<div class="col-lg-10">
 											<select name="deptId" data-placeholder="Select Department"
 												id="deptId"
@@ -243,30 +268,8 @@
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
-
-									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="permntAdd">Permanent
-											Address : *</label>
-										<div class="col-lg-10">
-											<textarea rows="3" cols="3" class="form-control"
-												placeholder="Permanent Address" onchange="trim(this)"
-												id="permntAdd" name="permntAdd"></textarea>
-											<span class="validation-invalid-label" id="error_permntAdd"
-												style="display: none;">This field is required.</span>
-
-										</div>
-									</div>
-
-									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="checkSameAdd">
-											Same As Permanent Address : </label>
-										<div class="form-check form-check-inline">
-											<input type="checkbox" id="checkSameAdd" name="checkSameAdd"
-												onclick="checkAdd()">
-
-										</div>
-									</div>
-
+									
+									
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="tempAdd">Temporary
 											Address : *</label>
@@ -280,22 +283,55 @@
 										</div>
 									</div>
 
+									
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="checkSameAdd">
+											Same As Permanent Address : </label>
+										<div class="form-check form-check-inline">
+											<input type="checkbox" id="checkSameAdd" name="checkSameAdd"
+												onclick="checkAdd()">
+
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="permntAdd">Permanent
+											Address : *</label>
+										<div class="col-lg-10">
+											<textarea rows="3" cols="3" class="form-control"
+												placeholder="Permanent Address" onchange="trim(this)"
+												id="permntAdd" name="permntAdd"></textarea>
+											<span class="validation-invalid-label" id="error_permntAdd"
+												style="display: none;">This field is required.</span>
+
+										</div>
+									</div>
+									
+								<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="bloodGrp">Blood Group
+											: *</label>
+										<div class="col-lg-10">
+											<input type="text" class="form-control" placeholder="Blood Group"
+												id="bloodGrp" name="bloodGrp" autocomplete="off"
+												onchange="trim(this)"> <span
+												class="validation-invalid-label" id="error_bloodGrp"
+												style="display: none;">This field is required.</span>
+										</div>
+									</div>
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="mobile1">Contact
 											No : *</label>
-										<div class="col-lg-10">
+										<div class="col-lg-4">
 											<input type="text" class="form-control"
 												placeholder="Contact No." id="mobile1" name="mobile1"
 												autocomplete="off" onchange="trim(this)" maxlength="10">
 											<span class="validation-invalid-label" id="error_mobile1"
 												style="display: none;">This field is required.</span>
 										</div>
-									</div>
-
-									<div class="form-group row">
+									
 										<label class="col-form-label col-lg-2" for="mobile2">Alternate
 											Contact No : </label>
-										<div class="col-lg-10">
+										<div class="col-lg-4">
 											<input type="text" class="form-control"
 												placeholder="Alternate Contact No." id="mobile2"
 												name="mobile2" autocomplete="off" onchange="trim(this)"
@@ -317,8 +353,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="emgContPrsn1">Emergency
-											Contact Person : *</label>
-										<div class="col-lg-10">
+											Contact Person 1: *</label>
+										<div class="col-lg-4">
 											<input type="text" class="form-control"
 												placeholder="Emergency Contact Person" id="emgContPrsn1"
 												name="emgContPrsn1" autocomplete="off" onchange="trim(this)">
@@ -326,12 +362,11 @@
 												id="error_emgContPrsn1" style="display: none;">This
 												field is required.</span>
 										</div>
-									</div>
-
-									<div class="form-group row">
+								
+									
 										<label class="col-form-label col-lg-2" for="emgContNo1">Emergency
-											Contact No : *</label>
-										<div class="col-lg-10">
+											Contact No 1: *</label>
+										<div class="col-lg-4">
 											<input type="text" class="form-control"
 												placeholder="Emergency Contact No." id="emgContNo1"
 												name="emgContNo1" autocomplete="off" onchange="trim(this)"
@@ -344,7 +379,7 @@
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="emgContPrsn2">Emergency
 											Contact Person 2 : *</label>
-										<div class="col-lg-10">
+										<div class="col-lg-4">
 											<input type="text" class="form-control"
 												placeholder="Emergency Alternate Contact Person"
 												id="emgContPrsn2" name="emgContPrsn2" autocomplete="off"
@@ -352,12 +387,10 @@
 												class="validation-invalid-label" id="error_emgContPrsn2"
 												style="display: none;">This field is required.</span>
 										</div>
-									</div>
-
-									<div class="form-group row">
+									
 										<label class="col-form-label col-lg-2" for="emgContNo2">Emergency
-											Contact No : *</label>
-										<div class="col-lg-10">
+											Contact No 2 : *</label>
+										<div class="col-lg-4">
 											<input type="text" class="form-control"
 												placeholder="Emergency Alternate Contact No."
 												id="emgContNo2" name="emgContNo2" autocomplete="off"
@@ -373,7 +406,7 @@
 										<div class="col-lg-10">
 											<input type="text" class="form-control numbersOnly"
 												placeholder="Employee Rate Per Hour" id="ratePerHr"
-												name="emgContNo2" autocomplete="off" onchange="trim(this)">
+												name="ratePerHr" autocomplete="off" onchange="trim(this)">
 											<span class="validation-invalid-label" id="error_ratePerHr"
 												style="display: none;">This field is required.</span>
 										</div>
@@ -394,19 +427,17 @@
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="prevsExpYr">
 											Previous Experience in Year : *</label>
-										<div class="col-lg-10">
+										<div class="col-lg-4">
 											<input type="text" class="form-control numbersOnly"
 												placeholder="Previous Experience in Year" id="prevsExpYr"
 												name="prevsExpYr" autocomplete="off" onchange="trim(this)">
 											<span class="validation-invalid-label" id="error_prevsExpYr"
 												style="display: none;">This field is required.</span>
 										</div>
-									</div>
 									
-									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="prevsExpMn">
 											Previous Experience in Month : *</label>
-										<div class="col-lg-10">
+										<div class="col-lg-4">
 											<input type="text" class="form-control numbersOnly"
 												placeholder="Previous Experience in Month" id="prevsExpMn"
 												name="prevsExpMn" autocomplete="off" onchange="trim(this)">
@@ -435,20 +466,60 @@
 
 										</div>
 									</div>
-
-									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="profilePic">
-											Profile Pic : </label>
-										<div class="col-lg-9">
-											<div class="uniform-uploader">
-												<input type="file" name="profilePic"
-													class="form-input-styled" data-fouc="" id="profilePic"><span
-													class="filename" style="user-select: none;">No file
-													selected</span><span class="action btn bg-blue legitRipple"
-													style="user-select: none;">Choose File</span>
-											</div>
+									
+									
+									<div class="card-header header-elements-inline">
+								<h6 class="card-title">Add User</h6>
+								<div class="header-elements">
+									<div class="list-icons">
+										<a class="list-icons-item" data-action="collapse"></a>
+									</div>
+								</div>
+							</div>
+									
+<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="uname">
+											User Name : *</label>
+										<div class="col-lg-10">
+											<input type="text" class="form-control  "
+												placeholder="User Name" id="uname" name="uname"
+												autocomplete="off" onchange="trim(this)"> <span
+												class="validation-invalid-label" id="error_uname"
+												style="display: none;">This field is required.</span>
 										</div>
 									</div>
+									
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="upass">
+											User Password : *</label>
+										<div class="col-lg-10">
+											<input type="password" class="form-control  "
+												placeholder="User Password " id="upass" name="upass"
+												autocomplete="off" onchange="trim(this)"> <span
+												class="validation-invalid-label" id="error_upass"
+												style="display: none;">This field is required.</span>
+										</div>
+									</div>
+									
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="locId2">
+											 Location : *</label>
+										<div class="col-lg-10">
+											
+											<select multiple="multiple" data-placeholder="Select Location" name="locId2" 
+											id="locId2" class="form-control form-control-sm select" data-container-css-class="select-sm" data-fouc>
+										<option value="">Select Location</option>
+												<c:forEach items="${locationList}" var="locationList">
+													<option value="${locationList.locId}">${locationList.locName}</option>
+												</c:forEach>
+										
+									</select>
+										
+											 <span class="validation-invalid-label" id="error_locId2"
+												style="display: none;">This field is required.</span>
+										</div>
+									</div>
+									
 									 
 									<div class="form-group row mb-0">
 										<div class="col-lg-10 ml-lg-auto">
@@ -486,12 +557,12 @@
 
 			if (document.getElementById("checkSameAdd").checked == true) {
 
-				document.getElementById("tempAdd").value = document
-						.getElementById("permntAdd").value;
+				document.getElementById("permntAdd").value = document.getElementById("tempAdd").value;
+					
 
 			} else {
 
-				document.getElementById("tempAdd").value = "";
+				document.getElementById("permntAdd").value = "";
 			}
 
 		}
@@ -581,6 +652,16 @@
 													$("#error_sname").hide()
 												}
 
+												if (!$("#locId2").val()) {
+
+													isError = true;
+
+													$("#error_locId2").show()
+
+												} else {
+													$("#error_locId2").hide()
+												}
+
 												if (!$("#locId").val()) {
 
 													isError = true;
@@ -629,6 +710,21 @@
 													$("#error_permntAdd")
 															.hide()
 												}
+												
+												
+												if (!$("#bloodGrp").val()) {
+
+													isError = true;
+
+													$("#error_bloodGrp")
+															.show()
+
+												} else {
+													$("#error_bloodGrp")
+															.hide()
+												}
+												
+												
 												if (!$("#tempAdd").val()) {
 
 													isError = true;
@@ -787,6 +883,29 @@
 												} else {
 													$("#error_email").hide()
 												}
+												
+												if (!$("#uname").val()) {
+
+													isError = true;
+
+													$("#error_uname")
+															.show()
+
+												} else {
+													$("#error_uname")
+															.hide()
+												}
+												if (!$("#upass").val()) {
+
+													isError = true;
+
+													$("#error_upass")
+															.show()
+
+												} else {
+													$("#error_upass")
+															.hide()
+												}
 												if (!isError) {
 
 													var x = confirm("Do you really want to submit the form?");
@@ -860,3 +979,15 @@
 
 </body>
 </html>
+<%-- <select name="locId2" id="locId2" data-placeholder="Select Location"
+												
+												class="form-control form-control-select2 select2-hidden-accessible"
+												data-fouc="" tabindex="-1" aria-hidden="true">
+
+												<option value="">Select Location</option>
+
+												<c:forEach items="${locationList}" var="locationList">
+													<option value="${locationList.locId}">${locationList.locName}</option>
+												</c:forEach>
+											</select> --%>
+											

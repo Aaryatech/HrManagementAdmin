@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import com.ats.hradmin.common.Constants;
+import com.ats.hradmin.common.DateConvertor;
 import com.ats.hradmin.common.FormValidation;
 import com.ats.hradmin.common.VpsImageUpload;
 import com.ats.hradmin.model.AccessRightModule;
@@ -29,8 +30,12 @@ import com.ats.hradmin.model.Company;
 import com.ats.hradmin.model.EmpType;
 import com.ats.hradmin.model.EmployeeCategory;
 import com.ats.hradmin.model.EmployeeDepartment;
+import com.ats.hradmin.model.EmployeeInfo;
+import com.ats.hradmin.model.GetEmployeeInfo;
 import com.ats.hradmin.model.Info;
+import com.ats.hradmin.model.LeaveType;
 import com.ats.hradmin.model.Location;
+import com.ats.hradmin.model.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -1445,6 +1450,332 @@ public class MasterController {
 			model.addObject("locationList", locationList);
 			model.addObject("deptList", employeeDepartmentlist);
 			model.addObject("catList", employeeCategorylist);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+	}
+	
+	
+
+	@RequestMapping(value = "/submitInsertEmployeeUserInfo", method = RequestMethod.POST)
+	public String submitInsertLeaveType(@RequestParam("profilePic") List<MultipartFile> profilePic,HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			HttpSession session = request.getSession();
+			Date date = new Date();
+			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+			VpsImageUpload upload = new VpsImageUpload();
+
+			
+			
+			String empCode = request.getParameter("empCode");
+			String fname = request.getParameter("fname");
+			String mname = request.getParameter("mname");
+			String sname = request.getParameter("sname");
+			int locId =Integer.parseInt( request.getParameter("locId"));
+			int catId =Integer.parseInt( request.getParameter("catId"));
+			int typeId =Integer.parseInt( request.getParameter("typeId"));
+			int deptId =Integer.parseInt( request.getParameter("deptId"));
+			String tempAdd = request.getParameter("tempAdd");
+			String permntAdd = request.getParameter("permntAdd");
+			String bloodGrp = request.getParameter("bloodGrp");
+			String mobile1 = request.getParameter("mobile1");
+			String mobile2 = request.getParameter("mobile2");
+			String email = request.getParameter("email");
+			String emgContPrsn1 = request.getParameter("emgContPrsn1");
+			String emgContNo1 = request.getParameter("emgContNo1");
+			String emgContPrsn2 = request.getParameter("emgContPrsn2");
+			String emgContNo2 = request.getParameter("emgContNo2");
+			int  ratePerHr =Integer.parseInt( request.getParameter("ratePerHr"));
+			String joiningDate = request.getParameter("joiningDate");
+			int prevsExpYr =Integer.parseInt( request.getParameter("prevsExpYr"));
+			int prevsExpMn =Integer.parseInt( request.getParameter("prevsExpMn"));
+			String leavingDate = request.getParameter("leavingDate");
+			String lvngReson = request.getParameter("lvngReson");
+			String uname = request.getParameter("uname");
+			String upass = request.getParameter("upass");
+			///int locId2 =Integer.parseInt( request.getParameter("locId2"));
+			String[] locId2 = request.getParameterValues("locId2");
+
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < locId2.length; i++) {
+				sb = sb.append(locId2[i] + ",");
+
+			}
+			String items = sb.toString();
+			items = items.substring(0, items.length() - 1);
+			System.err.println("loc are:::"+items);
+			/*
+			 * int summId =Integer.parseInt( request.getParameter("summId"));
+			 * 
+			 * String remark=null;
+			 * 
+			 * System.out.println("color    "+leaveColor); int isStructured =
+			 * Integer.parseInt( request.getParameter("isStructured")); try { remark =
+			 * request.getParameter("remark"); } catch (Exception e) { remark = "NA"; }
+			 */
+
+			Boolean ret = false;
+			if (FormValidation.Validaton(profilePic.get(0).getOriginalFilename(), "") == true) {
+				ret = true;
+			}
+
+			if (FormValidation.Validaton(empCode, "") == true) {
+
+				ret = true;
+				System.out.println("empCode" + ret);
+			}
+			if (FormValidation.Validaton(fname, "") == true) {
+
+				ret = true;
+				System.out.println("add" + ret);
+			}
+
+			if (FormValidation.Validaton(request.getParameter("mname"), "") == true) {
+
+				ret = true;
+				System.out.println("add" + ret);
+			}
+			
+			if (FormValidation.Validaton(request.getParameter("sname"), "") == true) {
+
+				ret = true;
+				System.out.println("add" + ret);
+			}
+			if (FormValidation.Validaton(request.getParameter("locId"), "") == true) {
+
+				ret = true;
+				System.out.println("add" + ret);
+			}
+			
+			if (FormValidation.Validaton(request.getParameter("catId"), "") == true) {
+
+				ret = true;
+				System.out.println("add" + ret);
+			}
+			
+			 if (FormValidation.Validaton(request.getParameter("typeId"), "") == true) {
+
+				ret = true;
+				System.out.println("add" + ret);
+			}
+			if(FormValidation.Validaton(request.getParameter("deptId"), "") == true) {
+
+				ret = true;
+				System.out.println("add" + ret);
+			}
+			
+			if (FormValidation.Validaton(request.getParameter("tempAdd"), "") == true) {
+
+				ret = true;
+				System.out.println("add" + ret);
+			}
+			if (FormValidation.Validaton(request.getParameter("permntAdd"), "") == true) {
+
+				ret = true;
+				System.out.println("add" + ret);
+			}
+			if (FormValidation.Validaton(request.getParameter("bloodGrp"), "") == true) {
+
+				ret = true;
+				System.out.println("add" + ret);
+			}
+			if (FormValidation.Validaton(request.getParameter("mobile1"), "") == true) {
+
+				ret = true;
+				System.out.println("add" + ret);
+			}
+			if (FormValidation.Validaton(request.getParameter("email"), "") == true) {
+
+				ret = true;
+				System.out.println("add" + ret);
+			}
+			if (FormValidation.Validaton(request.getParameter("emgContPrsn1"), "") == true) {
+
+				ret = true;
+				System.out.println("add" + ret);
+			}
+			if (FormValidation.Validaton(request.getParameter("emgContNo1"), "") == true) {
+
+				ret = true;
+				System.out.println("add" + ret);
+			}
+			if (FormValidation.Validaton(request.getParameter("emgContPrsn2"), "") == true) {
+
+				ret = true;
+				System.out.println("add" + ret);
+			}
+			if (FormValidation.Validaton(request.getParameter("emgContNo2"), "") == true) {
+
+				ret = true;
+				System.out.println("add" + ret);
+			}
+			
+			
+			
+			if (FormValidation.Validaton(request.getParameter("ratePerHr"), "") == true) {
+
+				ret = true;
+				System.out.println("add" + ret);
+			}
+			if (FormValidation.Validaton(request.getParameter("joiningDate"), "") == true) {
+
+				ret = true;
+				System.out.println("add" + ret);
+			}
+			if (FormValidation.Validaton(request.getParameter("prevsExpYr"), "") == true) {
+
+				ret = true;
+				System.out.println("add" + ret);
+			}
+			if (FormValidation.Validaton(request.getParameter("prevsExpMn"), "") == true) {
+
+				ret = true;
+				System.out.println("add" + ret);
+			}
+			if (FormValidation.Validaton(request.getParameter("uname"), "") == true) {
+
+				ret = true;
+				System.out.println("add" + ret);
+			}
+			if (FormValidation.Validaton(request.getParameter("upass"), "") == true) {
+
+				ret = true;
+				System.out.println("add" + ret);
+			}
+			if (FormValidation.Validaton(request.getParameter("locId2"), "") == true) {
+
+				ret = true;
+				System.out.println("add" + ret);
+			}
+			
+			EmployeeInfo leaveSummary = new EmployeeInfo();
+			if(ret == false)
+			{
+				
+				
+
+				/*
+				 * String imageName = new String(); imageName = dateTimeInGMT.format(date) + "_"
+				 * + profilePic.get(0).getOriginalFilename(); try {
+				 * upload.saveUploadedImge(profilePic.get(0), Constants.imageSaveUrl, imageName,
+				 * Constants.values, 0, 0, 0, 0, 0); leaveSummary.setEmpPhoto(imageName);; }
+				 * catch (Exception e) { // TODO: handle exception e.printStackTrace(); }
+				 */
+
+			leaveSummary.setEmpPhoto("siri");;
+			leaveSummary.setCompanyId(1);
+			leaveSummary.setEmpCode(empCode);
+			leaveSummary.setEmpCatId(catId);
+			leaveSummary.setEmpDeptId(deptId);
+			leaveSummary.setEmpTypeId(typeId);
+			leaveSummary.setLocId(locId);
+			leaveSummary.setEmpFname(fname);
+			leaveSummary.setEmpMname(mname);
+			leaveSummary.setEmpSname(sname);
+			leaveSummary.setEmpMobile1(mobile1);
+			leaveSummary.setEmpMobile2(mobile2);
+			leaveSummary.setEmpEmail(email);
+			leaveSummary.setEmpAddressTemp(tempAdd);
+			leaveSummary.setEmpAddressPerm(permntAdd);
+			leaveSummary.setEmpBloodgrp(bloodGrp);
+			leaveSummary.setEmpEmergencyPerson1(emgContPrsn1);
+			leaveSummary.setEmpEmergencyPerson2(emgContPrsn2);
+			leaveSummary.setEmpEmergencyNo2(emgContNo2);
+			leaveSummary.setEmpEmergencyNo1(emgContNo1);
+			leaveSummary.setEmpRatePerhr(ratePerHr);
+			
+			leaveSummary.setEmpJoiningDate(DateConvertor.convertToYMD(joiningDate));
+			leaveSummary.setEmpLeavingDate(DateConvertor.convertToYMD(leavingDate));
+			
+			leaveSummary.setEmpPrevExpYrs(prevsExpYr);
+			leaveSummary.setEmpPrevExpMonths(prevsExpMn);
+			leaveSummary.setEmpLeavingReason(lvngReson);
+			
+			leaveSummary.setExInt1(1);
+			leaveSummary.setExInt2(1);
+			leaveSummary.setExInt3(1);
+			leaveSummary.setExVar1("NA");
+			leaveSummary.setExVar2("NA");
+			leaveSummary.setExVar3("NA");
+			leaveSummary.setIsActive(1);
+			leaveSummary.setDelStatus(1);
+			leaveSummary.setMakerUserId(1);
+			leaveSummary.setMakerEnterDatetime(sf.format(date));
+
+			
+
+			EmployeeInfo res = Constants.getRestTemplate().postForObject(Constants.url + "/saveEmpInfo", leaveSummary,
+					EmployeeInfo.class);
+			if(res!=null) {
+			
+			User uinfo = new User();
+			uinfo.setEmpId(res.getEmpId());
+			uinfo.setEmpTypeId(typeId);
+			uinfo.setUserName(uname);
+			uinfo.setUserPwd(upass);
+			uinfo.setLocId(items);
+			uinfo.setExInt1(1);
+			uinfo.setExInt2(1);
+			uinfo.setExInt3(1);
+			uinfo.setExVar1("NA");
+			uinfo.setExVar2("NA");
+			uinfo.setExVar3("NA");
+			uinfo.setIsActive(1);
+			uinfo.setDelStatus(1);
+			uinfo.setMakerUserId(1);
+			uinfo.setMakerEnterDatetime(sf.format(date));
+
+			User res1 = Constants.getRestTemplate().postForObject(Constants.url + "/saveUserInfo", uinfo,
+					User.class);
+			
+			}
+			
+			
+			} else {
+				session.setAttribute("errorMsg", "Failed to Insert Record");
+			}
+
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:/showLeaveTypeList";
+	
+
+}
+	
+	@RequestMapping(value = "/showEmpList", method = RequestMethod.GET)
+	public ModelAndView showEmpList(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("master/empList");
+
+		try {
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("companyId", 1);
+			map.add("locIdList", 4);
+			
+			GetEmployeeInfo[] employeeDepartment = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getEmpInfoList", map, GetEmployeeInfo[].class);
+
+			List<GetEmployeeInfo> employeeDepartmentlist = new ArrayList<GetEmployeeInfo>(
+					Arrays.asList(employeeDepartment));
+
+			for (int i = 0; i < employeeDepartmentlist.size(); i++) {
+
+				employeeDepartmentlist.get(i).setExVar1(
+						FormValidation.Encrypt(String.valueOf(employeeDepartmentlist.get(i).getEmpId())));
+			}
+
+			model.addObject("empList", employeeDepartmentlist);
+			System.err.println("emp list is  "+employeeDepartment.toString());
 
 		} catch (Exception e) {
 			e.printStackTrace();
