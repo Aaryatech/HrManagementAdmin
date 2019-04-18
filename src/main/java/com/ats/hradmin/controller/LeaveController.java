@@ -63,7 +63,6 @@ public class LeaveController {
 	@RequestMapping(value = "/submitInsertLeaveType", method = RequestMethod.POST)
 	public String submitInsertLeaveType(HttpServletRequest request,
 			HttpServletResponse response) {
-
 		try {
 			HttpSession session = request.getSession();
 			Date date = new Date();
@@ -76,11 +75,17 @@ public class LeaveController {
 			int WprkingHrs =Integer.parseInt( request.getParameter("leaveWorlHrs"));
 			int summId =Integer.parseInt( request.getParameter("summId"));
 			String leaveColor = request.getParameter("leaveColor");
-			
+			String remark=null;
+
 			System.out.println("color    "+leaveColor);
 			int isStructured = Integer.parseInt( request.getParameter("isStructured"));
-			int remark = Integer.parseInt( request.getParameter("remark"));
-		
+			try {
+			 remark =  request.getParameter("remark");
+			}
+			catch (Exception e) {
+				 remark =  "NA";
+			}
+
 			Boolean ret = false;
 			
 			if (FormValidation.Validaton(leaveTypeTitle, "") == true) {
@@ -249,10 +254,16 @@ public class LeaveController {
 			int WprkingHrs =Integer.parseInt( request.getParameter("leaveWorlHrs"));
 			int summId =Integer.parseInt( request.getParameter("summId"));
 			String leaveColor = request.getParameter("leaveColor");
-			
+			String remark=null;
 			System.out.println("color    "+leaveColor);
 			int isStructured = Integer.parseInt( request.getParameter("isStructured"));
-			int remark = Integer.parseInt( request.getParameter("remark"));
+			try {
+				 remark =  request.getParameter("remark");
+				}
+				catch (Exception e) {
+					 remark =  "NA";
+				}
+
 		
 			Boolean ret = false;
 			

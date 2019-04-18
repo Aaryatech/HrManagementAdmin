@@ -18,7 +18,7 @@ public class LeaveType {
 	
 	private int isStructured;
 	
-	private int lvRmarks;
+	private String lvRmarks;
 	
 	private int delStatus;
 	
@@ -106,11 +106,13 @@ public class LeaveType {
 		this.isStructured = isStructured;
 	}
 
-	public int getLvRmarks() {
+	
+
+	public String getLvRmarks() {
 		return lvRmarks;
 	}
 
-	public void setLvRmarks(int lvRmarks) {
+	public void setLvRmarks(String lvRmarks) {
 		this.lvRmarks = lvRmarks;
 	}
 
