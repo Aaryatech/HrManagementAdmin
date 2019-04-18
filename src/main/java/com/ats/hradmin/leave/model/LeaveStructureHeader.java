@@ -1,5 +1,7 @@
 package com.ats.hradmin.leave.model;
 
+import java.util.List;
+
 public class LeaveStructureHeader {
 
 	private int lvsId;
@@ -14,7 +16,7 @@ public class LeaveStructureHeader {
 
 	private int makerUserId;
 
-	private String makerEnterDatetime;
+	private String makerDatetime;
 
 	private int exInt1;
 
@@ -23,6 +25,9 @@ public class LeaveStructureHeader {
 	private String exVar1;
 
 	private String exVar2;
+	List<LeaveStructureDetails> detailList;
+
+	private boolean isError;
 
 	public int getLvsId() {
 		return lvsId;
@@ -72,12 +77,12 @@ public class LeaveStructureHeader {
 		this.makerUserId = makerUserId;
 	}
 
-	public String getMakerEnterDatetime() {
-		return makerEnterDatetime;
+	public String getMakerDatetime() {
+		return makerDatetime;
 	}
 
-	public void setMakerEnterDatetime(String makerEnterDatetime) {
-		this.makerEnterDatetime = makerEnterDatetime;
+	public void setMakerDatetime(String makerDatetime) {
+		this.makerDatetime = makerDatetime;
 	}
 
 	public int getExInt1() {
@@ -112,12 +117,27 @@ public class LeaveStructureHeader {
 		this.exVar2 = exVar2;
 	}
 
+	public List<LeaveStructureDetails> getDetailList() {
+		return detailList;
+	}
+
+	public void setDetailList(List<LeaveStructureDetails> detailList) {
+		this.detailList = detailList;
+	}
+
+	public boolean isError() {
+		return isError;
+	}
+
+	public void setError(boolean isError) {
+		this.isError = isError;
+	}
+
 	@Override
 	public String toString() {
 		return "LeaveStructureHeader [lvsId=" + lvsId + ", companyId=" + companyId + ", lvsName=" + lvsName
 				+ ", delStatus=" + delStatus + ", isActive=" + isActive + ", makerUserId=" + makerUserId
-				+ ", makerEnterDatetime=" + makerEnterDatetime + ", exInt1=" + exInt1 + ", exInt2=" + exInt2
-				+ ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + "]";
+				+ ", makerDatetime=" + makerDatetime + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exVar1="
+				+ exVar1 + ", exVar2=" + exVar2 + ", detailList=" + detailList + "]";
 	}
-
 }

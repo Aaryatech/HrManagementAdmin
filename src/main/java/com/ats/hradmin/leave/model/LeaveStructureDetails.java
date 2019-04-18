@@ -16,7 +16,7 @@ public class LeaveStructureDetails {
 
 	private int makerUserId;
 
-	private String makerEnterDatetime;
+	private String makerDatetime;
 
 	private int exInt1;
 
@@ -82,12 +82,12 @@ public class LeaveStructureDetails {
 		this.makerUserId = makerUserId;
 	}
 
-	public String getMakerEnterDatetime() {
-		return makerEnterDatetime;
+	public String getMakerDatetime() {
+		return makerDatetime;
 	}
 
-	public void setMakerEnterDatetime(String makerEnterDatetime) {
-		this.makerEnterDatetime = makerEnterDatetime;
+	public void setMakerDatetime(String makerDatetime) {
+		this.makerDatetime = makerDatetime;
 	}
 
 	public int getExInt1() {
@@ -126,7 +126,7 @@ public class LeaveStructureDetails {
 	public String toString() {
 		return "LeaveStructureDetails [lvsDetailsId=" + lvsDetailsId + ", lvsId=" + lvsId + ", lvTypeId=" + lvTypeId
 				+ ", lvsAllotedLeaves=" + lvsAllotedLeaves + ", delStatus=" + delStatus + ", isActive=" + isActive
-				+ ", makerUserId=" + makerUserId + ", makerEnterDatetime=" + makerEnterDatetime + ", exInt1=" + exInt1
+				+ ", makerUserId=" + makerUserId + ", makerDatetime=" + makerDatetime + ", exInt1=" + exInt1
 				+ ", exInt2=" + exInt2 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + "]";
 	}
 
