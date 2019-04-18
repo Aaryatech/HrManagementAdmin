@@ -1,0 +1,862 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%><%@ taglib
+	uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<jsp:include page="/WEB-INF/views/include/metacssjs.jsp"></jsp:include>
+<c:url var="getSubmoduleList" value="/getSubmoduleList" />
+</head>
+
+<body>
+
+	<!-- Main navbar -->
+	<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+	<!-- /main navbar -->
+
+
+	<!-- Page content -->
+	<div class="page-content">
+
+		<!-- Main sidebar -->
+		<jsp:include page="/WEB-INF/views/include/left.jsp"></jsp:include>
+		<!-- /main sidebar -->
+
+
+		<!-- Main content -->
+		<div class="content-wrapper">
+
+			<!-- Page header -->
+			<div class="page-header page-header-light">
+
+
+				<div
+					class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+					<div class="d-flex">
+						<div class="breadcrumb">
+							<a href="index.html" class="breadcrumb-item"><i
+								class="icon-home2 mr-2"></i> Home</a> <span
+								class="breadcrumb-item active">Dashboard</span>
+						</div>
+
+						<a href="#" class="header-elements-toggle text-default d-md-none"><i
+							class="icon-more"></i></a>
+					</div>
+
+					<div class="breadcrumb justify-content-center">
+						<a href="${pageContext.request.contextPath}/showEmpList"
+							class="breadcrumb-elements-item"> Employee List</a>
+
+					</div>
+
+
+				</div>
+			</div>
+			<!-- /page header -->
+
+
+			<!-- Content area -->
+			<div class="content">
+
+				<!-- Form validation -->
+				<div class="row">
+					<div class="col-md-12">
+						<!-- Title -->
+						<!-- <div class="mb-3">
+							<h6 class="mb-0 font-weight-semibold">Hidden labels</h6>
+							<span class="text-muted d-block">Inputs with empty values</span>
+						</div> -->
+						<!-- /title -->
+
+
+						<div class="card">
+							<div class="card-header header-elements-inline">
+								<h6 class="card-title">Add Employee</h6>
+								<div class="header-elements">
+									<div class="list-icons">
+										<a class="list-icons-item" data-action="collapse"></a>
+									</div>
+								</div>
+							</div>
+
+							<div class="card-body">
+								<%
+									if (session.getAttribute("errorMsg") != null) {
+								%>
+								<div
+									class="alert bg-danger text-white alert-styled-left alert-dismissible">
+									<button type="button" class="close" data-dismiss="alert">
+										<span>×</span>
+									</button>
+									<span class="font-weight-semibold">Oh snap!</span>
+									<%
+										out.println(session.getAttribute("errorMsg"));
+									%>
+								</div>
+
+								<%
+									session.removeAttribute("errorMsg");
+									}
+								%>
+								<%
+									if (session.getAttribute("successMsg") != null) {
+								%>
+								<div
+									class="alert bg-success text-white alert-styled-left alert-dismissible">
+									<button type="button" class="close" data-dismiss="alert">
+										<span>×</span>
+									</button>
+									<span class="font-weight-semibold">Well done!</span>
+									<%
+										out.println(session.getAttribute("successMsg"));
+									%>
+								</div>
+								<%
+									session.removeAttribute("successMsg");
+									}
+								%>
+
+								<form
+									action="${pageContext.request.contextPath}/submitInsertEmp"
+									id="submitInsertEmp" method="post">
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="empCode">
+											Employee Code : *</label>
+										<div class="col-lg-10">
+											<input type="text" class="form-control"
+												placeholder="Employee Code" id="empCode" name="empCode"
+												autocomplete="off" onchange="trim(this)"> <span
+												class="validation-invalid-label" id="error_empCode"
+												style="display: none;">This field is required.</span>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="fname">
+											First Name : *</label>
+										<div class="col-lg-10">
+											<input type="text" class="form-control  "
+												placeholder="First Name" id="fname" name="fname"
+												autocomplete="off" onchange="trim(this)"> <span
+												class="validation-invalid-label" id="error_fname"
+												style="display: none;">This field is required.</span>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="mname">
+											Middle Name : *</label>
+										<div class="col-lg-10">
+											<input type="text" class="form-control  "
+												placeholder="Middle Name" id="mname" name="mname"
+												autocomplete="off" onchange="trim(this)"> <span
+												class="validation-invalid-label" id="error_mname"
+												style="display: none;">This field is required.</span>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="sname">
+											Surname Name : *</label>
+										<div class="col-lg-10">
+											<input type="text" class="form-control  "
+												placeholder="Surname Name" id="sname" name="sname"
+												autocomplete="off" onchange="trim(this)"> <span
+												class="validation-invalid-label" id="error_sname"
+												style="display: none;">This field is required.</span>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="locId">
+											Select Location : *</label>
+										<div class="col-lg-10">
+											<select name="locId" data-placeholder="Select Location"
+												id="locId"
+												class="form-control form-control-select2 select2-hidden-accessible"
+												data-fouc="" tabindex="-1" aria-hidden="true">
+
+												<option value="">Select Location</option>
+
+												<c:forEach items="${locationList}" var="locationList">
+													<option value="${locationList.locId}">${locationList.locName}</option>
+												</c:forEach>
+											</select> <span class="validation-invalid-label" id="error_locId"
+												style="display: none;">This field is required.</span>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="catId">
+											Select Category : *</label>
+										<div class="col-lg-10">
+											<select name="catId" data-placeholder="Select Category"
+												id="catId"
+												class="form-control form-control-select2 select2-hidden-accessible"
+												data-fouc="" tabindex="-1" aria-hidden="true">
+
+												<option value="">Select Category</option>
+
+												<c:forEach items="${catList}" var="catList">
+													<option value="${catList.empCatId}">${catList.empCatName}</option>
+												</c:forEach>
+											</select> <span class="validation-invalid-label" id="error_catId"
+												style="display: none;">This field is required.</span>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="typeId">
+											Select Type : *</label>
+										<div class="col-lg-10">
+											<select name="typeId" data-placeholder="Select Type"
+												id="typeId"
+												class="form-control form-control-select2 select2-hidden-accessible"
+												data-fouc="" tabindex="-1" aria-hidden="true">
+
+												<option value="">Select Type</option>
+
+												<c:forEach items="${empTypelist}" var="empTypelist">
+													<option value="${empTypelist.empTypeId}">${empTypelist.empTypeName}</option>
+												</c:forEach>
+											</select> <span class="validation-invalid-label" id="error_typeId"
+												style="display: none;">This field is required.</span>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="deptId">
+											Select Department : *</label>
+										<div class="col-lg-10">
+											<select name="deptId" data-placeholder="Select Department"
+												id="deptId"
+												class="form-control form-control-select2 select2-hidden-accessible"
+												data-fouc="" tabindex="-1" aria-hidden="true">
+
+												<option value="">Select Department</option>
+
+												<c:forEach items="${deptList}" var="deptList">
+													<option value="${deptList.empDeptId}">${deptList.empDeptName}</option>
+												</c:forEach>
+											</select> <span class="validation-invalid-label" id="error_deptId"
+												style="display: none;">This field is required.</span>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="permntAdd">Permanent
+											Address : *</label>
+										<div class="col-lg-10">
+											<textarea rows="3" cols="3" class="form-control"
+												placeholder="Permanent Address" onchange="trim(this)"
+												id="permntAdd" name="permntAdd"></textarea>
+											<span class="validation-invalid-label" id="error_permntAdd"
+												style="display: none;">This field is required.</span>
+
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="checkSameAdd">
+											Same As Permanent Address : </label>
+										<div class="form-check form-check-inline">
+											<input type="checkbox" id="checkSameAdd" name="checkSameAdd"
+												onclick="checkAdd()">
+
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="tempAdd">Temporary
+											Address : *</label>
+										<div class="col-lg-10">
+											<textarea rows="3" cols="3" class="form-control"
+												placeholder="Temporary Address" onchange="trim(this)"
+												id="tempAdd" name="tempAdd"></textarea>
+											<span class="validation-invalid-label" id="error_tempAdd"
+												style="display: none;">This field is required.</span>
+
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="mobile1">Contact
+											No : *</label>
+										<div class="col-lg-10">
+											<input type="text" class="form-control"
+												placeholder="Contact No." id="mobile1" name="mobile1"
+												autocomplete="off" onchange="trim(this)" maxlength="10">
+											<span class="validation-invalid-label" id="error_mobile1"
+												style="display: none;">This field is required.</span>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="mobile2">Alternate
+											Contact No : </label>
+										<div class="col-lg-10">
+											<input type="text" class="form-control"
+												placeholder="Alternate Contact No." id="mobile2"
+												name="mobile2" autocomplete="off" onchange="trim(this)"
+												maxlength="10">
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="email">Email
+											: *</label>
+										<div class="col-lg-10">
+											<input type="text" class="form-control" placeholder="Email"
+												id="email" name="email" autocomplete="off"
+												onchange="trim(this)"> <span
+												class="validation-invalid-label" id="error_email"
+												style="display: none;">This field is required.</span>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="emgContPrsn1">Emergency
+											Contact Person : *</label>
+										<div class="col-lg-10">
+											<input type="text" class="form-control"
+												placeholder="Emergency Contact Person" id="emgContPrsn1"
+												name="emgContPrsn1" autocomplete="off" onchange="trim(this)">
+											<span class="validation-invalid-label"
+												id="error_emgContPrsn1" style="display: none;">This
+												field is required.</span>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="emgContNo1">Emergency
+											Contact No : *</label>
+										<div class="col-lg-10">
+											<input type="text" class="form-control"
+												placeholder="Emergency Contact No." id="emgContNo1"
+												name="emgContNo1" autocomplete="off" onchange="trim(this)"
+												maxlength="10"> <span
+												class="validation-invalid-label" id="error_emgContNo1"
+												style="display: none;">This field is required.</span>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="emgContPrsn2">Emergency
+											Contact Person 2 : *</label>
+										<div class="col-lg-10">
+											<input type="text" class="form-control"
+												placeholder="Emergency Alternate Contact Person"
+												id="emgContPrsn2" name="emgContPrsn2" autocomplete="off"
+												onchange="trim(this)"> <span
+												class="validation-invalid-label" id="error_emgContPrsn2"
+												style="display: none;">This field is required.</span>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="emgContNo2">Emergency
+											Contact No : *</label>
+										<div class="col-lg-10">
+											<input type="text" class="form-control"
+												placeholder="Emergency Alternate Contact No."
+												id="emgContNo2" name="emgContNo2" autocomplete="off"
+												onchange="trim(this)" maxlength="10"> <span
+												class="validation-invalid-label" id="error_emgContNo2"
+												style="display: none;">This field is required.</span>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="ratePerHr">
+											Employee Rate Per Hour : *</label>
+										<div class="col-lg-10">
+											<input type="text" class="form-control numbersOnly"
+												placeholder="Employee Rate Per Hour" id="ratePerHr"
+												name="emgContNo2" autocomplete="off" onchange="trim(this)">
+											<span class="validation-invalid-label" id="error_ratePerHr"
+												style="display: none;">This field is required.</span>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="joiningDate">Joining
+											Date : *</label>
+										<div class="col-lg-10">
+											<input type="text" class="form-control datepickerclass "
+												name="joiningDate" id="joiningDate"
+												placeholder="Joining Date"> <span
+												class="validation-invalid-label" id="error_joiningDate"
+												style="display: none;">This field is required.</span>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="prevsExpYr">
+											Previous Experience in Year : *</label>
+										<div class="col-lg-10">
+											<input type="text" class="form-control numbersOnly"
+												placeholder="Previous Experience in Year" id="prevsExpYr"
+												name="prevsExpYr" autocomplete="off" onchange="trim(this)">
+											<span class="validation-invalid-label" id="error_prevsExpYr"
+												style="display: none;">This field is required.</span>
+										</div>
+									</div>
+									
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="prevsExpMn">
+											Previous Experience in Month : *</label>
+										<div class="col-lg-10">
+											<input type="text" class="form-control numbersOnly"
+												placeholder="Previous Experience in Month" id="prevsExpMn"
+												name="prevsExpMn" autocomplete="off" onchange="trim(this)">
+											<span class="validation-invalid-label" id="error_prevsExpMn"
+												style="display: none;">This field is required.</span>
+										</div>
+									</div>
+									
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="leavingDate">Leaving
+											Date : </label>
+										<div class="col-lg-10">
+											<input type="text" class="form-control datepickerclass "
+												name="leavingDate" id="leavingDate"
+												placeholder="Leaving Date">  
+										</div>
+									</div>
+									
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="lvngReson"> Leaving Reason :  </label>
+										<div class="col-lg-10">
+											<textarea rows="3" cols="3" class="form-control"
+												placeholder="Leaving Reason" onchange="trim(this)"
+												id="lvngReson" name="lvngReson"></textarea>
+											 
+
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="profilePic">
+											Profile Pic : </label>
+										<div class="col-lg-9">
+											<div class="uniform-uploader">
+												<input type="file" name="profilePic"
+													class="form-input-styled" data-fouc="" id="profilePic"><span
+													class="filename" style="user-select: none;">No file
+													selected</span><span class="action btn bg-blue legitRipple"
+													style="user-select: none;">Choose File</span>
+											</div>
+										</div>
+									</div>
+									 
+									<div class="form-group row mb-0">
+										<div class="col-lg-10 ml-lg-auto">
+											<button type="reset" class="btn btn-light legitRipple">Reset</button>
+											<button type="submit" class="btn bg-blue ml-3 legitRipple"
+												id="submtbtn">
+												Submit <i class="icon-paperplane ml-2"></i>
+											</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+
+
+					</div>
+				</div>
+
+			</div>
+			<!-- /content area -->
+
+
+			<!-- Footer -->
+			<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
+			<!-- /footer -->
+
+		</div>
+		<!-- /main content -->
+
+	</div>
+	<!-- /page content -->
+
+	<script>
+		function checkAdd() {
+
+			if (document.getElementById("checkSameAdd").checked == true) {
+
+				document.getElementById("tempAdd").value = document
+						.getElementById("permntAdd").value;
+
+			} else {
+
+				document.getElementById("tempAdd").value = "";
+			}
+
+		}
+	</script>
+
+	<script>
+		function trim(el) {
+			el.value = el.value.replace(/(^\s*)|(\s*$)/gi, ""). // removes leading and trailing spaces
+			replace(/[ ]{2,}/gi, " "). // replaces multiple spaces with one space 
+			replace(/\n +/, "\n"); // Removes spaces after newlines
+			return;
+		}
+
+		function validateEmail(email) {
+
+			var eml = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+
+			if (eml.test($.trim(email)) == false) {
+
+				return false;
+
+			}
+
+			return true;
+
+		}
+		function validateMobile(mobile) {
+			var mob = /^[1-9]{1}[0-9]{9}$/;
+
+			if (mob.test($.trim(mobile)) == false) {
+
+				//alert("Please enter a valid email address .");
+				return false;
+
+			}
+			return true;
+
+		}
+
+		$(document)
+				.ready(
+						function($) {
+
+							$("#submitInsertEmp")
+									.submit(
+											function(e) {
+												var isError = false;
+												var errMsg = "";
+
+												if (!$("#empCode").val()) {
+
+													isError = true;
+
+													$("#error_empCode").show()
+													//return false;
+												} else {
+													$("#error_empCode").hide()
+												}
+
+												if (!$("#fname").val()) {
+
+													isError = true;
+
+													$("#error_fname").show()
+
+												} else {
+													$("#error_fname").hide()
+												}
+
+												if (!$("#mname").val()) {
+
+													isError = true;
+
+													$("#error_mname").show()
+
+												} else {
+													$("#error_mname").hide()
+												}
+
+												if (!$("#sname").val()) {
+
+													isError = true;
+
+													$("#error_sname").show()
+
+												} else {
+													$("#error_sname").hide()
+												}
+
+												if (!$("#locId").val()) {
+
+													isError = true;
+
+													$("#error_locId").show()
+
+												} else {
+													$("#error_locId").hide()
+												}
+
+												if (!$("#catId").val()) {
+
+													isError = true;
+
+													$("#error_catId").show()
+
+												} else {
+													$("#error_catId").hide()
+												}
+												if (!$("#typeId").val()) {
+
+													isError = true;
+
+													$("#error_typeId").show()
+
+												} else {
+													$("#error_typeId").hide()
+												}
+												if (!$("#deptId").val()) {
+
+													isError = true;
+
+													$("#error_deptId").show()
+
+												} else {
+													$("#error_deptId").hide()
+												}
+												if (!$("#permntAdd").val()) {
+
+													isError = true;
+
+													$("#error_permntAdd")
+															.show()
+
+												} else {
+													$("#error_permntAdd")
+															.hide()
+												}
+												if (!$("#tempAdd").val()) {
+
+													isError = true;
+
+													$("#error_tempAdd").show()
+
+												} else {
+													$("#error_tempAdd").hide()
+												}
+
+												if (!$("#emgContPrsn1").val()) {
+
+													isError = true;
+
+													$("#error_emgContPrsn1")
+															.show()
+
+												} else {
+													$("#error_emgContPrsn1")
+															.hide()
+												}
+
+												if (!$("#emgContPrsn2").val()) {
+
+													isError = true;
+
+													$("#error_emgContPrsn2")
+															.show()
+
+												} else {
+													$("#error_emgContPrsn2")
+															.hide()
+												}
+												
+												if (!$("#ratePerHr").val()) {
+
+													isError = true;
+
+													$("#error_ratePerHr")
+															.show()
+
+												} else {
+													$("#error_ratePerHr")
+															.hide()
+												}
+												
+												if (!$("#prevsExpYr").val()) {
+
+													isError = true;
+
+													$("#error_prevsExpYr")
+															.show()
+
+												} else {
+													$("#error_prevsExpYr")
+															.hide()
+												}
+												
+												if (!$("#prevsExpMn").val()) {
+
+													isError = true;
+
+													$("#error_prevsExpMn")
+															.show()
+
+												} else {
+													$("#error_prevsExpMn")
+															.hide()
+												}
+												
+												   
+
+												if (!$("#mobile1").val()
+														|| !validateMobile($(
+																"#mobile1")
+																.val())) {
+
+													isError = true;
+
+													if (!$("#mobile1").val()) {
+														document
+																.getElementById("error_mobile1").innerHTML = "This field is required.";
+													} else {
+														document
+																.getElementById("error_mobile1").innerHTML = "Enter valid Mobile No.";
+													}
+
+													$("#error_mobile1").show()
+
+												} else {
+													$("#error_mobile1").hide()
+												}
+
+												if (!$("#emgContNo1").val()
+														|| !validateMobile($(
+																"#emgContNo1")
+																.val())) {
+
+													isError = true;
+
+													if (!$("#emgContNo1").val()) {
+														document
+																.getElementById("error_emgContNo1").innerHTML = "This field is required.";
+													} else {
+														document
+																.getElementById("error_emgContNo1").innerHTML = "Enter valid Mobile No.";
+													}
+
+													$("#error_emgContNo1")
+															.show()
+
+												} else {
+													$("#error_emgContNo1")
+															.hide()
+												}
+
+												if (!$("#emgContNo2").val()
+														|| !validateMobile($(
+																"#emgContNo2")
+																.val())) {
+
+													isError = true;
+
+													if (!$("#emgContNo2").val()) {
+														document
+																.getElementById("error_emgContNo2").innerHTML = "This field is required.";
+													} else {
+														document
+																.getElementById("error_emgContNo2").innerHTML = "Enter valid Mobile No.";
+													}
+
+													$("#error_emgContNo2")
+															.show()
+
+												} else {
+													$("#error_emgContNo2")
+															.hide()
+												}
+
+												if (!$("#email").val()
+														|| !validateEmail($(
+																"#email").val())) {
+
+													isError = true;
+
+													if (!$("#email").val()) {
+														document
+																.getElementById("error_email").innerHTML = "This field is required.";
+													} else {
+														document
+																.getElementById("error_email").innerHTML = "Enter valid email.";
+													}
+
+													$("#error_email").show()
+
+												} else {
+													$("#error_email").hide()
+												}
+												if (!isError) {
+
+													var x = confirm("Do you really want to submit the form?");
+													if (x == true) {
+
+														document
+																.getElementById("submtbtn").disabled = true;
+														return true;
+													}
+													//end ajax send this to php page
+												}
+												return false;
+											});
+						});
+		//
+	</script>
+	<script type="text/javascript">
+		// Single picker
+		$('.datepickerclass').daterangepicker({
+			singleDatePicker : true,
+			selectMonths : true,
+			selectYears : true,
+			locale : {
+				format : 'DD-MM-YYYY'
+			}
+		});
+
+		//daterange-basic_new
+		// Basic initialization
+		$('.daterange-basic_new').daterangepicker({
+			applyClass : 'bg-slate-600',
+
+			cancelClass : 'btn-light',
+			locale : {
+				format : 'DD-MM-YYYY',
+				separator : ' to '
+			}
+		});
+	</script>
+	<!-- <script type="text/javascript">
+	$('#submtbtn').on('click', function() {
+        swalInit({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: false
+        }).then(function(result) {
+            if(result.value) {
+                swalInit(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                );
+            }
+            else if(result.dismiss === swal.DismissReason.cancel) {
+                swalInit(
+                    'Cancelled',
+                    'Your imaginary file is safe :)',
+                    'error'
+                );
+            }
+        });
+    });
+	
+	</script> -->
+
+</body>
+</html>

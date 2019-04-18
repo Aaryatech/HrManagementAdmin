@@ -30,7 +30,7 @@ import com.ats.hradmin.model.EmpType;
 import com.ats.hradmin.model.EmployeeCategory;
 import com.ats.hradmin.model.EmployeeDepartment;
 import com.ats.hradmin.model.Info;
-import com.ats.hradmin.model.Location; 
+import com.ats.hradmin.model.Location;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -784,18 +784,17 @@ public class MasterController {
 			model.addObject("editEmpType", editEmpType);
 
 			List<AccessRightModule> moduleJsonList = new ArrayList<AccessRightModule>();
-			
+
 			try {
-				
+
 				AccessRightModule[] moduleJson = null;
 				ObjectMapper mapper = new ObjectMapper();
 				moduleJson = mapper.readValue(editEmpType.getEmpTypeAccess(), AccessRightModule[].class);
-						moduleJsonList = new ArrayList<AccessRightModule>(Arrays.asList(moduleJson));
-						
-			}catch(Exception e) {
-				 
+				moduleJsonList = new ArrayList<AccessRightModule>(Arrays.asList(moduleJson));
+
+			} catch (Exception e) {
+
 			}
-			
 
 			AccessRightModule[] accessRightModule = Constants.getRestTemplate()
 					.getForObject(Constants.url + "/getModuleAndSubModuleList", AccessRightModule[].class);
@@ -858,7 +857,7 @@ public class MasterController {
 		try {
 
 			List<AccessRightModule> moduleJsonList = new ArrayList<>();
-			
+
 			Date date = new Date();
 			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
@@ -889,7 +888,7 @@ public class MasterController {
 				editEmpType.setEmpTypeRemarks(remark);
 				editEmpType.setEmpTypeAccess("");
 				editEmpType.setMakerEnterDatetime(sf.format(date));
-				
+
 				for (int i = 0; i < moduleList.size(); i++) {
 
 					AccessRightModule moduleJson = new AccessRightModule();
@@ -969,7 +968,6 @@ public class MasterController {
 
 				}
 
-				
 				if (moduleJsonList != null && !moduleJsonList.isEmpty()) {
 
 					ObjectMapper mapper = new ObjectMapper();
@@ -984,7 +982,7 @@ public class MasterController {
 
 						e.printStackTrace();
 					}
-					
+
 					EmpType res = Constants.getRestTemplate().postForObject(Constants.url + "/saveEmpType", editEmpType,
 							EmpType.class);
 
@@ -997,7 +995,6 @@ public class MasterController {
 				} else {
 					session.setAttribute("errorMsg", "Select Minimum One View Access.");
 				}
-				 
 
 			} else {
 				session.setAttribute("errorMsg", "Failed to Updated Record");
@@ -1412,6 +1409,47 @@ public class MasterController {
 		}
 
 		return "redirect:/showEmpDeptList";
+	}
+
+	@RequestMapping(value = "/employeeAdd", method = RequestMethod.GET)
+	public ModelAndView employeeAdd(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("master/employeeAdd");
+
+		try {
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("companyId", 1);
+			Location[] location = Constants.getRestTemplate().postForObject(Constants.url + "/getLocationList", map,
+					Location[].class);
+			List<Location> locationList = new ArrayList<Location>(Arrays.asList(location));
+
+			map = new LinkedMultiValueMap<>();
+			map.add("compId", 1);
+
+			EmpType[] EmpType = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpTypeList", map,
+					EmpType[].class);
+			List<EmpType> empTypelist = new ArrayList<EmpType>(Arrays.asList(EmpType));
+
+			EmployeeDepartment[] employeeDepartment = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getEmpDeptList", map, EmployeeDepartment[].class);
+			List<EmployeeDepartment> employeeDepartmentlist = new ArrayList<EmployeeDepartment>(
+					Arrays.asList(employeeDepartment));
+
+			EmployeeCategory[] employeeCategory = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getEmpCategoryList", map, EmployeeCategory[].class);
+			List<EmployeeCategory> employeeCategorylist = new ArrayList<EmployeeCategory>(
+					Arrays.asList(employeeCategory));
+
+			model.addObject("empTypelist", empTypelist);
+			model.addObject("locationList", locationList);
+			model.addObject("deptList", employeeDepartmentlist);
+			model.addObject("catList", employeeCategorylist);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
 	}
 
 }

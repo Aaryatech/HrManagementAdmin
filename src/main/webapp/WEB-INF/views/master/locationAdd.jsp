@@ -171,7 +171,7 @@
 											No : *</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
-												placeholder="Location HR Contact No." id="contactNo"
+												placeholder="Contact No." id="contactNo"
 												name="contactNo" autocomplete="off" onchange="trim(this)"
 												maxlength="10"> <span
 												class="validation-invalid-label" id="error_contactNo"
@@ -184,7 +184,7 @@
 											: *</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
-												placeholder="Location HR Person Name" id="email"
+												placeholder="Email" id="email"
 												name="email" autocomplete="off" onchange="trim(this)">
 											<span class="validation-invalid-label" id="error_email"
 												style="display: none;">This field is required.</span>
