@@ -58,10 +58,10 @@
 						<li class="nav-item"><a
 							href="${pageContext.request.contextPath}/showLocationList"
 							class="nav-link">Location List</a></li>
-							
+
 						<li class="nav-item"><a
 							href="${pageContext.request.contextPath}/showEmpList"
-							class="nav-link">Employee  List</a></li>
+							class="nav-link">Employee List</a></li>
 						<li class="nav-item"><a
 							href="${pageContext.request.contextPath}/showEmpTypeList"
 							class="nav-link">Employee Type List</a></li>
@@ -71,7 +71,7 @@
 						<li class="nav-item"><a
 							href="${pageContext.request.contextPath}/showEmpDeptList"
 							class="nav-link">Employee Department List</a></li>
-							
+
 					</ul></li>
 
 
@@ -92,6 +92,14 @@
 						<li class="nav-item"><a
 							href="${pageContext.request.contextPath}/showLeaveStructureList"
 							class="nav-link">Leave Structure List</a></li>
+
+						<li class="nav-item"><a
+							href="${pageContext.request.contextPath}/leaveStructureAllotment"
+							class="nav-link">Leave Authority</a></li>
+
+						<li class="nav-item"><a
+							href="${pageContext.request.contextPath}/addLeaveAuthority"
+							class="nav-link">Leave Allotment</a></li>
 
 					</ul></li>
 				<li class="nav-item nav-item-submenu"><a href="#"
