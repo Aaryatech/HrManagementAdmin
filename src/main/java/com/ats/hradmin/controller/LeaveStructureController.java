@@ -25,6 +25,7 @@ import com.ats.hradmin.common.DateConvertor;
 import com.ats.hradmin.common.FormValidation;
 import com.ats.hradmin.leave.model.GetStructureAllotment;
 import com.ats.hradmin.leave.model.Holiday;
+import com.ats.hradmin.leave.model.LeaveAuthority;
 import com.ats.hradmin.leave.model.LeaveStructureDetails;
 import com.ats.hradmin.leave.model.LeaveStructureHeader;
 import com.ats.hradmin.leave.model.LeavesAllotment;
@@ -530,6 +531,109 @@ public class LeaveStructureController {
 		}
 
 		return "redirect:/leaveStructureAllotment";
+	}
+
+	// leave_authority
+
+	@RequestMapping(value = "/addLeaveAuthority", method = RequestMethod.GET)
+	public ModelAndView addLeaveAuthority(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("leave/authority_add");
+
+		try {
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("companyId", 1);
+			LeaveStructureHeader[] lvStrSummery = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getStructureList", map, LeaveStructureHeader[].class);
+
+			List<LeaveStructureHeader> lSummarylist = new ArrayList<>(Arrays.asList(lvStrSummery));
+			model.addObject("lStrList", lSummarylist);
+			map = new LinkedMultiValueMap<>();
+			map.add("companyId", 1);
+			map.add("locIdList", 1);
+			GetStructureAllotment[] summary = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getStructureAllotmentList", map, GetStructureAllotment[].class);
+
+			List<GetStructureAllotment> leaveSummarylist = new ArrayList<>(Arrays.asList(summary));
+
+			model.addObject("lvStructureList", leaveSummarylist);
+			System.out.println("leaveSummarylist" + leaveSummarylist.toString());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+	}
+
+	@RequestMapping(value = "/submitAuthorityList", method = RequestMethod.POST)
+	public String submitAuthorityList(HttpServletRequest request, HttpServletResponse response) {
+
+		try {
+			HttpSession session = request.getSession();
+			int iniAuthEmpId = Integer.parseInt(request.getParameter("iniAuthEmpId"));
+
+			int finAuthEmpId = Integer.parseInt(request.getParameter("finAuthEmpId"));
+
+			String[] empIds = request.getParameterValues("empIds");
+			String[] repToEmpIds = request.getParameterValues("repToEmpIds");
+
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < empIds.length; i++) {
+				sb = sb.append(empIds[i] + ",");
+
+			}
+			String empIdList = sb.toString();
+			empIdList = empIdList.substring(0, empIdList.length() - 1);
+
+			sb = new StringBuilder();
+
+			for (int i = 0; i < repToEmpIds.length; i++) {
+				sb = sb.append(repToEmpIds[i] + ",");
+
+			}
+			String repToEmpIdsList = sb.toString();
+			repToEmpIdsList = repToEmpIdsList.substring(0, repToEmpIdsList.length() - 1);
+
+			String[] arrOfStr = empIdList.split(",");
+			LeaveAuthority leaves = new LeaveAuthority();
+			for (int i = 0; i < empIdList.length(); i++) {
+				for (int j = 0; j < arrOfStr.length; j++) {
+
+					leaves.setDelStatus(1);
+					leaves.setEmpId(Integer.parseInt(arrOfStr[j]));
+					leaves.setExInt1(1);
+					leaves.setExInt2(1);
+					leaves.setExInt3(1);
+					leaves.setExVar1("NA");
+					leaves.setExVar2("NA");
+					leaves.setExVar3("NA");
+					leaves.setIsActive(1);
+					leaves.setMakerUserId(1);
+					leaves.setMakerEnterDatetime(dateTime);
+					leaves.setIniAuthEmpId(iniAuthEmpId);
+					leaves.setFinAuthEmpId(finAuthEmpId);
+					leaves.setCompanyId(1);
+					leaves.setRepToEmpIds(repToEmpIdsList);
+
+				}
+
+				LeaveAuthority res = Constants.getRestTemplate().postForObject(Constants.url + "/saveLeaveAuthority",
+						leaves, LeaveAuthority.class);
+
+				if (res != null) {
+					session.setAttribute("successMsg", "Record Insert Successfully");
+				} else {
+					session.setAttribute("errorMsg", "Failed to Insert Record");
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:/addLeaveAuthority";
 	}
 
 }

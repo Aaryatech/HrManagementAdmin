@@ -168,7 +168,7 @@
 												id="empIds${count.index+1}" value="${structure.empId}" /></td>
 											<td>${count.index+1}</td>
 											<td>${structure.empCode}</td>
-											<td>${structure.empFname}</td>
+											<td>${structure.empFname}${structure.empMname}${structure.empSname}</td>
 											<td>${structure.empDeptName}</td>
 											<td>${structure.empCatName}</td>
 											<td>${structure.lvsName}</td>
@@ -201,7 +201,7 @@
 
 								<input type="submit" class="btn btn-primary" value="Add"
 									id="deleteId"
-									onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to delete record');}"
+									onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to Submit record');}"
 									style="align-content: center; width: 113px; margin-left: 40px;">
 
 
@@ -226,6 +226,20 @@
 
 	</div>
 	<!-- /page content -->
+
+	<script type="text/javascript">
+		$(document).ready(
+				function() {
+					$('#bootstrap-data-table-export').DataTable();
+
+					$("#selAll").click(
+							function() {
+								$('#printtable1 tbody input[type="checkbox"]')
+										.prop('checked', this.checked);
+							});
+				});
+	</script>
+
 
 </body>
 </html>
