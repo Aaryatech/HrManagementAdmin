@@ -118,17 +118,17 @@
 
 								<form
 									action="${pageContext.request.contextPath}/submitInsertHoliday"
-									id="submitInstHoliday" method="post">
+									id="submitInsertHoliday" method="post">
 
 									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="locShortName">Holiday
+										<label class="col-form-label col-lg-2" for="holidayTitle">Holiday
 											Title : *</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Enter Hliday Title" id="holidayTitle"
 												name="holidayTitle" autocomplete="off" onchange="trim(this)"
 												maxlength="100"> <span
-												class="validation-invalid-label" id="error_locShortName"
+												class="validation-invalid-label" id="error_holidayTitle"
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
@@ -137,24 +137,17 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="select2">Select
-											Location :</label>
+											Location :*</label>
 										<div class="col-lg-10">
 											<select name="locId" data-placeholder="Select Location"
 												id="locId" multiple="multiple"
 												class="form-control form-control-select2 select2-hidden-accessible"
-												required="" data-fouc="" tabindex="-1" aria-hidden="true">
-												<option></option>
+												tabindex="-1" aria-hidden="true">
+												<option value="">Select Location</option>
 												<c:forEach items="${locationList}" var="location">
-													<c:choose>
-														<c:when test="${location.locId == editHoliday.companyId}">
-															<option value="${location.locId}" selected="selected">${location.locName}</option>
-														</c:when>
-														<c:otherwise>
-															<option value="${location.locId}">${location.locName}</option>
-														</c:otherwise>
-													</c:choose>
+													<option value="${location.locId}">${location.locName}</option>
 												</c:forEach>
-											</select> <span class="validation-invalid-label" id="error_locName"
+											</select> <span class="validation-invalid-label" id="error_locId"
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
@@ -162,30 +155,25 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="calYrId">Select
-											year :</label>
+											year :*</label>
 										<div class="col-lg-10">
 											<select name="calYrId" data-placeholder="Select Year"
 												id="calYrId"
 												class="form-control form-control-select2 select2-hidden-accessible"
-												required="" data-fouc="" tabindex="-1" aria-hidden="true">
-												<option></option>
+												tabindex="-1" aria-hidden="true">
+												<option value="">Select Year</option>
 												<c:forEach items="${yearList}" var="year">
-													<c:choose>
-														<c:when test="${year.calYrId == editHoliday.calYrId}">
-															<option value="${year.calYrId}" selected="selected">${year.calYrFromDate}_${year.calYrToDate}</option>
-														</c:when>
-														<c:otherwise>
-															<option value="${year.calYrId}">${year.calYrFromDate}_${year.calYrToDate}</option>
-														</c:otherwise>
-													</c:choose>
+
+													<option value="${year.calYrId}">${year.calYrFromDate}_${year.calYrToDate}</option>
+
 												</c:forEach>
-											</select> <span class="validation-invalid-label" id="error_calendar"
+											</select> <span class="validation-invalid-label" id="error_calYrId"
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
 
 									<div class="form-group row">
-										<label class="col-form-label col-lg-2">Date Range:</label>
+										<label class="col-form-label col-lg-2">Date Range :*</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control daterange-basic_new "
 												value="21-04-2019 @ 21-05-2019" name="dateRange"
@@ -196,23 +184,20 @@
 										</div>
 									</div>
 
-
-
-
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="remark">
 											Remark : </label>
 										<div class="col-lg-10">
 											<textarea rows="3" cols="3" class="form-control"
 												placeholder="Any Remark for Holiday" onchange="trim(this)"
-												id="holidayRemark" name="holidayRemark"></textarea>
+												id="holidayRemark" name="holidayRemark">-</textarea>
 
 										</div>
 									</div>
 
 									<div class="form-group row mb-0">
 										<div class="col-lg-10 ml-lg-auto">
-											<button type="reset" class="btn btn-light legitRipple">Reset</button>
+
 											<button type="submit" class="btn bg-blue ml-3 legitRipple"
 												id="submtbtn">
 												Submit <i class="icon-paperplane ml-2"></i>
@@ -280,34 +265,34 @@
 				var isError = false;
 				var errMsg = "";
 
-				if (!$("#companyId").val()) {
+				if (!$("#holidayTitle").val()) {
 
 					isError = true;
 
-					$("#error_compName").show()
-					//return false;
+					$("#error_holidayTitle").show()
+
 				} else {
-					$("#error_compName").hide()
+					$("#error_locId").hide()
 				}
 
 				if (!$("#locId").val()) {
 
 					isError = true;
 
-					$("#error_locName").show()
+					$("#error_locId").show()
 
 				} else {
-					$("#error_locName").hide()
+					$("#error_locId").hide()
 				}
 
 				if (!$("#calYrId").val()) {
 
 					isError = true;
 
-					$("#error_calendar").show()
+					$("#error_calYrId").show()
 
 				} else {
-					$("#error_calendar").hide()
+					$("#error_calYrId").hide()
 				}
 
 				if (!$("#dateRange").val()) {

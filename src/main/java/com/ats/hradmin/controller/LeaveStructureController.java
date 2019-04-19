@@ -23,12 +23,15 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ats.hradmin.common.Constants;
 import com.ats.hradmin.common.DateConvertor;
 import com.ats.hradmin.common.FormValidation;
+import com.ats.hradmin.leave.model.GetLeaveAuthority;
 import com.ats.hradmin.leave.model.GetStructureAllotment;
 import com.ats.hradmin.leave.model.Holiday;
 import com.ats.hradmin.leave.model.LeaveAuthority;
 import com.ats.hradmin.leave.model.LeaveStructureDetails;
 import com.ats.hradmin.leave.model.LeaveStructureHeader;
 import com.ats.hradmin.leave.model.LeavesAllotment;
+import com.ats.hradmin.model.EmployeeInfo;
+import com.ats.hradmin.model.GetEmployeeInfo;
 import com.ats.hradmin.model.Info;
 import com.ats.hradmin.model.LeaveSummary;
 import com.ats.hradmin.model.LeaveType;
@@ -543,21 +546,23 @@ public class LeaveStructureController {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("companyId", 1);
-			LeaveStructureHeader[] lvStrSummery = Constants.getRestTemplate()
-					.postForObject(Constants.url + "/getStructureList", map, LeaveStructureHeader[].class);
+			map.add("locIdList", 1);
 
-			List<LeaveStructureHeader> lSummarylist = new ArrayList<>(Arrays.asList(lvStrSummery));
-			model.addObject("lStrList", lSummarylist);
+			GetEmployeeInfo[] employeeDepartment = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getEmpInfoList", map, GetEmployeeInfo[].class);
+
+			List<GetEmployeeInfo> employeeDepartmentlist = new ArrayList<GetEmployeeInfo>(
+					Arrays.asList(employeeDepartment));
+
+			model.addObject("empList", employeeDepartmentlist);
+
 			map = new LinkedMultiValueMap<>();
 			map.add("companyId", 1);
-			map.add("locIdList", 1);
-			GetStructureAllotment[] summary = Constants.getRestTemplate()
-					.postForObject(Constants.url + "/getStructureAllotmentList", map, GetStructureAllotment[].class);
+			GetEmployeeInfo[] empInfoError = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getEmpInfoListForLeaveAuth", map, GetEmployeeInfo[].class);
 
-			List<GetStructureAllotment> leaveSummarylist = new ArrayList<>(Arrays.asList(summary));
-
-			model.addObject("lvStructureList", leaveSummarylist);
-			System.out.println("leaveSummarylist" + leaveSummarylist.toString());
+			List<GetEmployeeInfo> employeeInfo = new ArrayList<>(Arrays.asList(empInfoError));
+			model.addObject("empListAuth", employeeInfo);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -633,6 +638,28 @@ public class LeaveStructureController {
 		}
 
 		return "redirect:/addLeaveAuthority";
+	}
+
+	@RequestMapping(value = "/leaveAuthorityList", method = RequestMethod.GET)
+	public ModelAndView leaveAuthorityList(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("leave/authority_list");
+
+		try {
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("companyId", 1);
+			 
+			GetLeaveAuthority[] empInfoError = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getEmpInfoListForLeaveAuth", map, GetLeaveAuthority[].class);
+
+			List<GetLeaveAuthority> employeeInfo = new ArrayList<>(Arrays.asList(empInfoError));
+			model.addObject("empListAuth", employeeInfo);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
 	}
 
 }

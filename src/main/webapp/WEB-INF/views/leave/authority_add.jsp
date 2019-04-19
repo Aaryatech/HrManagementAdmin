@@ -126,7 +126,7 @@
 												<th class="check" style="text-align: center; width: 5%;"><input
 													type="checkbox" name="selAll" id="selAll" />Select All</th>
 
-												<!-- <th width="10%">Sr. No.</th> -->
+
 												<th>Employee Code</th>
 												<th>Employee Name</th>
 												<th>Department</th>
@@ -137,17 +137,16 @@
 										<tbody>
 
 
-											<c:forEach items="${lvStructureList}" var="structure"
-												varStatus="count">
+											<c:forEach items="${empListAuth}" var="emp" varStatus="count">
 												<tr>
 													<td style="text-align: center;"><input type="checkbox"
 														class="chk" name="empIds" id="empIds${count.index+1}"
-														value="${structure.empId}" /></td>
-													<%-- 	<td>${count.index+1}</td> --%>
-													<td>${structure.empCode}</td>
-													<td>${structure.empFname}${structure.empMname}${structure.empSname}</td>
-													<td>${structure.empDeptName}</td>
-													<td>${structure.empCatName}</td>
+														value="${emp.empId}" /></td>
+
+													<td width="10%">${emp.empCode}</td>
+													<td>${emp.empFname}${emp.empMname}${emp.empSname}</td>
+													<td width="10%">${emp.empDept}</td>
+													<td width="10%">${emp.empCategory}</td>
 												</tr>
 											</c:forEach>
 
@@ -165,31 +164,27 @@
 													Authority</th>
 
 												<!-- <th width="10%">Sr. No.</th> -->
-												<th width="10%">Employee Code</th>
-												<th width="10%">Employee Name</th>
-												<th width="10%">Department</th>
-												<th width="10%">Designation</th>
+												<th width="10%">Emp Code</th>
+												<th width="10%">Emp Name</th>
+												<th width="10%">Dept</th>
+												<th width="10%">Desgn</th>
 											</tr>
 										</thead>
 										<tbody>
-											<c:forEach items="${lvStructureList}" var="structure"
-												varStatus="count">
+											<c:forEach items="${empList}" var="emp" varStatus="count">
 												<tr>
 													<td width="60%"><input type="radio" class="chk"
 														name="iniAuthEmpId" id="iniAuthEmpId${count.index+1}"
-														value="${structure.empId}" />Initial <input type="radio"
+														value="${emp.empId}" />Initial <input type="radio"
 														class="chk" name="finAuthEmpId"
-														id="finAuthEmpId${count.index+1}"
-														value="${structure.empId}" />Final <input type="checkbox"
-														class="chk" name="repToEmpIds"
-														id="repToEmpIds${count.index+1}"
-														value="${structure.empId}" />Reporting</td>
+														id="finAuthEmpId${count.index+1}" value="${emp.empId}" />Final
+														<input type="checkbox" class="chk" name="repToEmpIds"
+														id="repToEmpIds${count.index+1}" value="${emp.empId}" />Reporting</td>
 													<%-- <td>${count.index+1}</td> --%>
-													<td width="10%">${structure.empCode}</td>
-													<td>${structure.empFname}${structure.empMname}
-														${structure.empSname}</td>
-													<td width="10%">${structure.empDeptName}</td>
-													<td width="10%">${structure.empCatName}</td>
+													<td width="10%">${emp.empCode}</td>
+													<td>${emp.empFname}${emp.empMname}${emp.empSname}</td>
+													<td width="10%">${emp.empDept}</td>
+													<td width="10%">${emp.empCategory}</td>
 												</tr>
 											</c:forEach>
 

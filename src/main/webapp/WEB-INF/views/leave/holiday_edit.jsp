@@ -130,7 +130,7 @@
 												value="${editHoliday.exVar2}" name="holidayTitle"
 												autocomplete="off" onchange="trim(this)" maxlength="100">
 											<span class="validation-invalid-label"
-												id="error_locShortName" style="display: none;">This
+												id="error_holidayTitle" style="display: none;">This
 												field is required.</span>
 										</div>
 									</div>
@@ -142,8 +142,7 @@
 											<select name="locId" data-placeholder="Select Location"
 												id="locId"
 												class="form-control form-control-select2 select2-hidden-accessible"
-												multiple="multiple" required="" data-fouc="" tabindex="-1"
-												aria-hidden="true">
+												multiple="multiple" tabindex="-1" aria-hidden="true">
 												<option></option>
 
 
@@ -179,7 +178,7 @@
 														</c:otherwise>
 													</c:choose>
 												</c:forEach> --%>
-											</select> <span class="validation-invalid-label" id="error_locName"
+											</select> <span class="validation-invalid-label" id="error_locId"
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
@@ -204,7 +203,7 @@
 														</c:otherwise>
 													</c:choose>
 												</c:forEach>
-											</select> <span class="validation-invalid-label" id="error_calendar"
+											</select> <span class="validation-invalid-label" id="error_calYrId"
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
@@ -215,7 +214,9 @@
 											<input type="text" class="form-control daterange-basic_new "
 												name="dateRange"
 												value="${editHoliday.holidayFromdt} to ${editHoliday.holidayTodt} "
-												data-placeholder="Select Date" id="dateRange">
+												data-placeholder="Select Date" id="dateRange"> <span
+												class="validation-invalid-label" id="error_dateRange"
+												style="display: none;">This field is required.</span>
 
 										</div>
 									</div>
@@ -264,7 +265,6 @@
 
 	</div>
 	<!-- /page content -->
-
 	<script>
 		function trim(el) {
 			el.value = el.value.replace(/(^\s*)|(\s*$)/gi, ""). // removes leading and trailing spaces
@@ -300,48 +300,48 @@
 		}
 		$(document).ready(function($) {
 
-			$("#submitEditHoliday").submit(function(e) {
+			$("#submitInsertHoliday").submit(function(e) {
 				var isError = false;
 				var errMsg = "";
 
-				if (!$("#companyId").val()) {
+				if (!$("#holidayTitle").val()) {
 
 					isError = true;
 
-					$("#error_compName").show()
-					//return false;
+					$("#error_holidayTitle").show()
+
 				} else {
-					$("#error_compName").hide()
+					$("#error_locId").hide()
 				}
 
 				if (!$("#locId").val()) {
 
 					isError = true;
 
-					$("#error_locName").show()
+					$("#error_locId").show()
 
 				} else {
-					$("#error_locName").hide()
+					$("#error_locId").hide()
 				}
 
 				if (!$("#calYrId").val()) {
 
 					isError = true;
 
-					$("#error_calendar").show()
+					$("#error_calYrId").show()
 
 				} else {
-					$("#error_calendar").hide()
+					$("#error_calYrId").hide()
 				}
 
-				if (!$("#prsnName").val()) {
+				if (!$("#dateRange").val()) {
 
 					isError = true;
 
-					$("#error_prsnName").show()
+					$("#error_Range").show()
 
 				} else {
-					$("#error_prsnName").hide()
+					$("#error_Range").hide()
 				}
 
 				if (!isError) {
@@ -359,7 +359,6 @@
 		});
 		//
 	</script>
-
 	<script type="text/javascript">
 		// Single picker
 		$('.datepickerclass').daterangepicker({

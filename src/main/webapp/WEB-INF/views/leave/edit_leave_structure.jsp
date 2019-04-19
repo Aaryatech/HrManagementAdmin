@@ -132,7 +132,7 @@
 												placeholder="Enter Leave Structure Name" id="lvsName"
 												value="${editStructure.lvsName}" name="lvsName"
 												autocomplete="off" onchange="trim(this)"> <span
-												class="validation-invalid-label" id="error_locName"
+												class="validation-invalid-label" id="error_lvsName"
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
@@ -234,115 +234,35 @@
 			return true;
 
 		}
-		$(document)
-				.ready(
-						function($) {
+		$(document).ready(function($) {
 
-							$("#submitInsertLocaion")
-									.submit(
-											function(e) {
-												var isError = false;
-												var errMsg = "";
+			$("#insertLeaveStructure").submit(function(e) {
+				var isError = false;
+				var errMsg = "";
 
-												if (!$("#locName").val()) {
+				if (!$("#lvsName").val()) {
 
-													isError = true;
+					isError = true;
 
-													$("#error_locName").show()
-													//return false;
-												} else {
-													$("#error_locName").hide()
-												}
+					$("#error_lvsName").show()
+					//return false;
+				} else {
+					$("#error_lvsName").hide()
+				}
 
-												if (!$("#locShortName").val()) {
+				if (!isError) {
 
-													isError = true;
+					var x = confirm("Do you really want to submit the form?");
+					if (x == true) {
 
-													$("#error_locShortName")
-															.show()
-
-												} else {
-													$("#error_locShortName")
-															.hide()
-												}
-
-												if (!$("#add").val()) {
-
-													isError = true;
-
-													$("#error_locadd").show()
-
-												} else {
-													$("#error_locadd").hide()
-												}
-
-												if (!$("#prsnName").val()) {
-
-													isError = true;
-
-													$("#error_prsnName").show()
-
-												} else {
-													$("#error_prsnName").hide()
-												}
-
-												if (!$("#contactNo").val()
-														|| !validateMobile($(
-																"#contactNo")
-																.val())) {
-
-													isError = true;
-
-													if (!$("#contactNo").val()) {
-														document
-																.getElementById("error_contactNo").innerHTML = "This field is required.";
-													} else {
-														document
-																.getElementById("error_contactNo").innerHTML = "Enter valid Mobile No.";
-													}
-
-													$("#error_contactNo")
-															.show()
-
-												} else {
-													$("#error_contactNo")
-															.hide()
-												}
-
-												if (!$("#email").val()
-														|| !validateEmail($(
-																"#email").val())) {
-
-													isError = true;
-
-													if (!$("#email").val()) {
-														document
-																.getElementById("error_email").innerHTML = "This field is required.";
-													} else {
-														document
-																.getElementById("error_email").innerHTML = "Enter valid email.";
-													}
-
-													$("#error_email").show()
-
-												} else {
-													$("#error_email").hide()
-												}
-
-												if (!isError) {
-
-													var x = confirm("Do you really want to submit the form?");
-													if (x == true) {
-
-														document
-																.getElementById("submtbtn").disabled = true;
-														return true;
-													}
-													//end ajax send this to php page
-												}
-												return false;
-											});
-						});
+						document.getElementById("submtbtn").disabled = true;
+						return true;
+					}
+					//end ajax send this to php page
+				}
+				return false;
+			});
+		});
 		//
 	</script>
 
