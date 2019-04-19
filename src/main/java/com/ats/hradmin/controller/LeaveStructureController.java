@@ -21,9 +21,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.hradmin.common.Constants;
+import com.ats.hradmin.common.DateConvertor;
 import com.ats.hradmin.common.FormValidation;
+import com.ats.hradmin.leave.model.GetStructureAllotment;
+import com.ats.hradmin.leave.model.Holiday;
 import com.ats.hradmin.leave.model.LeaveStructureDetails;
 import com.ats.hradmin.leave.model.LeaveStructureHeader;
+import com.ats.hradmin.leave.model.LeavesAllotment;
 import com.ats.hradmin.model.Info;
 import com.ats.hradmin.model.LeaveSummary;
 import com.ats.hradmin.model.LeaveType;
@@ -439,4 +443,93 @@ public class LeaveStructureController {
 		return "redirect:/showLeaveStructureList";
 
 	}
+
+	@RequestMapping(value = "/leaveStructureAllotment", method = RequestMethod.GET)
+	public ModelAndView leaveStructureAllotment(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("leave/leave_structure_allot_list");
+
+		try {
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("companyId", 1);
+			LeaveStructureHeader[] lvStrSummery = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getStructureList", map, LeaveStructureHeader[].class);
+
+			List<LeaveStructureHeader> lSummarylist = new ArrayList<>(Arrays.asList(lvStrSummery));
+			model.addObject("lStrList", lSummarylist);
+			map = new LinkedMultiValueMap<>();
+			map.add("companyId", 1);
+			map.add("locIdList", 1);
+			GetStructureAllotment[] summary = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getStructureAllotmentList", map, GetStructureAllotment[].class);
+
+			List<GetStructureAllotment> leaveSummarylist = new ArrayList<>(Arrays.asList(summary));
+
+			model.addObject("lvStructureList", leaveSummarylist);
+			System.out.println("leaveSummarylist" + leaveSummarylist.toString());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+	}
+
+	@RequestMapping(value = "/submitStructureList", method = RequestMethod.POST)
+	public String submitStructureList(HttpServletRequest request, HttpServletResponse response) {
+
+		try {
+			HttpSession session = request.getSession();
+			int lvsId = Integer.parseInt(request.getParameter("lvsId"));
+
+			String[] empIds = request.getParameterValues("empIds");
+
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < empIds.length; i++) {
+				sb = sb.append(empIds[i] + ",");
+
+			}
+			String items = sb.toString();
+			items = items.substring(0, items.length() - 1);
+
+			String[] arrOfStr = items.split(",");
+			LeavesAllotment leavesAllotment = new LeavesAllotment();
+			for (int i = 0; i < items.length(); i++) {
+				for (int j = 0; j < arrOfStr.length; j++) {
+
+					leavesAllotment.setCalYrId(1);
+
+					leavesAllotment.setDelStatus(1);
+					leavesAllotment.setEmpId(Integer.parseInt(arrOfStr[j]));
+					leavesAllotment.setExInt1(1);
+					leavesAllotment.setExInt2(1);
+					leavesAllotment.setExInt3(1);
+					leavesAllotment.setExVar1("NA");
+					leavesAllotment.setExVar2("NA");
+					leavesAllotment.setExVar3("NA");
+					leavesAllotment.setIsActive(1);
+					leavesAllotment.setMakerUserId(1);
+					leavesAllotment.setMakerEnterDatetime(dateTime);
+					leavesAllotment.setLvsId(lvsId);
+
+				}
+
+				LeavesAllotment res = Constants.getRestTemplate().postForObject(Constants.url + "/saveLeaveAllotment",
+						leavesAllotment, LeavesAllotment.class);
+
+				if (res != null) {
+					session.setAttribute("successMsg", "Record Insert Successfully");
+				} else {
+					session.setAttribute("errorMsg", "Failed to Insert Record");
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:/leaveStructureAllotment";
+	}
+
 }
