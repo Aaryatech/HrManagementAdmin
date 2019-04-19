@@ -116,7 +116,7 @@
 								<tr class="bg-blue">
 
 									<th width="10%">Sr. No.</th>
-									<th>Company Name</th>
+									<th>Holiday Title</th>
 									<th>Location Name</th>
 									<th>Calendar</th>
 									<th>From Date</th>
@@ -132,7 +132,7 @@
 								<c:forEach items="${holList}" var="holiday" varStatus="count">
 									<tr>
 										<td>${count.index+1}</td>
-										<td>${holiday.companyName}</td>
+										<td>${holiday.exVar2}</td>
 										<td>${holiday.locName}</td>
 										<td>${holiday.calYrFromDate}_${holiday.calYrToDate}</td>
 										<td>${holiday.holidayFromdt}</td>

@@ -115,94 +115,98 @@
 							action="${pageContext.request.contextPath}/submitAuthorityList"
 							method="post">
 
+							<div class="row">
+								<div class="col-md-6">
 
-							<div class="col-md-6">
+									<table
+										class="table table-bordered table-hover datatable-highlight datatable-button-html5-basic1  datatable-button-print-columns1"
+										id="printtable1">
+										<thead>
+											<tr class="bg-blue">
+												<th class="check" style="text-align: center; width: 5%;"><input
+													type="checkbox" name="selAll" id="selAll" />Select All</th>
 
-								<table
-									class="table table-bordered table-hover datatable-highlight datatable-button-html5-basic1  datatable-button-print-columns1"
-									id="printtable1">
-									<thead>
-										<tr class="bg-blue">
-											<th class="check" style="text-align: center; width: 5%;"><input
-												type="checkbox" name="selAll" id="selAll" />Select All</th>
+												<!-- <th width="10%">Sr. No.</th> -->
+												<th>Employee Code</th>
+												<th>Employee Name</th>
+												<th>Department</th>
+												<th>Designation</th>
 
-											<!-- <th width="10%">Sr. No.</th> -->
-											<th>Employee Code</th>
-											<th>Employee Name</th>
-											<th>Department</th>
-											<th>Designation</th>
-
-										</tr>
-									</thead>
-									<tbody>
-
-
-										<c:forEach items="${lvStructureList}" var="structure"
-											varStatus="count">
-											<tr>
-												<td style="text-align: center;"><input type="checkbox"
-													class="chk" name="empIds" id="empIds${count.index+1}"
-													value="${structure.empId}" /></td>
-												<%-- 	<td>${count.index+1}</td> --%>
-												<td>${structure.empCode}</td>
-												<td>${structure.empFname}${structure.empMname}${structure.empSname}</td>
-												<td>${structure.empDeptName}</td>
-												<td>${structure.empCatName}</td>
 											</tr>
-										</c:forEach>
+										</thead>
+										<tbody>
 
-									</tbody>
-								</table>
-							</div>
 
-							<div class="col-md-6">
-								<table
-									class="table table-bordered table-hover datatable-highlight datatable-button-html5-basic1  datatable-button-print-columns1"
-									id="printtable2">
-									<thead>
-										<tr class="bg-blue">
-											<th class="check" style="text-align: center;">Select
-												Authority</th>
+											<c:forEach items="${lvStructureList}" var="structure"
+												varStatus="count">
+												<tr>
+													<td style="text-align: center;"><input type="checkbox"
+														class="chk" name="empIds" id="empIds${count.index+1}"
+														value="${structure.empId}" /></td>
+													<%-- 	<td>${count.index+1}</td> --%>
+													<td>${structure.empCode}</td>
+													<td>${structure.empFname}${structure.empMname}${structure.empSname}</td>
+													<td>${structure.empDeptName}</td>
+													<td>${structure.empCatName}</td>
+												</tr>
+											</c:forEach>
 
-											<!-- <th width="10%">Sr. No.</th> -->
-											<th width="10%">Employee Code</th>
-											<th width="10%">Employee Name</th>
-											<th width="10%">Department</th>
-											<th width="10%">Designation</th>
-										</tr>
-									</thead>
-									<tbody>
-										<c:forEach items="${lvStructureList}" var="structure"
-											varStatus="count">
-											<tr>
-												<td width="60%"><input type="radio" class="chk"
-													name="iniAuthEmpId" id="iniAuthEmpId${count.index+1}"
-													value="${structure.empId}" />Initial <input type="radio"
-													class="chk" name="finAuthEmpId"
-													id="finAuthEmpId${count.index+1}"
-													value="${structure.empId}" />Final <input type="checkbox"
-													class="chk" name="repToEmpIds"
-													id="repToEmpIds${count.index+1}" value="${structure.empId}" />Reporting</td>
-												<%-- <td>${count.index+1}</td> --%>
-												<td width="10%">${structure.empCode}</td>
-												<td>${structure.empFname}${structure.empMname}
-													${structure.empSname}</td>
-												<td width="10%">${structure.empDeptName}</td>
-												<td width="10%">${structure.empCatName}</td>
+										</tbody>
+									</table>
+								</div>
+
+								<div class="col-md-6">
+									<table
+										class="table table-bordered table-hover datatable-highlight datatable-button-html5-basic1  datatable-button-print-columns1"
+										id="printtable2">
+										<thead>
+											<tr class="bg-blue">
+												<th class="check" style="text-align: center;">Select
+													Authority</th>
+
+												<!-- <th width="10%">Sr. No.</th> -->
+												<th width="10%">Employee Code</th>
+												<th width="10%">Employee Name</th>
+												<th width="10%">Department</th>
+												<th width="10%">Designation</th>
 											</tr>
-										</c:forEach>
+										</thead>
+										<tbody>
+											<c:forEach items="${lvStructureList}" var="structure"
+												varStatus="count">
+												<tr>
+													<td width="60%"><input type="radio" class="chk"
+														name="iniAuthEmpId" id="iniAuthEmpId${count.index+1}"
+														value="${structure.empId}" />Initial <input type="radio"
+														class="chk" name="finAuthEmpId"
+														id="finAuthEmpId${count.index+1}"
+														value="${structure.empId}" />Final <input type="checkbox"
+														class="chk" name="repToEmpIds"
+														id="repToEmpIds${count.index+1}"
+														value="${structure.empId}" />Reporting</td>
+													<%-- <td>${count.index+1}</td> --%>
+													<td width="10%">${structure.empCode}</td>
+													<td>${structure.empFname}${structure.empMname}
+														${structure.empSname}</td>
+													<td width="10%">${structure.empDeptName}</td>
+													<td width="10%">${structure.empCatName}</td>
+												</tr>
+											</c:forEach>
 
-									</tbody>
-								</table>
+										</tbody>
+									</table>
+								</div>
 							</div>
-							<div class="col-lg-1">
+							<div class="row">
+								<div class="col-lg-1">
 
-								<input type="submit" class="btn btn-primary" value="Add"
-									id="deleteId"
-									onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to Submit record');}"
-									style="align-content: center; width: 113px; margin-left: 40px;">
+									<input type="submit" class="btn btn-primary" value="Add"
+										id="deleteId"
+										onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to Submit record');}"
+										style="align-content: center; width: 113px; margin-left: 40px;">
 
 
+								</div>
 							</div>
 						</form>
 

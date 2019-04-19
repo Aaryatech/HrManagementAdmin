@@ -95,11 +95,11 @@
 
 						<li class="nav-item"><a
 							href="${pageContext.request.contextPath}/leaveStructureAllotment"
-							class="nav-link">Leave Authority</a></li>
+							class="nav-link">Leave Allotment</a></li>
 
 						<li class="nav-item"><a
 							href="${pageContext.request.contextPath}/addLeaveAuthority"
-							class="nav-link">Leave Allotment</a></li>
+							class="nav-link">Leave Authority</a></li>
 
 					</ul></li>
 				<li class="nav-item nav-item-submenu"><a href="#"

@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,21 +40,17 @@ import com.ats.hradmin.model.Location;
 public class LeaveHolidayController {
 	Holiday editHoliday = new Holiday();
 
+	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	Date now = new Date();
+	String curDate = dateFormat.format(new Date());
+	String dateTime = dateFormat.format(now);
+
 	@RequestMapping(value = "/holidayAdd", method = RequestMethod.GET)
 	public ModelAndView holidayAdd(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("leave/holiday");
 
 		try {
-
-			Company[] companyArray = Constants.getRestTemplate().getForObject(Constants.url + "/getCompanyList",
-					Company[].class);
-
-			List<Company> compList = new ArrayList<>(Arrays.asList(companyArray));
-
-			model.addObject("compList", compList);
-
-			System.out.println(compList); // System.out.println("asdfsdf");
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("companyId", 1);
@@ -91,15 +89,22 @@ public class LeaveHolidayController {
 
 			String dateRange = request.getParameter("dateRange");
 			String[] arrOfStr = dateRange.split("to", 2);
-			System.out.println("111" + arrOfStr[0].toString().trim());
-			System.out.println("222" + arrOfStr[1].toString().trim());
 
 			String holidayRemark = request.getParameter("holidayRemark");
+			String holidayTitle = request.getParameter("holidayTitle");
 
 			int calYrId = Integer.parseInt(request.getParameter("calYrId"));
-			int companyId = Integer.parseInt(request.getParameter("companyId"));
 
-			int locId = Integer.parseInt(request.getParameter("locId"));
+			String[] locIds = request.getParameterValues("locId");
+
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < locIds.length; i++) {
+				sb = sb.append(locIds[i] + ",");
+
+			}
+			String locIdList = sb.toString();
+			locIdList = locIdList.substring(0, locIdList.length() - 1);
 
 			int holidayId = 0;
 			try {
@@ -107,10 +112,6 @@ public class LeaveHolidayController {
 			} catch (Exception e) {
 				holidayId = 0;
 			}
-			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			Date now = new Date();
-			String curDate = dateFormat.format(new Date());
-			String dateTime = dateFormat.format(now);
 
 			Boolean ret = false;
 
@@ -131,21 +132,21 @@ public class LeaveHolidayController {
 				Holiday holiday = new Holiday();
 
 				holiday.setCalYrId(calYrId);
-				holiday.setCompanyId(companyId);
+				holiday.setCompanyId(1);
 				holiday.setDelStatus(1);
 				holiday.setExInt1(1);
 
 				holiday.setExInt2(1);
 				holiday.setExInt3(1);
 				holiday.setExVar1("NA");
-				holiday.setExVar2("NA");
+				holiday.setExVar2(holidayTitle);
 				holiday.setExVar3("NA");
 				holiday.setHolidayFromdt(DateConvertor.convertToYMD(arrOfStr[0].toString().trim()));
 				holiday.setHolidayTodt(DateConvertor.convertToYMD(arrOfStr[1].toString().trim()));
 				holiday.setHolidayId(holidayId);
 				holiday.setHolidayRemark(holidayRemark);
 				holiday.setIsActive(1);
-				holiday.setLocId(locId);
+				holiday.setLocId(locIdList);
 				holiday.setMakerEnterDatetime(dateTime);
 				holiday.setMakerUserId(1);
 
@@ -175,16 +176,6 @@ public class LeaveHolidayController {
 		ModelAndView model = new ModelAndView("leave/holiday_edit");
 
 		try {
-
-			Company[] companyArray = Constants.getRestTemplate().getForObject(Constants.url + "/getCompanyList",
-					Company[].class);
-
-			List<Company> compList = new ArrayList<>(Arrays.asList(companyArray));
-
-			model.addObject("compList", compList);
-
-			System.out.println(compList); // System.out.println("asdfsdf");
-
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("companyId", 1);
 			Location[] location = Constants.getRestTemplate().postForObject(Constants.url + "/getLocationList", map,
@@ -217,6 +208,11 @@ public class LeaveHolidayController {
 					Holiday.class);
 			model.addObject("editHoliday", editHoliday);
 
+			List<Integer> locIdList = Stream.of(editHoliday.getLocId().split(",")).map(Integer::parseInt)
+					.collect(Collectors.toList());
+
+			model.addObject("locIdList", locIdList);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -232,7 +228,6 @@ public class LeaveHolidayController {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("companyId", 1);
-			map.add("locIdList", 1);
 
 			GetHoliday[] holListArray = Constants.getRestTemplate().postForObject(Constants.url + "/getHolidayList",
 					map, GetHoliday[].class);
@@ -262,26 +257,22 @@ public class LeaveHolidayController {
 
 			String dateRange = request.getParameter("dateRange");
 			String[] arrOfStr = dateRange.split("to", 2);
-			System.out.println("111" + arrOfStr[0].toString().trim());
-			System.out.println("222" + arrOfStr[1].toString().trim());
 
 			String holidayRemark = request.getParameter("holidayRemark");
+			String holidayTitle = request.getParameter("holidayTitle");
 
 			int calYrId = Integer.parseInt(request.getParameter("calYrId"));
-			int companyId = Integer.parseInt(request.getParameter("companyId"));
 
-			int locId = Integer.parseInt(request.getParameter("locId"));
+			String[] locIds = request.getParameterValues("locId");
 
-			int holidayId = 0;
-			try {
-				holidayId = Integer.parseInt(request.getParameter("holidayId"));
-			} catch (Exception e) {
-				holidayId = 0;
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < locIds.length; i++) {
+				sb = sb.append(locIds[i] + ",");
+
 			}
-			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			Date now = new Date();
-			String curDate = dateFormat.format(new Date());
-			String dateTime = dateFormat.format(now);
+			String locIdList = sb.toString();
+			locIdList = locIdList.substring(0, locIdList.length() - 1);
 
 			Boolean ret = false;
 
@@ -291,7 +282,7 @@ public class LeaveHolidayController {
 				System.out.println("holidayFromdt" + ret);
 			}
 
-			if (FormValidation.Validaton(holidayRemark, "") == true) {
+			if (FormValidation.Validaton(holidayTitle, "") == true) {
 
 				ret = true;
 				System.out.println("holidayRemark" + ret);
@@ -300,11 +291,11 @@ public class LeaveHolidayController {
 			if (ret == false) {
 
 				editHoliday.setCalYrId(calYrId);
-				editHoliday.setCompanyId(companyId);
+
 				editHoliday.setHolidayFromdt(DateConvertor.convertToYMD(arrOfStr[0].toString().trim()));
 				editHoliday.setHolidayTodt(DateConvertor.convertToYMD(arrOfStr[1].toString().trim()));
 				editHoliday.setHolidayRemark(holidayRemark);
-				editHoliday.setLocId(locId);
+				editHoliday.setLocId(locIdList);
 
 				Holiday res = Constants.getRestTemplate().postForObject(Constants.url + "/saveHoliday", editHoliday,
 						Holiday.class);

@@ -8,7 +8,7 @@ public class Holiday {
 
 	private int companyId;
 
-	private int locId;
+	private String locId;
 
 	private String holidayFromdt;
 
@@ -60,11 +60,11 @@ public class Holiday {
 		this.companyId = companyId;
 	}
 
-	public int getLocId() {
+	public String getLocId() {
 		return locId;
 	}
 
-	public void setLocId(int locId) {
+	public void setLocId(String locId) {
 		this.locId = locId;
 	}
 

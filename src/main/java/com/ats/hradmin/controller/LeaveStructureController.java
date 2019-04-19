@@ -403,8 +403,6 @@ public class LeaveStructureController {
 
 				editStructure.setLvsName(lvsName);
 
-				List<LeaveStructureDetails> detailList = new ArrayList<>();
-
 				for (int i = 0; i < editStructure.getDetailList().size(); i++) {
 
 					int noOfLeaves = 0;
@@ -416,10 +414,11 @@ public class LeaveStructureController {
 						editStructure.getDetailList().get(i).setLvsAllotedLeaves(noOfLeaves);
 					}
 
-					detailList.add(editStructure.getDetailList().get(i));
 				}
+				// System.err.println("detailList" + detailList.toString());
+				System.err.println("editStructure" + editStructure.toString());
 
-				editStructure.setDetailList(detailList);
+				// editStructure.setDetailList(detailList);
 
 				LeaveStructureHeader res = Constants.getRestTemplate()
 						.postForObject(Constants.url + "saveLeaveStruture", editStructure, LeaveStructureHeader.class);

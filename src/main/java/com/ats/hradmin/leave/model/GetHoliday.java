@@ -9,7 +9,7 @@ public class GetHoliday {
 
 	private int companyId;
 
-	private int locId;
+	private String locId;
 
 	private String holidayFromdt;
 
@@ -21,8 +21,10 @@ public class GetHoliday {
 	private String locName;
 	private String calYrFromDate;
 	private String calYrToDate;
-	
+
 	private String exVar1;
+	
+	private String exVar2;
 
 	public int getHolidayId() {
 		return holidayId;
@@ -48,11 +50,11 @@ public class GetHoliday {
 		this.companyId = companyId;
 	}
 
-	public int getLocId() {
+	public String getLocId() {
 		return locId;
 	}
 
-	public void setLocId(int locId) {
+	public void setLocId(String locId) {
 		this.locId = locId;
 	}
 
@@ -111,8 +113,6 @@ public class GetHoliday {
 	public void setCalYrToDate(String calYrToDate) {
 		this.calYrToDate = calYrToDate;
 	}
-	
-	
 
 	public String getExVar1() {
 		return exVar1;
@@ -121,13 +121,22 @@ public class GetHoliday {
 	public void setExVar1(String exVar1) {
 		this.exVar1 = exVar1;
 	}
+	
+
+	public String getExVar2() {
+		return exVar2;
+	}
+
+	public void setExVar2(String exVar2) {
+		this.exVar2 = exVar2;
+	}
 
 	@Override
 	public String toString() {
 		return "GetHoliday [holidayId=" + holidayId + ", calYrId=" + calYrId + ", companyId=" + companyId + ", locId="
 				+ locId + ", holidayFromdt=" + holidayFromdt + ", holidayTodt=" + holidayTodt + ", holidayRemark="
 				+ holidayRemark + ", companyName=" + companyName + ", locName=" + locName + ", calYrFromDate="
-				+ calYrFromDate + ", calYrToDate=" + calYrToDate + ", exVar1=" + exVar1 + "]";
+				+ calYrFromDate + ", calYrToDate=" + calYrToDate + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + "]";
 	}
 
 }

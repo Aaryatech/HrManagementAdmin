@@ -118,31 +118,21 @@
 
 								<form
 									action="${pageContext.request.contextPath}/submitInsertHoliday"
-									id="submitInsertHoliday" method="post">
+									id="submitInstHoliday" method="post">
 
 									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="companyId">Select
-											Company :</label>
+										<label class="col-form-label col-lg-2" for="locShortName">Holiday
+											Title : *</label>
 										<div class="col-lg-10">
-											<select name="companyId" data-placeholder="Select Company"
-												id="companyId"
-												class="form-control form-control-select2 select2-hidden-accessible"
-												required="" data-fouc="" tabindex="-1" aria-hidden="true">
-												<option></option>
-												<c:forEach items="${compList}" var="comp">
-													<c:choose>
-														<c:when test="${comp.companyId == editHoliday.companyId}">
-															<option value="${comp.companyId}" selected="selected">${comp.companyName}</option>
-														</c:when>
-														<c:otherwise>
-															<option value="${comp.companyId}">${comp.companyName}</option>
-														</c:otherwise>
-													</c:choose>
-												</c:forEach>
-											</select> <span class="validation-invalid-label" id="error_compName"
+											<input type="text" class="form-control"
+												placeholder="Enter Hliday Title" id="holidayTitle"
+												name="holidayTitle" autocomplete="off" onchange="trim(this)"
+												maxlength="100"> <span
+												class="validation-invalid-label" id="error_locShortName"
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
+
 
 
 									<div class="form-group row">
@@ -150,7 +140,7 @@
 											Location :</label>
 										<div class="col-lg-10">
 											<select name="locId" data-placeholder="Select Location"
-												id="locId"
+												id="locId" multiple="multiple"
 												class="form-control form-control-select2 select2-hidden-accessible"
 												required="" data-fouc="" tabindex="-1" aria-hidden="true">
 												<option></option>

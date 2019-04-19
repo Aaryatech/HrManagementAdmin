@@ -120,30 +120,20 @@
 									action="${pageContext.request.contextPath}/submitEditHoliday"
 									id="submitInsertHoliday" method="post">
 
+
 									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="companyId">Select
-											Company :</label>
+										<label class="col-form-label col-lg-2" for="locShortName">Holiday
+											Title : *</label>
 										<div class="col-lg-10">
-											<select name="companyId" data-placeholder="Select Company"
-												id="companyId"
-												class="form-control form-control-select2 select2-hidden-accessible"
-												required="" data-fouc="" tabindex="-1" aria-hidden="true">
-												<option></option>
-												<c:forEach items="${compList}" var="comp">
-													<c:choose>
-														<c:when test="${comp.companyId == editHoliday.companyId}">
-															<option value="${comp.companyId}" selected="selected">${comp.companyName}</option>
-														</c:when>
-														<c:otherwise>
-															<option value="${comp.companyId}">${comp.companyName}</option>
-														</c:otherwise>
-													</c:choose>
-												</c:forEach>
-											</select> <span class="validation-invalid-label" id="error_compName"
-												style="display: none;">This field is required.</span>
+											<input type="text" class="form-control"
+												placeholder="Enter Hliday Title" id="holidayTitle"
+												value="${editHoliday.exVar2}" name="holidayTitle"
+												autocomplete="off" onchange="trim(this)" maxlength="100">
+											<span class="validation-invalid-label"
+												id="error_locShortName" style="display: none;">This
+												field is required.</span>
 										</div>
 									</div>
-
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="select2">Select
@@ -152,9 +142,34 @@
 											<select name="locId" data-placeholder="Select Location"
 												id="locId"
 												class="form-control form-control-select2 select2-hidden-accessible"
-												required="" data-fouc="" tabindex="-1" aria-hidden="true">
+												multiple="multiple" required="" data-fouc="" tabindex="-1"
+												aria-hidden="true">
 												<option></option>
+
+
 												<c:forEach items="${locationList}" var="location">
+													<c:set var="flag" value="0"></c:set>
+													<c:forEach items="${locIdList}" var="selFr"
+														varStatus="count2">
+														<c:choose>
+															<c:when test="${selFr==location.locId}">
+																<option selected value="${location.locId}"><c:out
+																		value="${location.locName}" /></option>
+																<c:set var="flag" value="1"></c:set>
+															</c:when>
+															<c:otherwise>
+
+															</c:otherwise>
+														</c:choose>
+													</c:forEach>
+													<c:choose>
+														<c:when test="${flag==0}">
+															<option value="${location.locId}"><c:out
+																	value="${location.locName}" /></option>
+														</c:when>
+													</c:choose>
+												</c:forEach>
+												<%-- <c:forEach items="${locationList}" var="location">
 													<c:choose>
 														<c:when test="${location.locId == editHoliday.companyId}">
 															<option value="${location.locId}" selected="selected">${location.locName}</option>
@@ -163,7 +178,7 @@
 															<option value="${location.locId}">${location.locName}</option>
 														</c:otherwise>
 													</c:choose>
-												</c:forEach>
+												</c:forEach> --%>
 											</select> <span class="validation-invalid-label" id="error_locName"
 												style="display: none;">This field is required.</span>
 										</div>
