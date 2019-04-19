@@ -48,7 +48,7 @@
 
 
 					<div class="breadcrumb justify-content-center">
-						<a href="${pageContext.request.contextPath}/leaveTypeAdd"
+						<a href="${pageContext.request.contextPath}/employeeAdd"
 							class="breadcrumb-elements-item"> Add Employee </a>
 
 					</div>
@@ -155,7 +155,7 @@
 															href="${pageContext.request.contextPath}/editEmp?typeId=${lvTypeList.exVar1}"
 															class="dropdown-item"><i class="icon-pencil7"></i>Edit</a>
 														<a
-															href="${pageContext.request.contextPath}/deleteEmp?typeId=${lvTypeList.exVar1}"
+															href="${pageContext.request.contextPath}/deleteEmployee?typeId=${lvTypeList.exVar1}"
 															class="dropdown-item"><i class="icon-trash"></i>
 															Delete</a>
 													</div>
@@ -167,7 +167,6 @@
 
 							</tbody>
 						</table>
-
 					</div>
 
 				</div>

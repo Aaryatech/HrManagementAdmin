@@ -72,7 +72,7 @@
 
 						<div class="card">
 							<div class="card-header header-elements-inline">
-								<h6 class="card-title">Add Employee</h6>
+								<h6 class="card-title">Edit Employee</h6>
 								<div class="header-elements">
 									<div class="list-icons">
 										<a class="list-icons-item" data-action="collapse"></a>
@@ -118,26 +118,31 @@
 								%>
 
 								<form
-									action="${pageContext.request.contextPath}/submitInsertEmployeeUserInfo"
-									id="submitInsertEmp" method="post" enctype="multipart/form-data">
+									action="${pageContext.request.contextPath}/SubmitEditEmp"
+									id="SubmitEditEmp" method="post" enctype="multipart/form-data">
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="empCode">
 											Employee Code : *</label>
 										<div class="col-lg-2">
 											<input type="text" class="form-control"
 												placeholder="Employee Code" id="empCode" name="empCode"
+												 value="${editEmp.empCode}"
 												autocomplete="off" onchange="trim(this)"> <span
 												class="validation-invalid-label" id="error_empCode"
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
 									
-									<!-- <div class="form-group row">
+									
+									<input type="hidden" id="url" value='${weighImageUrl}' /> <input
+										type="hidden" name="imageName" id="imageName"> 
+										
+									<%-- <div class="form-group row">
 										<label class="col-form-label col-lg-2" for="profilePic">
 											Profile Pic : </label>
 										<div class="col-lg-6">
 											<div class="uniform-uploader">
-												<input type="file" name="profilePic"
+												<input type="file" name="profilePic" value="${editEmp.empPhoto}"
 													class="form-input-styled" data-fouc="" id="profilePic"><span
 													class="filename" style="user-select: none;">No file
 													selected</span><span class="action btn bg-blue legitRipple"
@@ -145,18 +150,16 @@
 											</div>
 										</div>
 										
-										
 										<div class="col-lg-2">
 										<img id="image1" name="image1"
 											alt="l" height="50px;" width="50px;">
 									</div>
-									</div>
-									 -->
+									</div> --%>
 									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="profilePic">	Profile Pic 
+										<label class="col-form-label col-lg-2" for="profilePic">Profile Pic 
 											:</label>
 										<div class="col-lg-6">
-											<input type="file" class="form-control" id="profilePic"
+											<input type="file" class="form-control" id="profilePic" value="${editEmp.empPhoto}"
 												name="profilePic" accept=".jpg,.png,.gif">
 											
 											<span
@@ -170,13 +173,13 @@
 									</div>
 									</div>
 									
-
+							
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="fname">
 											Employee Name : *</label>
 										<div class="col-lg-3">
 											<input type="text" class="form-control  "
-												placeholder="First Name" id="fname" name="fname"
+												placeholder="First Name" id="fname" name="fname"  value="${editEmp.empFname}"
 												autocomplete="off" onchange="trim(this)"> <span
 												class="validation-invalid-label" id="error_fname"
 												style="display: none;">This field is required.</span>
@@ -186,7 +189,7 @@
 										
 										<div class="col-lg-3">
 											<input type="text" class="form-control  "
-												placeholder="Middle Name" id="mname" name="mname"
+												placeholder="Middle Name" id="mname" name="mname"  value="${editEmp.empMname}"
 												autocomplete="off" onchange="trim(this)"> <span
 												class="validation-invalid-label" id="error_mname"
 												style="display: none;">This field is required.</span>
@@ -197,7 +200,7 @@
 										
 										<div class="col-lg-3">
 											<input type="text" class="form-control  "
-												placeholder="Surname Name" id="sname" name="sname"
+												placeholder="Surname Name" id="sname" name="sname"  value="${editEmp.empSname}"
 												autocomplete="off" onchange="trim(this)"> <span
 												class="validation-invalid-label" id="error_sname"
 												style="display: none;">This field is required.</span>
@@ -215,13 +218,28 @@
 
 												<option value="">Select Location</option>
 
+												
 												<c:forEach items="${locationList}" var="locationList">
-													<option value="${locationList.locId}">${locationList.locName}</option>
-												</c:forEach>
-											</select> <span class="validation-invalid-label" id="error_locId"
+									<c:choose>
+									<c:when test="${locationList.locId == editEmp.locId}">
+										<option selected value="${locationList.locId}">${locationList.locName}</option>
+									</c:when>
+								<c:otherwise>
+									<option value="${locationList.locId}">${locationList.locName}</option>
+								</c:otherwise>
+
+								</c:choose>
+									</c:forEach>
+											</select> 
+											
+											<span class="validation-invalid-label" id="error_locId"
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
+									
+									
+									
+									
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="catId">
@@ -235,9 +253,18 @@
 												<option value="">Select Category</option>
 
 												<c:forEach items="${catList}" var="catList">
+									<c:choose>
+									<c:when test="${catList.empCatId == editEmp.empCatId}">
+													<option selected value="${catList.empCatId}">${catList.empCatName}</option>
+									</c:when>
+								<c:otherwise>
 													<option value="${catList.empCatId}">${catList.empCatName}</option>
-												</c:forEach>
-											</select> <span class="validation-invalid-label" id="error_catId"
+								</c:otherwise>
+
+								</c:choose>
+									</c:forEach>
+											</select> 
+											<span class="validation-invalid-label" id="error_catId"
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
@@ -254,8 +281,16 @@
 												<option value="">Select Type</option>
 
 												<c:forEach items="${empTypelist}" var="empTypelist">
+									<c:choose>
+									<c:when test="${empTypelist.empTypeId == editEmp.empTypeId}">
+													<option selected value="${empTypelist.empTypeId}">${empTypelist.empTypeName}</option>
+									</c:when>
+								<c:otherwise>
 													<option value="${empTypelist.empTypeId}">${empTypelist.empTypeName}</option>
-												</c:forEach>
+								</c:otherwise>
+
+								</c:choose>
+									</c:forEach>
 											</select> <span class="validation-invalid-label" id="error_typeId"
 												style="display: none;">This field is required.</span>
 										</div>
@@ -273,8 +308,16 @@
 												<option value="">Select Department</option>
 
 												<c:forEach items="${deptList}" var="deptList">
+									<c:choose>
+									<c:when test="${deptList.empDeptId == editEmp.empDeptId}">
+													<option selected value="${deptList.empDeptId}">${deptList.empDeptName}</option>
+									</c:when>
+								<c:otherwise>
 													<option value="${deptList.empDeptId}">${deptList.empDeptName}</option>
-												</c:forEach>
+								</c:otherwise>
+
+								</c:choose>
+									</c:forEach>
 											</select> <span class="validation-invalid-label" id="error_deptId"
 												style="display: none;">This field is required.</span>
 										</div>
@@ -285,10 +328,10 @@
 										<label class="col-form-label col-lg-2" for="tempAdd">Temporary
 											Address : *</label>
 										<div class="col-lg-10">
-											<textarea rows="3" cols="3" class="form-control"
+											<textarea rows="3" cols="3" class="form-control" 
 												placeholder="Temporary Address" onchange="trim(this)"
-												id="tempAdd" name="tempAdd"></textarea>
-											<span class="validation-invalid-label" id="error_tempAdd"
+												id="tempAdd" name="tempAdd">${editEmp.empAddressTemp}</textarea>
+											<span class="validation-invalid-label" id="error_tempAdd" 
 												style="display: none;">This field is required.</span>
 
 										</div>
@@ -299,7 +342,7 @@
 										<label class="col-form-label col-lg-2" for="checkSameAdd">
 											Same As Permanent Address : </label>
 										<div class="form-check form-check-inline">
-											<input type="checkbox" id="checkSameAdd" name="checkSameAdd"
+											<input type="checkbox" id="checkSameAdd"  	${editEmp.empAddressTemp == editEmp.empAddressPerm ? 'checked' : 'checked'}  name="checkSameAdd"
 												onclick="checkAdd()">
 
 										</div>
@@ -311,7 +354,7 @@
 										<div class="col-lg-10">
 											<textarea rows="3" cols="3" class="form-control"
 												placeholder="Permanent Address" onchange="trim(this)"
-												id="permntAdd" name="permntAdd"></textarea>
+												id="permntAdd" name="permntAdd">${editEmp.empAddressPerm}</textarea>
 											<span class="validation-invalid-label" id="error_permntAdd"
 												style="display: none;">This field is required.</span>
 
@@ -323,9 +366,9 @@
 											: *</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control" placeholder="Blood Group"
-												id="bloodGrp" name="bloodGrp" autocomplete="off"
+												id="bloodGrp" name="bloodGrp" value="${editEmp.empBloodgrp}" autocomplete="off"
 												onchange="trim(this)"> <span
-												class="validation-invalid-label" id="error_bloodGrp"
+												class="validation-invalid-label" id="error_bloodGrp"  
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
@@ -334,7 +377,7 @@
 											No : *</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
-												placeholder="Contact No." id="mobile1" name="mobile1"
+												placeholder="Contact No." id="mobile1" name="mobile1"  value="${editEmp.empMobile1}"
 												autocomplete="off" onchange="trim(this)" maxlength="10">
 											<span class="validation-invalid-label" id="error_mobile1"
 												style="display: none;">This field is required.</span>
@@ -344,7 +387,7 @@
 											Contact No : </label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
-												placeholder="Alternate Contact No." id="mobile2"
+												placeholder="Alternate Contact No." id="mobile2"  value="${editEmp.empMobile2}"
 												name="mobile2" autocomplete="off" onchange="trim(this)"
 												maxlength="10">
 										</div>
@@ -355,9 +398,9 @@
 											: *</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control" placeholder="Email"
-												id="email" name="email" autocomplete="off"
+												id="email" name="email" value="${editEmp.empEmail}" autocomplete="off"
 												onchange="trim(this)"> <span
-												class="validation-invalid-label" id="error_email"
+												class="validation-invalid-label" id="error_email"  
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
@@ -367,7 +410,7 @@
 											Contact Person 1: *</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
-												placeholder="Emergency Contact Person" id="emgContPrsn1"
+												placeholder="Emergency Contact Person" id="emgContPrsn1"  value="${editEmp.empEmergencyPerson1}"
 												name="emgContPrsn1" autocomplete="off" onchange="trim(this)">
 											<span class="validation-invalid-label"
 												id="error_emgContPrsn1" style="display: none;">This
@@ -379,7 +422,7 @@
 											Contact No 1: *</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
-												placeholder="Emergency Contact No." id="emgContNo1"
+												placeholder="Emergency Contact No." id="emgContNo1"  value="${editEmp.empEmergencyNo1}"
 												name="emgContNo1" autocomplete="off" onchange="trim(this)"
 												maxlength="10"> <span
 												class="validation-invalid-label" id="error_emgContNo1"
@@ -392,7 +435,7 @@
 											Contact Person 2 : *</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
-												placeholder="Emergency Alternate Contact Person"
+												placeholder="Emergency Alternate Contact Person"  value="${editEmp.empEmergencyPerson2}"
 												id="emgContPrsn2" name="emgContPrsn2" autocomplete="off"
 												onchange="trim(this)"> <span
 												class="validation-invalid-label" id="error_emgContPrsn2"
@@ -404,9 +447,9 @@
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
 												placeholder="Emergency Alternate Contact No."
-												id="emgContNo2" name="emgContNo2" autocomplete="off"
+												id="emgContNo2" name="emgContNo2" value="${editEmp.empEmergencyNo2}"  autocomplete="off"
 												onchange="trim(this)" maxlength="10"> <span
-												class="validation-invalid-label" id="error_emgContNo2"
+												class="validation-invalid-label" id="error_emgContNo2"  
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
@@ -416,7 +459,7 @@
 											Employee Rate Per Hour : *</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control numbersOnly"
-												placeholder="Employee Rate Per Hour" id="ratePerHr"
+												placeholder="Employee Rate Per Hour" id="ratePerHr"  value="${editEmp.empRatePerhr}"
 												name="ratePerHr" autocomplete="off" onchange="trim(this)">
 											<span class="validation-invalid-label" id="error_ratePerHr"
 												style="display: none;">This field is required.</span>
@@ -428,7 +471,7 @@
 											Date : *</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control datepickerclass "
-												name="joiningDate" id="joiningDate"
+												name="joiningDate" id="joiningDate" value="${editEmp.empJoiningDate}"
 												placeholder="Joining Date"> <span
 												class="validation-invalid-label" id="error_joiningDate"
 												style="display: none;">This field is required.</span>
@@ -439,7 +482,7 @@
 										<label class="col-form-label col-lg-2" for="prevsExpYr">
 											Previous Experience in Year : *</label>
 										<div class="col-lg-4">
-											<input type="text" class="form-control numbersOnly"
+											<input type="text" class="form-control numbersOnly"  value="${editEmp.empPrevExpYrs}"
 												placeholder="Previous Experience in Year" id="prevsExpYr"
 												name="prevsExpYr" autocomplete="off" onchange="trim(this)">
 											<span class="validation-invalid-label" id="error_prevsExpYr"
@@ -450,7 +493,7 @@
 											Previous Experience in Month : *</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control numbersOnly"
-												placeholder="Previous Experience in Month" id="prevsExpMn"
+												placeholder="Previous Experience in Month" id="prevsExpMn"  value="${editEmp.empPrevExpMonths}"
 												name="prevsExpMn" autocomplete="off" onchange="trim(this)">
 											<span class="validation-invalid-label" id="error_prevsExpMn"
 												style="display: none;">This field is required.</span>
@@ -461,8 +504,8 @@
 										<label class="col-form-label col-lg-2" for="leavingDate">Leaving
 											Date : </label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control datepickerclass "
-												name="leavingDate" id="leavingDate"
+											<input type="text" class="form-control datepickerclass " 
+												name="leavingDate" id="leavingDate"  value="${editEmp.empLeavingDate}"
 												placeholder="Leaving Date">  
 										</div>
 									</div>
@@ -472,64 +515,13 @@
 										<div class="col-lg-10">
 											<textarea rows="3" cols="3" class="form-control"
 												placeholder="Leaving Reason" onchange="trim(this)"
-												id="lvngReson" name="lvngReson"></textarea>
+												id="lvngReson" name="lvngReson"> ${editEmp.empLeavingReason}</textarea>
 											 
 
 										</div>
 									</div>
 									
 									
-									<div class="card-header header-elements-inline">
-								<h6 class="card-title">Add User</h6>
-								<div class="header-elements">
-									<div class="list-icons">
-										<a class="list-icons-item" data-action="collapse"></a>
-									</div>
-								</div>
-							</div>
-									
-<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="uname">
-											User Name : *</label>
-										<div class="col-lg-10">
-											<input type="text" class="form-control  "
-												placeholder="User Name" id="uname" name="uname"
-												autocomplete="off" onchange="trim(this)"> <span
-												class="validation-invalid-label" id="error_uname"
-												style="display: none;">This field is required.</span>
-										</div>
-									</div>
-									
-									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="upass">
-											User Password : *</label>
-										<div class="col-lg-10">
-											<input type="password" class="form-control  "
-												placeholder="User Password " id="upass" name="upass"
-												autocomplete="off" onchange="trim(this)"> <span
-												class="validation-invalid-label" id="error_upass"
-												style="display: none;">This field is required.</span>
-										</div>
-									</div>
-									
-									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="locId2">
-											 Location : *</label>
-										<div class="col-lg-10">
-											
-											<select multiple="multiple" data-placeholder="Select Location" name="locId2" 
-											id="locId2" class="form-control form-control-sm select" data-container-css-class="select-sm" data-fouc>
-										<option value="">Select Location</option>
-												<c:forEach items="${locationList}" var="locationList">
-													<option value="${locationList.locId}">${locationList.locName}</option>
-												</c:forEach>
-										
-									</select>
-										
-											 <span class="validation-invalid-label" id="error_locId2"
-												style="display: none;">This field is required.</span>
-										</div>
-									</div>
 									
 									 
 									<div class="form-group row mb-0">
@@ -563,6 +555,25 @@
 	</div>
 	<!-- /page content -->
 
+	<script type="text/javascript">
+		function readURL(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+
+				reader.onload = function(e) {
+					$('#image1').attr('src', e.target.result);
+				}
+
+				reader.readAsDataURL(input.files[0]);
+			}
+		}
+
+		$("#profilePic").change(function() {
+			
+
+			readURL(this);
+		});
+	</script>
 	<script>
 		function checkAdd() {
 
@@ -663,16 +674,6 @@
 													$("#error_sname").hide()
 												}
 
-												if (!$("#locId2").val()) {
-
-													isError = true;
-
-													$("#error_locId2").show()
-
-												} else {
-													$("#error_locId2").hide()
-												}
-
 												if (!$("#locId").val()) {
 
 													isError = true;
@@ -721,21 +722,6 @@
 													$("#error_permntAdd")
 															.hide()
 												}
-												
-												
-												if (!$("#bloodGrp").val()) {
-
-													isError = true;
-
-													$("#error_bloodGrp")
-															.show()
-
-												} else {
-													$("#error_bloodGrp")
-															.hide()
-												}
-												
-												
 												if (!$("#tempAdd").val()) {
 
 													isError = true;
@@ -894,29 +880,6 @@
 												} else {
 													$("#error_email").hide()
 												}
-												
-												if (!$("#uname").val()) {
-
-													isError = true;
-
-													$("#error_uname")
-															.show()
-
-												} else {
-													$("#error_uname")
-															.hide()
-												}
-												if (!$("#upass").val()) {
-
-													isError = true;
-
-													$("#error_upass")
-															.show()
-
-												} else {
-													$("#error_upass")
-															.hide()
-												}
 												if (!isError) {
 
 													var x = confirm("Do you really want to submit the form?");
@@ -954,27 +917,6 @@
 				format : 'DD-MM-YYYY',
 				separator : ' to '
 			}
-		});
-	</script>
-	
-	
-	<script type="text/javascript">
-		function readURL(input) {
-			if (input.files && input.files[0]) {
-				var reader = new FileReader();
-
-				reader.onload = function(e) {
-					$('#image1').attr('src', e.target.result);
-				}
-
-				reader.readAsDataURL(input.files[0]);
-			}
-		}
-
-		$("#profilePic").change(function() {
-			
-
-			readURL(this);
 		});
 	</script>
 	<!-- <script type="text/javascript">

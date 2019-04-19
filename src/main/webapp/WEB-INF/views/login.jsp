@@ -66,7 +66,7 @@
 			<div class="content d-flex justify-content-center align-items-center">
 
 				<!-- Login form -->
-				<form class="login-form" action="index.html">
+				<form class="login-form" action="loginProcess">
 					<div class="card mb-0">
 						<div class="card-body">
 							<div class="text-center mb-3">
@@ -76,14 +76,14 @@
 							</div>
 
 							<div class="form-group form-group-feedback form-group-feedback-left">
-								<input type="text" class="form-control" placeholder="Username">
+								<input type="text" id="username" name="username" class="form-control" placeholder="Username">
 								<div class="form-control-feedback">
 									<i class="icon-user text-muted"></i>
 								</div>
 							</div>
 
 							<div class="form-group form-group-feedback form-group-feedback-left">
-								<input type="password" class="form-control" placeholder="Password">
+								<input type="password" id="password" name="password"  class="form-control" placeholder="Password">
 								<div class="form-control-feedback">
 									<i class="icon-lock2 text-muted"></i>
 								</div>
@@ -93,9 +93,9 @@
 								<button type="submit" class="btn btn-primary btn-block">Sign in <i class="icon-circle-right2 ml-2"></i></button>
 							</div>
 
-							<div class="text-center">
+							<!-- <div class="text-center">
 								<a href="login_password_recover.html">Forgot password?</a>
-							</div>
+							</div> -->
 						</div>
 					</div>
 				</form>

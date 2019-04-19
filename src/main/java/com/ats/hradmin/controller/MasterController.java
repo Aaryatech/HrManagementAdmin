@@ -42,7 +42,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Controller
 @Scope("session")
 public class MasterController {
-
+	EmployeeInfo editEmp= new EmployeeInfo();
 	Company editCompany = new Company();
 	Location editLocation = new Location();
 	EmpType editEmpType = new EmpType();
@@ -1456,9 +1456,170 @@ public class MasterController {
 		}
 		return model;
 	}
-	
+	@RequestMapping(value = "/editEmp", method = RequestMethod.GET)
+	public ModelAndView empEdit(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("master/empEdit");
+		model.addObject("weighImageUrl", Constants.imageSaveUrl);
+		try {
+			String base64encodedString = request.getParameter("typeId");
+			String compId = FormValidation.DecodeKey(base64encodedString);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("empId", compId);
+			editEmp = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpInfoById", map,
+					EmployeeInfo.class);
+			model.addObject("editEmp", editEmp);
+			
+			map = new LinkedMultiValueMap<>();
+			map.add("companyId", 1);
+			Location[] location = Constants.getRestTemplate().postForObject(Constants.url + "/getLocationList", map,
+					Location[].class);
+			List<Location> locationList = new ArrayList<Location>(Arrays.asList(location));
+
+			map = new LinkedMultiValueMap<>();
+			map.add("compId", 1);
+
+			EmpType[] EmpType = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpTypeList", map,
+					EmpType[].class);
+			List<EmpType> empTypelist = new ArrayList<EmpType>(Arrays.asList(EmpType));
+
+			EmployeeDepartment[] employeeDepartment = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getEmpDeptList", map, EmployeeDepartment[].class);
+			List<EmployeeDepartment> employeeDepartmentlist = new ArrayList<EmployeeDepartment>(
+					Arrays.asList(employeeDepartment));
+
+			EmployeeCategory[] employeeCategory = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getEmpCategoryList", map, EmployeeCategory[].class);
+			List<EmployeeCategory> employeeCategorylist = new ArrayList<EmployeeCategory>(
+					Arrays.asList(employeeCategory));
+
+			model.addObject("empTypelist", empTypelist);
+			model.addObject("locationList", locationList);
+			model.addObject("deptList", employeeDepartmentlist);
+			model.addObject("catList", employeeCategorylist);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+	}
 	
 
+	@RequestMapping(value = "/SubmitEditEmp", method = RequestMethod.POST)
+	public String editEmp(@RequestParam("profilePic") List<MultipartFile> profilePic,HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			HttpSession session = request.getSession();
+			Date date = new Date();
+			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+			VpsImageUpload upload = new VpsImageUpload();
+
+			
+			String empCode = request.getParameter("empCode");
+			String fname = request.getParameter("fname");
+			System.out.println("name is "+fname);
+			String mname = request.getParameter("mname");
+			String sname = request.getParameter("sname");
+			int locId =Integer.parseInt( request.getParameter("locId"));
+			int catId =Integer.parseInt( request.getParameter("catId"));
+			int typeId =Integer.parseInt( request.getParameter("typeId"));
+			int deptId =Integer.parseInt( request.getParameter("deptId"));
+			String tempAdd = request.getParameter("tempAdd");
+			String permntAdd = request.getParameter("permntAdd");
+			String bloodGrp = request.getParameter("bloodGrp");
+			String mobile1 = request.getParameter("mobile1");
+			String mobile2 = request.getParameter("mobile2");
+			String email = request.getParameter("email");
+			String emgContPrsn1 = request.getParameter("emgContPrsn1");
+			String emgContNo1 = request.getParameter("emgContNo1");
+			String emgContPrsn2 = request.getParameter("emgContPrsn2");
+			String emgContNo2 = request.getParameter("emgContNo2");
+			int  ratePerHr =Integer.parseInt( request.getParameter("ratePerHr"));
+			String joiningDate = request.getParameter("joiningDate");
+			int prevsExpYr =Integer.parseInt( request.getParameter("prevsExpYr"));
+			int prevsExpMn =Integer.parseInt( request.getParameter("prevsExpMn"));
+			String leavingDate = request.getParameter("leavingDate");
+			String lvngReson = request.getParameter("lvngReson");
+			 Boolean ret = false;
+			
+			if(ret == false)
+			{
+				
+				
+	  String imageName = new String(); imageName = dateTimeInGMT.format(date) + "_" + profilePic.get(0).getOriginalFilename();
+				 
+		  try {
+				  upload.saveUploadedImge(profilePic.get(0), Constants.imageSaveUrl, imageName,
+				  Constants.values, 0, 0, 0, 0, 0); 
+				  editEmp.setEmpPhoto(imageName);
+				  }
+				  catch (Exception e) { 
+					 System.out.println(e.getMessage());  
+					   }
+				 
+				 
+
+			//leaveSummary.setEmpPhoto("siri");;
+			editEmp.setCompanyId(1);
+			editEmp.setEmpCode(empCode);
+			editEmp.setEmpCatId(catId);
+			editEmp.setEmpDeptId(deptId);
+			editEmp.setEmpTypeId(typeId);
+			editEmp.setLocId(locId);
+			editEmp.setEmpFname(fname);
+			editEmp.setEmpMname(mname);
+			editEmp.setEmpSname(sname);
+			editEmp.setEmpMobile1(mobile1);
+			editEmp.setEmpMobile2(mobile2);
+			editEmp.setEmpEmail(email);
+			editEmp.setEmpAddressTemp(tempAdd);
+			editEmp.setEmpAddressPerm(permntAdd);
+			editEmp.setEmpBloodgrp(bloodGrp);
+			editEmp.setEmpEmergencyPerson1(emgContPrsn1);
+			editEmp.setEmpEmergencyPerson2(emgContPrsn2);
+			editEmp.setEmpEmergencyNo2(emgContNo2);
+			editEmp.setEmpEmergencyNo1(emgContNo1);
+			editEmp.setEmpRatePerhr(ratePerHr);
+			
+			editEmp.setEmpJoiningDate(DateConvertor.convertToYMD(joiningDate));
+			editEmp.setEmpLeavingDate(DateConvertor.convertToYMD(leavingDate));
+			
+			editEmp.setEmpPrevExpYrs(prevsExpYr);
+			editEmp.setEmpPrevExpMonths(prevsExpMn);
+			editEmp.setEmpLeavingReason(lvngReson);
+			
+			
+			editEmp.setMakerUserId(1);
+			editEmp.setMakerEnterDatetime(sf.format(date));
+
+			
+
+			EmployeeInfo res = Constants.getRestTemplate().postForObject(Constants.url + "/saveEmpInfo", editEmp,
+					EmployeeInfo.class);
+			System.err.println("edited success");
+			
+			} else {
+				session.setAttribute("errorMsg", "Failed to Insert Record");
+			}
+			
+			
+			
+
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:/showEmpList";
+		
+	
+
+}
+	
+	
 	@RequestMapping(value = "/submitInsertEmployeeUserInfo", method = RequestMethod.POST)
 	public String submitInsertLeaveType(@RequestParam("profilePic") List<MultipartFile> profilePic,HttpServletRequest request,
 			HttpServletResponse response) {
@@ -1658,16 +1819,19 @@ public class MasterController {
 			{
 				
 				
+	  String imageName = new String(); imageName = dateTimeInGMT.format(date) + "_" + profilePic.get(0).getOriginalFilename();
+				 
+		  try {
+				  upload.saveUploadedImge(profilePic.get(0), Constants.imageSaveUrl, imageName,
+				  Constants.values, 0, 0, 0, 0, 0); leaveSummary.setEmpPhoto(imageName);
+				  }
+				  catch (Exception e) { 
+					 System.out.println(e.getMessage());  
+					   }
+				 
+				 
 
-				/*
-				 * String imageName = new String(); imageName = dateTimeInGMT.format(date) + "_"
-				 * + profilePic.get(0).getOriginalFilename(); try {
-				 * upload.saveUploadedImge(profilePic.get(0), Constants.imageSaveUrl, imageName,
-				 * Constants.values, 0, 0, 0, 0, 0); leaveSummary.setEmpPhoto(imageName);; }
-				 * catch (Exception e) { // TODO: handle exception e.printStackTrace(); }
-				 */
-
-			leaveSummary.setEmpPhoto("siri");;
+			//leaveSummary.setEmpPhoto("siri");;
 			leaveSummary.setCompanyId(1);
 			leaveSummary.setEmpCode(empCode);
 			leaveSummary.setEmpCatId(catId);
@@ -1746,7 +1910,7 @@ public class MasterController {
 			e.printStackTrace();
 		}
 
-		return "redirect:/showLeaveTypeList";
+		return "redirect:/showEmpList";
 	
 
 }
@@ -1760,7 +1924,7 @@ public class MasterController {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("companyId", 1);
-			map.add("locIdList", 4);
+			map.add("locIdList", 1);
 			
 			GetEmployeeInfo[] employeeDepartment = Constants.getRestTemplate()
 					.postForObject(Constants.url + "/getEmpInfoList", map, GetEmployeeInfo[].class);
@@ -1769,7 +1933,7 @@ public class MasterController {
 					Arrays.asList(employeeDepartment));
 
 			for (int i = 0; i < employeeDepartmentlist.size(); i++) {
-
+//System.out.println("employeeDepartmentlist.get(i).getEmpId()"+employeeDepartmentlist.get(i).getEmpId());
 				employeeDepartmentlist.get(i).setExVar1(
 						FormValidation.Encrypt(String.valueOf(employeeDepartmentlist.get(i).getEmpId())));
 			}
@@ -1782,5 +1946,25 @@ public class MasterController {
 		}
 		return model;
 	}
+	
+	
+	@RequestMapping(value = "/deleteEmployee", method = RequestMethod.GET)
+	public String deleteEmployee(HttpServletRequest request, HttpServletResponse response) {
+
+		try {
+//System.err.println("request.getParameter(\"empId\")"+request.getParameter("typeId"));
+			String base64encodedString = request.getParameter("typeId");
+			String typeId = FormValidation.DecodeKey(base64encodedString);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("empId", typeId);
+			Info info = Constants.getRestTemplate().postForObject(Constants.url + "/deleteEmpInfo", map, Info.class);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:/showEmpList";
+	}
+
 
 }
