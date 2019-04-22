@@ -153,6 +153,7 @@
 									<th></th>
 									<th>Earned</th>
 									<th>Sanction</th>
+									<th>Balanced</th>
 									<th>Applied</th>
 									
 									 
@@ -165,7 +166,7 @@
 										<td>${leaveHistoryList.shortName}</td>
 										<td>${leaveHistoryList.earnedNo}</td>
 										<td>${leaveHistoryList.sanctionNo}</td>
-										
+										<td>${leaveHistoryList.earnedNo-leaveHistoryList.sanctionNo}</td>
 										<td>${leaveHistoryList.appliedNo}</td>
 										
 										
@@ -267,7 +268,7 @@
 												</div>
 									</div>
 										<input type="hidden" class="form-control numbersOnly"
-												id="empId"  value="${locationList}"
+												id="empId"  value="${empId}"
 												name="empId" >
 									
 									<div class="form-group row mb-0">

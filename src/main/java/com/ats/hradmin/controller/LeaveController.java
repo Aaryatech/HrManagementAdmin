@@ -1,6 +1,7 @@
 package com.ats.hradmin.controller;
 
 import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -337,16 +338,59 @@ public class LeaveController {
 		ModelAndView model = new ModelAndView("leave/appplyForLeave");
 
 		try {
+			
+			HttpSession session = request.getSession();
+			GetEmployeeInfo userObj = (GetEmployeeInfo) session.getAttribute("empDetail");
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("companyId", 1);
 			map.add("locIdList", 1);
+			map.add("empId",userObj.getEmpId());
 			
 			GetEmployeeInfo[] employeeDepartment = Constants.getRestTemplate()
-					.postForObject(Constants.url + "/getEmpInfoList", map, GetEmployeeInfo[].class);
+					.postForObject(Constants.url + "/getEmpInfoAuthWise", map, GetEmployeeInfo[].class);
 
 			List<GetEmployeeInfo> employeeDepartmentlist = new ArrayList<GetEmployeeInfo>(
 					Arrays.asList(employeeDepartment));
+		
+			
+			int flag=1;
+			
+		 map = new LinkedMultiValueMap<>();
+			map.add("empId", userObj.getEmpId());
+			
+			GetEmployeeInfo  editEmp = Constants.getRestTemplate().postForObject(Constants.url + "/GetEmployeeInfo", map,
+					GetEmployeeInfo.class);
+			model.addObject("editEmp", editEmp);
+			for (int i = 0; i < employeeDepartmentlist.size(); i++) {
+				if(employeeDepartmentlist.get(i).getEmpId()==userObj.getEmpId()) {
+					flag=0;
+				}
+				System.err.println(" matched");
+			}
+			if(flag==1) {
+				System.err.println("not matched");
+				GetEmployeeInfo temp =new GetEmployeeInfo();
+				temp.setCompanyId(editEmp.getCompanyId());
+				temp.setCompanyName(editEmp.getCompanyName());
+				temp.setEmpCategory(editEmp.getEmpCategory());
+				temp.setEmpCatId(editEmp.getEmpCatId());
+				temp.setEmpCode(editEmp.getEmpCode());
+				temp.setEmpDept(editEmp.getEmpDept());
+				temp.setEmpDeptId(editEmp.getEmpDeptId());
+				temp.setEmpEmail(editEmp.getEmpEmail());
+				temp.setEmpFname(editEmp.getEmpFname());
+				temp.setEmpId(editEmp.getEmpId());
+				temp.setEmpMname(editEmp.getEmpMname());
+				temp.setEmpMobile1(editEmp.getEmpMobile1());
+				temp.setEmpPrevExpYrs(editEmp.getEmpPrevExpYrs());
+				temp.setEmpSname(editEmp.getEmpSname());
+				temp.setEmpType(editEmp.getEmpType());
+				temp.setEmpTypeId(editEmp.getEmpTypeId());
+				employeeDepartmentlist.add(temp);
+			}
+			
+			
 
 			for (int i = 0; i < employeeDepartmentlist.size(); i++) {
 						//System.out.println("employeeDepartmentlist.get(i).getEmpId()"+employeeDepartmentlist.get(i).getEmpId());
