@@ -153,7 +153,7 @@
 													<div class="dropdown-menu dropdown-menu-right">
 														<a
 															href="${pageContext.request.contextPath}/leaveApply?empId=${lvTypeList.exVar1}"
-															class="dropdown-item"><i class="icon-pencil7"></i>Edit</a>
+															class="dropdown-item"><i class="icon-pencil7"></i>Add Leave</a>
 														
 													</div>
 												</div>

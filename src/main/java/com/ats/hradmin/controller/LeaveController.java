@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.hradmin.common.Constants;
+import com.ats.hradmin.common.DateConvertor;
 import com.ats.hradmin.common.FormValidation;
 import com.ats.hradmin.leave.model.LeaveHistory;
 import com.ats.hradmin.model.AccessRightModule;
@@ -26,6 +27,7 @@ import com.ats.hradmin.model.Company;
 import com.ats.hradmin.model.EmployeeInfo;
 import com.ats.hradmin.model.GetEmployeeInfo;
 import com.ats.hradmin.model.Info;
+import com.ats.hradmin.model.LeaveApply;
 import com.ats.hradmin.model.LeaveSummary;
 import com.ats.hradmin.model.LeaveType;
 
@@ -385,6 +387,7 @@ public class LeaveController {
 			List<LeaveType> leaveTypeList = new ArrayList<>(Arrays.asList(leaveArray));
 
 			model.addObject("leaveTypeList", leaveTypeList);
+			model.addObject("empId", empId);
 
 			
 		 map = new LinkedMultiValueMap<>();
@@ -404,6 +407,106 @@ public class LeaveController {
 		return model;
 	}
 	
+	@RequestMapping(value = "/insertLeave", method = RequestMethod.POST)
+	public String insertLeave(HttpServletRequest request,	HttpServletResponse response) {
+		
+		try {
+			HttpSession session = request.getSession();
+			Date date = new Date();
+			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+			
+			//String compName = request.getParameter("1");
+			String leaveDateRange = request.getParameter("leaveDateRange");
+			String dayType = request.getParameter("dayType");
+			int noOfDays =Integer.parseInt( request.getParameter("noOfDays"));
+			int leaveTypeId =Integer.parseInt( request.getParameter("leaveTypeId"));
+			int noOfDaysExclude = Integer.parseInt( request.getParameter("noOfDaysExclude"));
+			int empId = Integer.parseInt( request.getParameter("empId"));
+			String remark=null;
+			
+			String[] arrOfStr = leaveDateRange.split("to", 2);
+			
+
+			
+			
+			try {
+			 remark =  request.getParameter("leaveRemark");
+			}
+			catch (Exception e) {
+				 remark =  "NA";
+			}
+
+			Boolean ret = false;
+			
+			if (FormValidation.Validaton(leaveDateRange, "") == true) {
+
+				ret = true;
+				System.out.println("leaveDateRange" + ret);
+			}
+			if (FormValidation.Validaton(request.getParameter("noOfDays"), "") == true) {
+
+				ret = true;
+				System.out.println("noOfDays" + ret);
+			}
+
+			if (FormValidation.Validaton(request.getParameter("noOfDaysExclude"), "") == true) {
+
+				ret = true;
+				System.out.println("add" + ret);
+			}
+			
+			if (FormValidation.Validaton(request.getParameter("leaveTypeId"), "") == true) {
+
+				ret = true;
+				System.out.println("add" + ret);
+			}
+			
+			
+			if(ret == false)
+			{
+				
+		LeaveApply leaveSummary = new LeaveApply();
+
+			leaveSummary.setCalYrId(1);
+			leaveSummary.setEmpId(empId);
+			leaveSummary.setFinalStatus(1);
+			leaveSummary.setLeaveNumDays(noOfDays);
+			leaveSummary.setCirculatedTo("1");
+			leaveSummary.setLeaveDuration(request.getParameter("noOfDaysExclude"));
+			leaveSummary.setLeaveEmpReason(remark);
+			leaveSummary.setLvTypeId(leaveTypeId);
+			leaveSummary.setLeaveFromdt(DateConvertor.convertToYMD(arrOfStr[0].toString().trim()));
+			leaveSummary.setLeaveTodt(DateConvertor.convertToYMD(arrOfStr[1].toString().trim()));
+			
+			leaveSummary.setExInt1(1);
+			leaveSummary.setExInt2(1);
+			leaveSummary.setExInt3(1);
+			leaveSummary.setExVar1("NA");
+			leaveSummary.setExVar2("NA");
+			leaveSummary.setExVar3("NA");
+			leaveSummary.setIsActive(1);
+			leaveSummary.setDelStatus(1);
+			leaveSummary.setMakerUserId(1);
+			leaveSummary.setMakerEnterDatetime(sf.format(date));
+
+			
+
+			LeaveType res = Constants.getRestTemplate().postForObject(Constants.url + "/saveLeaveApply", leaveSummary,
+					LeaveType.class);
+			} else {
+				session.setAttribute("errorMsg", "Failed to Insert Record");
+			}
+
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:/showLeaveTypeList";
 	
+
+}
 	
 }

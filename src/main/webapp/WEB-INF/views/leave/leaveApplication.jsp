@@ -178,19 +178,19 @@
 							</tbody>
 						</table>
 								<form
-									action="${pageContext.request.contextPath}/insertLeaveStructure"
-									id="insertLeaveStructure" method="post">
+									action="${pageContext.request.contextPath}/insertLeave"
+									id="submitInsertLeave" method="post">
 									
 									
 									
 										<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="companyId">Select
+										<label class="col-form-label col-lg-2" for="leaveTypeId">Select
 											Leave Type :</label>
 										<div class="col-lg-4">
 											<select name="leaveTypeId"
 												data-placeholder="Select Leave Type" id="leaveTypeId"
 												class="form-control form-control-select2 select2-hidden-accessible"
-												required="" data-fouc="" tabindex="-1" aria-hidden="true">
+												 data-fouc="" tabindex="-1" aria-hidden="true">
 												<option></option>
 												<c:forEach items="${leaveTypeList}" var="leaveType">
 													<c:choose>
@@ -202,31 +202,32 @@
 														</c:otherwise>
 													</c:choose>
 												</c:forEach>
-											</select> <span class="validation-invalid-label" id="error_compName"
+											</select> <span class="validation-invalid-label" id="error_leaveTypeId"
 												style="display: none;">This field is required.</span>
 										</div>
 										
 											
 										
 										<div class="col-lg-2">
-											<select name="summId" data-placeholder="Select a Summary" id="summId"
+											<select name="summId" data-placeholder="Select a Day Type" id="dayType" name="dayType"
 												class="form-control form-control-select2 select2-hidden-accessible"
-												required data-fouc="" tabindex="-1" aria-hidden="true">
-														
+												 data-fouc="" tabindex="-1" aria-hidden="true">
+												<option></option>		
 											<option value="Full Day">Full Day</option>
 											<option value="Half Day">Half Day</option>
 
 											
-											</select>
+											</select><span class="validation-invalid-label" id="error_dayType"
+												style="display: none;">This field is required.</span>
 										</div>
 										</div>
 										<div class="form-group row">
 										<label class="col-form-label col-lg-2">Date Range:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control daterange-basic_new "
-												value="21-04-2019 @ 21-05-2019" name="dateRange"
-												data-placeholder="Select Date" id="dateRange"> <span
-												class="validation-invalid-label" id="error_Range"
+												value="21-04-2019 @ 21-05-2019" name="leaveDateRange" onchange="trim(this)"
+												data-placeholder="Select Date" id="leaveDateRange"> 
+												 <span class="validation-invalid-label" id="error_Range"
 												style="display: none;">This field is required.</span>
 
 										</div>
@@ -235,24 +236,24 @@
 									
 									
 	<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="prevsExpYr">
+										<label class="col-form-label col-lg-2" for="noOfDays">
 										No. of Days : *</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control numbersOnly"  value=""
-												placeholder="No. of Days " id="prevsExpYr"
-												name="prevsExpYr" autocomplete="off" onchange="trim(this)">
-											<span class="validation-invalid-label" id="error_prevsExpYr"
+												placeholder="No. of Days " id="noOfDays"
+												name="noOfDays" autocomplete="off" onchange="calNoOfDays">
+											<span class="validation-invalid-label" id="error_noOfDays"
 												style="display: none;">This field is required.</span>
 										</div>
 										</div>
 									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="prevsExpMn">
+										<label class="col-form-label col-lg-2" for="noOfDaysExclude">
 											Excluding Weekly Off *</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control numbersOnly"
-												placeholder="Excluding Weekly Off: " id="prevsExpMn"  value=""
-												name="prevsExpMn" autocomplete="off" onchange="trim(this)">
-											<span class="validation-invalid-label" id="error_prevsExpMn"
+												placeholder="Excluding Weekly Off: " id="noOfDaysExclude"  value=""
+												name="noOfDaysExclude" autocomplete="off" onchange="trim(this)">
+											<span class="validation-invalid-label" id="error_noOfDaysExclude"
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
@@ -262,12 +263,12 @@
 										<div class="col-lg-10">
 											<textarea rows="3" cols="3" class="form-control"
 												placeholder="Remark" onchange="trim(this)"
-												id="lvngReson" name="lvngReson"> </textarea>
-											 
-
-										</div>
+												id="leaveRemark" name="leaveRemark"> </textarea>
+												</div>
 									</div>
-										
+										<input type="hidden" class="form-control numbersOnly"
+												id="empId"  value="${locationList}"
+												name="empId" >
 									
 									<div class="form-group row mb-0">
 										<div class="col-lg-10 ml-lg-auto">
@@ -299,6 +300,15 @@
 
 	</div>
 	<!-- /page content -->
+	<script type="text/javascript">
+	function calNoOfDays() {
+	var dateRange=document.getElementById("leaveDateRange");
+	
+	alert(dateRange);
+	
+	}
+	
+	</script>
 
 	<script>
 		function trim(el) {
@@ -308,124 +318,67 @@
 			return;
 		}
 
-		function validateEmail(email) {
-
-			var eml = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-
-			if (eml.test($.trim(email)) == false) {
-
-				return false;
-
-			}
-
-			return true;
-
-		}
-		function validateMobile(mobile) {
-			var mob = /^[1-9]{1}[0-9]{9}$/;
-
-			if (mob.test($.trim(mobile)) == false) {
-
-				//alert("Please enter a valid email address .");
-				return false;
-
-			}
-			return true;
-
-		}
+		
 		$(document)
 				.ready(
 						function($) {
 
-							$("#submitInsertLocaion")
+							$("#submitInsertLeave")
 									.submit(
 											function(e) {
 												var isError = false;
 												var errMsg = "";
 
-												if (!$("#locName").val()) {
+												if (!$("#leaveTypeId").val()) {
 
 													isError = true;
 
-													$("#error_locName").show()
+													$("#error_leaveTypeId").show()
 													//return false;
 												} else {
-													$("#error_locName").hide()
+													$("#error_leaveTypeId").hide()
 												}
 
-												if (!$("#locShortName").val()) {
+												if (!$("#dayType").val()) {
 
 													isError = true;
 
-													$("#error_locShortName")
+													$("#error_dayType")
 															.show()
 
 												} else {
-													$("#error_locShortName")
+													$("#error_dayType")
 															.hide()
 												}
 
-												if (!$("#add").val()) {
+												if (!$("#leaveDateRange").val()) {
 
 													isError = true;
 
-													$("#error_locadd").show()
+													$("#error_Range").show()
 
 												} else {
-													$("#error_locadd").hide()
+													$("#error_Range").hide()
 												}
 
-												if (!$("#prsnName").val()) {
+												if (!$("#noOfDays").val()) {
 
 													isError = true;
 
-													$("#error_prsnName").show()
+													$("#error_noOfDays").show()
 
 												} else {
-													$("#error_prsnName").hide()
+													$("#error_noOfDays").hide()
 												}
 
-												if (!$("#contactNo").val()
-														|| !validateMobile($(
-																"#contactNo")
-																.val())) {
+												if (!$("#noOfDaysExclude").val()) {
 
 													isError = true;
 
-													if (!$("#contactNo").val()) {
-														document
-																.getElementById("error_contactNo").innerHTML = "This field is required.";
-													} else {
-														document
-																.getElementById("error_contactNo").innerHTML = "Enter valid Mobile No.";
-													}
-
-													$("#error_contactNo")
-															.show()
+													$("#error_noOfDaysExclude").show()
 
 												} else {
-													$("#error_contactNo")
-															.hide()
-												}
-
-												if (!$("#email").val()
-														|| !validateEmail($(
-																"#email").val())) {
-
-													isError = true;
-
-													if (!$("#email").val()) {
-														document
-																.getElementById("error_email").innerHTML = "This field is required.";
-													} else {
-														document
-																.getElementById("error_email").innerHTML = "Enter valid email.";
-													}
-
-													$("#error_email").show()
-
-												} else {
-													$("#error_email").hide()
+													$("#error_noOfDaysExclude").hide()
 												}
 
 												if (!isError) {
@@ -448,7 +401,7 @@
 
 
 
-	<script type="text/javascript">
+		<script type="text/javascript">
 		// Single picker
 		$('.datepickerclass').daterangepicker({
 			singleDatePicker : true,
@@ -471,7 +424,6 @@
 			}
 		});
 	</script>
-
 
 
 
