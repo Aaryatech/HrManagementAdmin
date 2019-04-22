@@ -117,8 +117,8 @@
 							<thead>
 								<tr class="bg-blue">
 
-									<th class="check" style="text-align: center; width: 5%;"><input
-										type="checkbox" name="selAll" id="selAll" />Select All</th>
+									<!-- <th class="check" style="text-align: center; width: 5%;"><input
+										type="checkbox" name="selAll" id="selAll" />Select All</th> -->
 
 									<th width="10%">Sr. No.</th>
 									<th>Employee Code</th>
@@ -134,8 +134,8 @@
 								<c:forEach items="${empLeaveAuth}" var="leaveAuth"
 									varStatus="count">
 									<tr>
-										<td><input type="checkbox" class="chk" name="empIds"
-											id="empIds${count.index+1}" value="${structure.empId}" /></td>
+										<%-- <td><input type="checkbox" class="chk" name="empIds"
+											id="empIds${count.index+1}" value="${structure.empId}" /></td> --%>
 										<td>${count.index+1}</td>
 										<td>${leaveAuth.empCode}</td>
 										<td>${leaveAuth.empFname}${leaveAuth.empMname}${leaveAuth.empSname}</td>
@@ -144,20 +144,17 @@
 
 
 										<td class="text-center">
-											<div class="list-icons">
+											<!-- <div class="list-icons">
 												<div class="dropdown">
 													<a href="#" class="list-icons-item" data-toggle="dropdown">
 														<i class="icon-menu9"></i>
 													</a>
 
-													<div class="dropdown-menu dropdown-menu-right">
-														<a
-															href="${pageContext.request.contextPath}/editLeaveAuthority?empId=${leaveAuth.exVar1}"
-															class="dropdown-item"><i class="icon-pencil7"></i>Edit</a>
-
-													</div>
+													<div class="dropdown-menu dropdown-menu-right"> --> <a
+											href="${pageContext.request.contextPath}/editLeaveAuthority?empId=${leaveAuth.exVar1}"
+											class="dropdown-item"><i class="icon-pencil7"></i></a> <!-- </div>
 												</div>
-											</div>
+											</div> -->
 										</td>
 									</tr>
 								</c:forEach>

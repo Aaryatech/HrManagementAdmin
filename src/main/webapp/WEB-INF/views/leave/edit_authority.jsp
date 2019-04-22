@@ -190,23 +190,33 @@
 																<input type="radio" class="chk" name="finAuthEmpId"
 																	id="finAuthEmpId${count.index+1}" value="${emp.empId}" />Final
 																</c:otherwise>
-														</c:choose> <input type="checkbox" class="chk" name="repToEmpIds"
-														id="repToEmpIds${count.index+1}" value="${emp.empId}" />Reporting<%-- <c:forEach items="${reportingIdList}" var="reportId"
+														</c:choose> 
+														
+														
+														
+														
+														
+														
+														<c:set var="countOf" value="0"></c:set> <c:forEach
+															items="${reportingIdList}" var="reportId"
 															varStatus="count">
+															<c:if test="${emp.empId==reportId}">
+																<c:set var="countOf" value="1"></c:set>
+															</c:if>
 
-															<c:choose>
-																<c:when test="${emp.empId==reportId}">
-																	<input type="checkbox" class="chk" name="repToEmpIds"
-																		id="repToEmpIds${count.index+1}" value="${emp.empId}"
-																		checked />Reporting
-														</c:when>
-																<c:otherwise>
 
-																	<input type="checkbox" class="chk" name="repToEmpIds"
-																		id="repToEmpIds${count.index+1}" value="${emp.empId}" />Reporting</c:otherwise>
+														</c:forEach> <c:choose>
+															<c:when test="${countOf==1}">
 
-															</c:choose>
-														</c:forEach> --%></td>
+																<input type="checkbox" class="chk" name="repToEmpIds"
+																	id="repToEmpIds${count.index+1}" value="${emp.empId}"
+																	checked />Reporting 
+															 
+																</c:when>
+															<c:otherwise>
+																<input type="checkbox" class="chk" name="repToEmpIds"
+																	id="repToEmpIds${count.index+1}" value="${emp.empId}" />Reporting </c:otherwise>
+														</c:choose></td>
 													<td width="10%">${emp.empCode}</td>
 													<td>${emp.empFname}${emp.empMname}${emp.empSname}</td>
 													<td width="10%">${emp.empDept}</td>
