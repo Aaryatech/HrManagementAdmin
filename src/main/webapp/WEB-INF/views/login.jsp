@@ -25,7 +25,7 @@
 	<!-- /core JS files -->
 
 	<!-- Theme JS files -->
-	<script src="assets/js/app.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/app.js"></script>
 	<!-- /theme JS files -->
 
 </head>
