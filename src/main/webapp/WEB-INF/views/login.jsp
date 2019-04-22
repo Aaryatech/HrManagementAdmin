@@ -66,7 +66,8 @@
 			<div class="content d-flex justify-content-center align-items-center">
 
 				<!-- Login form -->
-				<form class="login-form" action="loginProcess">
+				<form action="${pageContext.request.contextPath}/loginProcess"
+									id="submitInsertEmpType" method="post">
 					<div class="card mb-0">
 						<div class="card-body">
 							<div class="text-center mb-3">

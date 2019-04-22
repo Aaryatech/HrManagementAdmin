@@ -20,7 +20,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.hradmin.common.Constants;
 import com.ats.hradmin.common.FormValidation;
+import com.ats.hradmin.leave.model.LeaveHistory;
 import com.ats.hradmin.model.AccessRightModule;
+import com.ats.hradmin.model.Company;
+import com.ats.hradmin.model.EmployeeInfo;
+import com.ats.hradmin.model.GetEmployeeInfo;
 import com.ats.hradmin.model.Info;
 import com.ats.hradmin.model.LeaveSummary;
 import com.ats.hradmin.model.LeaveType;
@@ -322,6 +326,84 @@ public class LeaveController {
 	
 
 }
+	
+	//******************************Apply for leave***********************************************
+
+	@RequestMapping(value = "/showApplyForLeave", method = RequestMethod.GET)
+	public ModelAndView showEmpList(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("leave/appplyForLeave");
+
+		try {
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("companyId", 1);
+			map.add("locIdList", 1);
+			
+			GetEmployeeInfo[] employeeDepartment = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getEmpInfoList", map, GetEmployeeInfo[].class);
+
+			List<GetEmployeeInfo> employeeDepartmentlist = new ArrayList<GetEmployeeInfo>(
+					Arrays.asList(employeeDepartment));
+
+			for (int i = 0; i < employeeDepartmentlist.size(); i++) {
+						//System.out.println("employeeDepartmentlist.get(i).getEmpId()"+employeeDepartmentlist.get(i).getEmpId());
+				employeeDepartmentlist.get(i).setExVar1(
+						FormValidation.Encrypt(String.valueOf(employeeDepartmentlist.get(i).getEmpId())));
+			}
+
+			model.addObject("empList", employeeDepartmentlist);
+			System.err.println("emp list is  "+employeeDepartment.toString());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+	}
+	
+	
+	@RequestMapping(value = "/leaveApply", method = RequestMethod.GET)
+	public ModelAndView showApplyLeave(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("leave/leaveApplication");
+
+		try {
+			String base64encodedString = request.getParameter("empId");
+			String empId = FormValidation.DecodeKey(base64encodedString);
+
+		
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("empId", empId);
+			
+			EmployeeInfo  editEmp = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpInfoById", map,
+					EmployeeInfo.class);
+			model.addObject("editEmp", editEmp);
+			
+			LeaveType[] leaveArray = Constants.getRestTemplate()
+					.getForObject(Constants.url + "/getLeaveTypeListIsStructure", LeaveType[].class);
+
+			List<LeaveType> leaveTypeList = new ArrayList<>(Arrays.asList(leaveArray));
+
+			model.addObject("leaveTypeList", leaveTypeList);
+
+			
+		 map = new LinkedMultiValueMap<>();
+			map.add("empId",empId);
+			
+			LeaveHistory[] leaveHistory = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getLeaveHistoryList", map, LeaveHistory[].class);
+
+			List<LeaveHistory> leaveHistoryList = new ArrayList<LeaveHistory>(
+					Arrays.asList(leaveHistory));
+			model.addObject("leaveHistoryList", leaveHistoryList);
+			System.err.println("emp leaveHistoryList is  "+leaveHistoryList.toString());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+	}
+	
 	
 	
 }
