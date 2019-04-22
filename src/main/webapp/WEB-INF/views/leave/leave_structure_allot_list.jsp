@@ -45,11 +45,11 @@
 							class="icon-more"></i></a>
 					</div>
 
-					<div class="breadcrumb justify-content-center">
+					<%-- 	<div class="breadcrumb justify-content-center">
 						<a href="${pageContext.request.contextPath}/holidayAdd"
 							class="breadcrumb-elements-item"> Add Holiday </a>
 
-					</div>
+					</div> --%>
 
 
 				</div>
@@ -64,7 +64,7 @@
 				<!-- Highlighting rows and columns -->
 				<div class="card">
 					<div class="card-header header-elements-inline">
-						<h5 class="card-title">Leave Structure List</h5>
+						<h5 class="card-title">Leave Structure Allotment List</h5>
 						<div class="header-elements">
 							<div class="list-icons">
 								<a class="list-icons-item" data-action="collapse"></a>

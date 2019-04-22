@@ -46,8 +46,8 @@
 					</div>
 
 					<div class="breadcrumb justify-content-center">
-						<a href="${pageContext.request.contextPath}/leaveAuthorityList"
-							class="breadcrumb-elements-item"> Authority List </a>
+						<a href="${pageContext.request.contextPath}/addLeaveAuthority"
+							class="breadcrumb-elements-item"> Add Authority</a>
 
 					</div>
 
@@ -64,7 +64,7 @@
 				<!-- Highlighting rows and columns -->
 				<div class="card">
 					<div class="card-header header-elements-inline">
-						<h5 class="card-title">Leave Authority</h5>
+						<h5 class="card-title">Edit Authority</h5>
 						<div class="header-elements">
 							<div class="list-icons">
 								<a class="list-icons-item" data-action="collapse"></a>
@@ -109,10 +109,8 @@
 							session.removeAttribute("successMsg");
 							}
 						%>
-
-
 						<form
-							action="${pageContext.request.contextPath}/submitAuthorityList"
+							action="${pageContext.request.contextPath}/editSubmitAuthorityList"
 							method="post">
 
 							<div class="row">
@@ -141,7 +139,7 @@
 												<tr>
 													<td style="text-align: center;"><input type="checkbox"
 														class="chk" name="empIds" id="empIds${count.index+1}"
-														value="${emp.empId}" /></td>
+														checked value="${emp.empId}" /></td>
 
 													<td width="10%">${emp.empCode}</td>
 													<td>${emp.empFname}${emp.empMname}${emp.empSname}</td>
@@ -173,14 +171,42 @@
 										<tbody>
 											<c:forEach items="${empList}" var="emp" varStatus="count">
 												<tr>
-													<td width="60%"><input type="radio" class="chk"
-														name="iniAuthEmpId" id="iniAuthEmpId${count.index+1}"
-														value="${emp.empId}" />Initial <input type="radio"
-														class="chk" name="finAuthEmpId"
-														id="finAuthEmpId${count.index+1}" value="${emp.empId}" />Final
-														<input type="checkbox" class="chk" name="repToEmpIds"
-														id="repToEmpIds${count.index+1}" value="${emp.empId}" />Reporting</td>
-													<%-- <td>${count.index+1}</td> --%>
+													<td width="60%"><c:choose>
+															<c:when test="${leaveAuthority.iniAuthEmpId==emp.empId}">
+																<input type="radio" class="chk" name="iniAuthEmpId"
+																	id="iniAuthEmpId${count.index+1}" value="${emp.empId}"
+																	checked />Initial</c:when>
+															<c:otherwise>
+																<input type="radio" class="chk" name="iniAuthEmpId"
+																	id="iniAuthEmpId${count.index+1}" value="${emp.empId}" />Initial
+																</c:otherwise>
+														</c:choose> <c:choose>
+															<c:when test="${leaveAuthority.finAuthEmpId==emp.empId}">
+																<input type="radio" class="chk" name="finAuthEmpId"
+																	id="finAuthEmpId${count.index+1}" value="${emp.empId}"
+																	checked />Final
+														</c:when>
+															<c:otherwise>
+																<input type="radio" class="chk" name="finAuthEmpId"
+																	id="finAuthEmpId${count.index+1}" value="${emp.empId}" />Final
+																</c:otherwise>
+														</c:choose> <input type="checkbox" class="chk" name="repToEmpIds"
+														id="repToEmpIds${count.index+1}" value="${emp.empId}" />Reporting<%-- <c:forEach items="${reportingIdList}" var="reportId"
+															varStatus="count">
+
+															<c:choose>
+																<c:when test="${emp.empId==reportId}">
+																	<input type="checkbox" class="chk" name="repToEmpIds"
+																		id="repToEmpIds${count.index+1}" value="${emp.empId}"
+																		checked />Reporting
+														</c:when>
+																<c:otherwise>
+
+																	<input type="checkbox" class="chk" name="repToEmpIds"
+																		id="repToEmpIds${count.index+1}" value="${emp.empId}" />Reporting</c:otherwise>
+
+															</c:choose>
+														</c:forEach> --%></td>
 													<td width="10%">${emp.empCode}</td>
 													<td>${emp.empFname}${emp.empMname}${emp.empSname}</td>
 													<td width="10%">${emp.empDept}</td>
@@ -237,17 +263,7 @@
 				});
 	</script>
 
-	<script type="text/javascript">
-		$(document).ready(
-				function() {
-					$('#bootstrap-data-table-export').DataTable();
 
-					$("#selAll1").click(
-							function() {
-								$('#printtable2 tbody input[type="checkbox"]')
-										.prop('checked', this.checked);
-							});
-				});
-	</script>
+
 </body>
 </html>

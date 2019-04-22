@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,6 +32,7 @@ import com.ats.hradmin.leave.model.LeaveAuthority;
 import com.ats.hradmin.leave.model.LeaveStructureDetails;
 import com.ats.hradmin.leave.model.LeaveStructureHeader;
 import com.ats.hradmin.leave.model.LeavesAllotment;
+import com.ats.hradmin.model.Company;
 import com.ats.hradmin.model.EmployeeInfo;
 import com.ats.hradmin.model.GetEmployeeInfo;
 import com.ats.hradmin.model.Info;
@@ -298,6 +301,8 @@ public class LeaveStructureController {
 		return "redirect:/showLeaveStructureList";
 
 	}
+
+	LeaveAuthority leaveAuthority = new LeaveAuthority();
 
 	@RequestMapping(value = "/showLeaveStructureList", method = RequestMethod.GET)
 	public ModelAndView showLeaveStructureList(HttpServletRequest request, HttpServletResponse response) {
@@ -649,17 +654,117 @@ public class LeaveStructureController {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("companyId", 1);
-			 
-			GetLeaveAuthority[] empInfoError = Constants.getRestTemplate()
-					.postForObject(Constants.url + "/getEmpInfoListForLeaveAuth", map, GetLeaveAuthority[].class);
 
-			List<GetLeaveAuthority> employeeInfo = new ArrayList<>(Arrays.asList(empInfoError));
-			model.addObject("empListAuth", employeeInfo);
+			GetLeaveAuthority[] empInfoError = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getLeaveAuthorityList", map, GetLeaveAuthority[].class);
+
+			List<GetLeaveAuthority> empLeaveAuth = new ArrayList<>(Arrays.asList(empInfoError));
+
+			for (int i = 0; i < empLeaveAuth.size(); i++) {
+
+				empLeaveAuth.get(i).setExVar1(FormValidation.Encrypt(String.valueOf(empLeaveAuth.get(i).getEmpId())));
+			}
+
+			model.addObject("empLeaveAuth", empLeaveAuth);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return model;
+	}
+
+	@RequestMapping(value = "/editLeaveAuthority", method = RequestMethod.GET)
+	public ModelAndView editLeaveAuthority(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("leave/edit_authority");
+
+		try {
+			String base64encodedString = request.getParameter("empId");
+			String empId = FormValidation.DecodeKey(base64encodedString);
+			System.out.println("empId" + empId);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("companyId", 1);
+			map.add("locIdList", 1);
+
+			GetEmployeeInfo[] employeeDepartment = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getEmpInfoList", map, GetEmployeeInfo[].class);
+
+			List<GetEmployeeInfo> employeeDepartmentlist = new ArrayList<GetEmployeeInfo>(
+					Arrays.asList(employeeDepartment));
+
+			model.addObject("empList", employeeDepartmentlist);
+
+			map = new LinkedMultiValueMap<>();
+			map.add("companyId", 1);
+			map.add("empIdList", empId);
+			GetEmployeeInfo[] empInfoError = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getEmpInfoListByEmpIdList", map, GetEmployeeInfo[].class);
+
+			List<GetEmployeeInfo> employeeInfo = new ArrayList<>(Arrays.asList(empInfoError));
+			model.addObject("empListAuth", employeeInfo);
+
+			model.addObject("empIdForEdit", empId);
+
+			map = new LinkedMultiValueMap<>();
+			map.add("empId", empId);
+			leaveAuthority = Constants.getRestTemplate().postForObject(Constants.url + "/getLeaveAuthorityListByEmpId",
+					map, LeaveAuthority.class);
+			model.addObject("leaveAuthority", leaveAuthority);
+			System.out.println(leaveAuthority.toString());
+
+			List<Integer> reportingIdList = Stream.of(leaveAuthority.getRepToEmpIds().split(",")).map(Integer::parseInt)
+					.collect(Collectors.toList());
+
+			model.addObject("reportingIdList", reportingIdList);
+			System.out.println("reportingIdList" + reportingIdList.toString());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+	}
+
+	@RequestMapping(value = "/editSubmitAuthorityList", method = RequestMethod.POST)
+	public String editSubmitAuthorityList(HttpServletRequest request, HttpServletResponse response) {
+
+		try {
+			HttpSession session = request.getSession();
+			int iniAuthEmpId = Integer.parseInt(request.getParameter("iniAuthEmpId"));
+
+			int finAuthEmpId = Integer.parseInt(request.getParameter("finAuthEmpId"));
+
+			String[] repToEmpIds = request.getParameterValues("repToEmpIds");
+
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < repToEmpIds.length; i++) {
+				sb = sb.append(repToEmpIds[i] + ",");
+
+			}
+			String repToEmpIdsList = sb.toString();
+			repToEmpIdsList = repToEmpIdsList.substring(0, repToEmpIdsList.length() - 1);
+
+			leaveAuthority.setRepToEmpIds(repToEmpIdsList);
+			leaveAuthority.setFinAuthEmpId(finAuthEmpId);
+			leaveAuthority.setIniAuthEmpId(iniAuthEmpId);
+
+			LeaveAuthority res = Constants.getRestTemplate().postForObject(Constants.url + "/saveLeaveAuthority",
+					leaveAuthority, LeaveAuthority.class);
+
+			if (res != null) {
+				session.setAttribute("successMsg", "Record Insert Successfully");
+			} else {
+				session.setAttribute("errorMsg", "Failed to Insert Record");
+			}
+
+		} catch (
+
+		Exception e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:/addLeaveAuthority";
 	}
 
 }

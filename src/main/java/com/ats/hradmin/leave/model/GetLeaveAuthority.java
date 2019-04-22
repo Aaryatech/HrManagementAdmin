@@ -46,11 +46,15 @@ public class GetLeaveAuthority {
 
 	private String iniEmpSname;
 
-	private String finEmpFname;
+	private String finiEmpFname;
 
-	private String finEmpMname;
+	private String finiEmpMname;
 
-	private String finEmpSname;
+	private String finiEmpSname;
+
+	private String empCode;
+	private String iniEmpCode;
+	private String finiEmpCode;
 
 	public int getLaPkey() {
 		return laPkey;
@@ -228,28 +232,52 @@ public class GetLeaveAuthority {
 		this.iniEmpSname = iniEmpSname;
 	}
 
-	public String getFinEmpFname() {
-		return finEmpFname;
+	public String getFiniEmpFname() {
+		return finiEmpFname;
 	}
 
-	public void setFinEmpFname(String finEmpFname) {
-		this.finEmpFname = finEmpFname;
+	public void setFiniEmpFname(String finiEmpFname) {
+		this.finiEmpFname = finiEmpFname;
 	}
 
-	public String getFinEmpMname() {
-		return finEmpMname;
+	public String getFiniEmpMname() {
+		return finiEmpMname;
 	}
 
-	public void setFinEmpMname(String finEmpMname) {
-		this.finEmpMname = finEmpMname;
+	public void setFiniEmpMname(String finiEmpMname) {
+		this.finiEmpMname = finiEmpMname;
 	}
 
-	public String getFinEmpSname() {
-		return finEmpSname;
+	public String getFiniEmpSname() {
+		return finiEmpSname;
 	}
 
-	public void setFinEmpSname(String finEmpSname) {
-		this.finEmpSname = finEmpSname;
+	public void setFiniEmpSname(String finiEmpSname) {
+		this.finiEmpSname = finiEmpSname;
+	}
+
+	public String getEmpCode() {
+		return empCode;
+	}
+
+	public void setEmpCode(String empCode) {
+		this.empCode = empCode;
+	}
+
+	public String getIniEmpCode() {
+		return iniEmpCode;
+	}
+
+	public void setIniEmpCode(String iniEmpCode) {
+		this.iniEmpCode = iniEmpCode;
+	}
+
+	public String getFiniEmpCode() {
+		return finiEmpCode;
+	}
+
+	public void setFiniEmpCode(String finiEmpCode) {
+		this.finiEmpCode = finiEmpCode;
 	}
 
 	@Override
@@ -260,8 +288,9 @@ public class GetLeaveAuthority {
 				+ ", makerEnterDatetime=" + makerEnterDatetime + ", exInt1=" + exInt1 + ", exInt2=" + exInt2
 				+ ", exInt3=" + exInt3 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3
 				+ ", empFname=" + empFname + ", empMname=" + empMname + ", empSname=" + empSname + ", iniEmpFname="
-				+ iniEmpFname + ", iniEmpMname=" + iniEmpMname + ", iniEmpSname=" + iniEmpSname + ", finEmpFname="
-				+ finEmpFname + ", finEmpMname=" + finEmpMname + ", finEmpSname=" + finEmpSname + "]";
+				+ iniEmpFname + ", iniEmpMname=" + iniEmpMname + ", iniEmpSname=" + iniEmpSname + ", finiEmpFname="
+				+ finiEmpFname + ", finiEmpMname=" + finiEmpMname + ", finiEmpSname=" + finiEmpSname + ", empCode="
+				+ empCode + ", iniEmpCode=" + iniEmpCode + ", finiEmpCode=" + finiEmpCode + "]";
 	}
 
 }
