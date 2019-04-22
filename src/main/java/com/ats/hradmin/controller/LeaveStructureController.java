@@ -502,17 +502,18 @@ public class LeaveStructureController {
 			items = items.substring(0, items.length() - 1);
 
 			String[] arrOfStr = items.split(",");
+			
+			
+			
+			
 			LeavesAllotment leavesAllotment = new LeavesAllotment();
-			for (int i = 0; i < items.length(); i++) {
-				for (int j = 0; j < arrOfStr.length; j++) {
+			for (int i = 0; i < arrOfStr.length ; i++) {
+				 
 
 					leavesAllotment.setCalYrId(1);
 
 					leavesAllotment.setDelStatus(1);
-					leavesAllotment.setEmpId(Integer.parseInt(arrOfStr[j]));
-					leavesAllotment.setExInt1(1);
-					leavesAllotment.setExInt2(1);
-					leavesAllotment.setExInt3(1);
+					leavesAllotment.setEmpId(Integer.parseInt(arrOfStr[i])); 
 					leavesAllotment.setExVar1("NA");
 					leavesAllotment.setExVar2("NA");
 					leavesAllotment.setExVar3("NA");
@@ -521,7 +522,7 @@ public class LeaveStructureController {
 					leavesAllotment.setMakerEnterDatetime(dateTime);
 					leavesAllotment.setLvsId(lvsId);
 
-				}
+			 
 
 				LeavesAllotment res = Constants.getRestTemplate().postForObject(Constants.url + "/saveLeaveAllotment",
 						leavesAllotment, LeavesAllotment.class);
