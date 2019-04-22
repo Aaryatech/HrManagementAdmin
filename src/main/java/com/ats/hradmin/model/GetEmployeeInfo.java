@@ -195,20 +195,9 @@ public class GetEmployeeInfo {
 				+ ", empTypeId=" + empTypeId + ", empType=" + empType + ", empDeptId=" + empDeptId + ", empDept="
 				+ empDept + ", empFname=" + empFname + ", empMname=" + empMname + ", empSname=" + empSname
 				+ ", empMobile1=" + empMobile1 + ", empEmail=" + empEmail + ", empPrevExpYrs=" + empPrevExpYrs
-				+ ", empRatePerhr=" + empRatePerhr + ", exVar1=" + exVar1 + ", getEmpId()=" + getEmpId()
-				+ ", getEmpCode()=" + getEmpCode() + ", getCompanyName()=" + getCompanyName() + ", getCompanyId()="
-				+ getCompanyId() + ", getEmpCatId()=" + getEmpCatId() + ", getEmpCategory()=" + getEmpCategory()
-				+ ", getEmpTypeId()=" + getEmpTypeId() + ", getEmpType()=" + getEmpType() + ", getEmpDeptId()="
-				+ getEmpDeptId() + ", getEmpDept()=" + getEmpDept() + ", getEmpFname()=" + getEmpFname()
-				+ ", getEmpMname()=" + getEmpMname() + ", getEmpSname()=" + getEmpSname() + ", getEmpMobile1()="
-				+ getEmpMobile1() + ", getEmpEmail()=" + getEmpEmail() + ", getEmpPrevExpYrs()=" + getEmpPrevExpYrs()
-				+ ", getEmpRatePerhr()=" + getEmpRatePerhr() + ", getExVar1()=" + getExVar1() + ", getClass()="
-				+ getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+				+ ", empRatePerhr=" + empRatePerhr + ", exVar1=" + exVar1 + "]";
 	}
-
-	
-	
-	
+ 
 	
 }
 
