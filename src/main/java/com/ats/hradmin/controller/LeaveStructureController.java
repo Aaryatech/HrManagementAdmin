@@ -29,6 +29,7 @@ import com.ats.hradmin.leave.model.GetLeaveAuthority;
 import com.ats.hradmin.leave.model.GetStructureAllotment;
 import com.ats.hradmin.leave.model.Holiday;
 import com.ats.hradmin.leave.model.LeaveAuthority;
+import com.ats.hradmin.leave.model.LeaveBalanceCal;
 import com.ats.hradmin.leave.model.LeaveStructureDetails;
 import com.ats.hradmin.leave.model.LeaveStructureHeader;
 import com.ats.hradmin.leave.model.LeavesAllotment;
@@ -38,6 +39,7 @@ import com.ats.hradmin.model.GetEmployeeInfo;
 import com.ats.hradmin.model.Info;
 import com.ats.hradmin.model.LeaveSummary;
 import com.ats.hradmin.model.LeaveType;
+import com.ats.hradmin.model.LoginResponse;
 
 @Controller
 @Scope("session")
@@ -228,8 +230,11 @@ public class LeaveStructureController {
 	@RequestMapping(value = "/insertLeaveStructure", method = RequestMethod.POST)
 	public String insertLeaveStructure(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			System.err.println("Inside insert submitInsertLeaveStructure method");
+
 			HttpSession session = request.getSession();
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+			System.err.println("Inside insert submitInsertLeaveStructure method");
+
 			String lvsName = request.getParameter("lvsName");
 
 			Boolean ret = false;
@@ -244,7 +249,7 @@ public class LeaveStructureController {
 
 				LeaveStructureHeader head = new LeaveStructureHeader();
 
-				head.setCompanyId(1);
+				head.setCompanyId(userObj.getCompanyId());
 				head.setDelStatus(1);
 				head.setIsActive(1);
 				head.setLvsName(lvsName);
@@ -310,9 +315,11 @@ public class LeaveStructureController {
 		ModelAndView model = new ModelAndView("leave/leave_structure_list");
 
 		try {
+			HttpSession session = request.getSession();
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			map.add("companyId", 1);
+			map.add("companyId", userObj.getCompanyId());
 			LeaveStructureHeader[] summary = Constants.getRestTemplate()
 					.postForObject(Constants.url + "/getStructureList", map, LeaveStructureHeader[].class);
 
@@ -459,16 +466,19 @@ public class LeaveStructureController {
 
 		try {
 
+			HttpSession session = request.getSession();
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			map.add("companyId", 1);
+			map.add("companyId", userObj.getCompanyId());
 			LeaveStructureHeader[] lvStrSummery = Constants.getRestTemplate()
 					.postForObject(Constants.url + "/getStructureList", map, LeaveStructureHeader[].class);
 
 			List<LeaveStructureHeader> lSummarylist = new ArrayList<>(Arrays.asList(lvStrSummery));
 			model.addObject("lStrList", lSummarylist);
 			map = new LinkedMultiValueMap<>();
-			map.add("companyId", 1);
-			map.add("locIdList", 1);
+			map.add("companyId", userObj.getCompanyId());
+			map.add("locIdList", userObj.getLocationIds());
 			GetStructureAllotment[] summary = Constants.getRestTemplate()
 					.postForObject(Constants.url + "/getStructureAllotmentList", map, GetStructureAllotment[].class);
 
@@ -502,30 +512,55 @@ public class LeaveStructureController {
 			items = items.substring(0, items.length() - 1);
 
 			String[] arrOfStr = items.split(",");
-			
-			
-			
-			
+
 			LeavesAllotment leavesAllotment = new LeavesAllotment();
-			for (int i = 0; i < arrOfStr.length ; i++) {
-				 
+			for (int i = 0; i < arrOfStr.length; i++) {
 
-					leavesAllotment.setCalYrId(1);
+				leavesAllotment.setCalYrId(1);
 
-					leavesAllotment.setDelStatus(1);
-					leavesAllotment.setEmpId(Integer.parseInt(arrOfStr[i])); 
-					leavesAllotment.setExVar1("NA");
-					leavesAllotment.setExVar2("NA");
-					leavesAllotment.setExVar3("NA");
-					leavesAllotment.setIsActive(1);
-					leavesAllotment.setMakerUserId(1);
-					leavesAllotment.setMakerEnterDatetime(dateTime);
-					leavesAllotment.setLvsId(lvsId);
-
-			 
+				leavesAllotment.setDelStatus(1);
+				leavesAllotment.setEmpId(Integer.parseInt(arrOfStr[i]));
+				leavesAllotment.setExVar1("NA");
+				leavesAllotment.setExVar2("NA");
+				leavesAllotment.setExVar3("NA");
+				leavesAllotment.setIsActive(1);
+				leavesAllotment.setMakerUserId(1);
+				leavesAllotment.setMakerEnterDatetime(dateTime);
+				leavesAllotment.setLvsId(lvsId);
 
 				LeavesAllotment res = Constants.getRestTemplate().postForObject(Constants.url + "/saveLeaveAllotment",
 						leavesAllotment, LeavesAllotment.class);
+
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+				map.add("lvsId", lvsId);
+				LeaveStructureHeader leaveDetails = Constants.getRestTemplate()
+						.postForObject(Constants.url + "/getStructureById", map, LeaveStructureHeader.class);
+
+				System.out.println(leaveDetails.toString());
+
+				for (int j = 0; j < leaveDetails.getDetailList().size(); j++) {
+
+					LeaveBalanceCal leaveBalanceCal = new LeaveBalanceCal();
+					leaveBalanceCal.setCalYrId(1);
+					leaveBalanceCal.setDelStatus(1);
+					leaveBalanceCal.setEmpId(Integer.parseInt(arrOfStr[i]));
+					leaveBalanceCal.setIsActive(1);
+					leaveBalanceCal.setLvAlloted(0);
+					leaveBalanceCal.setLvbalId(0);
+					leaveBalanceCal.setLvCarryFwd(0);
+					leaveBalanceCal.setLvCarryFwdRemarks("Null");
+					leaveBalanceCal.setLvEncash(0);
+					leaveBalanceCal.setOpBal(0);
+					leaveBalanceCal.setMakerUserId(1);
+					leaveBalanceCal.setMakerEnterDatetime(dateTime);
+
+					leaveBalanceCal.setLvTypeId(leaveDetails.getDetailList().get(j).getLvTypeId());
+
+					LeaveBalanceCal resForBalanceCal = Constants.getRestTemplate().postForObject(
+							Constants.url + "/saveLeaveBalanceCal", leaveBalanceCal, LeaveBalanceCal.class);
+					System.out.println(resForBalanceCal.toString());
+
+				}
 
 				if (res != null) {
 					session.setAttribute("successMsg", "Record Insert Successfully");
@@ -549,10 +584,12 @@ public class LeaveStructureController {
 		ModelAndView model = new ModelAndView("leave/authority_add");
 
 		try {
+			HttpSession session = request.getSession();
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			map.add("companyId", 1);
-			map.add("locIdList", 1);
+			map.add("companyId", userObj.getCompanyId());
+			map.add("locIdList", userObj.getLocId());
 
 			GetEmployeeInfo[] employeeDepartment = Constants.getRestTemplate()
 					.postForObject(Constants.url + "/getEmpInfoList", map, GetEmployeeInfo[].class);
@@ -563,7 +600,7 @@ public class LeaveStructureController {
 			model.addObject("empList", employeeDepartmentlist);
 
 			map = new LinkedMultiValueMap<>();
-			map.add("companyId", 1);
+			map.add("companyId", userObj.getCompanyId());
 			GetEmployeeInfo[] empInfoError = Constants.getRestTemplate()
 					.postForObject(Constants.url + "/getEmpInfoListForLeaveAuth", map, GetEmployeeInfo[].class);
 
@@ -608,26 +645,22 @@ public class LeaveStructureController {
 
 			String[] arrOfStr = empIdList.split(",");
 			LeaveAuthority leaves = new LeaveAuthority();
-			for (int i = 0; i < empIdList.length(); i++) {
-				for (int j = 0; j < arrOfStr.length; j++) {
 
-					leaves.setDelStatus(1);
-					leaves.setEmpId(Integer.parseInt(arrOfStr[j]));
-					leaves.setExInt1(1);
-					leaves.setExInt2(1);
-					leaves.setExInt3(1);
-					leaves.setExVar1("NA");
-					leaves.setExVar2("NA");
-					leaves.setExVar3("NA");
-					leaves.setIsActive(1);
-					leaves.setMakerUserId(1);
-					leaves.setMakerEnterDatetime(dateTime);
-					leaves.setIniAuthEmpId(iniAuthEmpId);
-					leaves.setFinAuthEmpId(finAuthEmpId);
-					leaves.setCompanyId(1);
-					leaves.setRepToEmpIds(repToEmpIdsList);
+			for (int j = 0; j < arrOfStr.length; j++) {
 
-				}
+				leaves.setDelStatus(1);
+				leaves.setEmpId(Integer.parseInt(arrOfStr[j]));
+
+				leaves.setExVar1("NA");
+				leaves.setExVar2("NA");
+				leaves.setExVar3("NA");
+				leaves.setIsActive(1);
+				leaves.setMakerUserId(1);
+				leaves.setMakerEnterDatetime(dateTime);
+				leaves.setIniAuthEmpId(iniAuthEmpId);
+				leaves.setFinAuthEmpId(finAuthEmpId);
+				leaves.setCompanyId(1);
+				leaves.setRepToEmpIds(repToEmpIdsList);
 
 				LeaveAuthority res = Constants.getRestTemplate().postForObject(Constants.url + "/saveLeaveAuthority",
 						leaves, LeaveAuthority.class);
@@ -652,9 +685,11 @@ public class LeaveStructureController {
 		ModelAndView model = new ModelAndView("leave/authority_list");
 
 		try {
+			HttpSession session = request.getSession();
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			map.add("companyId", 1);
+			map.add("companyId", userObj.getCompanyId());
 
 			GetLeaveAuthority[] empInfoError = Constants.getRestTemplate()
 					.postForObject(Constants.url + "/getLeaveAuthorityList", map, GetLeaveAuthority[].class);
@@ -680,13 +715,17 @@ public class LeaveStructureController {
 		ModelAndView model = new ModelAndView("leave/edit_authority");
 
 		try {
+
+			HttpSession session = request.getSession();
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+
 			String base64encodedString = request.getParameter("empId");
 			String empId = FormValidation.DecodeKey(base64encodedString);
 			System.out.println("empId" + empId);
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			map.add("companyId", 1);
-			map.add("locIdList", 1);
+			map.add("companyId", userObj.getCompanyId());
+			map.add("locIdList", userObj.getLocId());
 
 			GetEmployeeInfo[] employeeDepartment = Constants.getRestTemplate()
 					.postForObject(Constants.url + "/getEmpInfoList", map, GetEmployeeInfo[].class);
@@ -697,7 +736,7 @@ public class LeaveStructureController {
 			model.addObject("empList", employeeDepartmentlist);
 
 			map = new LinkedMultiValueMap<>();
-			map.add("companyId", 1);
+			map.add("companyId", userObj.getCompanyId());
 			map.add("empIdList", empId);
 			GetEmployeeInfo[] empInfoError = Constants.getRestTemplate()
 					.postForObject(Constants.url + "/getEmpInfoListByEmpIdList", map, GetEmployeeInfo[].class);

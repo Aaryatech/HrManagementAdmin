@@ -34,6 +34,7 @@ import com.ats.hradmin.leave.model.Holiday;
 import com.ats.hradmin.model.Company;
 import com.ats.hradmin.model.Info;
 import com.ats.hradmin.model.Location;
+import com.ats.hradmin.model.LoginResponse;
 
 @Controller
 @Scope("session")
@@ -51,9 +52,11 @@ public class LeaveHolidayController {
 		ModelAndView model = new ModelAndView("leave/holiday");
 
 		try {
+			HttpSession session = request.getSession();
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			map.add("companyId", 1);
+			map.add("companyId", userObj.getCompanyId());
 			Location[] location = Constants.getRestTemplate().postForObject(Constants.url + "/getLocationList", map,
 					Location[].class);
 
@@ -68,12 +71,15 @@ public class LeaveHolidayController {
 
 			// getCalculateYearList
 
-			CalenderYear[] calculateYear = Constants.getRestTemplate()
-					.getForObject(Constants.url + "/getCalculateYearListIsCurrent", CalenderYear[].class);
-
-			List<CalenderYear> yearList = new ArrayList<>(Arrays.asList(calculateYear));
-
-			model.addObject("yearList", yearList);
+			/*
+			 * CalenderYear[] calculateYear = Constants.getRestTemplate()
+			 * .getForObject(Constants.url + "/getCalculateYearListIsCurrent",
+			 * CalenderYear[].class);
+			 * 
+			 * List<CalenderYear> yearList = new ArrayList<>(Arrays.asList(calculateYear));
+			 * 
+			 * model.addObject("yearList", yearList);
+			 */
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -87,13 +93,14 @@ public class LeaveHolidayController {
 		try {
 			HttpSession session = request.getSession();
 
+			CalenderYear calculateYear = Constants.getRestTemplate()
+					.getForObject(Constants.url + "/getCalculateYearListIsCurrent", CalenderYear.class);
+
 			String dateRange = request.getParameter("dateRange");
 			String[] arrOfStr = dateRange.split("to", 2);
 
 			String holidayRemark = request.getParameter("holidayRemark");
 			String holidayTitle = request.getParameter("holidayTitle");
-
-			int calYrId = Integer.parseInt(request.getParameter("calYrId"));
 
 			String[] locIds = request.getParameterValues("locId");
 
@@ -131,7 +138,7 @@ public class LeaveHolidayController {
 
 				Holiday holiday = new Holiday();
 
-				holiday.setCalYrId(calYrId);
+				holiday.setCalYrId(calculateYear.getCalYrId());
 				holiday.setCompanyId(1);
 				holiday.setDelStatus(1);
 				holiday.setExInt1(1);
@@ -192,12 +199,15 @@ public class LeaveHolidayController {
 
 			// getCalculateYearList
 
-			CalenderYear[] calculateYear = Constants.getRestTemplate()
-					.getForObject(Constants.url + "/getCalculateYearListIsCurrent", CalenderYear[].class);
-
-			List<CalenderYear> yearList = new ArrayList<>(Arrays.asList(calculateYear));
-
-			model.addObject("yearList", yearList);
+			/*
+			 * CalenderYear[] calculateYear = Constants.getRestTemplate()
+			 * .getForObject(Constants.url + "/getCalculateYearListIsCurrent",
+			 * CalenderYear[].class);
+			 * 
+			 * List<CalenderYear> yearList = new ArrayList<>(Arrays.asList(calculateYear));
+			 * 
+			 * model.addObject("yearList", yearList);
+			 */
 			String base64encodedString = request.getParameter("holidayId");
 			String holidayId = FormValidation.DecodeKey(base64encodedString);
 			System.out.println("holidayId" + holidayId);
@@ -261,8 +271,6 @@ public class LeaveHolidayController {
 			String holidayRemark = request.getParameter("holidayRemark");
 			String holidayTitle = request.getParameter("holidayTitle");
 
-			int calYrId = Integer.parseInt(request.getParameter("calYrId"));
-
 			String[] locIds = request.getParameterValues("locId");
 
 			StringBuilder sb = new StringBuilder();
@@ -289,8 +297,6 @@ public class LeaveHolidayController {
 			}
 
 			if (ret == false) {
-
-				editHoliday.setCalYrId(calYrId);
 
 				editHoliday.setHolidayFromdt(DateConvertor.convertToYMD(arrOfStr[0].toString().trim()));
 				editHoliday.setHolidayTodt(DateConvertor.convertToYMD(arrOfStr[1].toString().trim()));
