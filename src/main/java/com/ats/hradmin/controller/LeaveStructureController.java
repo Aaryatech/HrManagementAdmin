@@ -254,7 +254,7 @@ public class LeaveStructureController {
 				head.setIsActive(1);
 				head.setLvsName(lvsName);
 				head.setMakerDatetime(dateTime);
-				head.setMakerUserId(1);
+				head.setMakerUserId(userObj.getUserId());
 
 				List<LeaveStructureDetails> detailList = new ArrayList<>();
 				for (int i = 0; i < leaveTypeList.size(); i++) {
@@ -276,7 +276,7 @@ public class LeaveStructureController {
 					}
 
 					detail.setLvTypeId(leaveTypeList.get(i).getLvTypeId());
-					detail.setMakerUserId(1);
+					detail.setMakerUserId(userObj.getUserId());
 					detail.setMakerDatetime(dateTime);
 					detailList.add(detail);
 				}
@@ -509,6 +509,7 @@ public class LeaveStructureController {
 
 		try {
 			HttpSession session = request.getSession();
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 			int lvsId = Integer.parseInt(request.getParameter("lvsId"));
 
 			String[] empIds = request.getParameterValues("empIds");
@@ -535,7 +536,7 @@ public class LeaveStructureController {
 				leavesAllotment.setExVar2("NA");
 				leavesAllotment.setExVar3("NA");
 				leavesAllotment.setIsActive(1);
-				leavesAllotment.setMakerUserId(1);
+				leavesAllotment.setMakerUserId(userObj.getUserId());
 				leavesAllotment.setMakerEnterDatetime(dateTime);
 				leavesAllotment.setLvsId(lvsId);
 

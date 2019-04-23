@@ -26,10 +26,12 @@ import com.ats.hradmin.common.Constants;
 import com.ats.hradmin.common.DateConvertor;
 import com.ats.hradmin.common.FormValidation;
 import com.ats.hradmin.leave.model.Holiday;
+import com.ats.hradmin.model.GetEmployeeInfo;
 import com.ats.hradmin.model.Info;
 import com.ats.hradmin.model.LeaveSummary;
 import com.ats.hradmin.model.LeaveType;
 import com.ats.hradmin.model.Location;
+import com.ats.hradmin.model.LoginResponse;
 
 @Controller
 @Scope("session")
@@ -60,6 +62,8 @@ public class ClaimController {
 	public String submitInsertClaimType(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			HttpSession session = request.getSession();
+
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
 			String calimTypeTitle = request.getParameter("calimTypeTitle");
 			String claimShortTypeTitle = request.getParameter("claimShortTypeTitle");
@@ -100,11 +104,11 @@ public class ClaimController {
 				save.setClaimTypeRemarks(remark);
 				save.setClaimTypeTitle(calimTypeTitle);
 				save.setClaimTypeTitleShort(claimShortTypeTitle);
-				save.setCompanyId(1);
+				save.setCompanyId(userObj.getCompanyId());
 
 				save.setDelStatus(1);
 				save.setIsActive(1);
-				save.setMakerUserId(1);
+				save.setMakerUserId(userObj.getUserId());
 				save.setMakerEnterDatetime(dateTime);
 
 				ClaimType res = Constants.getRestTemplate().postForObject(Constants.url + "/saveClaimType", save,
@@ -128,8 +132,12 @@ public class ClaimController {
 
 		try {
 
+			HttpSession session = request.getSession();
+
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			map.add("companyId", 1);
+			map.add("companyId", userObj.getCompanyId());
 
 			ClaimType[] claimTypeListArray = Constants.getRestTemplate()
 					.postForObject(Constants.url + "/getClaimListByCompanyId", map, ClaimType[].class);
@@ -257,6 +265,41 @@ public class ClaimController {
 			session.setAttribute("errorMsg", "Failed to Delete");
 		}
 		return "redirect:/showClaimTypeList";
+	}
+
+	@RequestMapping(value = "/addClaimAuthority", method = RequestMethod.GET)
+	public ModelAndView addClaimAuthority(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("claim/claim_authority_add");
+
+		try {
+			HttpSession session = request.getSession();
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("companyId", userObj.getCompanyId());
+			map.add("locIdList", userObj.getLocId());
+
+			GetEmployeeInfo[] employeeDepartment = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getEmpInfoList", map, GetEmployeeInfo[].class);
+
+			List<GetEmployeeInfo> employeeDepartmentlist = new ArrayList<GetEmployeeInfo>(
+					Arrays.asList(employeeDepartment));
+
+			model.addObject("empList", employeeDepartmentlist);
+
+			map = new LinkedMultiValueMap<>();
+			map.add("companyId", userObj.getCompanyId());
+			GetEmployeeInfo[] empInfoError = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getEmpInfoListForClaimAuth", map, GetEmployeeInfo[].class);
+
+			List<GetEmployeeInfo> employeeInfo = new ArrayList<>(Arrays.asList(empInfoError));
+			model.addObject("empListAuth", employeeInfo);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
 	}
 
 }

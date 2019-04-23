@@ -92,6 +92,7 @@ public class LeaveHolidayController {
 
 		try {
 			HttpSession session = request.getSession();
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
 			CalenderYear calculateYear = Constants.getRestTemplate()
 					.getForObject(Constants.url + "/getCalculateYearListIsCurrent", CalenderYear.class);
@@ -141,21 +142,18 @@ public class LeaveHolidayController {
 				holiday.setCalYrId(calculateYear.getCalYrId());
 				holiday.setCompanyId(1);
 				holiday.setDelStatus(1);
-				holiday.setExInt1(1);
 
-				holiday.setExInt2(1);
-				holiday.setExInt3(1);
 				holiday.setExVar1("NA");
 				holiday.setExVar2(holidayTitle);
 				holiday.setExVar3("NA");
 				holiday.setHolidayFromdt(DateConvertor.convertToYMD(arrOfStr[0].toString().trim()));
 				holiday.setHolidayTodt(DateConvertor.convertToYMD(arrOfStr[1].toString().trim()));
-				holiday.setHolidayId(holidayId);
+
 				holiday.setHolidayRemark(holidayRemark);
 				holiday.setIsActive(1);
 				holiday.setLocId(locIdList);
 				holiday.setMakerEnterDatetime(dateTime);
-				holiday.setMakerUserId(1);
+				holiday.setMakerUserId(userObj.getUserId());
 
 				Holiday res = Constants.getRestTemplate().postForObject(Constants.url + "/saveHoliday", holiday,
 						Holiday.class);
@@ -183,8 +181,13 @@ public class LeaveHolidayController {
 		ModelAndView model = new ModelAndView("leave/holiday_edit");
 
 		try {
+
+			HttpSession session = request.getSession();
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			map.add("companyId", 1);
+			map.add("companyId", userObj.getCompanyId());
+
 			Location[] location = Constants.getRestTemplate().postForObject(Constants.url + "/getLocationList", map,
 					Location[].class);
 
@@ -236,8 +239,11 @@ public class LeaveHolidayController {
 
 		try {
 
+			HttpSession session = request.getSession();
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			map.add("companyId", 1);
+			map.add("companyId", userObj.getCompanyId());
 
 			GetHoliday[] holListArray = Constants.getRestTemplate().postForObject(Constants.url + "/getHolidayList",
 					map, GetHoliday[].class);
