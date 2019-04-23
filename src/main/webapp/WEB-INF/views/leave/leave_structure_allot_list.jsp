@@ -145,7 +145,7 @@
 								<thead>
 									<tr class="bg-blue">
 										<th class="check" style="text-align: center; width: 5%;"><input
-											type="checkbox" name="selAll" id="selAll" />Select All</th>
+											type="checkbox" name="selAll" id="selAll" /></th>
 
 										<th width="10%">Sr. No.</th>
 										<th>Employee Code</th>
@@ -164,8 +164,32 @@
 									<c:forEach items="${lvStructureList}" var="structure"
 										varStatus="count">
 										<tr>
-											<td><input type="checkbox" class="chk" name="empIds"
-												id="empIds${count.index+1}" value="${structure.empId}" /></td>
+
+
+
+											<c:set var="countOf" value="0"></c:set>
+											<c:forEach items="${calAllotList}" var="calender"
+												varStatus="count">
+												<c:if test="${calender.empId == structure.empId}">
+													<c:set var="countOf" value="1"></c:set>
+												</c:if>
+
+
+											</c:forEach>
+
+
+
+											<c:choose>
+												<c:when test="${countOf==1}">
+													<td></td>
+												</c:when>
+												<c:otherwise>
+													<td><input type="checkbox" class="chk" name="empIds"
+														id="empIds${count.index+1}" value="${structure.empId}" /></td>
+												</c:otherwise>
+											</c:choose>
+
+
 											<td>${count.index+1}</td>
 											<td>${structure.empCode}</td>
 											<td>${structure.empFname}${structure.empMname}${structure.empSname}</td>

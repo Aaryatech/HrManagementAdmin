@@ -486,6 +486,17 @@ public class LeaveStructureController {
 
 			model.addObject("lvStructureList", leaveSummarylist);
 			System.out.println("leaveSummarylist" + leaveSummarylist.toString());
+			map = new LinkedMultiValueMap<>();
+
+			map.add("calYrId", 2);
+			LeavesAllotment[] leavesAllotmentArray = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getLeaveAllotmentByCurrentCalender", map, LeavesAllotment[].class);
+
+			List<LeavesAllotment> calAllotList = new ArrayList<>(Arrays.asList(leavesAllotmentArray));
+
+			model.addObject("calAllotList", calAllotList);
+
+			System.out.println("calAllotList" + calAllotList.toString());
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -516,7 +527,7 @@ public class LeaveStructureController {
 			LeavesAllotment leavesAllotment = new LeavesAllotment();
 			for (int i = 0; i < arrOfStr.length; i++) {
 
-				leavesAllotment.setCalYrId(1);
+				leavesAllotment.setCalYrId(2);
 
 				leavesAllotment.setDelStatus(1);
 				leavesAllotment.setEmpId(Integer.parseInt(arrOfStr[i]));
@@ -531,36 +542,36 @@ public class LeaveStructureController {
 				LeavesAllotment res = Constants.getRestTemplate().postForObject(Constants.url + "/saveLeaveAllotment",
 						leavesAllotment, LeavesAllotment.class);
 
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-				map.add("lvsId", lvsId);
-				LeaveStructureHeader leaveDetails = Constants.getRestTemplate()
-						.postForObject(Constants.url + "/getStructureById", map, LeaveStructureHeader.class);
-
-				System.out.println(leaveDetails.toString());
-
-				for (int j = 0; j < leaveDetails.getDetailList().size(); j++) {
-
-					LeaveBalanceCal leaveBalanceCal = new LeaveBalanceCal();
-					leaveBalanceCal.setCalYrId(1);
-					leaveBalanceCal.setDelStatus(1);
-					leaveBalanceCal.setEmpId(Integer.parseInt(arrOfStr[i]));
-					leaveBalanceCal.setIsActive(1);
-					leaveBalanceCal.setLvAlloted(0);
-					leaveBalanceCal.setLvbalId(0);
-					leaveBalanceCal.setLvCarryFwd(0);
-					leaveBalanceCal.setLvCarryFwdRemarks("Null");
-					leaveBalanceCal.setLvEncash(0);
-					leaveBalanceCal.setOpBal(0);
-					leaveBalanceCal.setMakerUserId(1);
-					leaveBalanceCal.setMakerEnterDatetime(dateTime);
-
-					leaveBalanceCal.setLvTypeId(leaveDetails.getDetailList().get(j).getLvTypeId());
-
-					LeaveBalanceCal resForBalanceCal = Constants.getRestTemplate().postForObject(
-							Constants.url + "/saveLeaveBalanceCal", leaveBalanceCal, LeaveBalanceCal.class);
-					System.out.println(resForBalanceCal.toString());
-
-				}
+				/*
+				 * MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+				 * map.add("lvsId", lvsId); LeaveStructureHeader leaveDetails =
+				 * Constants.getRestTemplate() .postForObject(Constants.url +
+				 * "/getStructureById", map, LeaveStructureHeader.class);
+				 * 
+				 * System.out.println(leaveDetails.toString());
+				 * 
+				 * for (int j = 0; j < leaveDetails.getDetailList().size(); j++) {
+				 * 
+				 * LeaveBalanceCal leaveBalanceCal = new LeaveBalanceCal();
+				 * leaveBalanceCal.setCalYrId(2); leaveBalanceCal.setDelStatus(1);
+				 * leaveBalanceCal.setEmpId(res.getem); leaveBalanceCal.setIsActive(1);
+				 * leaveBalanceCal.setLvAlloted(0); leaveBalanceCal.setLvbalId(0);
+				 * leaveBalanceCal.setLvCarryFwd(0);
+				 * leaveBalanceCal.setLvCarryFwdRemarks("Null"); leaveBalanceCal.setLvEncash(0);
+				 * leaveBalanceCal.setOpBal(0); leaveBalanceCal.setMakerUserId(1);
+				 * leaveBalanceCal.setMakerEnterDatetime(dateTime);
+				 * 
+				 * leaveBalanceCal.setLvTypeId(leaveDetails.getDetailList().get(j).getLvTypeId()
+				 * );
+				 * 
+				 * System.out.println("--------------" + leaveBalanceCal.toString());
+				 * 
+				 * LeaveBalanceCal resForBalanceCal = Constants.getRestTemplate().postForObject(
+				 * Constants.url + "/saveLeaveBalanceCal", leaveBalanceCal,
+				 * LeaveBalanceCal.class); System.out.println(resForBalanceCal.toString());
+				 * 
+				 * }
+				 */
 
 				if (res != null) {
 					session.setAttribute("successMsg", "Record Insert Successfully");

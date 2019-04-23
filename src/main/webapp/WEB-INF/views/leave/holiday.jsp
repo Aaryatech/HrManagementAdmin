@@ -153,7 +153,7 @@
 									</div>
 
 
-									<div class="form-group row">
+									<%-- <div class="form-group row">
 										<label class="col-form-label col-lg-2" for="calYrId">Select
 											year :*</label>
 										<div class="col-lg-10">
@@ -171,7 +171,7 @@
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
-
+ --%>
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2">Date Range :*</label>
 										<div class="col-lg-10">
@@ -272,7 +272,7 @@
 					$("#error_holidayTitle").show()
 
 				} else {
-					$("#error_locId").hide()
+					$("#error_holidayTitle").hide()
 				}
 
 				if (!$("#locId").val()) {
@@ -285,7 +285,7 @@
 					$("#error_locId").hide()
 				}
 
-				if (!$("#calYrId").val()) {
+				/* if (!$("#calYrId").val()) {
 
 					isError = true;
 
@@ -293,7 +293,7 @@
 
 				} else {
 					$("#error_calYrId").hide()
-				}
+				} */
 
 				if (!$("#dateRange").val()) {
 
