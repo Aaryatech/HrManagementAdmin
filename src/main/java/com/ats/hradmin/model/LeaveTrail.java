@@ -12,9 +12,6 @@ public class LeaveTrail {
 	
 	private int leaveStatus;
 	
-	private int delStatus;
-	
-	private int isActive;
 	
 	private int makerUserId ;
 	
@@ -73,21 +70,7 @@ public class LeaveTrail {
 		this.leaveStatus = leaveStatus;
 	}
 
-	public int getDelStatus() {
-		return delStatus;
-	}
-
-	public void setDelStatus(int delStatus) {
-		this.delStatus = delStatus;
-	}
-
-	public int getIsActive() {
-		return isActive;
-	}
-
-	public void setIsActive(int isActive) {
-		this.isActive = isActive;
-	}
+	
 
 	public int getMakerUserId() {
 		return makerUserId;
@@ -156,11 +139,17 @@ public class LeaveTrail {
 	@Override
 	public String toString() {
 		return "LeaveTrail [trailPkey=" + trailPkey + ", leaveId=" + leaveId + ", empId=" + empId + ", empRemarks="
-				+ empRemarks + ", leaveStatus=" + leaveStatus + ", delStatus=" + delStatus + ", isActive=" + isActive
-				+ ", makerUserId=" + makerUserId + ", makerEnterDatetime=" + makerEnterDatetime + ", exInt1=" + exInt1
-				+ ", exInt2=" + exInt2 + ", exInt3=" + exInt3 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2
-				+ ", exVar3=" + exVar3 + "]";
+				+ empRemarks + ", leaveStatus=" + leaveStatus + ", makerUserId=" + makerUserId + ", makerEnterDatetime="
+				+ makerEnterDatetime + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exInt3=" + exInt3 + ", exVar1="
+				+ exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3 + ", getTrailPkey()=" + getTrailPkey()
+				+ ", getLeaveId()=" + getLeaveId() + ", getEmpId()=" + getEmpId() + ", getEmpRemarks()="
+				+ getEmpRemarks() + ", getLeaveStatus()=" + getLeaveStatus() + ", getMakerUserId()=" + getMakerUserId()
+				+ ", getMakerEnterDatetime()=" + getMakerEnterDatetime() + ", getExInt1()=" + getExInt1()
+				+ ", getExInt2()=" + getExInt2() + ", getExInt3()=" + getExInt3() + ", getExVar1()=" + getExVar1()
+				+ ", getExVar2()=" + getExVar2() + ", getExVar3()=" + getExVar3() + ", getClass()=" + getClass()
+				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
 	}
+
 	
 	
 }

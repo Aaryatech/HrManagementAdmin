@@ -210,12 +210,12 @@
 											
 										
 										<div class="col-lg-2">
-											<select name="summId" data-placeholder="Select a Day Type" id="dayType" name="dayType"
+											<select  data-placeholder="Select a Day Type" id="dayTypeName" name="dayTypeName"
 												class="form-control form-control-select2 select2-hidden-accessible"
 												 data-fouc="" tabindex="-1" aria-hidden="true">
 												<option></option>		
-											<option value="Full Day">Full Day</option>
-											<option value="Half Day">Half Day</option>
+											<option value="1">Full Day</option>
+											<option value="2">Half Day</option>
 
 											
 											</select><span class="validation-invalid-label" id="error_dayType"
@@ -226,7 +226,7 @@
 										<label class="col-form-label col-lg-2">Date Range:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control daterange-basic_new "
-												value="21-04-2019 @ 21-05-2019" name="leaveDateRange" onchange="trim(this)"
+												value="21-04-2019 @ 21-05-2019" name="leaveDateRange"  
 												data-placeholder="Select Date" id="leaveDateRange"> 
 												 <span class="validation-invalid-label" id="error_Range"
 												style="display: none;">This field is required.</span>
@@ -240,9 +240,9 @@
 										<label class="col-form-label col-lg-2" for="noOfDays">
 										No. of Days : *</label>
 										<div class="col-lg-4">
-											<input type="text" class="form-control numbersOnly"  value=""
+											<input type="text" class="form-control numbersOnly"  value="5"
 												placeholder="No. of Days " id="noOfDays"
-												name="noOfDays" autocomplete="off" onchange="calNoOfDays">
+												name="noOfDays" autocomplete="off">
 											<span class="validation-invalid-label" id="error_noOfDays"
 												style="display: none;">This field is required.</span>
 										</div>
@@ -252,7 +252,7 @@
 											Excluding Weekly Off *</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control numbersOnly"
-												placeholder="Excluding Weekly Off: " id="noOfDaysExclude"  value=""
+												placeholder="Excluding Weekly Off: " id="noOfDaysExclude"  value="5"
 												name="noOfDaysExclude" autocomplete="off" onchange="trim(this)">
 											<span class="validation-invalid-label" id="error_noOfDaysExclude"
 												style="display: none;">This field is required.</span>
@@ -303,10 +303,22 @@
 	<!-- /page content -->
 	<script type="text/javascript">
 	function calNoOfDays() {
-	var dateRange=document.getElementById("leaveDateRange");
+		
+	var dateRange=document.getElementById("leaveDateRange").value;
 	
-	alert(dateRange);
 	
+	var array = dateRange.split("to"); 
+	
+	//alert(array[0]);
+	//alert(array[1]);
+	//alert(dateRange);
+	const startDate =  array[0].split("-").reverse().join("-");
+	alert(startDate);
+	const endDate   = array[1].split("-").reverse().join("-");
+	const timeDiff  = (new Date(startDate)) - (new Date(endDate));
+	alert(timeDiff);
+	const days      = timeDiff / (1000 * 60 * 60 * 24)
+	alert(days);
 	}
 	
 	</script>
@@ -340,7 +352,7 @@
 													$("#error_leaveTypeId").hide()
 												}
 
-												if (!$("#dayType").val()) {
+												if (!$("#dayTypeName").val()) {
 
 													isError = true;
 

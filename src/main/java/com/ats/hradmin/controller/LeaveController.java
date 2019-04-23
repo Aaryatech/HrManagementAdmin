@@ -30,6 +30,7 @@ import com.ats.hradmin.model.GetEmployeeInfo;
 import com.ats.hradmin.model.Info;
 import com.ats.hradmin.model.LeaveApply;
 import com.ats.hradmin.model.LeaveSummary;
+import com.ats.hradmin.model.LeaveTrail;
 import com.ats.hradmin.model.LeaveType;
 
 @Controller
@@ -365,10 +366,12 @@ public class LeaveController {
 			for (int i = 0; i < employeeDepartmentlist.size(); i++) {
 				if(employeeDepartmentlist.get(i).getEmpId()==userObj.getEmpId()) {
 					flag=0;
+					System.err.println(" matched");
+					break;
 				}
-				System.err.println(" matched");
+				
 			}
-			if(flag==1) {
+			if(flag == 1) {
 				System.err.println("not matched");
 				GetEmployeeInfo temp =new GetEmployeeInfo();
 				temp.setCompanyId(editEmp.getCompanyId());
@@ -462,16 +465,18 @@ public class LeaveController {
 			
 			//String compName = request.getParameter("1");
 			String leaveDateRange = request.getParameter("leaveDateRange");
-			String dayType = request.getParameter("dayType");
+			String dayTypeName = request.getParameter("dayTypeName");
 			int noOfDays =Integer.parseInt( request.getParameter("noOfDays"));
 			int leaveTypeId =Integer.parseInt( request.getParameter("leaveTypeId"));
+			
+			System.out.println("leaveTypeId" + leaveTypeId);
 			int noOfDaysExclude = Integer.parseInt( request.getParameter("noOfDaysExclude"));
 			int empId = Integer.parseInt( request.getParameter("empId"));
 			String remark=null;
 			
 			String[] arrOfStr = leaveDateRange.split("to", 2);
 			
-
+			System.out.println("dayType" + dayTypeName);
 			
 			
 			try {
@@ -515,9 +520,9 @@ public class LeaveController {
 			leaveSummary.setCalYrId(1);
 			leaveSummary.setEmpId(empId);
 			leaveSummary.setFinalStatus(1);
-			leaveSummary.setLeaveNumDays(noOfDays);
+			leaveSummary.setLeaveNumDays(noOfDaysExclude);
 			leaveSummary.setCirculatedTo("1");
-			leaveSummary.setLeaveDuration(request.getParameter("noOfDaysExclude"));
+			leaveSummary.setLeaveDuration(dayTypeName);
 			leaveSummary.setLeaveEmpReason(remark);
 			leaveSummary.setLvTypeId(leaveTypeId);
 			leaveSummary.setLeaveFromdt(DateConvertor.convertToYMD(arrOfStr[0].toString().trim()));
@@ -536,8 +541,44 @@ public class LeaveController {
 
 			
 
-			LeaveType res = Constants.getRestTemplate().postForObject(Constants.url + "/saveLeaveApply", leaveSummary,
-					LeaveType.class);
+			LeaveApply res = Constants.getRestTemplate().postForObject(Constants.url + "/saveLeaveApply", leaveSummary,
+					LeaveApply.class);
+			
+			
+			if(res!=null) {
+				LeaveTrail lt = new LeaveTrail();
+				
+				
+				lt.setEmpRemarks(remark);
+				System.err.println("res.getLeaveId()"+res.getLeaveId());
+				lt.setLeaveId(res.getLeaveId());
+				
+				lt.setLeaveStatus(1);
+				lt.setEmpId(empId);
+				lt.setExInt1(1);
+				lt.setExInt2(1);
+				lt.setExInt3(1);
+				lt.setExVar1("NA");
+				lt.setExVar2("NA");
+				lt.setExVar3("NA");
+				
+				lt.setMakerUserId(1);
+				lt.setMakerEnterDatetime(sf.format(date));
+				
+
+				LeaveTrail res1 = Constants.getRestTemplate().postForObject(Constants.url + "/saveLeaveTrail", lt,
+						LeaveTrail.class);
+				if(res1!=null) {
+					
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+				map.add("leaveId", res.getLeaveId());
+				map.add("trailId", res1.getTrailPkey());
+				Info info = Constants.getRestTemplate().postForObject(Constants.url + "/updateTrailId", map, Info.class);
+
+
+				}
+			}
+			
 			} else {
 				session.setAttribute("errorMsg", "Failed to Insert Record");
 			}
