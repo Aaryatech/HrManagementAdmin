@@ -50,7 +50,7 @@ public class LeaveApprovalController {
 					
 			 List<GetLeaveApplyAuthwise> leaveList = new ArrayList<GetLeaveApplyAuthwise>(Arrays.asList(employeeDoc));
 			 System.out.println("lv leaveList list "+leaveList); 
-			 model.addObject("leaveListForApproval",leaveList);
+			
 			 
 
 				for (int i = 0; i < leaveList.size(); i++) {
@@ -59,7 +59,7 @@ public class LeaveApprovalController {
 					leaveList.get(i).setLeaveTypeName(FormValidation.Encrypt(String.valueOf(leaveList.get(i).getEmpId())));
 
 				}
-
+				 model.addObject("leaveListForApproval",leaveList);
 			 
 	//for final		 
 		 map = new LinkedMultiValueMap<>();
@@ -72,7 +72,13 @@ public class LeaveApprovalController {
 						
 			List<GetLeaveApplyAuthwise> leaveList1 = new ArrayList<GetLeaveApplyAuthwise>(Arrays.asList(employeeDoc1));
 			//System.out.println("lv leaveList list1 "+leaveList1.toString()); 
-			model.addObject("leaveList1",leaveList1);
+			for (int i = 0; i < leaveList1.size(); i++) {
+
+				leaveList1.get(i).setCirculatedTo(FormValidation.Encrypt(String.valueOf(leaveList1.get(i).getLeaveId())));
+				leaveList1.get(i).setLeaveTypeName(FormValidation.Encrypt(String.valueOf(leaveList1.get(i).getEmpId())));
+
+			}
+			model.addObject("leaveListForApproval1",leaveList1);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -152,6 +158,9 @@ public class LeaveApprovalController {
 	
 
 }
+	
+	
+	
 	
 	
 

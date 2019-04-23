@@ -28,7 +28,7 @@
 	<!-- Theme JS files -->
 	<script src="${pageContext.request.contextPath}/resources/global_assets/js/plugins/visualization/d3/d3.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/global_assets/js/plugins/visualization/d3/d3_tooltip.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/global_assets/js/plugins/forms/styling/switchery.min.js"></script>
+<%-- 	<script src="${pageContext.request.contextPath}/resources/global_assets/js/plugins/forms/styling/switchery.min.js"></script> --%>
 	<script src="${pageContext.request.contextPath}/resources/global_assets/js/plugins/forms/selects/bootstrap_multiselect.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/global_assets/js/plugins/ui/moment/moment.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/global_assets/js/plugins/pickers/daterangepicker.js"></script>
@@ -38,7 +38,7 @@
 	<script src="${pageContext.request.contextPath}/resources/global_assets/js/plugins/pickers/pickadate/picker.date.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/global_assets/js/plugins/pickers/pickadate/picker.time.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/global_assets/js/plugins/pickers/pickadate/legacy.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/global_assets/js/plugins/notifications/jgrowl.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/global_assets/js/plugins/notifications/jgrowl.min.js"></script>  
 		<!-- Theme JS files -->
 	<script src="${pageContext.request.contextPath}/resources/global_assets/js/plugins/forms/inputs/inputmask.js"></script>
 		<script src="${pageContext.request.contextPath}/resources/global_assets/js/plugins/extensions/jquery_ui/interactions.min.js"></script>
@@ -61,13 +61,13 @@
 	<script src="${pageContext.request.contextPath}/resources/global_assets/js/plugins/tables/datatables/extensions/pdfmake/pdfmake.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/global_assets/js/plugins/tables/datatables/extensions/pdfmake/vfs_fonts.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/global_assets/js/plugins/tables/datatables/extensions/buttons.min.js"></script>
-	
+	 
 	<script src="${pageContext.request.contextPath}/resources/global_assets/js/plugins/pickers/color/spectrum.js"></script>
 	  <script src="${pageContext.request.contextPath}/resources/global_assets/js/plugins/forms/styling/switchery.min.js"></script>  
-	
+	  
 	
 	<script src="${pageContext.request.contextPath}/resources/assets/js/app.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/global_assets/js/demo_pages/dashboard.js"></script>
+	<%-- <script src="${pageContext.request.contextPath}/resources/global_assets/js/demo_pages/dashboard.js"></script> --%>
 	<script src="${pageContext.request.contextPath}/resources/global_assets/js/demo_pages/form_floating_labels.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/global_assets/js/demo_pages/datatables_advanced.js"></script>
 		<script src="${pageContext.request.contextPath}/resources/global_assets/js/demo_pages/datatables_extension_fixed_columns.js"></script>
