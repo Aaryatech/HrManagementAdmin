@@ -142,10 +142,10 @@
 
 													<div class="dropdown-menu dropdown-menu-right">
 														<a
-															href="${pageContext.request.contextPath}/editClaimType?typeId=${claim.exVar1}"
+															href="${pageContext.request.contextPath}/editClaimType?claimTypeId=${claim.exVar1}"
 															class="dropdown-item"><i class="icon-pencil7"></i>Edit</a>
 														<a
-															href="${pageContext.request.contextPath}/deleteClaimType?typeId=${claim.exVar1}"
+															href="${pageContext.request.contextPath}/deleteClaimType?claimTypeId=${claim.exVar1}"
 															class="dropdown-item"><i class="icon-trash"></i>
 															Delete</a>
 													</div>
