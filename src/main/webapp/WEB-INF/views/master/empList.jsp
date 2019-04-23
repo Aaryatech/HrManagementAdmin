@@ -41,9 +41,9 @@
 
 						<a href="#" class="header-elements-toggle text-default d-md-none"><i
 							class="icon-more"></i></a>
-							
-							
-							
+
+
+
 					</div>
 
 
@@ -124,7 +124,7 @@
 									<th>Mobile</th>
 									<th>Department</th>
 									<th>Rate Per Hour</th>
-									 
+
 									<th class="text-center" width="10%">Actions</th>
 								</tr>
 							</thead>
@@ -141,8 +141,8 @@
 										<td>${lvTypeList.empMobile1}</td>
 										<td>${lvTypeList.empDept}</td>
 										<td>${lvTypeList.empRatePerhr}</td>
-										 
-										
+
+
 										<td class="text-center">
 											<div class="list-icons">
 												<div class="dropdown">
@@ -157,7 +157,11 @@
 														<a
 															href="${pageContext.request.contextPath}/deleteEmployee?typeId=${lvTypeList.exVar1}"
 															class="dropdown-item"><i class="icon-trash"></i>
-															Delete</a>
+															Delete</a> <a
+															href="${pageContext.request.contextPath}/uploadDocument?empId=${lvTypeList.exVar1}"
+															class="dropdown-item"><i class="icon-file-upload"></i> 
+															Document upload</a>
+
 													</div>
 												</div>
 											</div>
