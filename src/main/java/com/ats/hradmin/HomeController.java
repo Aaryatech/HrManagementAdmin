@@ -121,16 +121,11 @@ public class HomeController {
 				System.out.println("JSON Response Objet " + userObj.toString());
 				String loginResponseMessage = "";
 
-				if (userObj.getErrMsg().equals("false")) {
+				if (userObj.isError()==false) {
 
 					mav = new ModelAndView("formSample");
 					session.setAttribute("UserDetail", userObj);
-
-					session.setAttribute("empDetail", userObj.getGetData());
-
-					session.setAttribute("empTypeDetail", userObj.getEmpType());
-
-					session.setAttribute("userName", name);
+  
 
 					List<AccessRightModule> moduleJsonList = new ArrayList<AccessRightModule>();
 
@@ -138,7 +133,7 @@ public class HomeController {
 
 						AccessRightModule[] moduleJson = null;
 						ObjectMapper mapper = new ObjectMapper();
-						moduleJson = mapper.readValue(userObj.getEmpType().getEmpTypeAccess(),
+						moduleJson = mapper.readValue(userObj.getEmpTypeAccess(),
 								AccessRightModule[].class);
 						moduleJsonList = new ArrayList<AccessRightModule>(Arrays.asList(moduleJson));
 						session.setAttribute("sessionModuleId", 0);
