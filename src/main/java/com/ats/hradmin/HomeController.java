@@ -26,6 +26,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.hradmin.common.Constants;
+import com.ats.hradmin.leave.model.CalenderYear;
 import com.ats.hradmin.model.AccessRightModule;
 import com.ats.hradmin.model.LoginResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -123,9 +124,15 @@ public class HomeController {
 
 				if (userObj.isError()==false) {
 
+					
+					
+					
 					mav = new ModelAndView("formSample");
 					session.setAttribute("UserDetail", userObj);
-  
+					CalenderYear currYr = Constants.getRestTemplate().getForObject(Constants.url + "getCalculateYearListIsCurrent",
+							CalenderYear.class);
+					System.out.println("currYr.getCalYrId():"+currYr.getCalYrId());
+					session.setAttribute("currYearId", currYr.getCalYrId());
 
 					List<AccessRightModule> moduleJsonList = new ArrayList<AccessRightModule>();
 
@@ -138,6 +145,9 @@ public class HomeController {
 						moduleJsonList = new ArrayList<AccessRightModule>(Arrays.asList(moduleJson));
 						session.setAttribute("sessionModuleId", 0);
 						session.setAttribute("sessionSubModuleId",0);
+						
+						
+
 					} catch (Exception e) {
 
 					}

@@ -32,6 +32,7 @@ import com.ats.hradmin.model.LeaveApply;
 import com.ats.hradmin.model.LeaveSummary;
 import com.ats.hradmin.model.LeaveTrail;
 import com.ats.hradmin.model.LeaveType;
+import com.ats.hradmin.model.LoginResponse;
 
 @Controller
 @Scope("session")
@@ -341,11 +342,13 @@ public class LeaveController {
 		try {
 			
 			HttpSession session = request.getSession();
-			GetEmployeeInfo userObj = (GetEmployeeInfo) session.getAttribute("empDetail");
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			map.add("companyId", 1);
-			map.add("locIdList", 1);
+			
+			
+			map.add("companyId", userObj.getCompanyId());
+			map.add("locIdList", userObj.getLocationIds());
 			map.add("empId",userObj.getEmpId());
 			
 			GetEmployeeInfo[] employeeDepartment = Constants.getRestTemplate()
@@ -517,7 +520,7 @@ public class LeaveController {
 				
 		LeaveApply leaveSummary = new LeaveApply();
 
-			leaveSummary.setCalYrId(1);
+			leaveSummary.setCalYrId(Integer.parseInt((String) session.getAttribute("currYearId")));
 			leaveSummary.setEmpId(empId);
 			leaveSummary.setFinalStatus(1);
 			leaveSummary.setLeaveNumDays(noOfDaysExclude);
