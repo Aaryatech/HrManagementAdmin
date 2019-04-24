@@ -47,9 +47,9 @@
 
 					<div class="breadcrumb justify-content-center">
 						<a href="${pageContext.request.contextPath}/addLeaveAuthority"
-							class="breadcrumb-elements-item"> Add Authority</a> <a
+							class="breadcrumb-elements-item"> Add Authority</a> <%-- <a
 							href="${pageContext.request.contextPath}/editLeaveAuthority"
-							class="breadcrumb-elements-item"> Edit Authority</a>
+							class="breadcrumb-elements-item"> Edit Authority</a> --%>
 
 					</div>
 

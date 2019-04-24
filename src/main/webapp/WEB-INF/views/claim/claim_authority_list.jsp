@@ -46,10 +46,11 @@
 					</div>
 
 					<div class="breadcrumb justify-content-center">
-						<a href="${pageContext.request.contextPath}/addLeaveAuthority"
-							class="breadcrumb-elements-item"> Add Authority</a> <a
+						<a href="${pageContext.request.contextPath}/addClaimAuthority"
+							class="breadcrumb-elements-item"> Add Claim Authority</a>
+						<%-- <a
 							href="${pageContext.request.contextPath}/editLeaveAuthority"
-							class="breadcrumb-elements-item"> Edit Authority</a>
+							class="breadcrumb-elements-item"> Edit Authority</a> --%>
 
 					</div>
 
@@ -151,7 +152,7 @@
 													</a>
 
 													<div class="dropdown-menu dropdown-menu-right"> --> <a
-											href="${pageContext.request.contextPath}/editLeaveAuthority?empId=${leaveAuth.exVar1}"
+											href="${pageContext.request.contextPath}/editClaimAuthority?empId=${leaveAuth.exVar1}"
 											class="dropdown-item"><i class="icon-pencil7"></i></a> <!-- </div>
 												</div>
 											</div> -->

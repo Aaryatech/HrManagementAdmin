@@ -494,9 +494,11 @@ public class LeaveStructureController {
 			List<LeavesAllotment> calAllotList = new ArrayList<>(Arrays.asList(leavesAllotmentArray));
 			model.addObject("calAllotList", calAllotList);
 
-			System.out.println("calYrId" + session.getAttribute("currYearId"));
-
-			System.out.println("calAllotList" + calAllotList.toString());
+			/*
+			 * System.out.println("calYrId" + session.getAttribute("currYearId"));
+			 * 
+			 * System.out.println("calAllotList" + calAllotList.toString());
+			 */
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -528,7 +530,7 @@ public class LeaveStructureController {
 			LeavesAllotment leavesAllotment = new LeavesAllotment();
 			for (int i = 0; i < arrOfStr.length; i++) {
 
-				leavesAllotment.setCalYrId(2);
+				leavesAllotment.setCalYrId((int) session.getAttribute("currYearId"));
 
 				leavesAllotment.setDelStatus(1);
 				leavesAllotment.setEmpId(Integer.parseInt(arrOfStr[i]));
@@ -542,37 +544,6 @@ public class LeaveStructureController {
 
 				LeavesAllotment res = Constants.getRestTemplate().postForObject(Constants.url + "/saveLeaveAllotment",
 						leavesAllotment, LeavesAllotment.class);
-
-				/*
-				 * MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-				 * map.add("lvsId", lvsId); LeaveStructureHeader leaveDetails =
-				 * Constants.getRestTemplate() .postForObject(Constants.url +
-				 * "/getStructureById", map, LeaveStructureHeader.class);
-				 * 
-				 * System.out.println(leaveDetails.toString());
-				 * 
-				 * for (int j = 0; j < leaveDetails.getDetailList().size(); j++) {
-				 * 
-				 * LeaveBalanceCal leaveBalanceCal = new LeaveBalanceCal();
-				 * leaveBalanceCal.setCalYrId(2); leaveBalanceCal.setDelStatus(1);
-				 * leaveBalanceCal.setEmpId(res.getem); leaveBalanceCal.setIsActive(1);
-				 * leaveBalanceCal.setLvAlloted(0); leaveBalanceCal.setLvbalId(0);
-				 * leaveBalanceCal.setLvCarryFwd(0);
-				 * leaveBalanceCal.setLvCarryFwdRemarks("Null"); leaveBalanceCal.setLvEncash(0);
-				 * leaveBalanceCal.setOpBal(0); leaveBalanceCal.setMakerUserId(1);
-				 * leaveBalanceCal.setMakerEnterDatetime(dateTime);
-				 * 
-				 * leaveBalanceCal.setLvTypeId(leaveDetails.getDetailList().get(j).getLvTypeId()
-				 * );
-				 * 
-				 * System.out.println("--------------" + leaveBalanceCal.toString());
-				 * 
-				 * LeaveBalanceCal resForBalanceCal = Constants.getRestTemplate().postForObject(
-				 * Constants.url + "/saveLeaveBalanceCal", leaveBalanceCal,
-				 * LeaveBalanceCal.class); System.out.println(resForBalanceCal.toString());
-				 * 
-				 * }
-				 */
 
 				if (res != null) {
 					session.setAttribute("successMsg", "Record Insert Successfully");
@@ -737,7 +708,7 @@ public class LeaveStructureController {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("companyId", userObj.getCompanyId());
-			map.add("locIdList", userObj.getLocId());
+			map.add("locIdList", userObj.getLocationIds());
 
 			GetEmployeeInfo[] employeeDepartment = Constants.getRestTemplate()
 					.postForObject(Constants.url + "/getEmpInfoList", map, GetEmployeeInfo[].class);
