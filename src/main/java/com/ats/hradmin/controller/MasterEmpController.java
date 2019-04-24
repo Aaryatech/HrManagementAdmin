@@ -262,7 +262,7 @@ public class MasterEmpController {
 			  
 			  EmployeeInfo[] employeeInfo = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpInfoByLocIdAndEmp",map,
 					  EmployeeInfo[].class);
-			  
+			   
 			  employeeInfoList = new ArrayList<EmployeeInfo>(Arrays.asList(employeeInfo));
 			  System.out.println("List : "+employeeInfoList.toString());
 		} catch (Exception e) {
