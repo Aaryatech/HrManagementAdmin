@@ -852,13 +852,13 @@
 		var date1res = res[0].split("-");
 		var date2res = res[1].split("-");
 		
-		var date1 = new Date(date1res[2],date1res[1],date1res[0])//converts string to date object
+		var date1 = new Date(date1res[2],date1res[1]-1,date1res[0])//converts string to date object
         
-        var date2 = new Date(date2res[2],date2res[1],date2res[0])
+        var date2 = new Date(date2res[2],date2res[1]-1,date2res[0])
          
         const diffTime = Math.abs(date2.getTime() - date1.getTime());
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
-        alert(diffDays);
+        document.getElementById("noOfDays").value =  diffDays+1 ;
 
 	}
 	</script>
