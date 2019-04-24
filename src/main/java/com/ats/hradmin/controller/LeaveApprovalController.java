@@ -1,6 +1,7 @@
 package com.ats.hradmin.controller;
 
 import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -21,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ats.hradmin.common.Constants;
 import com.ats.hradmin.common.FormValidation;
 import com.ats.hradmin.leave.model.GetLeaveApplyAuthwise;
+import com.ats.hradmin.leave.model.LeaveDetail;
 import com.ats.hradmin.model.Info;
 import com.ats.hradmin.model.LeaveTrail;
 import com.ats.hradmin.model.LoginResponse;
@@ -78,6 +80,37 @@ public class LeaveApprovalController {
 				leaveList1.get(i).setLeaveTypeName(FormValidation.Encrypt(String.valueOf(leaveList1.get(i).getEmpId())));
 
 			}
+			
+			
+			
+			 map = new LinkedMultiValueMap<>();
+				map.add("empId",userObj.getEmpId());
+				map.add("statusList","1,2");
+				
+				map.add("currYrId",session.getAttribute("currYearId"));
+				LeaveDetail  editEmp = Constants.getRestTemplate().postForObject(Constants.url + "/getEmployeeLeaveByEmpId", map,
+						LeaveDetail.class);
+			
+				if(editEmp!=null) {
+					
+					
+					GetLeaveApplyAuthwise temp=new GetLeaveApplyAuthwise();
+					
+					temp.setCalYrId(editEmp.getCalYrId());
+					temp.setEmpCode(editEmp.getEmpCode());
+					temp.setEmpFname(editEmp.getEmpFname());
+					temp.setEmpMname(editEmp.getEmpMname());
+					temp.setEmpSname(editEmp.getEmpSname());
+					temp.setLeaveDuration(editEmp.getLeaveDuration());
+					temp.setLeaveFromdt(editEmp.getLeaveFromdt());
+					temp.setLeaveTodt(editEmp.getLeaveTodt());
+					temp.setLeaveTitle(editEmp.getLvTitle());
+					temp.setLeaveNumDays(editEmp.getLeaveNumDays());
+					leaveList1.add(temp);
+					
+				}
+			
+			
 			model.addObject("leaveListForApproval1",leaveList1);
 			
 		} catch (Exception e) {
