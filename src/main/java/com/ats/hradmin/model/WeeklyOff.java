@@ -6,7 +6,7 @@ public class WeeklyOff {
 
 	private int companyId;
 
-	private int woType;
+	private String woType;
 
 	private String locId;
 
@@ -55,11 +55,11 @@ public class WeeklyOff {
 		this.companyId = companyId;
 	}
 
-	public int getWoType() {
+	public String getWoType() {
 		return woType;
 	}
 
-	public void setWoType(int woType) {
+	public void setWoType(String woType) {
 		this.woType = woType;
 	}
 
