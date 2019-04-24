@@ -80,9 +80,17 @@ public class LeaveApprovalController {
 				leaveList1.get(i).setLeaveTypeName(FormValidation.Encrypt(String.valueOf(leaveList1.get(i).getEmpId())));
 
 			}
-			
-			
-			
+			int flag=1;
+			for (int i = 0; i < leaveList1.size(); i++) {
+				if(leaveList1.get(i).getEmpId()==userObj.getEmpId()) {
+					flag=0;
+					System.err.println(" matched");
+					break;
+				}
+				
+			}
+			if(flag==1) {
+				System.err.println(" not matched");
 			 map = new LinkedMultiValueMap<>();
 				map.add("empId",userObj.getEmpId());
 				map.add("statusList","1,2");
@@ -90,6 +98,7 @@ public class LeaveApprovalController {
 				map.add("currYrId",session.getAttribute("currYearId"));
 				LeaveDetail  editEmp = Constants.getRestTemplate().postForObject(Constants.url + "/getEmployeeLeaveByEmpId", map,
 						LeaveDetail.class);
+				System.out.println("edit emp::::"+editEmp.toString());
 			
 				if(editEmp!=null) {
 					
@@ -110,7 +119,7 @@ public class LeaveApprovalController {
 					
 				}
 			
-			
+			}
 			model.addObject("leaveListForApproval1",leaveList1);
 			
 		} catch (Exception e) {
