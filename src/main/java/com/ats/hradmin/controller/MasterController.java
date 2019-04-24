@@ -1548,20 +1548,19 @@ public class MasterController {
 			if(ret == false)
 			{
 				
-				
-	  String imageName = new String(); imageName = dateTimeInGMT.format(date) + "_" + profilePic.get(0).getOriginalFilename();
-				 
-		  try {
-				  upload.saveUploadedImge(profilePic.get(0), Constants.imageSaveUrl, imageName,
-				  Constants.values, 0, 0, 0, 0, 0); 
-				  editEmp.setEmpPhoto(imageName);
-				  }
-				  catch (Exception e) { 
-					 System.out.println(e.getMessage());  
-					   }
-				 
-				 
-
+				if(profilePic.get(0).getOriginalFilename()!="") {
+					String imageName = new String(); imageName = dateTimeInGMT.format(date) + "_" + profilePic.get(0).getOriginalFilename();
+					 
+					  try {
+							  upload.saveUploadedImge(profilePic.get(0), Constants.imageSaveUrl, imageName,
+							  Constants.values, 0, 0, 0, 0, 0); 
+							  editEmp.setEmpPhoto(imageName);
+							  }
+							  catch (Exception e) { 
+								 System.out.println(e.getMessage());  
+								   }
+				}
+	   
 			//leaveSummary.setEmpPhoto("siri");;
 			editEmp.setCompanyId(1);
 			editEmp.setEmpCode(empCode);

@@ -45,7 +45,7 @@
 
 					<div class="breadcrumb justify-content-center">
 						<a href="${pageContext.request.contextPath}/showEmpList"
-							class="breadcrumb-elements-item"> Employee Employee List</a>
+							class="breadcrumb-elements-item"> Employee List</a>
 
 					</div>
 

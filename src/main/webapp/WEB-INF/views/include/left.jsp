@@ -23,14 +23,31 @@
 		<div class="sidebar-user-material">
 			<div class="sidebar-user-material-body">
 				<div class="card-body text-center">
-					<a href="#"> <img
-						src="${pageContext.request.contextPath}/resources/global_assets/images/placeholders/placeholder.jpg"
-						class="img-fluid rounded-circle shadow-1 mb-3" width="80"
-						height="80" alt="">
-					</a>
-					<h6 class="mb-0 text-white text-shadow-dark">Victoria Baker</h6>
-					<span class="font-size-sm text-white text-shadow-dark">Santa
-						Ana, CA</span>
+					<c:choose>
+						<c:when test="${not empty sessionScope.UserDetail.empPhoto}">
+
+							<a
+								href="${sessionScope.logoUrl}${sessionScope.UserDetail.empPhoto}"
+								target="_blank"> <img
+								src="${sessionScope.logoUrl}${sessionScope.UserDetail.empPhoto}"
+								class="img-fluid rounded-circle shadow-1 mb-3" width="80"
+								height="80" alt="">
+							</a>
+						</c:when>
+						<c:otherwise>
+
+							<a href="#"> <img
+								src="${pageContext.request.contextPath}/resources/global_assets/images/noimageteam.png"
+								class="img-fluid rounded-circle shadow-1 mb-3" width="80"
+								height="80" alt="">
+							</a>
+						</c:otherwise>
+					</c:choose>
+
+					<h6 class="mb-0 text-white text-shadow-dark">${sessionScope.UserDetail.empSname}
+						${sessionScope.UserDetail.empFname}</h6>
+					<!-- <span class="font-size-sm text-white text-shadow-dark">Santa
+						Ana, CA</span> -->
 				</div>
 			</div>
 		</div>
@@ -135,22 +152,22 @@
 
 					<c:forEach items="${moduleJsonList.accessRightSubModuleList}"
 						var="accessRightSubModuleList">
-						<li class="nav-item">
-						
-						<c:choose>
-						<c:when test="${accessRightSubModuleList.subModuleId==sessionSubModuleId}">
-							<a
-							href="${pageContext.request.contextPath}/${accessRightSubModuleList.subModuleMapping}"
-							class="nav-link active legitRipple" 
-							onclick="selectSubMod(${accessRightSubModuleList.subModuleId},${accessRightSubModuleList.moduleId})">${accessRightSubModuleList.subModulName}</a></li>
+						<li class="nav-item"><c:choose>
+								<c:when
+									test="${accessRightSubModuleList.subModuleId==sessionSubModuleId}">
+									<a
+										href="${pageContext.request.contextPath}/${accessRightSubModuleList.subModuleMapping}"
+										class="nav-link active legitRipple"
+										onclick="selectSubMod(${accessRightSubModuleList.subModuleId},${accessRightSubModuleList.moduleId})">${accessRightSubModuleList.subModulName}</a></li>
 						</c:when>
 						<c:otherwise>
 							<a
-							href="${pageContext.request.contextPath}/${accessRightSubModuleList.subModuleMapping}"
-							class="nav-link" 
-							onclick="selectSubMod(${accessRightSubModuleList.subModuleId},${accessRightSubModuleList.moduleId})">${accessRightSubModuleList.subModulName}</a></li>
+								href="${pageContext.request.contextPath}/${accessRightSubModuleList.subModuleMapping}"
+								class="nav-link"
+								onclick="selectSubMod(${accessRightSubModuleList.subModuleId},${accessRightSubModuleList.moduleId})">${accessRightSubModuleList.subModulName}</a>
+							</li>
 						</c:otherwise>
-					</c:choose>
+						</c:choose>
 					</c:forEach>
 			</ul>
 			</li>

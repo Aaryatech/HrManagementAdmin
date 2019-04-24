@@ -122,31 +122,26 @@ public class HomeController {
 				System.out.println("JSON Response Objet " + userObj.toString());
 				String loginResponseMessage = "";
 
-				if (userObj.isError()==false) {
+				if (userObj.isError() == false) {
 
-					
-					
-					
 					mav = new ModelAndView("formSample");
 					session.setAttribute("UserDetail", userObj);
-					CalenderYear currYr = Constants.getRestTemplate().getForObject(Constants.url + "getCalculateYearListIsCurrent",
-							CalenderYear.class);
-					System.out.println("currYr.getCalYrId():"+currYr.getCalYrId());
+					CalenderYear currYr = Constants.getRestTemplate()
+							.getForObject(Constants.url + "getCalculateYearListIsCurrent", CalenderYear.class);
+					System.out.println("currYr.getCalYrId():" + currYr.getCalYrId());
 					session.setAttribute("currYearId", currYr.getCalYrId());
-
+					session.setAttribute("logoUrl", Constants.getImageSaveUrl);
+					
 					List<AccessRightModule> moduleJsonList = new ArrayList<AccessRightModule>();
 
 					try {
 
 						AccessRightModule[] moduleJson = null;
 						ObjectMapper mapper = new ObjectMapper();
-						moduleJson = mapper.readValue(userObj.getEmpTypeAccess(),
-								AccessRightModule[].class);
+						moduleJson = mapper.readValue(userObj.getEmpTypeAccess(), AccessRightModule[].class);
 						moduleJsonList = new ArrayList<AccessRightModule>(Arrays.asList(moduleJson));
 						session.setAttribute("sessionModuleId", 0);
-						session.setAttribute("sessionSubModuleId",0);
-						
-						
+						session.setAttribute("sessionSubModuleId", 0);
 
 					} catch (Exception e) {
 
@@ -179,18 +174,26 @@ public class HomeController {
 		return mav;
 
 	}
-	
+
 	@RequestMapping(value = "/setSubModId", method = RequestMethod.GET)
-	public @ResponseBody void setSubModId(HttpServletRequest request,
-		HttpServletResponse response) {
-		int subModId=Integer.parseInt(request.getParameter("subModId"));
-		int modId=Integer.parseInt(request.getParameter("modId"));
-		/* System.out.println("subModId " + subModId);
-		System.out.println("modId " + modId); */
+	public @ResponseBody void setSubModId(HttpServletRequest request, HttpServletResponse response) {
+		int subModId = Integer.parseInt(request.getParameter("subModId"));
+		int modId = Integer.parseInt(request.getParameter("modId"));
+		/*
+		 * System.out.println("subModId " + subModId); System.out.println("modId " +
+		 * modId);
+		 */
 		HttpSession session = request.getSession();
 		session.setAttribute("sessionModuleId", modId);
-		session.setAttribute("sessionSubModuleId",subModId);
-		 session.removeAttribute( "exportExcelList" );
+		session.setAttribute("sessionSubModuleId", subModId);
+		session.removeAttribute("exportExcelList");
 	}
 
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logout(HttpSession session) {
+		System.out.println("User Logout");
+
+		session.invalidate();
+		return "redirect:/";
+	}
 }
