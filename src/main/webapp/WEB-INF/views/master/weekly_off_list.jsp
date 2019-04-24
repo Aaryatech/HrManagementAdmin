@@ -46,8 +46,8 @@
 					</div>
 
 					<div class="breadcrumb justify-content-center">
-						<a href="${pageContext.request.contextPath}/holidayAdd"
-							class="breadcrumb-elements-item"> Add Holiday </a>
+						<a href="${pageContext.request.contextPath}/addWeeklyOff"
+							class="breadcrumb-elements-item"> Add Weekly Off </a>
 
 					</div>
 
@@ -64,7 +64,7 @@
 				<!-- Highlighting rows and columns -->
 				<div class="card">
 					<div class="card-header header-elements-inline">
-						<h5 class="card-title">Holiday List</h5>
+						<h5 class="card-title">Weekly Off List</h5>
 						<div class="header-elements">
 							<div class="list-icons">
 								<a class="list-icons-item" data-action="collapse"></a>
@@ -143,10 +143,10 @@
 
 													<div class="dropdown-menu dropdown-menu-right">
 														<a
-															href="${pageContext.request.contextPath}/editHoliday?holidayId=${week.exVar1}"
+															href="${pageContext.request.contextPath}/editWeeklyOff?woId=${week.exVar1}"
 															class="dropdown-item"><i class="icon-pencil7"></i>Edit</a>
 														<a
-															href="${pageContext.request.contextPath}/deleteHoliday?holidayId=${week.exVar1}"
+															href="${pageContext.request.contextPath}/deleteWeeklyOff?woId=${week.exVar1}"
 															class="dropdown-item"><i class="icon-trash"></i>
 															Delete</a>
 													</div>
