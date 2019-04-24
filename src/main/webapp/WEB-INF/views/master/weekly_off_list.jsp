@@ -116,27 +116,23 @@
 								<tr class="bg-blue">
 
 									<th width="10%">Sr. No.</th>
-									<th>Holiday Title</th>
 									<th>Location Name</th>
-									<th>Calendar</th>
-									<th>From Date</th>
-									<th>To Date</th>
-
-
+									<th>Weekly Off Type</th>
+									<th>Weekly Off Presently</th>
+									<th>Remarks</th>
 									<th width="10%" class="text-center">Actions</th>
 								</tr>
 							</thead>
 							<tbody>
 
 
-								<c:forEach items="${holList}" var="holiday" varStatus="count">
+								<c:forEach items="${weekOffList}" var="week" varStatus="count">
 									<tr>
 										<td>${count.index+1}</td>
-										<td>${holiday.exVar2}</td>
-										<td>${holiday.locName}</td>
-										<td>${holiday.calYrFromDate}_${holiday.calYrToDate}</td>
-										<td>${holiday.holidayFromdt}</td>
-										<td>${holiday.holidayTodt}</td>
+										<td>${week.locName}</td>
+										<td>${week.woType}</td>
+										<td>${week.woPresently}</td>
+										<td>${week.woRemarks}</td>
 
 										<td class="text-center">
 											<div class="list-icons">
@@ -147,10 +143,10 @@
 
 													<div class="dropdown-menu dropdown-menu-right">
 														<a
-															href="${pageContext.request.contextPath}/editHoliday?holidayId=${holiday.exVar1}"
+															href="${pageContext.request.contextPath}/editHoliday?holidayId=${week.exVar1}"
 															class="dropdown-item"><i class="icon-pencil7"></i>Edit</a>
 														<a
-															href="${pageContext.request.contextPath}/deleteHoliday?holidayId=${holiday.exVar1}"
+															href="${pageContext.request.contextPath}/deleteHoliday?holidayId=${week.exVar1}"
 															class="dropdown-item"><i class="icon-trash"></i>
 															Delete</a>
 													</div>

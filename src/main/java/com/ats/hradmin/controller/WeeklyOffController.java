@@ -24,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ats.hradmin.common.Constants;
 import com.ats.hradmin.common.FormValidation;
 import com.ats.hradmin.leave.model.GetHoliday;
+import com.ats.hradmin.model.GetWeeklyOff;
 import com.ats.hradmin.model.Location;
 import com.ats.hradmin.model.LoginResponse;
 import com.ats.hradmin.model.WeeklyOff;
@@ -140,7 +141,7 @@ public class WeeklyOffController {
 	@RequestMapping(value = "/showWeeklyOffList", method = RequestMethod.GET)
 	public ModelAndView showWeeklyOffList(HttpServletRequest request, HttpServletResponse response) {
 
-		ModelAndView model = new ModelAndView("leave/weekly_off_list");
+		ModelAndView model = new ModelAndView("master/weekly_off_list");
 
 		try {
 
@@ -150,18 +151,17 @@ public class WeeklyOffController {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("companyId", userObj.getCompanyId());
 
-			GetHoliday[] holListArray = Constants.getRestTemplate().postForObject(Constants.url + "/getHolidayList",
-					map, GetHoliday[].class);
+			GetWeeklyOff[] holListArray = Constants.getRestTemplate().postForObject(Constants.url + "/getWeeklyOffList",
+					map, GetWeeklyOff[].class);
 
-			List<GetHoliday> holList = new ArrayList<>(Arrays.asList(holListArray));
+			List<GetWeeklyOff> weekOffList = new ArrayList<>(Arrays.asList(holListArray));
 
-			for (int i = 0; i < holList.size(); i++) {
+			for (int i = 0; i < weekOffList.size(); i++) {
 
-				holList.get(i).setExVar1(FormValidation.Encrypt(String.valueOf(holList.get(i).getHolidayId())));
+				weekOffList.get(i).setExVar1(FormValidation.Encrypt(String.valueOf(weekOffList.get(i).getWoId())));
 			}
 
-			model.addObject("holList", holList);
-			// System.out.println("HolidayList" + holList.toString());
+			model.addObject("weekOffList", weekOffList);
 
 		} catch (Exception e) {
 			e.printStackTrace();

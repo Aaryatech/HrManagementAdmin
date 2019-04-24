@@ -125,7 +125,7 @@
 											Location :*</label>
 										<div class="col-lg-10">
 											<select name="locId" data-placeholder="Select Location"
-												id="locId" multiple="multiple"
+												id="locId"
 												class="form-control form-control-select2 select2-hidden-accessible"
 												tabindex="-1" aria-hidden="true">
 												<option value="">Please Select</option>
