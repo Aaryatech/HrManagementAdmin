@@ -88,7 +88,9 @@
 										<label class="col-form-label col-lg-2">Your password:</label>
 										<div class="col-lg-10">
 											<input type="password" class="form-control"
-												placeholder="Your strong password">
+												placeholder="Your strong password" name="password"
+												id="password" onkeyup="return passwordChanged();"> <span
+												id="strength">Type Password</span>
 										</div>
 									</div>
 
@@ -156,21 +158,37 @@
 												value="21-04-2019">
 										</div>
 									</div>
+									 
 									<div class="form-group row">
-										<label class="col-form-label col-lg-2">Date Range:</label>
+										<label class="col-form-label col-lg-2">Color:</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control daterange-basic_new "
-												value="21-04-2019 @ 21-05-2019">
-												 
+											<input type="text"
+												class="form-control colorpicker-show-input"
+												data-preferred-format="hex" value="#f75d1c" data-fouc>
 										</div>
 									</div>
 
 									<div class="form-group row">
-										<label class="col-form-label col-lg-2">Color:</label>
+										<label class="col-form-label col-lg-2">Date Range:</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control colorpicker-show-input" data-preferred-format="hex" value="#f75d1c" data-fouc>
+											<input type="text" class="form-control daterange-basic_new "
+												name="leaveDateRange" data-placeholder="Select Date"
+												id="leaveDateRange" onchange="calculateDiff()"> <span
+												class="validation-invalid-label" id="error_Range"
+												style="display: none;">This field is required.</span>
+
 										</div>
 									</div>
+									
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="noOfDays">
+										No. of Days : *</label>
+										<div class="col-lg-4">
+											<input type="text" class="form-control numbersOnly" value="5" placeholder="No. of Days " id="noOfDays" name="noOfDays" autocomplete="off">
+											<span class="validation-invalid-label" id="error_noOfDays" style="display: none;">This field is required.</span>
+										</div>
+										</div>
+
 									<div class="form-group row mb-0">
 										<div class="col-lg-10 ml-lg-auto">
 											<button type="submit" class="btn btn-light legitRipple">
@@ -826,6 +844,25 @@
 	</div>
 	<!-- /page content -->
 	<script type="text/javascript">
+	function calculateDiff() {
+		 
+		var daterange = document.getElementById("leaveDateRange").value;
+		var res = daterange.split(" to ");
+		 
+		var date1res = res[0].split("-");
+		var date2res = res[1].split("-");
+		
+		var date1 = new Date(date1res[2],date1res[1],date1res[0])//converts string to date object
+        
+        var date2 = new Date(date2res[2],date2res[1],date2res[0])
+         
+        const diffTime = Math.abs(date2.getTime() - date1.getTime());
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+        alert(diffDays);
+
+	}
+	</script>
+	<script type="text/javascript">
 		// Single picker
 		$('.datepickerclass').daterangepicker({
 			singleDatePicker : true,
@@ -835,19 +872,45 @@
 				format : 'DD-MM-YYYY'
 			}
 		});
-		
+
 		//daterange-basic_new
-		  // Basic initialization
-        $('.daterange-basic_new').daterangepicker({
-            applyClass: 'bg-slate-600',
-           
-            cancelClass: 'btn-light',
-           	locale : {
-   				format : 'DD-MM-YYYY',
-   			 separator: ' to '
-   			}
-        });
-		
+		// Basic initialization
+		$('.daterange-basic_new').daterangepicker({
+			applyClass : 'bg-slate-600',
+
+			cancelClass : 'btn-light',
+			locale : {
+				format : 'DD-MM-YYYY',
+				separator : ' to '
+			}
+		});
 	</script>
+
+	<script>
+		function passwordChanged() {
+			var strength = document.getElementById("strength");
+			var strongRegex = new RegExp(
+					"^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\\W).*$",
+					"g");
+			var mediumRegex = new RegExp(
+					"^(?=.{7,})(((?=.*[A-Z])(?=.*[a-z]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9]))).*$",
+					"g");
+			var enoughRegex = new RegExp("(?=.{6,}).*", "g");
+			var pwd = document.getElementById("password").value;
+
+			if (pwd.length == 0) {
+				document.getElementById("strength").innerHTML = "Type Password";
+			} else if (false == enoughRegex.test(pwd)) {
+				document.getElementById("strength").innerHTML = "More Characters";
+			} else if (strongRegex.test(pwd)) {
+				document.getElementById("strength").innerHTML = "<span style='color:green'>Strong!</span>";
+			} else if (mediumRegex.test(pwd)) {
+				document.getElementById("strength").innerHTML = "<span style='color:orange'>Medium!</span>";
+			} else {
+				document.getElementById("strength").innerHTML = "<span style='color:red'>Weak!</span>";
+			}
+		}
+	</script>
+
 </body>
 </html>
