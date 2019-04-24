@@ -46,8 +46,8 @@
 					</div>
 
 					<div class="breadcrumb justify-content-center">
-						<a href="${pageContext.request.contextPath}/leaveAuthorityList"
-							class="breadcrumb-elements-item"> Authority List </a>
+						<a href="${pageContext.request.contextPath}/claimAuthorityList"
+							class="breadcrumb-elements-item"> Claim Authority List </a>
 
 					</div>
 
@@ -64,7 +64,7 @@
 				<!-- Highlighting rows and columns -->
 				<div class="card">
 					<div class="card-header header-elements-inline">
-						<h5 class="card-title">Leave Authority</h5>
+						<h5 class="card-title">Add Claim Authority</h5>
 						<div class="header-elements">
 							<div class="list-icons">
 								<a class="list-icons-item" data-action="collapse"></a>
@@ -112,7 +112,7 @@
 
 
 						<form
-							action="${pageContext.request.contextPath}/submitAuthorityList"
+							action="${pageContext.request.contextPath}/submitClaimAuthorityList"
 							method="post">
 
 							<div class="row">

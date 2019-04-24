@@ -476,6 +476,7 @@ public class LeaveStructureController {
 
 			List<LeaveStructureHeader> lSummarylist = new ArrayList<>(Arrays.asList(lvStrSummery));
 			model.addObject("lStrList", lSummarylist);
+
 			map = new LinkedMultiValueMap<>();
 			map.add("companyId", userObj.getCompanyId());
 			map.add("locIdList", userObj.getLocationIds());
@@ -483,18 +484,17 @@ public class LeaveStructureController {
 					.postForObject(Constants.url + "/getStructureAllotmentList", map, GetStructureAllotment[].class);
 
 			List<GetStructureAllotment> leaveSummarylist = new ArrayList<>(Arrays.asList(summary));
-
 			model.addObject("lvStructureList", leaveSummarylist);
-			System.out.println("leaveSummarylist" + leaveSummarylist.toString());
-			map = new LinkedMultiValueMap<>();
 
-			map.add("calYrId", 2);
+			map = new LinkedMultiValueMap<>();
+			map.add("calYrId", session.getAttribute("currYearId"));
 			LeavesAllotment[] leavesAllotmentArray = Constants.getRestTemplate()
 					.postForObject(Constants.url + "/getLeaveAllotmentByCurrentCalender", map, LeavesAllotment[].class);
 
 			List<LeavesAllotment> calAllotList = new ArrayList<>(Arrays.asList(leavesAllotmentArray));
-
 			model.addObject("calAllotList", calAllotList);
+
+			System.out.println("calYrId" + session.getAttribute("currYearId"));
 
 			System.out.println("calAllotList" + calAllotList.toString());
 

@@ -169,7 +169,7 @@
 
 											<c:set var="countOf" value="0"></c:set>
 											<c:forEach items="${calAllotList}" var="calender"
-												varStatus="count">
+												varStatus="count1">
 												<c:if test="${calender.empId == structure.empId}">
 													<c:set var="countOf" value="1"></c:set>
 												</c:if>

@@ -21,11 +21,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ats.hradmin.claim.ClaimAuthority;
 import com.ats.hradmin.claim.ClaimType;
+import com.ats.hradmin.claim.GetClaimAuthority;
 import com.ats.hradmin.common.Constants;
 import com.ats.hradmin.common.DateConvertor;
 import com.ats.hradmin.common.FormValidation;
+import com.ats.hradmin.leave.model.GetLeaveAuthority;
 import com.ats.hradmin.leave.model.Holiday;
+import com.ats.hradmin.leave.model.LeaveAuthority;
 import com.ats.hradmin.model.GetEmployeeInfo;
 import com.ats.hradmin.model.Info;
 import com.ats.hradmin.model.LeaveSummary;
@@ -295,6 +299,102 @@ public class ClaimController {
 
 			List<GetEmployeeInfo> employeeInfo = new ArrayList<>(Arrays.asList(empInfoError));
 			model.addObject("empListAuth", employeeInfo);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+	}
+
+	@RequestMapping(value = "/submitClaimAuthorityList", method = RequestMethod.POST)
+	public String submitClaimAuthorityList(HttpServletRequest request, HttpServletResponse response) {
+
+		try {
+			HttpSession session = request.getSession();
+			int iniAuthEmpId = Integer.parseInt(request.getParameter("iniAuthEmpId"));
+
+			int finAuthEmpId = Integer.parseInt(request.getParameter("finAuthEmpId"));
+
+			String[] empIds = request.getParameterValues("empIds");
+			String[] repToEmpIds = request.getParameterValues("repToEmpIds");
+
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < empIds.length; i++) {
+				sb = sb.append(empIds[i] + ",");
+
+			}
+			String empIdList = sb.toString();
+			empIdList = empIdList.substring(0, empIdList.length() - 1);
+
+			sb = new StringBuilder();
+
+			for (int i = 0; i < repToEmpIds.length; i++) {
+				sb = sb.append(repToEmpIds[i] + ",");
+
+			}
+			String repToEmpIdsList = sb.toString();
+			repToEmpIdsList = repToEmpIdsList.substring(0, repToEmpIdsList.length() - 1);
+
+			String[] arrOfStr = empIdList.split(",");
+			ClaimAuthority claim = new ClaimAuthority();
+
+			for (int j = 0; j < arrOfStr.length; j++) {
+
+				claim.setDelStatus(1);
+				claim.setEmpId(Integer.parseInt(arrOfStr[j]));
+
+				claim.setExVar1("NA");
+				claim.setExVar2("NA");
+				claim.setExVar3("NA");
+				claim.setIsActive(1);
+				claim.setMakerUserId(1);
+				claim.setMakerEnterDatetime(dateTime);
+				claim.setCaIniAuthEmpId(iniAuthEmpId);
+				claim.setCaFinAuthEmpId(finAuthEmpId);
+				claim.setCompanyId(1);
+				claim.setCaRepToEmpIds(repToEmpIdsList);
+
+				ClaimAuthority res = Constants.getRestTemplate().postForObject(Constants.url + "/saveClaimAuthority",
+						claim, ClaimAuthority.class);
+
+				if (res != null) {
+					session.setAttribute("successMsg", "Record Insert Successfully");
+				} else {
+					session.setAttribute("errorMsg", "Failed to Insert Record");
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:/addClaimAuthority";
+	}
+
+	@RequestMapping(value = "/claimAuthorityList", method = RequestMethod.GET)
+	public ModelAndView claimAuthorityList(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("claim/claim_authority_list");
+
+		try {
+			HttpSession session = request.getSession();
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("companyId", userObj.getCompanyId());
+
+			GetClaimAuthority[] empInfoError = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getClaimAuthorityList", map, GetClaimAuthority[].class);
+
+			List<GetClaimAuthority> empLeaveAuth = new ArrayList<>(Arrays.asList(empInfoError));
+
+			for (int i = 0; i < empLeaveAuth.size(); i++) {
+
+				empLeaveAuth.get(i).setExVar1(FormValidation.Encrypt(String.valueOf(empLeaveAuth.get(i).getEmpId())));
+			}
+
+			model.addObject("empLeaveAuth", empLeaveAuth);
 
 		} catch (Exception e) {
 			e.printStackTrace();
