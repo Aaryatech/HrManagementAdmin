@@ -151,6 +151,7 @@
 								<tr class="bg-blue">
 								
 									<th></th>
+									<th>OB</th>
 									<th>Earned</th>
 									<th>Sanction</th>
 									<th>Balanced</th>
@@ -163,11 +164,12 @@
 							<tbody>
 	<c:forEach items="${leaveHistoryList}" var="leaveHistoryList" >
 									<tr>
-										<td>${leaveHistoryList.shortName}</td>
-										<td>${leaveHistoryList.earnedNo}</td>
-										<td>${leaveHistoryList.sanctionNo}</td>
-										<td>${leaveHistoryList.earnedNo-leaveHistoryList.sanctionNo}</td>
-										<td>${leaveHistoryList.appliedNo}</td>
+										<td>${leaveHistoryList.lvTitleShort}</td>
+										<td>${leaveHistoryList.balLeave}</td>
+										<td>${leaveHistoryList.lvsAllotedLeaves}</td>
+										<td>${leaveHistoryList.sactionLeave}</td>
+										<td>${leaveHistoryList.lvsAllotedLeaves-leaveHistoryList.sactionLeave}</td>
+										<td>${leaveHistoryList.aplliedLeaeve}</td>
 										
 										
 									</tr>

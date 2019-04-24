@@ -4,62 +4,76 @@ package com.ats.hradmin.leave.model;
 public class LeaveHistory {
 	
 	
-	private int empId;
 	
+    private int lvTypeId;
 	
-	private String shortName;
+	private String lvTitleShort;
 	
-	private int earnedNo;
+	private int lvsAllotedLeaves;
 	
-	private int sanctionNo;
+	private int balLeave;
 	
-	private int appliedNo;
-
-	public int getEmpId() {
-		return empId;
-	}
-
-	public void setEmpId(int empId) {
-		this.empId = empId;
-	}
-
-	public int getEarnedNo() {
-		return earnedNo;
-	}
-
-	public void setEarnedNo(int earnedNo) {
-		this.earnedNo = earnedNo;
-	}
-
-	public int getSanctionNo() {
-		return sanctionNo;
-	}
-
-	public void setSanctionNo(int sanctionNo) {
-		this.sanctionNo = sanctionNo;
-	}
-
-	public int getAppliedNo() {
-		return appliedNo;
-	}
-
-	public void setAppliedNo(int appliedNo) {
-		this.appliedNo = appliedNo;
-	}
-
+	private int aplliedLeaeve;
 	
-	public String getShortName() {
-		return shortName;
+	private int sactionLeave;
+
+	public int getLvTypeId() {
+		return lvTypeId;
 	}
 
-	public void setShortName(String shortName) {
-		this.shortName = shortName;
+	public void setLvTypeId(int lvTypeId) {
+		this.lvTypeId = lvTypeId;
+	}
+
+	public String getLvTitleShort() {
+		return lvTitleShort;
+	}
+
+	public void setLvTitleShort(String lvTitleShort) {
+		this.lvTitleShort = lvTitleShort;
+	}
+
+	public int getLvsAllotedLeaves() {
+		return lvsAllotedLeaves;
+	}
+
+	public void setLvsAllotedLeaves(int lvsAllotedLeaves) {
+		this.lvsAllotedLeaves = lvsAllotedLeaves;
+	}
+
+	public int getBalLeave() {
+		return balLeave;
+	}
+
+	public void setBalLeave(int balLeave) {
+		this.balLeave = balLeave;
+	}
+
+	public int getAplliedLeaeve() {
+		return aplliedLeaeve;
+	}
+
+	public void setAplliedLeaeve(int aplliedLeaeve) {
+		this.aplliedLeaeve = aplliedLeaeve;
+	}
+
+	public int getSactionLeave() {
+		return sactionLeave;
+	}
+
+	public void setSactionLeave(int sactionLeave) {
+		this.sactionLeave = sactionLeave;
 	}
 
 	@Override
 	public String toString() {
-		return "LeaveHistory [empId=" + empId + ", shortName=" + shortName + ", earnedNo=" + earnedNo + ", sanctionNo="
-				+ sanctionNo + ", appliedNo=" + appliedNo + "]";
+		return "LeaveHistory [lvTypeId=" + lvTypeId + ", lvTitleShort=" + lvTitleShort + ", lvsAllotedLeaves="
+				+ lvsAllotedLeaves + ", balLeave=" + balLeave + ", aplliedLeaeve=" + aplliedLeaeve + ", sactionLeave="
+				+ sactionLeave + ", getLvTypeId()=" + getLvTypeId() + ", getLvTitleShort()=" + getLvTitleShort()
+				+ ", getLvsAllotedLeaves()=" + getLvsAllotedLeaves() + ", getBalLeave()=" + getBalLeave()
+				+ ", getAplliedLeaeve()=" + getAplliedLeaeve() + ", getSactionLeave()=" + getSactionLeave()
+				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString()
+				+ "]";
 	}
 
 	

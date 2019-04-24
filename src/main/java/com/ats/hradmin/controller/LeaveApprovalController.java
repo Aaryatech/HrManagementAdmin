@@ -62,7 +62,7 @@ public class LeaveApprovalController {
 
 				}
 				 model.addObject("leaveListForApproval",leaveList);
-			 
+				 model.addObject("list1Count",leaveList.size());
 	//for final		 
 		 map = new LinkedMultiValueMap<>();
 			map.add("empId",userObj.getEmpId());
@@ -117,9 +117,12 @@ public class LeaveApprovalController {
 					temp.setLeaveNumDays(editEmp.getLeaveNumDays());
 					leaveList1.add(temp);
 					
+					
+					
 				}
 			
 			}
+			model.addObject("list2Count",leaveList1.size());
 			model.addObject("leaveListForApproval1",leaveList1);
 			
 		} catch (Exception e) {

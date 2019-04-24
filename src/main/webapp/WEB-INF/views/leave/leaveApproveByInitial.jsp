@@ -70,8 +70,8 @@
 
 					<div class="card-body">
 					 <ul class="nav nav-tabs nav-tabs-highlight nav-justified1">
-									<li class="nav-item"><a href="#highlighted-justified-tab1" class="nav-link active" data-toggle="tab">Pending Task</a></li>
-									<li class="nav-item"><a href="#highlighted-justified-tab2" class="nav-link" data-toggle="tab">Information</a></li>
+									<li class="nav-item"><a href="#highlighted-justified-tab1" class="nav-link active" data-toggle="tab">Pending Task(${list1Count})</a></li>
+									<li class="nav-item"><a href="#highlighted-justified-tab2" class="nav-link" data-toggle="tab">Information(${list2Count})</a></li>
 									 
 								</ul>
 

@@ -418,7 +418,8 @@ public class LeaveController {
 	public ModelAndView showApplyLeave(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("leave/leaveApplication");
-
+		HttpSession session = request.getSession();
+		Date date = new Date();
 		try {
 			String base64encodedString = request.getParameter("empId");
 			String empId = FormValidation.DecodeKey(base64encodedString);
@@ -442,6 +443,7 @@ public class LeaveController {
 			
 		 map = new LinkedMultiValueMap<>();
 			map.add("empId",empId);
+			map.add("currYrId",session.getAttribute("currYearId"));
 			
 			LeaveHistory[] leaveHistory = Constants.getRestTemplate()
 					.postForObject(Constants.url + "/getLeaveHistoryList", map, LeaveHistory[].class);
