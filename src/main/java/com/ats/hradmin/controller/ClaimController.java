@@ -80,25 +80,23 @@ public class ClaimController {
 				remark = "NA";
 			}
 
-			System.out.println("color    " + claimTypeColor);
-
 			Boolean ret = false;
 
 			if (FormValidation.Validaton(calimTypeTitle, "") == true) {
 
 				ret = true;
-				System.out.println("calimTypeTitle" + ret);
+
 			}
 			if (FormValidation.Validaton(claimShortTypeTitle, "") == true) {
 
 				ret = true;
-				System.out.println("add" + ret);
+
 			}
 
 			if (FormValidation.Validaton(request.getParameter("claimColor"), "") == true) {
 
 				ret = true;
-				System.out.println("add" + ret);
+
 			}
 
 			if (ret == false) {
@@ -156,7 +154,7 @@ public class ClaimController {
 
 			model.addObject("claimTypelist", claimTypelist);
 
-			System.out.println("" + claimTypelist.toString());
+			// System.out.println("" + claimTypelist.toString());
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -173,7 +171,7 @@ public class ClaimController {
 
 			String base64encodedString = request.getParameter("claimTypeId");
 			String claimTypeId = FormValidation.DecodeKey(base64encodedString);
-			System.out.println("claimTypeId" + claimTypeId);
+			// System.out.println("claimTypeId" + claimTypeId);
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("claimTypeId", claimTypeId);
@@ -205,25 +203,25 @@ public class ClaimController {
 				remark = "NA";
 			}
 
-			System.out.println("color    " + claimTypeColor);
+			// System.out.println("color " + claimTypeColor);
 
 			Boolean ret = false;
 
 			if (FormValidation.Validaton(calimTypeTitle, "") == true) {
 
 				ret = true;
-				System.out.println("calimTypeTitle" + ret);
+				// System.out.println("calimTypeTitle" + ret);
 			}
 			if (FormValidation.Validaton(claimShortTypeTitle, "") == true) {
 
 				ret = true;
-				System.out.println("add" + ret);
+				// System.out.println("add" + ret);
 			}
 
 			if (FormValidation.Validaton(request.getParameter("claimColor"), "") == true) {
 
 				ret = true;
-				System.out.println("add" + ret);
+				// System.out.println("add" + ret);
 			}
 
 			if (ret == false) {

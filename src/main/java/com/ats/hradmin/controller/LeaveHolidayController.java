@@ -126,21 +126,21 @@ public class LeaveHolidayController {
 			if (FormValidation.Validaton(dateRange, "") == true) {
 
 				ret = true;
-				System.out.println("holidayFromdt" + ret);
+
 			}
 
 			if (FormValidation.Validaton(holidayRemark, "") == true) {
 
 				ret = true;
-				System.out.println("holidayRemark" + ret);
+
 			}
 
 			if (ret == false) {
 
 				Holiday holiday = new Holiday();
 
-				holiday.setCalYrId(calculateYear.getCalYrId());
-				holiday.setCompanyId(1);
+				holiday.setCalYrId((int) session.getAttribute("currYrId"));
+				holiday.setCompanyId(userObj.getCompanyId());
 				holiday.setDelStatus(1);
 
 				holiday.setExVar1("NA");
@@ -213,7 +213,6 @@ public class LeaveHolidayController {
 			 */
 			String base64encodedString = request.getParameter("holidayId");
 			String holidayId = FormValidation.DecodeKey(base64encodedString);
-			System.out.println("holidayId" + holidayId);
 
 			map = new LinkedMultiValueMap<>();
 			map.add("holidayId", holidayId);
@@ -256,7 +255,7 @@ public class LeaveHolidayController {
 			}
 
 			model.addObject("holList", holList);
-			System.out.println("HolidayList" + holList.toString());
+			// System.out.println("HolidayList" + holList.toString());
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -293,13 +292,13 @@ public class LeaveHolidayController {
 			if (FormValidation.Validaton(dateRange, "") == true) {
 
 				ret = true;
-				System.out.println("holidayFromdt" + ret);
+
 			}
 
 			if (FormValidation.Validaton(holidayTitle, "") == true) {
 
 				ret = true;
-				System.out.println("holidayRemark" + ret);
+
 			}
 
 			if (ret == false) {

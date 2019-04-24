@@ -50,6 +50,7 @@ public class LeaveStructureController {
 	String curDate = dateFormat.format(new Date());
 	String dateTime = dateFormat.format(now);
 	List<LeaveStructureDetails> tempDetailList = new ArrayList<LeaveStructureDetails>();
+	LeaveAuthority leaveAuthority = new LeaveAuthority();
 
 	@RequestMapping(value = "/addLeaveStructureHeader", method = RequestMethod.GET)
 	public ModelAndView addLeaveStructureHeader(HttpServletRequest request, HttpServletResponse response) {
@@ -233,7 +234,6 @@ public class LeaveStructureController {
 
 			HttpSession session = request.getSession();
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
-			System.err.println("Inside insert submitInsertLeaveStructure method");
 
 			String lvsName = request.getParameter("lvsName");
 
@@ -242,7 +242,7 @@ public class LeaveStructureController {
 			if (FormValidation.Validaton(lvsName, "") == true) {
 
 				ret = true;
-				System.out.println("lvsName" + ret);
+
 			}
 
 			if (ret == false) {
@@ -261,8 +261,8 @@ public class LeaveStructureController {
 
 					LeaveStructureDetails detail = new LeaveStructureDetails();
 					detail.setDelStatus(1);
-					detail.setExInt1(1);
-					detail.setExInt2(1);
+					detail.setExInt1(0);
+					detail.setExInt2(0);
 					detail.setExVar1("NA");
 					detail.setExVar2("NA");
 					detail.setIsActive(1);
@@ -285,7 +285,6 @@ public class LeaveStructureController {
 
 				LeaveStructureHeader res = Constants.getRestTemplate()
 						.postForObject(Constants.url + "saveLeaveStruture", head, LeaveStructureHeader.class);
-				System.out.println("docInsertRes" + res.toString());
 
 				if (res != null) {
 					session.setAttribute("successMsg", "Record Insert Successfully");
@@ -293,8 +292,6 @@ public class LeaveStructureController {
 					session.setAttribute("errorMsg", "Failed to Insert Record");
 				}
 
-			} else {
-				session.setAttribute("errorMsg", "Failed to Insert Record");
 			}
 		} catch (Exception e) {
 
@@ -306,8 +303,6 @@ public class LeaveStructureController {
 		return "redirect:/showLeaveStructureList";
 
 	}
-
-	LeaveAuthority leaveAuthority = new LeaveAuthority();
 
 	@RequestMapping(value = "/showLeaveStructureList", method = RequestMethod.GET)
 	public ModelAndView showLeaveStructureList(HttpServletRequest request, HttpServletResponse response) {
@@ -445,8 +440,6 @@ public class LeaveStructureController {
 					session.setAttribute("errorMsg", "Failed to Insert Record");
 				}
 
-			} else {
-				session.setAttribute("errorMsg", "Failed to Insert Record");
 			}
 		} catch (Exception e) {
 
