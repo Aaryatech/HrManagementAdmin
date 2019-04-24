@@ -118,7 +118,7 @@
 								%>
 
 								<form
-									action="${pageContext.request.contextPath}/submitInsertEmployeeUserInfo"
+									action="${pageContext.request.contextPath}/submitInsertClaim"
 									id="submitInsertEmp" method="post" enctype="multipart/form-data">
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="empCode">

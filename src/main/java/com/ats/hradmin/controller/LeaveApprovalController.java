@@ -36,25 +36,22 @@ public class LeaveApprovalController {
 	public ModelAndView showLeaveApprovalByInitialAuthority(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("leave/leaveApproveByInitial");
-
+		
+		//for pending 
 		try {
 			HttpSession session = request.getSession();
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
             MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("empId",userObj.getEmpId());
-			map.add("statusList", 1);
-			map.add("authTypeId", 1);//1-initial,2-final
 			map.add("currYrId",session.getAttribute("currYearId"));
 			
 			
 			GetLeaveApplyAuthwise[] employeeDoc = Constants.getRestTemplate().postForObject(Constants.url +
-					 "/getLeaveApplyListForAuth",map, GetLeaveApplyAuthwise[].class);
+					 "/getLeaveApplyListForPending",map, GetLeaveApplyAuthwise[].class);
 					
 			 List<GetLeaveApplyAuthwise> leaveList = new ArrayList<GetLeaveApplyAuthwise>(Arrays.asList(employeeDoc));
-			 System.out.println("lv leaveList list "+leaveList); 
+			 System.out.println("lv leaveList list pending "+leaveList.toString()); 
 			
-			 
-
 				for (int i = 0; i < leaveList.size(); i++) {
 
 					leaveList.get(i).setCirculatedTo(FormValidation.Encrypt(String.valueOf(leaveList.get(i).getLeaveId())));
@@ -63,65 +60,29 @@ public class LeaveApprovalController {
 				}
 				 model.addObject("leaveListForApproval",leaveList);
 				 model.addObject("list1Count",leaveList.size());
-	//for final		 
+				
+	//for Info	
+				 
+				 
+				 
+		 model.addObject("empIdOrig",userObj.getEmpId());
+				 
 		 map = new LinkedMultiValueMap<>();
 			map.add("empId",userObj.getEmpId());
-			map.add("statusList","1,2");
-			map.add("authTypeId", 2);
+			
 			map.add("currYrId",session.getAttribute("currYearId"));
 			GetLeaveApplyAuthwise[] employeeDoc1 = Constants.getRestTemplate().postForObject(Constants.url +
-						 "/getLeaveApplyListForAuth",map, GetLeaveApplyAuthwise[].class);
+						 "/getLeaveApplyListForInformation",map, GetLeaveApplyAuthwise[].class);
 						
 			List<GetLeaveApplyAuthwise> leaveList1 = new ArrayList<GetLeaveApplyAuthwise>(Arrays.asList(employeeDoc1));
-			//System.out.println("lv leaveList list1 "+leaveList1.toString()); 
+		System.out.println("lv leaveList list1 info "+leaveList1.toString()); 
 			for (int i = 0; i < leaveList1.size(); i++) {
 
 				leaveList1.get(i).setCirculatedTo(FormValidation.Encrypt(String.valueOf(leaveList1.get(i).getLeaveId())));
 				leaveList1.get(i).setLeaveTypeName(FormValidation.Encrypt(String.valueOf(leaveList1.get(i).getEmpId())));
 
 			}
-			int flag=1;
-			for (int i = 0; i < leaveList1.size(); i++) {
-				if(leaveList1.get(i).getEmpId()==userObj.getEmpId()) {
-					flag=0;
-					System.err.println(" matched");
-					break;
-				}
-				
-			}
-			if(flag==1) {
-				System.err.println(" not matched");
-			 map = new LinkedMultiValueMap<>();
-				map.add("empId",userObj.getEmpId());
-				map.add("statusList","1,2");
-				
-				map.add("currYrId",session.getAttribute("currYearId"));
-				LeaveDetail  editEmp = Constants.getRestTemplate().postForObject(Constants.url + "/getEmployeeLeaveByEmpId", map,
-						LeaveDetail.class);
-				System.out.println("edit emp::::"+editEmp.toString());
 			
-				if(editEmp!=null) {
-					
-					
-					GetLeaveApplyAuthwise temp=new GetLeaveApplyAuthwise();
-					
-					temp.setCalYrId(editEmp.getCalYrId());
-					temp.setEmpCode(editEmp.getEmpCode());
-					temp.setEmpFname(editEmp.getEmpFname());
-					temp.setEmpMname(editEmp.getEmpMname());
-					temp.setEmpSname(editEmp.getEmpSname());
-					temp.setLeaveDuration(editEmp.getLeaveDuration());
-					temp.setLeaveFromdt(editEmp.getLeaveFromdt());
-					temp.setLeaveTodt(editEmp.getLeaveTodt());
-					temp.setLeaveTitle(editEmp.getLvTitle());
-					temp.setLeaveNumDays(editEmp.getLeaveNumDays());
-					leaveList1.add(temp);
-					
-					
-					
-				}
-			
-			}
 			model.addObject("list2Count",leaveList1.size());
 			model.addObject("leaveListForApproval1",leaveList1);
 			
@@ -203,9 +164,6 @@ public class LeaveApprovalController {
 	
 
 }
-	
-	
-	
 	
 	
 

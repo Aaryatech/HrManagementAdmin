@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%><%@ taglib
 	uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+	
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -88,6 +90,7 @@
 									<th>From Date</th>
 									<th>To Date</th>
 									<th>No. Of Days</th>
+									<th>Status</th>
 									<th class="text-center" width="10%">Actions</th>
 								</tr>
 							</thead>
@@ -99,11 +102,12 @@
 									<tr>
 										<td>${count.index+1}</td>
 										<td>${leaveList.empCode}</td>
-										<td>${leaveList.empFname}</td>
+										<td>${leaveList.empName}</td>
 										<td>${leaveList.leaveTitle}</td>
 										<td>${leaveList.leaveFromdt}</td>
 										<td>${leaveList.leaveTodt}</td>
 										<td>${leaveList.leaveNumDays}</td>
+										<td>${leaveList.exInt1}</td>
 										
 										<td class="text-center">
 											<div class="list-icons">
@@ -113,14 +117,34 @@
 													</a>
 
 													<div class="dropdown-menu dropdown-menu-right">
-														<a
+														<c:choose>
+															<c:when test="${leaveList.exInt1==2}">
+															
+													<a
+															href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList.leaveTypeName}&leaveId=${leaveList.circulatedTo}&stat=3"
+															class="dropdown-item"><i class="icon-pencil7"></i>Approve</a>
+															
+													<a
+															href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList.leaveTypeName}&leaveId=${leaveList.circulatedTo}&stat=9"
+															class="dropdown-item"><i class="icon-pencil7"></i>Reject</a>
+																
+														
+															
+															</c:when>
+															<c:otherwise>
+
+
+
+													<a
 															href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList.leaveTypeName}&leaveId=${leaveList.circulatedTo}&stat=2"
 															class="dropdown-item"><i class="icon-pencil7"></i>Approve</a>
 															
 													<a
 															href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList.leaveTypeName}&leaveId=${leaveList.circulatedTo}&stat=8"
 															class="dropdown-item"><i class="icon-pencil7"></i>Reject</a>
-														
+															</c:otherwise>
+															</c:choose>
+																											
 													</div>
 												</div>
 											</div>
@@ -144,6 +168,7 @@
 									<th>From Date</th>
 									<th>To Date</th>
 									<th>No. Of Days</th>
+									<td>Status</td>
 									<th class="text-center" width="10%">Actions</th>
 								</tr>
 							</thead>
@@ -155,7 +180,7 @@
 									<tr>
 										<td>${count.index+1}</td>
 										<td>${leaveList1.empCode}</td>
-										<td>${leaveList1.empFname}</td>
+										<td>${leaveList1.empName}</td>
 										<td>${leaveList1.leaveTitle}</td>
 										<td>${leaveList1.leaveFromdt}</td>
 										<td>${leaveList1.leaveTodt}</td>
@@ -169,13 +194,20 @@
 													</a>
 
 													<div class="dropdown-menu dropdown-menu-right">
-														<a
+													
+													
+
+
+													<a
 															href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList1.leaveTypeName}&leaveId=${leaveList1.circulatedTo}&stat=3"
 															class="dropdown-item"><i class="icon-pencil7"></i>Approve</a>
 															
 													<a
 															href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList1.leaveTypeName}&leaveId=${leaveList1.circulatedTo}&stat=9"
 															class="dropdown-item"><i class="icon-pencil7"></i>Reject</a>
+															
+															
+															
 														
 													</div>
 												</div>

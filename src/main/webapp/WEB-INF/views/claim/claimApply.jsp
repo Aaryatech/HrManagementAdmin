@@ -120,82 +120,23 @@
 									session.removeAttribute("successMsg");
 									}
 								%>
-<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="lvsName">
-											Employee Code : *</label>
-										<div class="col-lg-10">
-											<input type="text" class="form-control"
-												placeholder="Enter Leave Structure Name" id="lvsName"   value="${editEmp.empCode}" 
-												name="lvsName" autocomplete="off" onchange="trim(this)" readonly>
-											
-										</div>
-									</div>
-									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="lvsName">
-											Employee Name : *</label>
-										<div class="col-lg-10">
-											<input type="text" class="form-control"
-												placeholder="Enter Leave Structure Name" id="lvsName"  value="${editEmp.empFname} ${editEmp.empMname} ${editEmp.empSname}   "
-												name="lvsName" autocomplete="off" onchange="trim(this)" readonly>
-											
-										</div>
-									</div>
-									<hr>
-									
-								<table
-							class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic  datatable-button-print-columns1"
-							id="printtable1">
-						
-						
-							<thead>
-								<tr class="bg-blue">
-								
-									<th></th>
-									<th>OB</th>
-									<th>Earned</th>
-									<th>Sanction</th>
-									<th>Balanced</th>
-									<th>Applied</th>
-									
-									 
-									
-								</tr>
-							</thead>
-							<tbody>
-	<c:forEach items="${leaveHistoryList}" var="leaveHistoryList" >
-									<tr>
-										<td>${leaveHistoryList.lvTitleShort}</td>
-										<td>${leaveHistoryList.balLeave}</td>
-										<td>${leaveHistoryList.lvsAllotedLeaves}</td>
-										<td>${leaveHistoryList.sactionLeave}</td>
-										<td>${leaveHistoryList.lvsAllotedLeaves-leaveHistoryList.sactionLeave}</td>
-										<td>${leaveHistoryList.aplliedLeaeve}</td>
-										
-										
-									</tr>
-								</c:forEach>
-									
-							
 
-
-							</tbody>
-						</table>
 								<form
-									action="${pageContext.request.contextPath}/insertLeave"
+									action="${pageContext.request.contextPath}/insertClaim"
 									id="submitInsertLeave" method="post">
 									
 									
 									
 										<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="leaveTypeId">Select
-											Leave Type :</label>
+										<label class="col-form-label col-lg-2" for="claimTypeId">Select
+											Claim Type :</label>
 										<div class="col-lg-4">
 											<select name="leaveTypeId"
-												data-placeholder="Select Leave Type" id="leaveTypeId"
+												data-placeholder="Select Claim Type" id="claimTypeId"
 												class="form-control form-control-select2 select2-hidden-accessible"
 												 data-fouc="" tabindex="-1" aria-hidden="true">
 												<option></option>
-												<c:forEach items="${leaveTypeList}" var="leaveType">
+												<c:forEach items="${leaveTypeList}" var="claimTypeId">
 													<c:choose>
 														<c:when test="${leaveType.lvTypeId == editLeave.lvTypeId}">
 															<option value="${leaveType.lvTypeId}" selected="selected">${leaveType.lvTitle}</option>
@@ -205,62 +146,55 @@
 														</c:otherwise>
 													</c:choose>
 												</c:forEach>
-											</select> <span class="validation-invalid-label" id="error_leaveTypeId"
+											</select> <span class="validation-invalid-label" id="error_claimTypeId"
 												style="display: none;">This field is required.</span>
 										</div>
+										</div>
 										
-											
-										
-										<div class="col-lg-2">
-											<select  data-placeholder="Select a Day Type" id="dayTypeName" name="dayTypeName"
+										<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="claimTypeId">Select
+											Project  :</label>
+										<div class="col-lg-4">
+											<select name="leaveTypeId"
+												data-placeholder="Select Claim Type" id="claimTypeId"
 												class="form-control form-control-select2 select2-hidden-accessible"
 												 data-fouc="" tabindex="-1" aria-hidden="true">
-												<option></option>		
-											<option value="1">Full Day</option>
-											<option value="2">Half Day</option>
-
+												<option></option>
+												<c:forEach items="${leaveTypeList}" var="claimTypeId">
+													<c:choose>
+														<c:when test="${leaveType.lvTypeId == editLeave.lvTypeId}">
+															<option value="${leaveType.lvTypeId}" selected="selected">${leaveType.lvTitle}</option>
+														</c:when>
+														<c:otherwise>
+															<option value="${leaveType.lvTypeId}">${leaveType.lvTitle}</option>
+														</c:otherwise>
+													</c:choose>
+												</c:forEach>
+											</select> <span class="validation-invalid-label" id="error_claimTypeId"
+												style="display: none;">This field is required.</span>
+										</div>
+										
 											
-											</select><span class="validation-invalid-label" id="error_dayType"
-												style="display: none;">This field is required.</span>
+										
+										
 										</div>
-										</div>
-											<div class="form-group row">
-										<label class="col-form-label col-lg-2">Date Range:</label>
-										<div class="col-lg-10">
-											<input type="text" class="form-control daterange-basic_new "
-												name="leaveDateRange" data-placeholder="Select Date"
-												id="leaveDateRange" onchange="calculateDiff()"> <span
-												class="validation-invalid-label" id="error_Range"
-												style="display: none;">This field is required.</span>
-
-										</div>
-									</div>
+											
 									
 										
 									
 									
 	<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="noOfDays">
-										No. of Days : *</label>
+										<label class="col-form-label col-lg-2" for="claimAmt">
+										Claim Amount: *</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control numbersOnly" 
-												placeholder="No. of Days " id="noOfDays"
-												name="noOfDays" autocomplete="off" readonly>
-											<span class="validation-invalid-label" id="error_noOfDays"
+												placeholder="No. of Days " id="claimAmt"
+												name="claimAmt" autocomplete="off" readonly>
+											<span class="validation-invalid-label" id="error_claimAmt"
 												style="display: none;">This field is required.</span>
 										</div>
 										</div>
-									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="noOfDaysExclude">
-											Excluding Weekly Off *</label>
-										<div class="col-lg-4">
-											<input type="text" class="form-control numbersOnly"
-												placeholder="Excluding Weekly Off: " id="noOfDaysExclude"  
-												name="noOfDaysExclude" autocomplete="off" onchange="trim(this)" readonly>
-											<span class="validation-invalid-label" id="error_noOfDaysExclude"
-												style="display: none;">This field is required.</span>
-										</div>
-									</div>
+									
 
 						<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="lvngReson">Remark :  </label>
@@ -270,9 +204,7 @@
 												id="leaveRemark" name="leaveRemark"> </textarea>
 												</div>
 									</div>
-										<input type="hidden" class="form-control numbersOnly"
-												id="empId"  value="${empId}"
-												name="empId" >
+										
 									
 									<div class="form-group row mb-0">
 										<div class="col-lg-10 ml-lg-auto">

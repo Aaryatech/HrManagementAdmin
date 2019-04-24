@@ -77,7 +77,8 @@ public class LeaveController {
 			Date date = new Date();
 			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 			SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
-			
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+
 			String compName = request.getParameter("1");
 			String leaveTypeTitle = request.getParameter("leaveTypeTitle");
 			String leaveShortTypeTitle = request.getParameter("leaveShortTypeTitle");
@@ -142,7 +143,7 @@ public class LeaveController {
 			leaveSummary.setExVar3("NA");
 			leaveSummary.setIsActive(1);
 			leaveSummary.setDelStatus(1);
-			leaveSummary.setMakerUserId(1);
+			leaveSummary.setMakerUserId(userObj.getUserId());
 			leaveSummary.setMakerEnterDatetime(sf.format(date));
 
 			
@@ -253,6 +254,8 @@ public class LeaveController {
 
 		try {
 			HttpSession session = request.getSession();
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+
 			Date date = new Date();
 			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 			SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
@@ -312,7 +315,7 @@ public class LeaveController {
 			editLeaveType.setLvWorkingHrs(WprkingHrs);
 			editLeaveType.setLvSumupId(summId);
 			editLeaveType.setLvRmarks(remark);
-			editLeaveType.setMakerUserId(1);
+			editLeaveType.setMakerUserId(userObj.getUserId());
 			editLeaveType.setMakerEnterDatetime(sf.format(date));
 
 			LeaveType res = Constants.getRestTemplate().postForObject(Constants.url + "/saveLeaveType", editLeaveType,
@@ -468,6 +471,10 @@ public class LeaveController {
 			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 			SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 			
+			
+		
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+         
 			//String compName = request.getParameter("1");
 			String leaveDateRange = request.getParameter("leaveDateRange");
 			String dayTypeName = request.getParameter("dayTypeName");
@@ -541,7 +548,7 @@ public class LeaveController {
 			leaveSummary.setExVar3("NA");
 			leaveSummary.setIsActive(1);
 			leaveSummary.setDelStatus(1);
-			leaveSummary.setMakerUserId(1);
+			leaveSummary.setMakerUserId(userObj.getUserId());
 			leaveSummary.setMakerEnterDatetime(sf.format(date));
 
 			
@@ -567,7 +574,7 @@ public class LeaveController {
 				lt.setExVar2("NA");
 				lt.setExVar3("NA");
 				
-				lt.setMakerUserId(1);
+				lt.setMakerUserId(userObj.getUserId());
 				lt.setMakerEnterDatetime(sf.format(date));
 				
 
