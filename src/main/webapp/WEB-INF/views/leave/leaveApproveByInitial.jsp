@@ -118,7 +118,7 @@
 
 													<div class="dropdown-menu dropdown-menu-right">
 														<c:choose>
-															<c:when test="${leaveList.exInt1==2}">
+															<c:when test="${leaveList.finAuthEmpId==empIdOrig}">
 															
 													<a
 															href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList.leaveTypeName}&leaveId=${leaveList.circulatedTo}&stat=3"
@@ -131,17 +131,36 @@
 														
 															
 															</c:when>
-															<c:otherwise>
-
-
-
-													<a
+															
+															<c:when test="${leaveList.iniAuthEmpId==empIdOrig}">
+															
+												<a
 															href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList.leaveTypeName}&leaveId=${leaveList.circulatedTo}&stat=2"
 															class="dropdown-item"><i class="icon-pencil7"></i>Approve</a>
 															
 													<a
 															href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList.leaveTypeName}&leaveId=${leaveList.circulatedTo}&stat=8"
 															class="dropdown-item"><i class="icon-pencil7"></i>Reject</a>
+																
+														
+															
+															</c:when>
+															
+															<c:when test="${leaveList.empId==empIdOrig}">
+															
+												<a
+															href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList.leaveTypeName}&leaveId=${leaveList.circulatedTo}&stat=7"
+															class="dropdown-item"><i class="icon-pencil7"></i>Cancel</a>
+														
+															
+															</c:when>
+															
+															
+															<c:otherwise>
+
+
+
+													
 															</c:otherwise>
 															</c:choose>
 																											
@@ -185,8 +204,8 @@
 										<td>${leaveList1.leaveFromdt}</td>
 										<td>${leaveList1.leaveTodt}</td>
 										<td>${leaveList1.leaveNumDays}</td>
-										
-										<td class="text-center">
+										<td>${leaveList.exInt1}</td>
+									<td class="text-center">
 											<div class="list-icons">
 												<div class="dropdown">
 													<a href="#" class="list-icons-item" data-toggle="dropdown">
@@ -194,10 +213,9 @@
 													</a>
 
 													<div class="dropdown-menu dropdown-menu-right">
-													
-													
-
-
+														<c:choose>
+															<c:when test="${leaveList1.finAuthEmpId==empIdOrig}">
+															
 													<a
 															href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList1.leaveTypeName}&leaveId=${leaveList1.circulatedTo}&stat=3"
 															class="dropdown-item"><i class="icon-pencil7"></i>Approve</a>
@@ -205,10 +223,43 @@
 													<a
 															href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList1.leaveTypeName}&leaveId=${leaveList1.circulatedTo}&stat=9"
 															class="dropdown-item"><i class="icon-pencil7"></i>Reject</a>
-															
-															
-															
+																
 														
+															
+															</c:when>
+															
+															<c:when test="${leaveList1.iniAuthEmpId==empIdOrig}">
+															
+												<%-- <a
+															href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList.leaveTypeName}&leaveId=${leaveList.circulatedTo}&stat=2"
+															class="dropdown-item"><i class="icon-pencil7"></i>Approve</a>
+															
+													<a
+															href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList.leaveTypeName}&leaveId=${leaveList.circulatedTo}&stat=8"
+															class="dropdown-item"><i class="icon-pencil7"></i>Reject</a> --%>
+																-
+														
+															
+															</c:when>
+															
+															<c:when test="${leaveList1.empId==empIdOrig}">
+															
+												<a
+															href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList1.leaveTypeName}&leaveId=${leaveList1.circulatedTo}&stat=7"
+															class="dropdown-item"><i class="icon-pencil7"></i>Cancel</a>
+														
+															
+															</c:when>
+															
+															
+															<c:otherwise>
+
+
+
+													
+															</c:otherwise>
+															</c:choose>
+																											
 													</div>
 												</div>
 											</div>
