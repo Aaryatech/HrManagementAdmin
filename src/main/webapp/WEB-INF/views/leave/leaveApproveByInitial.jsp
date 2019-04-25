@@ -90,7 +90,7 @@
 									<th>From Date</th>
 									<th>To Date</th>
 									<th>No. Of Days</th>
-									<th>Status</th>
+									
 									<th class="text-center" width="10%">Actions</th>
 								</tr>
 							</thead>
@@ -107,7 +107,7 @@
 										<td>${leaveList.leaveFromdt}</td>
 										<td>${leaveList.leaveTodt}</td>
 										<td>${leaveList.leaveNumDays}</td>
-										<td>${leaveList.exInt1}</td>
+										
 										
 										<td class="text-center">
 											<div class="list-icons">
@@ -187,7 +187,7 @@
 									<th>From Date</th>
 									<th>To Date</th>
 									<th>No. Of Days</th>
-									<td>Status</td>
+								
 									<th class="text-center" width="10%">Actions</th>
 								</tr>
 							</thead>
@@ -204,7 +204,7 @@
 										<td>${leaveList1.leaveFromdt}</td>
 										<td>${leaveList1.leaveTodt}</td>
 										<td>${leaveList1.leaveNumDays}</td>
-										<td>${leaveList.exInt1}</td>
+										
 									<td class="text-center">
 											<div class="list-icons">
 												<div class="dropdown">
@@ -237,19 +237,12 @@
 													<a
 															href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList.leaveTypeName}&leaveId=${leaveList.circulatedTo}&stat=8"
 															class="dropdown-item"><i class="icon-pencil7"></i>Reject</a> --%>
-																-
+															
 														
 															
 															</c:when>
 															
-															<c:when test="${leaveList1.empId==empIdOrig}">
 															
-												<a
-															href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList1.leaveTypeName}&leaveId=${leaveList1.circulatedTo}&stat=7"
-															class="dropdown-item"><i class="icon-pencil7"></i>Cancel</a>
-														
-															
-															</c:when>
 															
 															
 															<c:otherwise>
@@ -259,6 +252,16 @@
 													
 															</c:otherwise>
 															</c:choose>
+															
+															
+															<c:if test="${leaveList1.empId==empIdOrig}">
+															
+												<a
+															href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList1.leaveTypeName}&leaveId=${leaveList1.circulatedTo}&stat=7"
+															class="dropdown-item"><i class="icon-pencil7"></i>Cancel</a>
+														
+															
+															</c:if>
 																											
 													</div>
 												</div>

@@ -17,6 +17,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.hradmin.common.Constants;
@@ -529,7 +530,7 @@ public class LeaveController {
 				
 		LeaveApply leaveSummary = new LeaveApply();
 
-			leaveSummary.setCalYrId(Integer.parseInt((String) session.getAttribute("currYearId")));
+			leaveSummary.setCalYrId( (int) session.getAttribute("currYearId"));
 			leaveSummary.setEmpId(empId);
 			leaveSummary.setFinalStatus(1);
 			leaveSummary.setLeaveNumDays(noOfDaysExclude);
@@ -601,9 +602,41 @@ public class LeaveController {
 			e.printStackTrace();
 		}
 
-		return "redirect:/showLeaveTypeList";
+		return "redirect:/showApplyForLeave";
 	
 
 }
+	
+	/*
+	 * @RequestMapping(value = "/chkNum", method = RequestMethod.GET)
+	 * public @ResponseBody chkNum(HttpServletRequest request, HttpServletResponse
+	 * response) {
+	 * 
+	 * 
+	 * try { String base64encodedString = request.getParameter("typeId"); String
+	 * lvTypeId = FormValidation.DecodeKey(base64encodedString);
+	 * 
+	 * MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+	 * map.add("lvTypeId", lvTypeId); editLeaveType =
+	 * Constants.getRestTemplate().postForObject(Constants.url +
+	 * "/getLeaveTypeById", map, LeaveType.class); model.addObject("editCompany",
+	 * editLeaveType);
+	 * 
+	 * 
+	 * map = new LinkedMultiValueMap<>(); map.add("compId", 1);
+	 * 
+	 * 
+	 * LeaveSummary[] employeeDoc =
+	 * Constants.getRestTemplate().postForObject(Constants.url +
+	 * "/getLeaveSummaryList",map, LeaveSummary[].class);
+	 * 
+	 * List<LeaveSummary> sumList = new
+	 * ArrayList<LeaveSummary>(Arrays.asList(employeeDoc));
+	 * System.out.println("lv sum list "+sumList);
+	 * model.addObject("sumList",sumList);
+	 * 
+	 * 
+	 * } catch (Exception e) { e.printStackTrace(); } return model; }
+	 */
 	
 }

@@ -13,6 +13,7 @@
 </head>
 
 <body>
+	<c:url value="/chkNum" var="chkNum"></c:url>
 
 	<!-- Main navbar -->
 	<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
@@ -166,7 +167,7 @@
 									<tr>
 										<td>${leaveHistoryList.lvTitleShort}</td>
 										<td>${leaveHistoryList.balLeave}</td>
-										<td>${leaveHistoryList.lvsAllotedLeaves}</td>
+										<td>${leaveHistoryList.balLeave+leaveHistoryList.lvsAllotedLeaves}</td>
 										<td>${leaveHistoryList.sactionLeave}</td>
 										<td>${leaveHistoryList.lvsAllotedLeaves-leaveHistoryList.sactionLeave}</td>
 										<td>${leaveHistoryList.aplliedLeaeve}</td>
@@ -195,13 +196,13 @@
 												class="form-control form-control-select2 select2-hidden-accessible"
 												 data-fouc="" tabindex="-1" aria-hidden="true">
 												<option></option>
-												<c:forEach items="${leaveTypeList}" var="leaveType">
+												<c:forEach items="${leaveHistoryList}" var="leaveHistoryList">
 													<c:choose>
-														<c:when test="${leaveType.lvTypeId == editLeave.lvTypeId}">
-															<option value="${leaveType.lvTypeId}" selected="selected">${leaveType.lvTitle}</option>
+														<c:when test="${leaveHistoryList.lvTypeId == editLeave.lvTypeId}">
+															<option value="${leaveHistoryList.lvTypeId}" selected="selected">${leaveHistoryList.lvTitle}</option>
 														</c:when>
 														<c:otherwise>
-															<option value="${leaveType.lvTypeId}">${leaveType.lvTitle}</option>
+															<option value="${leaveHistoryList.lvTypeId}">${leaveHistoryList.lvTitle}</option>
 														</c:otherwise>
 													</c:choose>
 												</c:forEach>
@@ -273,6 +274,10 @@
 										<input type="hidden" class="form-control numbersOnly"
 												id="empId"  value="${empId}"
 												name="empId" >
+												
+													<input type="hidden" class="form-control numbersOnly"
+												id="tempNoDays" 
+												name="tempNoDays" >
 									
 									<div class="form-group row mb-0">
 										<div class="col-lg-10 ml-lg-auto">
@@ -313,18 +318,48 @@
 		var date1res = res[0].split("-");
 		var date2res = res[1].split("-");
 		
-		var date1 = new Date(date1res[2],date1res[1],date1res[0])//converts string to date object
+		var date1 = new Date(date1res[2],date1res[1]-1,date1res[0])//converts string to date object
         
-        var date2 = new Date(date2res[2],date2res[1],date2res[0])
+        var date2 = new Date(date2res[2],date2res[1]-1,date2res[0])
          
         const diffTime = Math.abs(date2.getTime() - date1.getTime());
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
-       // alert(diffDays);
+        document.getElementById("noOfDays").value =  diffDays+1 ;
         
-        
-        document.getElementById("noOfDays").value=diffDays;
-        document.getElementById("noOfDaysExclude").value=diffDays;
+        document.getElementById("noOfDaysExclude").value =  diffDays+1 ;
 	}
+	
+	
+	
+		function checkUnique() {
+			var inputValue = document.getElementById("leaveTypeId").value;
+			var valid = false;
+			
+			if(inputValue!=null){
+				valid == true;
+			}
+			if (valid == true)
+				$
+						.getJSON(
+								'${chkNum}',
+								{
+
+									inputValue : inputValue,
+									ajax : 'true',
+
+								},
+								function(data) {
+
+									//alert("Data  " +JSON.stringify(data));
+									if (data.error == true) {
+										
+									}
+								});
+		}
+
+		
+	
+	
 	</script>
 	<script type="text/javascript">
 		// Single picker
