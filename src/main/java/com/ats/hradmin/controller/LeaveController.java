@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ats.hradmin.common.Constants;
 import com.ats.hradmin.common.DateConvertor;
 import com.ats.hradmin.common.FormValidation;
+import com.ats.hradmin.leave.model.GetAuthorityIds;
 import com.ats.hradmin.leave.model.LeaveHistory;
 import com.ats.hradmin.model.AccessRightModule;
 import com.ats.hradmin.model.Company;
@@ -485,6 +486,26 @@ public class LeaveController {
 			System.out.println("leaveTypeId" + leaveTypeId);
 			int noOfDaysExclude = Integer.parseInt( request.getParameter("noOfDaysExclude"));
 			int empId = Integer.parseInt( request.getParameter("empId"));
+			
+			//get Authority ids 
+			
+			
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("empId", empId);
+			
+			GetAuthorityIds  editEmp = Constants.getRestTemplate().postForObject(Constants.url + "/getAuthIdByEmpId", map,
+					GetAuthorityIds.class);
+			int stat=0;
+			if(editEmp.getFinAuthEmpId()==userObj.getEmpId()) {
+				stat=3;
+			}
+			else if(editEmp.getIniAuthEmpId()==userObj.getEmpId()) {
+				stat=2;
+			}
+			else {
+				stat=1;
+			}
+			System.out.println("stat is "+stat);
 			String remark=null;
 			
 			String[] arrOfStr = leaveDateRange.split("to", 2);
@@ -541,7 +562,7 @@ public class LeaveController {
 			leaveSummary.setLeaveFromdt(DateConvertor.convertToYMD(arrOfStr[0].toString().trim()));
 			leaveSummary.setLeaveTodt(DateConvertor.convertToYMD(arrOfStr[1].toString().trim()));
 			
-			leaveSummary.setExInt1(1);
+			leaveSummary.setExInt1(stat);
 			leaveSummary.setExInt2(1);
 			leaveSummary.setExInt3(1);
 			leaveSummary.setExVar1("NA");
@@ -583,7 +604,7 @@ public class LeaveController {
 						LeaveTrail.class);
 				if(res1!=null) {
 					
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+				 map = new LinkedMultiValueMap<>();
 				map.add("leaveId", res.getLeaveId());
 				map.add("trailId", res1.getTrailPkey());
 				Info info = Constants.getRestTemplate().postForObject(Constants.url + "/updateTrailId", map, Info.class);
