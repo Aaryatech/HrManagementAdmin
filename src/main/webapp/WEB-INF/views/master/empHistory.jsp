@@ -163,12 +163,10 @@
 								<tr class="bg-blue">
 									<th width="10%">Sr.no</th>
 									<th>Name</th>
-									<th>Category</th>
-									<th>Type</th>
 									<th>Email</th>
 									<th>Mobile</th>
-									<th>Department</th>
-									<th>Rate Per Hour</th>
+									<th>Code</th>
+									<th>Leave Status</th>
 
 									<th class="text-center" width="10%">Actions</th>
 								</tr>
@@ -233,16 +231,51 @@
 				},
 
 				function(data) {
-					alert(data);
+					
+							
 					var dataTable = $('#bootstrap-data-table').DataTable();
 					dataTable.clear().draw();
 
 					$.each(data, function(i, v) {
 					
-						dataTable.row.add(
-								[ i + 1, v.empFname,  v.empType,
-										v.empEmail							
+						var str = '<a href="${pageContext.request.contextPath}/empDetailHistory?empId='+v.exVar1+'" class="nav-link legitRipple"  style="color:black"><i class="icon-list-unordered"></i></a>'
+							
+ 	
+							var current_status;
+							if(v.exInt1==1)
+								{
+								/* current_status="Pending"; */
 
+								current_status='<span class="badge badge-info">Initial Pending</span>';
+								}
+							else if(v.exInt1==2)
+								{
+								
+								current_status='<span class="badge badge-secondary">Final Pending</span>';
+								}
+							else if(v.exInt1==3)
+							{
+							current_status='<span class="badge badge-success">Final Approve</span>';
+							}
+							else if(v.exInt1==7)
+							{
+							current_status='<span class="badge badge-danger">Cancel By Employee</span>';
+							}
+							else if(v.exInt1==8)
+							{
+							current_status='<span class="badge badge-danger">Initial Rejected</span>';
+							}
+							else if(v.exInt1==9)
+							{
+							current_status='<span class="badge badge-danger">Final Rejected</span>';
+							}
+							
+
+							
+						dataTable.row.add(
+								[ i + 1, v.empFname +" " +v.empMname +" "+v.empSname,
+										v.empEmail,	v.empMobile1,v.empCode,current_status,		
+										str
 								]).draw();
 					});
 
@@ -252,10 +285,9 @@
 
 		}
 
-		function callEdit(weighId) {
-
-			window.open("${pageContext.request.contextPath}/editWeighing/"
-					+ weighId);
+		function callDetail(exVar1,empId) {
+alert(exVar1);
+			window.open("${pageContext.request.contextPath}/empDetailHistory?empId="+exVar1);
 
 		}
 

@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,9 +22,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import com.ats.hradmin.common.Constants;
+import com.ats.hradmin.common.DateConvertor;
 import com.ats.hradmin.common.FormValidation;
 import com.ats.hradmin.common.VpsImageUpload;
 import com.ats.hradmin.leave.model.CalenderYear;
+import com.ats.hradmin.leave.model.GetLeaveStatus;
 import com.ats.hradmin.model.Company;
 import com.ats.hradmin.model.EmployeDoc;
 import com.ats.hradmin.model.EmployeeDepartment;
@@ -237,6 +240,10 @@ public class MasterEmpController {
 			  
 			  List<EmployeeInfo> employeeInfoList = new ArrayList<EmployeeInfo>(Arrays.asList(employeeInfo));
 			  System.out.println(employeeInfoList);
+			  
+			 
+				 
+			//String dateConvertor=  DateConvertor.convertToDMY(calYearList.get(0).get);
 			  model.addObject("calYearList",calYearList);
 			  model.addObject("employeeInfoList",employeeInfoList);
 			 
@@ -252,6 +259,7 @@ public class MasterEmpController {
 
 		  List<EmployeeInfo> employeeInfoList=new ArrayList<EmployeeInfo>();
 		try {
+			
 		
 			int empId=Integer.parseInt(request.getParameter("empId"));
 			int calYrId=Integer.parseInt(request.getParameter("calYrId"));
@@ -259,11 +267,16 @@ public class MasterEmpController {
 			  MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			  map.add("empId",empId);
 			  map.add("calYrId",calYrId);
-			  
+			   
 			  EmployeeInfo[] employeeInfo = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpInfoByLocIdAndEmp",map,
 					  EmployeeInfo[].class);
 			   
 			  employeeInfoList = new ArrayList<EmployeeInfo>(Arrays.asList(employeeInfo));
+			  for (int i = 0; i < employeeInfoList.size(); i++) {
+
+				  employeeInfoList.get(i).setExVar1(FormValidation.Encrypt(String.valueOf(employeeInfoList.get(i).getEmpId())));
+				}
+
 			  System.out.println("List : "+employeeInfoList.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -277,17 +290,17 @@ public class MasterEmpController {
 		ModelAndView model = new ModelAndView("master/empDetailHistory");
 
 		try {
-			/*
-			 * EmployeDoc[] employeeDoc =
-			 * Constants.getRestTemplate().getForObject(Constants.url + "/getEmpDocList",
-			 * EmployeDoc[].class);
-			 * 
-			 * List<EmployeDoc> employeeList = new
-			 * ArrayList<EmployeDoc>(Arrays.asList(employeeDoc));
-			 * System.out.println(employeeList);
-			 * model.addObject("employeeList",employeeList);
-			 */
-			
+		
+			String base64encodedString = request.getParameter("empId");			
+			String empId = FormValidation.DecodeKey(base64encodedString);			
+			  MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			  map.add("empId",empId);
+			  GetLeaveStatus[] employeeDoc = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpInfoListByTrailEmpId", map,GetLeaveStatus[].class);
+			  
+			  List<GetLeaveStatus> employeeList = new
+			  ArrayList<GetLeaveStatus>(Arrays.asList(employeeDoc));
+			  System.out.println(employeeList);
+			  model.addObject("employeeList",employeeList);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

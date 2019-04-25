@@ -48,8 +48,8 @@
 
 
 					<div class="breadcrumb justify-content-center">
-						<a href="${pageContext.request.contextPath}/employeeAdd"
-							class="breadcrumb-elements-item"> Add Employee </a>
+						<a href="${pageContext.request.contextPath}/empInfoHistory"
+							class="breadcrumb-elements-item">Employee Leave History </a>
 
 					</div>
 
@@ -66,7 +66,7 @@
 				<!-- Highlighting rows and columns -->
 				<div class="card">
 					<div class="card-header header-elements-inline">
-						<h5 class="card-title">Employee List</h5>
+						<h5 class="card-title">Employee Trail List</h5>
 						<div class="header-elements">
 							<div class="list-icons">
 								<a class="list-icons-item" data-action="collapse"></a>
@@ -117,33 +117,52 @@
 							<thead>
 								<tr class="bg-blue">
 									<th width="10%">Sr.no</th>
-									<th>Name</th>
-									<th>Category</th>
-									<th>Type</th>
-									<th>Email</th>
-									<th>Mobile</th>
-									<th>Department</th>
-									<th>Rate Per Hour</th>
+									<th> Name</th>								
+									<th>Remark</th>
+									<th>Leave Status</th>
+									
 
-									<th class="text-center" width="10%">Actions</th>
 								</tr>
 							</thead>
 							<tbody>
 
 
-								<c:forEach items="${empList}" var="lvTypeList" varStatus="count">
+								<c:forEach items="${employeeList}" var="empTrailList" varStatus="count">
 									<tr>
 										<td>${count.index+1}</td>
-										<td>${lvTypeList.empFname}</td>
-										<td>${lvTypeList.empCategory}</td>
-										<td>${lvTypeList.empType}</td>
-										<td>${lvTypeList.empEmail}</td>
-										<td>${lvTypeList.empMobile1}</td>
-										<td>${lvTypeList.empDept}</td>
-										<td>${lvTypeList.empRatePerhr}</td>
+										<td>${empTrailList.empFname} ${empTrailList.empMname} ${empTrailList.empSname}</td>
+									
+										
+										<c:choose>
+										<c:when test="${empTrailList.empRemarks=='null' || empty empTrailList.empRemarks}">
+											<td>-</td>
+										</c:when>
+										<c:otherwise>
+										<td>${empTrailList.empRemarks}</td>
+										</c:otherwise>
+										</c:choose>									
+										
+										<c:if test="${empTrailList.leaveStatus==1}">
+										<td><span class="badge badge-info">Initial Pending</span></td>
+										</c:if>
+										<c:if test="${empTrailList.leaveStatus==2}">
+										<td><span class="badge badge-secondary">Final Pending</span></td>
+										</c:if>
+											<c:if test="${empTrailList.leaveStatus==3}">
+										<td><span class="badge badge-success">Final Approve</span></td>
+										</c:if>
+											<c:if test="${empTrailList.leaveStatus==7}">
+										<td><span class="badge badge-danger">Cancel By Employee</span></td>
+										</c:if>
+											<c:if test="${empTrailList.leaveStatus==8}">
+										<td><span class="badge badge-danger">Initial Rejected</span></td>
+										</c:if>
+											<c:if test="${empTrailList.leaveStatus==9}">
+										<td><span class="badge badge-danger">Final Rejected</span></td>
+										</c:if>
 
 
-										<td class="text-center">
+									<%-- 	<td class="text-center">
 											<div class="list-icons">
 												<div class="dropdown">
 													<a href="#" class="list-icons-item" data-toggle="dropdown">
@@ -165,7 +184,7 @@
 													</div>
 												</div>
 											</div>
-										</td>
+										</td> --%>
 									</tr>
 								</c:forEach>
 
