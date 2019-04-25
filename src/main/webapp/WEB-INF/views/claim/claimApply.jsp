@@ -47,12 +47,12 @@
 							class="icon-more"></i></a>
 					</div>
 
-					<div class="breadcrumb justify-content-center">
+					<%-- <div class="breadcrumb justify-content-center">
 						<a
 							href="${pageContext.request.contextPath}/showLeaveStructureList"
-							class="breadcrumb-elements-item"> Leave Structure List</a>
+							class="breadcrumb-elements-item"> Claim List</a>
 
-					</div>
+					</div> --%>
 
 
 				</div>
@@ -76,7 +76,7 @@
 
 						<div class="card">
 							<div class="card-header header-elements-inline">
-								<h6 class="card-title">Add Leave Structure</h6>
+								<h6 class="card-title">Add Claim</h6>
 								<div class="header-elements">
 									<div class="list-icons">
 										<a class="list-icons-item" data-action="collapse"></a>
@@ -120,9 +120,30 @@
 									session.removeAttribute("successMsg");
 									}
 								%>
-
+<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="lvsName">
+											Employee Code : *</label>
+										<div class="col-lg-10">
+											<input type="text" class="form-control"
+												placeholder="Enter Leave Structure Name" id="lvsName"   value="${editEmp.empCode}" 
+												name="lvsName" autocomplete="off" onchange="trim(this)" readonly>
+											
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="lvsName">
+											Employee Name : *</label>
+										<div class="col-lg-10">
+											<input type="text" class="form-control"
+												placeholder="Enter Leave Structure Name" id="lvsName"  value="${editEmp.empFname} ${editEmp.empMname} ${editEmp.empSname}   "
+												name="lvsName" autocomplete="off" onchange="trim(this)" readonly>
+											
+										</div>
+									</div>
+									<hr>
+									
 								<form
-									action="${pageContext.request.contextPath}/insertClaim"
+									action="${pageContext.request.contextPath}/insertSubmitClaim"
 									id="submitInsertLeave" method="post">
 									
 									
@@ -131,7 +152,7 @@
 										<label class="col-form-label col-lg-2" for="claimTypeId">Select
 											Claim Type :</label>
 										<div class="col-lg-4">
-											<select name="leaveTypeId"
+											<select name="claimTypeId"
 												data-placeholder="Select Claim Type" id="claimTypeId"
 												class="form-control form-control-select2 select2-hidden-accessible"
 												 data-fouc="" tabindex="-1" aria-hidden="true">
@@ -152,25 +173,25 @@
 										</div>
 										
 										<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="claimTypeId">Select
+										<label class="col-form-label col-lg-2" for="projectTypeId">Select
 											Project  :</label>
 										<div class="col-lg-4">
-											<select name="leaveTypeId"
-												data-placeholder="Select Claim Type" id="claimTypeId"
+											<select name="projectTypeId"
+												data-placeholder="Select Claim Type" id="projectTypeId"
 												class="form-control form-control-select2 select2-hidden-accessible"
 												 data-fouc="" tabindex="-1" aria-hidden="true">
 												<option></option>
-												<c:forEach items="${leaveTypeList}" var="claimTypeId">
+												<c:forEach items="${projectTypeList}" var="proTypeList">
 													<c:choose>
-														<c:when test="${leaveType.lvTypeId == editLeave.lvTypeId}">
-															<option value="${leaveType.lvTypeId}" selected="selected">${leaveType.lvTitle}</option>
+														<c:when test="${proTypeList.projectId == editLeave.lvTypeId}">
+															<option value="${proTypeList.projectId}" selected="selected">${proTypeList.projectTitle}</option>
 														</c:when>
 														<c:otherwise>
-															<option value="${leaveType.lvTypeId}">${leaveType.lvTitle}</option>
+															<option value="${proTypeList.projectId}">${proTypeList.projectTitle}</option>
 														</c:otherwise>
 													</c:choose>
 												</c:forEach>
-											</select> <span class="validation-invalid-label" id="error_claimTypeId"
+											</select> <span class="validation-invalid-label" id="error_projectTypeId"
 												style="display: none;">This field is required.</span>
 										</div>
 										
@@ -198,8 +219,8 @@
 										Claim Amount: *</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control numbersOnly" 
-												placeholder="No. of Days " id="claimAmt"
-												name="claimAmt" autocomplete="off" readonly>
+												placeholder="Amount of Claim in Rs. " id="claimAmt"
+												name="claimAmt" autocomplete="off" >
 											<span class="validation-invalid-label" id="error_claimAmt"
 												style="display: none;">This field is required.</span>
 										</div>
@@ -214,7 +235,9 @@
 												id="claimRemark" name="claimRemark"> </textarea>
 												</div>
 									</div>
-										
+										<input type="hidden" class="form-control numbersOnly" 
+												value="${editEmp.empId}" id="empId"
+												name="empId" autocomplete="off" readonly>
 									
 									<div class="form-group row mb-0">
 										<div class="col-lg-10 ml-lg-auto">
@@ -290,57 +313,49 @@
 												var isError = false;
 												var errMsg = "";
 
-												if (!$("#leaveTypeId").val()) {
+												if (!$("#claimTypeId").val()) {
 
 													isError = true;
 
-													$("#error_leaveTypeId").show()
+													$("#error_claimTypeId").show()
 													//return false;
 												} else {
-													$("#error_leaveTypeId").hide()
+													$("#error_claimTypeId").hide()
 												}
 
-												if (!$("#dayTypeName").val()) {
+												if (!$("#projectTypeId").val()) {
 
 													isError = true;
 
-													$("#error_dayType")
+													$("#error_projectTypeId")
 															.show()
 
 												} else {
-													$("#error_dayType")
+													$("#error_projectTypeId")
 															.hide()
 												}
 
-												if (!$("#leaveDateRange").val()) {
+												if (!$("#claimDate").val()) {
 
 													isError = true;
 
-													$("#error_Range").show()
+													$("#error_claimDate").show()
 
 												} else {
-													$("#error_Range").hide()
+													$("#error_claimDate").hide()
 												}
 
-												if (!$("#noOfDays").val()) {
+												if (!$("#claimAmt").val()) {
 
 													isError = true;
 
-													$("#error_noOfDays").show()
+													$("#error_claimAmt").show()
 
 												} else {
-													$("#error_noOfDays").hide()
+													$("#error_claimAmt").hide()
 												}
 
-												if (!$("#noOfDaysExclude").val()) {
-
-													isError = true;
-
-													$("#error_noOfDaysExclude").show()
-
-												} else {
-													$("#error_noOfDaysExclude").hide()
-												}
+												
 
 												if (!isError) {
 
