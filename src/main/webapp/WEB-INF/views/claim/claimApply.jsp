@@ -136,13 +136,13 @@
 												class="form-control form-control-select2 select2-hidden-accessible"
 												 data-fouc="" tabindex="-1" aria-hidden="true">
 												<option></option>
-												<c:forEach items="${leaveTypeList}" var="claimTypeId">
+												<c:forEach items="${claimTypeList}" var="claimTypeList">
 													<c:choose>
-														<c:when test="${leaveType.lvTypeId == editLeave.lvTypeId}">
-															<option value="${leaveType.lvTypeId}" selected="selected">${leaveType.lvTitle}</option>
+														<c:when test="${claimTypeList.claimTypeId == editClaim.lvTypeId}">
+															<option value="${claimTypeList.claimTypeId}" selected="selected">${claimTypeList.claimTypeTitle}</option>
 														</c:when>
 														<c:otherwise>
-															<option value="${leaveType.lvTypeId}">${leaveType.lvTitle}</option>
+															<option value="${claimTypeList.claimTypeId}">${claimTypeList.claimTypeTitle}</option>
 														</c:otherwise>
 													</c:choose>
 												</c:forEach>
@@ -179,7 +179,17 @@
 										
 										</div>
 											
-									
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="joiningDate">Claim
+											Date : *</label>
+										<div class="col-lg-10">
+											<input type="text" class="form-control datepickerclass "
+												name="claimDate" id="claimDate"
+												placeholder="Joining Date"> <span
+												class="validation-invalid-label" id="error_claimDate"
+												style="display: none;">This field is required.</span>
+										</div>
+									</div>
 										
 									
 									
@@ -201,7 +211,7 @@
 										<div class="col-lg-10">
 											<textarea rows="3" cols="3" class="form-control"
 												placeholder="Remark" onchange="trim(this)"
-												id="leaveRemark" name="leaveRemark"> </textarea>
+												id="claimRemark" name="claimRemark"> </textarea>
 												</div>
 									</div>
 										
@@ -236,28 +246,7 @@
 
 	</div>
 	<!-- /page content -->
-	<script type="text/javascript">
-	function calculateDiff() {
-		 
-		var daterange = document.getElementById("leaveDateRange").value;
-		var res = daterange.split(" to ");
-		 
-		var date1res = res[0].split("-");
-		var date2res = res[1].split("-");
-		
-		var date1 = new Date(date1res[2],date1res[1],date1res[0])//converts string to date object
-        
-        var date2 = new Date(date2res[2],date2res[1],date2res[0])
-         
-        const diffTime = Math.abs(date2.getTime() - date1.getTime());
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
-       // alert(diffDays);
-        
-        
-        document.getElementById("noOfDays").value=diffDays;
-        document.getElementById("noOfDaysExclude").value=diffDays;
-	}
-	</script>
+	
 	<script type="text/javascript">
 		// Single picker
 		$('.datepickerclass').daterangepicker({

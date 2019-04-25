@@ -90,6 +90,7 @@
 									<th>From Date</th>
 									<th>To Date</th>
 									<th>No. Of Days</th>
+									<th>Status</th>
 									
 									<th class="text-center" width="10%">Actions</th>
 								</tr>
@@ -108,6 +109,15 @@
 										<td>${leaveList.leaveTodt}</td>
 										<td>${leaveList.leaveNumDays}</td>
 										
+										<c:choose>
+										<c:when test="${leaveList.exInt1==1}">
+										<td><span class="badge badge-info">Initial Pending</span></td>
+										</c:when>
+										<c:when test="${leaveList.exInt1==2}">
+										<td><span class="badge badge-secondary">Final Pending</span></td>
+										</c:when>
+									
+										</c:choose>
 										
 										<td class="text-center">
 											<div class="list-icons">
@@ -122,11 +132,13 @@
 															
 													<a
 															href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList.leaveTypeName}&leaveId=${leaveList.circulatedTo}&stat=3"
-															class="dropdown-item"><i class="icon-pencil7"></i>Approve</a>
+															onClick="return confirm('Are you sure want to Approve this Leave');"
+															class="dropdown-item"><i class="icon-checkmark4 "></i>Approve</a>
 															
 													<a
 															href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList.leaveTypeName}&leaveId=${leaveList.circulatedTo}&stat=9"
-															class="dropdown-item"><i class="icon-pencil7"></i>Reject</a>
+															onClick="return confirm('Are you sure want to Reject this Leave');"
+															class="dropdown-item"><i class="icon-x"></i>Reject</a>
 																
 														
 															
@@ -136,13 +148,13 @@
 															
 												<a
 															href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList.leaveTypeName}&leaveId=${leaveList.circulatedTo}&stat=2"
-															class="dropdown-item"><i class="icon-pencil7"></i>Approve</a>
+															onClick="return confirm('Are you sure want to Approve this Leave');"
+															class="dropdown-item"><i class="icon-checkmark4 "></i>Approve</a>
 															
 													<a
 															href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList.leaveTypeName}&leaveId=${leaveList.circulatedTo}&stat=8"
-															class="dropdown-item"><i class="icon-pencil7"></i>Reject</a>
-																
-														
+															onClick="return confirm('Are you sure want to Reject this Leave');"
+															class="dropdown-item"><i class="icon-x"></i>Reject</a>
 															
 															</c:when>
 															
@@ -150,7 +162,9 @@
 															
 												<a
 															href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList.leaveTypeName}&leaveId=${leaveList.circulatedTo}&stat=7"
-															class="dropdown-item"><i class="icon-pencil7"></i>Cancel</a>
+															onClick="return confirm('Are you sure want to Cancel this Leave');"
+															class="dropdown-item"><i class="icon-cancel-square
+ed65"></i>Cancel</a>
 														
 															
 															</c:when>
@@ -187,7 +201,7 @@
 									<th>From Date</th>
 									<th>To Date</th>
 									<th>No. Of Days</th>
-								
+								    <th>Status</th>
 									<th class="text-center" width="10%">Actions</th>
 								</tr>
 							</thead>
@@ -205,6 +219,20 @@
 										<td>${leaveList1.leaveTodt}</td>
 										<td>${leaveList1.leaveNumDays}</td>
 										
+										<c:choose>
+										<c:when test="${leaveList1.exInt1==2}">
+										<td><span class="badge badge-success">Initial Approved</span></td>
+										</c:when>
+										<c:when test="${leaveList1.exInt1==1}">
+										<td><span class="badge badge-danger">Final & Initial Pending</span></td>
+										</c:when>
+									
+										</c:choose>
+										
+										
+										
+										
+										
 									<td class="text-center">
 											<div class="list-icons">
 												<div class="dropdown">
@@ -218,14 +246,13 @@
 															
 													<a
 															href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList1.leaveTypeName}&leaveId=${leaveList1.circulatedTo}&stat=3"
-															class="dropdown-item"><i class="icon-pencil7"></i>Approve</a>
+															onClick="return confirm('Are you sure want to Approve this Leave');"
+															class="dropdown-item"><i class="icon-checkmark4 "></i>Approve</a>
 															
 													<a
 															href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList1.leaveTypeName}&leaveId=${leaveList1.circulatedTo}&stat=9"
-															class="dropdown-item"><i class="icon-pencil7"></i>Reject</a>
-																
-														
-															
+															onClick="return confirm('Are you sure want to Reject this Leave');"
+															class="dropdown-item"><i class="icon-x"></i>Reject</a>
 															</c:when>
 															
 															<c:when test="${leaveList1.iniAuthEmpId==empIdOrig}">
@@ -242,14 +269,8 @@
 															
 															</c:when>
 															
-															
-															
-															
 															<c:otherwise>
 
-
-
-													
 															</c:otherwise>
 															</c:choose>
 															
@@ -258,7 +279,9 @@
 															
 												<a
 															href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList1.leaveTypeName}&leaveId=${leaveList1.circulatedTo}&stat=7"
-															class="dropdown-item"><i class="icon-pencil7"></i>Cancel</a>
+													onClick="return confirm('Are you sure want to Cancel this Leave');"
+															
+															class="dropdown-item"><i class="icon-cancel-square "></i>Cancel</a>
 														
 															
 															</c:if>
