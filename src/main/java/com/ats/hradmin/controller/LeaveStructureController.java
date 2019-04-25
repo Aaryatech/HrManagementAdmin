@@ -594,6 +594,7 @@ public class LeaveStructureController {
 
 		try {
 			HttpSession session = request.getSession();
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 			int iniAuthEmpId = Integer.parseInt(request.getParameter("iniAuthEmpId"));
 
 			int finAuthEmpId = Integer.parseInt(request.getParameter("finAuthEmpId"));
@@ -631,11 +632,11 @@ public class LeaveStructureController {
 				leaves.setExVar2("NA");
 				leaves.setExVar3("NA");
 				leaves.setIsActive(1);
-				leaves.setMakerUserId(1);
+				leaves.setMakerUserId(userObj.getUserId());
 				leaves.setMakerEnterDatetime(dateTime);
 				leaves.setIniAuthEmpId(iniAuthEmpId);
 				leaves.setFinAuthEmpId(finAuthEmpId);
-				leaves.setCompanyId(1);
+				leaves.setCompanyId(userObj.getCompanyId());
 				leaves.setRepToEmpIds(repToEmpIdsList);
 
 				LeaveAuthority res = Constants.getRestTemplate().postForObject(Constants.url + "/saveLeaveAuthority",
@@ -697,7 +698,7 @@ public class LeaveStructureController {
 
 			String base64encodedString = request.getParameter("empId");
 			String empId = FormValidation.DecodeKey(base64encodedString);
-			System.out.println("empId" + empId);
+			// System.out.println("empId" + empId);
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("companyId", userObj.getCompanyId());
