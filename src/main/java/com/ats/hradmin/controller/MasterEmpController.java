@@ -283,7 +283,7 @@ public class MasterEmpController {
 		}
 		return employeeInfoList;
 	}
-	
+	  
 	@RequestMapping(value = "/empDetailHistory", method = RequestMethod.GET)
 	public ModelAndView empDetailHistory(HttpServletRequest request, HttpServletResponse response) {
 
