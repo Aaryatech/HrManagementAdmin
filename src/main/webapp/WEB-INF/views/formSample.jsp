@@ -858,7 +858,19 @@
          
         const diffTime = Math.abs(date2.getTime() - date1.getTime());
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
-        document.getElementById("noOfDays").value =  diffDays+1 ;
+        var totalSundays = 0;
+        
+        
+        //for remove the week end from date
+        
+        for (var i = date1; i <= date2; ){
+            if (i.getDay() == 0){
+                totalSundays++;
+            }
+            i.setTime(i.getTime() + 1000*60*60*24);
+        }
+        
+        document.getElementById("noOfDays").value =  diffDays+1-totalSundays ;
 
 	}
 	</script>
