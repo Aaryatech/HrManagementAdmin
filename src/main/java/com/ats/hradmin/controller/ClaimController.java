@@ -30,6 +30,7 @@ import com.ats.hradmin.common.FormValidation;
 import com.ats.hradmin.leave.model.GetLeaveAuthority;
 import com.ats.hradmin.leave.model.Holiday;
 import com.ats.hradmin.leave.model.LeaveAuthority;
+import com.ats.hradmin.model.Customer;
 import com.ats.hradmin.model.GetEmployeeInfo;
 import com.ats.hradmin.model.Info;
 import com.ats.hradmin.model.LeaveSummary;
@@ -46,6 +47,210 @@ public class ClaimController {
 	String curDate = dateFormat.format(new Date());
 	String dateTime = dateFormat.format(now);
 	ClaimType editClaimType = new ClaimType();
+	Customer editCust = new Customer();
+
+	// ************************************Customer***************************
+	@RequestMapping(value = "/addCustomer", method = RequestMethod.GET)
+	public ModelAndView addCustomer(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("master/cust_add");
+
+		try {
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+	}
+
+	@RequestMapping(value = "/submitInsertCustomer", method = RequestMethod.POST)
+	public String submitInsertCustomer(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			HttpSession session = request.getSession();
+
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+
+			String custName = request.getParameter("custName");
+
+			String remark = null;
+			try {
+				remark = request.getParameter("remark");
+			} catch (Exception e) {
+				remark = "NA";
+			}
+
+			Boolean ret = false;
+
+			if (FormValidation.Validaton(custName, "") == true) {
+
+				ret = true;
+
+			}
+
+			if (ret == false) {
+
+				Customer save = new Customer();
+				save.setCustName(custName);
+				save.setCustRemarks(remark);
+				save.setCustType("1");
+				save.setCompanyId(userObj.getCompanyId());
+
+				save.setDelStatus(1);
+				save.setIsActive(1);
+				save.setMakerUserId(userObj.getUserId());
+				save.setMakerEnterDatetime(dateTime);
+
+				Customer res = Constants.getRestTemplate().postForObject(Constants.url + "/saveCustomer", save,
+						Customer.class);
+
+				if (res != null) {
+					session.setAttribute("successMsg", "Record Insert Successfully");
+				} else {
+					session.setAttribute("errorMsg", "Failed to Insert Record");
+				}
+
+			} else {
+				session.setAttribute("errorMsg", "Failed to Insert Record");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:/addCustomer";
+
+	}
+
+	@RequestMapping(value = "/showCustomerList", method = RequestMethod.GET)
+	public ModelAndView showCustomerList(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("master/cust_list");
+
+		try {
+
+			HttpSession session = request.getSession();
+
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("companyId", userObj.getCompanyId());
+
+			Customer[] custListArray = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getCustListByCompanyId", map, Customer[].class);
+
+			List<Customer> custlist = new ArrayList<Customer>(Arrays.asList(custListArray));
+
+			for (int i = 0; i < custlist.size(); i++) {
+
+				custlist.get(i).setExVar1(FormValidation.Encrypt(String.valueOf(custlist.get(i).getCustId())));
+			}
+
+			model.addObject("custlist", custlist);
+
+			System.out.println("" + custlist.toString());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+	}
+	// cust_edit
+
+	@RequestMapping(value = "/editCustomer", method = RequestMethod.GET)
+	public ModelAndView editCustomer(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("master/cust_edit");
+
+		try {
+
+			String base64encodedString = request.getParameter("custId");
+			String custId = FormValidation.DecodeKey(base64encodedString);
+			// System.out.println("claimTypeId" + claimTypeId);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("custId", custId);
+			editCust = Constants.getRestTemplate().postForObject(Constants.url + "/getCustByCustId", map,
+					Customer.class);
+			model.addObject("editCust", editCust);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+	}
+
+	@RequestMapping(value = "/submitEditCustomer", method = RequestMethod.POST)
+	public String submitEditCustomer(HttpServletRequest request, HttpServletResponse response) {
+
+		HttpSession session = request.getSession();
+
+		try {
+
+			String custName = request.getParameter("custName");
+
+			String remark = null;
+			try {
+				remark = request.getParameter("remark");
+			} catch (Exception e) {
+				remark = "NA";
+			}
+
+			Boolean ret = false;
+
+			if (FormValidation.Validaton(custName, "") == true) {
+
+				ret = true;
+
+			}
+
+			if (ret == false) {
+				editCust.setCustName(custName);
+				editCust.setCustRemarks(remark);
+
+				Customer res = Constants.getRestTemplate().postForObject(Constants.url + "/saveCustomer", editCust,
+						Customer.class);
+
+				if (res != null) {
+					session.setAttribute("successMsg", "Record Insert Successfully");
+				} else {
+					session.setAttribute("errorMsg", "Failed to Insert Record");
+				}
+
+			} else {
+				session.setAttribute("errorMsg", "Failed to Insert Record");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.setAttribute("errorMsg", "Failed to Update Record");
+		}
+
+		return "redirect:/showCustomerList";
+	}
+
+	@RequestMapping(value = "/deleteCustomer", method = RequestMethod.GET)
+	public String deleteCustomer(HttpServletRequest request, HttpServletResponse response) {
+
+		HttpSession session = request.getSession();
+		try {
+			String base64encodedString = request.getParameter("custId");
+			String custId = FormValidation.DecodeKey(base64encodedString);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("custId", custId);
+			Info info = Constants.getRestTemplate().postForObject(Constants.url + "/deleteCustomer", map, Info.class);
+
+			if (info.isError() == false) {
+				session.setAttribute("successMsg", "Deleted Successfully");
+			} else {
+				session.setAttribute("errorMsg", "Failed to Delete");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.setAttribute("errorMsg", "Failed to Delete");
+		}
+		return "redirect:/showClaimTypeList";
+	}
 
 	// ************************************Claim Type***************************
 
