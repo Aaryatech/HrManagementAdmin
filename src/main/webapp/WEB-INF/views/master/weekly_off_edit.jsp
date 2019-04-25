@@ -157,13 +157,13 @@
 												tabindex="-1" aria-hidden="true">
 												<option value="">Please Select</option>
 
-												<option ${editWeeklyOff.woType == 'All'  ? 'Selected': '' }>All</option>
-												<option ${editWeeklyOff.woType == 'Even' ? 'Selected': '' }>Even</option>
-												<option ${editWeeklyOff.woType == 'Odd'  ? 'Selected': '' }>Odd</option>
-												<option ${editWeeklyOff.woType == '1st' ? 'Selected': '' }>1st</option>
-												<option ${editWeeklyOff.woType == '2nd'  ? 'Selected': '' }>2nd</option>
-												<option ${editWeeklyOff.woType == '3rd'  ? 'Selected': '' }>3rd</option>
-												<option ${editWeeklyOff.woType == '4th'  ? 'Selected': '' }>4th</option>
+												<option ${editWeeklyOff.woType == '0'  ? 'Selected': '' } value="0">All</option>
+												<option ${editWeeklyOff.woType == '1' ? 'Selected': '' } value="1">Even</option>
+												<option ${editWeeklyOff.woType == '2'  ? 'Selected': '' } value="2">Odd</option>
+												<option ${editWeeklyOff.woType == '3' ? 'Selected': '' } value="3">1st</option>
+												<option ${editWeeklyOff.woType == '4'  ? 'Selected': '' } value="4">2nd</option>
+												<option ${editWeeklyOff.woType == '5'  ? 'Selected': '' } value="5">3rd</option>
+												<option ${editWeeklyOff.woType == '6'  ? 'Selected': '' } value="6">4th</option>
 												<!-- <option value="All">All</option>
 												<option value="Even">Even</option>
 												<option value="Odd">Odd</option>
@@ -217,18 +217,18 @@
 												<option value="">Please Select</option>
 
 												<option
-													${editWeeklyOff.woDay == 'SUNDAY'  ? 'Selected': '' }>SUNDAY</option>
-												<option ${editWeeklyOff.woDay == 'MONDAY' ? 'Selected': '' }>MONDAY</option>
+													${editWeeklyOff.woDay == '0'  ? 'Selected': '' } value="0">SUNDAY</option>
+												<option ${editWeeklyOff.woDay == '1' ? 'Selected': '' } value="1">MONDAY</option>
 												<option
-													${editWeeklyOff.woDay == 'TUESDAY'  ? 'Selected': '' }>TUESDAY</option>
+													${editWeeklyOff.woDay == '2'  ? 'Selected': '' } value="2">TUESDAY</option>
 												<option
-													${editWeeklyOff.woDay == 'WEDNESDAY' ? 'Selected': '' }>WEDNESDAY</option>
+													${editWeeklyOff.woDay == '3' ? 'Selected': '' } value="3">WEDNESDAY</option>
 												<option
-													${editWeeklyOff.woDay == 'THURSDAY'  ? 'Selected': '' }>THURSDAY</option>
+													${editWeeklyOff.woDay == '4'  ? 'Selected': '' } value="4">THURSDAY</option>
 												<option
-													${editWeeklyOff.woDay == 'FRIDAY'  ? 'Selected': '' }>FRIDAY</option>
+													${editWeeklyOff.woDay == '5'  ? 'Selected': '' } value="5">FRIDAY</option>
 												<option
-													${editWeeklyOff.woDay == 'SATURDAY'  ? 'Selected': '' }>SATURDAY</option>
+													${editWeeklyOff.woDay == '6'  ? 'Selected': '' } value="6">SATURDAY</option>
 												<!-- <option value="SUNDAY">SUNDAY</option>
 												<option value="MONDAY">MONDAY</option>
 												<option value="TUESDAY">TUESDAY</option>

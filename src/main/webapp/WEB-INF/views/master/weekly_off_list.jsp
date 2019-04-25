@@ -119,7 +119,7 @@
 									<th>Location Name</th>
 									<th>Weekly Off Type</th>
 									<th>Weekly Off Presently</th>
-									<th>Remarks</th>
+									<th>Day</th>
 									<th width="10%" class="text-center">Actions</th>
 								</tr>
 							</thead>
@@ -130,9 +130,78 @@
 									<tr>
 										<td>${count.index+1}</td>
 										<td>${week.locName}</td>
-										<td>${week.woType}</td>
+										<td><c:choose>
+												<c:when test="${week.woType==1}">
+												
+												Even
+
+												</c:when>
+												<c:when test="${week.woType==2}">
+												
+												Odd
+
+												</c:when>
+												<c:when test="${week.woType==3}">
+												
+												1st
+
+												</c:when>
+												<c:when test="${week.woType==4}">
+												
+												2nd
+
+												</c:when>
+												<c:when test="${week.woType==5}">
+												
+												3rd
+
+												</c:when>
+												<c:when test="${week.woType==6}">
+												
+												4th
+
+												</c:when>
+												<c:otherwise>
+												All
+												</c:otherwise>
+											</c:choose></td>
 										<td>${week.woPresently}</td>
-										<td>${week.woRemarks}</td>
+										<td> 
+										<c:choose>
+												<c:when test="${week.woDay==1}">
+												
+												MONDAY
+
+												</c:when>
+												<c:when test="${week.woDay==2}">
+												
+												TUESDAY
+
+												</c:when>
+												<c:when test="${week.woDay==3}">
+												
+												WEDNESDAY
+
+												</c:when>
+												<c:when test="${week.woDay==4}">
+												
+												THURSDAY
+
+												</c:when>
+												<c:when test="${week.woDay==5}">
+												
+												FRIDAY
+
+												</c:when>
+												<c:when test="${week.woDay==6}">
+												
+												SATURDAY
+
+												</c:when>
+												<c:otherwise>
+												SUNDAY
+												</c:otherwise>
+											</c:choose></td>
 
 										<td class="text-center">
 											<div class="list-icons">

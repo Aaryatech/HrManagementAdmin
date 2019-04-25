@@ -147,13 +147,13 @@
 												class="form-control form-control-select2 select2-hidden-accessible"
 												tabindex="-1" aria-hidden="true">
 												<option value="">Please Select</option>
-												<option value="All">All</option>
-												<option value="Even">Even</option>
-												<option value="Odd">Odd</option>
-												<option value="1st">1st</option>
-												<option value="2nd">2nd</option>
-												<option value="3rd">3rd</option>
-												<option value="4th">4th</option>
+												<option value="0">All</option>
+												<option value="1">Even</option>
+												<option value="2">Odd</option>
+												<option value="3">1st</option>
+												<option value="4">2nd</option>
+												<option value="5">3rd</option>
+												<option value="6">4th</option>
 
 
 											</select> <span class="validation-invalid-label" id="error_woType"
@@ -190,13 +190,13 @@
 												class="form-control form-control-select2 select2-hidden-accessible"
 												tabindex="-1" aria-hidden="true">
 												<option value="">Please Select</option>
-												<option value="SUNDAY">SUNDAY</option>
-												<option value="MONDAY">MONDAY</option>
-												<option value="TUESDAY">TUESDAY</option>
-												<option value="WEDNESDAY">WEDNESDAY</option>
-												<option value="THURSDAY">THURSDAY</option>
-												<option value="FRIDAY">FRIDAY</option>
-												<option value="SATURDAY">SATURDAY</option>
+												<option value="0">SUNDAY</option>
+												<option value="1">MONDAY</option>
+												<option value="2">TUESDAY</option>
+												<option value="3">WEDNESDAY</option>
+												<option value="4">THURSDAY</option>
+												<option value="5">FRIDAY</option>
+												<option value="6">SATURDAY</option>
 											</select> <span class="validation-invalid-label" id="error_woDay"
 												style="display: none;">This field is required.</span>
 										</div>
