@@ -44,8 +44,8 @@
 							class="icon-more"></i></a>
 					</div>
 					<div class="breadcrumb justify-content-center">
-						<a href="${pageContext.request.contextPath}/showClaimTypeList"
-							class="breadcrumb-elements-item"> Claim Type List </a>
+						<a href="${pageContext.request.contextPath}/showProjectTypeList"
+							class="breadcrumb-elements-item"> Project Type List </a>
 
 					</div>
 				</div>
@@ -68,7 +68,7 @@
 
 							<div class="card">
 								<div class="card-header header-elements-inline">
-									<h6 class="card-title">Edit Claim Type</h6>
+									<h6 class="card-title">Add Project Type</h6>
 									<div class="header-elements">
 										<div class="list-icons">
 											<a class="list-icons-item" data-action="collapse"></a>
@@ -115,44 +115,48 @@
 									%>
 
 									<form
-										action="${pageContext.request.contextPath}/submitEditClaimType"
-										id="submitEditClaimType" method="post">
+										action="${pageContext.request.contextPath}/submitInsertProjectType"
+										id="submitInsertProjectType" method="post">
 
 
 										<div class="form-group row">
-											<label class="col-form-label col-lg-2" for="calimTypeTitle">
-												Title:</label>
+											<label class="col-form-label col-lg-2" for="proTypetitle">
+												Project Type Title: *</label>
 											<div class="col-lg-10">
 												<input type="text" class="form-control"
-													placeholder="Enter Claim Type Title" id="calimTypeTitle"
-													name="calimTypeTitle" autocomplete="off"
-													value="${editClaimType.claimTypeTitle}"
+													placeholder="Enter Project Type Title" id="proTypetitle"
+													name="proTypetitle" autocomplete="off"
 													onchange="trim(this)"> <span
-													class="validation-invalid-label" id="error_claimType"
+													class="validation-invalid-label" id="error_proTypetitle"
 													style="display: none;">This field is required.</span>
 											</div>
 										</div>
 
 										<div class="form-group row">
 											<label class="col-form-label col-lg-2"
-												for="claimShortTypeTitle"> Short Title:</label>
+												for="proShortTypeTitle"> Project Type Short Title: *</label>
 											<div class="col-lg-10">
 												<input type="text" class="form-control"
-													placeholder="Enter Claim Short Name "
-													value="${editClaimType.claimTypeTitleShort}"
-													id="claimShortTypeTitle" name="claimShortTypeTitle"
+													placeholder="Enter Project Short Title "
+													id="proShortTypeTitle" name="proShortTypeTitle"
 													autocomplete="off" onchange="trim(this)"> <span
-													class="validation-invalid-label" id="error_claimScType"
-													style="display: none;">This field is required.</span>
+													class="validation-invalid-label"
+													id="error_proShortTypeTitle" style="display: none;">This
+													field is required.</span>
 											</div>
 										</div>
 
+
+
+
+
+
 										<div class="form-group row">
-											<label class="col-form-label col-lg-2">Color:</label>
+											<label class="col-form-label col-lg-2">Project Type
+												Color:</label>
 											<div class="col-lg-10">
-												<input type="text" id="claimColor" name="claimColor"
+												<input type="text" id="projectColor" name="projectColor"
 													class="form-control colorpicker-show-input"
-													value="${editClaimType.claimTypeColor}"
 													data-preferred-format="hex" value="#f75d1c" data-fouc>
 											</div>
 										</div>
@@ -165,7 +169,7 @@
 											<div class="col-lg-10">
 												<textarea rows="3" cols="3" class="form-control"
 													placeholder="Any Remark" onchange="trim(this)" id="remark"
-													name="remark">${editClaimType.claimTypeRemarks}</textarea>
+													name="remark"></textarea>
 											</div>
 										</div>
 
@@ -225,36 +229,37 @@
 					.ready(
 							function($) {
 
-								$("#submitEditClaimType")
+								$("#submitInsertProjectType")
 										.submit(
 												function(e) {
 													var isError = false;
 													var errMsg = "";
 
-													if (!$("#calimTypeTitle")
+													if (!$("#proTypetitle")
 															.val()) {
 
 														isError = true;
 
-														$("#error_claimType")
+														$("#error_proTypetitle")
 																.show()
 														//return false;
 													} else {
-														$("#error_claimType")
+														$("#error_proTypetitle")
 																.hide()
 													}
 
-													if (!$(
-															"#claimShortTypeTitle")
+													if (!$("#proShortTypeTitle")
 															.val()) {
 
 														isError = true;
 
-														$("#error_claimScType")
+														$(
+																"#error_proShortTypeTitle")
 																.show()
 														//return false;
 													} else {
-														$("#error_claimScType")
+														$(
+																"#error_proShortTypeTitle")
 																.hide()
 													}
 

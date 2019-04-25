@@ -37,17 +37,19 @@
 							<a href="index.html" class="breadcrumb-item"><i
 								class="icon-home2 mr-2"></i> Home</a> <span
 								class="breadcrumb-item active">Dashboard</span>
-
 						</div>
-
 
 						<a href="#" class="header-elements-toggle text-default d-md-none"><i
 							class="icon-more"></i></a>
+
+
+
 					</div>
 
+
 					<div class="breadcrumb justify-content-center">
-						<a href="${pageContext.request.contextPath}/holidayAdd"
-							class="breadcrumb-elements-item"> Add Holiday </a>
+						<a href="${pageContext.request.contextPath}/projectTypeAdd"
+							class="breadcrumb-elements-item"> Add Project Type </a>
 
 					</div>
 
@@ -64,7 +66,7 @@
 				<!-- Highlighting rows and columns -->
 				<div class="card">
 					<div class="card-header header-elements-inline">
-						<h5 class="card-title">Holiday List</h5>
+						<h5 class="card-title">Project Type List</h5>
 						<div class="header-elements">
 							<div class="list-icons">
 								<a class="list-icons-item" data-action="collapse"></a>
@@ -84,7 +86,7 @@
 							</button>
 							<span class="font-weight-semibold">Oh snap!</span>
 							<%
-								out.println(session.getAttribute("errorMsg"));
+								session.removeAttribute("errorMsg");
 							%>
 						</div>
 
@@ -102,7 +104,7 @@
 							</button>
 							<span class="font-weight-semibold">Well done!</span>
 							<%
-								out.println(session.getAttribute("successMsg"));
+								session.removeAttribute("successMsg");
 							%>
 						</div>
 						<%
@@ -114,30 +116,23 @@
 							id="printtable1">
 							<thead>
 								<tr class="bg-blue">
-
-									<th width="10%">Sr. No.</th>
-									<th>Holiday Title</th>
-									<th>Location Name</th>
-									<th>Calendar</th>
-									<th>From Date</th>
-									<th>To Date</th>
+									<th width="10%">Sr.no</th>
+									<th>Project Type Title</th>
+									<th>Project Short Title</th>
 
 
-									<th width="10%" class="text-center">Actions</th>
+									<th class="text-center" width="10%">Actions</th>
 								</tr>
 							</thead>
 							<tbody>
 
 
-								<c:forEach items="${holList}" var="holiday" varStatus="count">
+								<c:forEach items="${projectTypelist}" var="project"
+									varStatus="count">
 									<tr>
 										<td>${count.index+1}</td>
-										<td>${holiday.exVar2}</td>
-										<td>${holiday.locName}</td>
-										<td>${holiday.calYrFromDate}_${holiday.calYrToDate}</td>
-										<td>${holiday.holidayFromdt}</td>
-										<td>${holiday.holidayTodt}</td>
-
+										<td>${project.projectTypeTitle}</td>
+										<td>${project.projectTypeTitleShort}</td>
 										<td class="text-center">
 											<div class="list-icons">
 												<div class="dropdown">
@@ -147,10 +142,10 @@
 
 													<div class="dropdown-menu dropdown-menu-right">
 														<a
-															href="${pageContext.request.contextPath}/editHoliday?holidayId=${holiday.exVar1}"
+															href="${pageContext.request.contextPath}/editProjectType?projectTypeId=${project.exVar1}"
 															class="dropdown-item"><i class="icon-pencil7"></i>Edit</a>
 														<a
-															href="${pageContext.request.contextPath}/deleteHoliday?holidayId=${holiday.exVar1}"
+															href="${pageContext.request.contextPath}/deleteProjectType?projectTypeId=${project.exVar1}"
 															onClick="return confirm('Are you sure want to delete this record');"
 															class="dropdown-item"><i class="icon-trash"></i>
 															Delete</a>

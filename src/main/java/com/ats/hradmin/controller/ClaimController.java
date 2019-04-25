@@ -115,6 +115,13 @@ public class ClaimController {
 
 				ClaimType res = Constants.getRestTemplate().postForObject(Constants.url + "/saveClaimType", save,
 						ClaimType.class);
+
+				if (res != null) {
+					session.setAttribute("successMsg", "Record Insert Successfully");
+				} else {
+					session.setAttribute("errorMsg", "Failed to Insert Record");
+				}
+
 			} else {
 				session.setAttribute("errorMsg", "Failed to Insert Record");
 			}
