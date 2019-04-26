@@ -92,8 +92,33 @@ public class LeaveApprovalController {
 		return model;
 	}
 
+	
 	@RequestMapping(value = "/approveLeaveByInitialAuth", method = RequestMethod.GET)
-	public String insertLeave(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView approveLeaveByInitialAuth(HttpServletRequest request, HttpServletResponse response) {
+		
+		ModelAndView model = new ModelAndView("leave/leaveApprovalRemark");
+		try {
+
+			
+			int empId = Integer.parseInt(FormValidation.DecodeKey(request.getParameter("empId")));
+			int leaveId = Integer.parseInt(FormValidation.DecodeKey(request.getParameter("leaveId")));
+			String stat = request.getParameter("stat");
+			
+			model.addObject("empId",empId);
+			model.addObject("leaveId", leaveId);
+			model.addObject("stat", stat);
+			
+			
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+	return model;
+		
+	}
+	
+	
+	@RequestMapping(value = "/approveLeaveByInitialAuth1", method = RequestMethod.POST)
+	public String approveLeaveByInitialAuth1(HttpServletRequest request, HttpServletResponse response) {
 
 		try {
 			HttpSession session = request.getSession();
@@ -102,9 +127,16 @@ public class LeaveApprovalController {
 			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 			SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 
-			int empId = Integer.parseInt(FormValidation.DecodeKey(request.getParameter("empId")));
-			int leaveId = Integer.parseInt(FormValidation.DecodeKey(request.getParameter("leaveId")));
+			int empId = Integer.parseInt((request.getParameter("empId")));
+			int leaveId = Integer.parseInt((request.getParameter("leaveId")));
 			String stat = request.getParameter("stat");
+			String remark = null;
+			try {
+				 remark =  request.getParameter("remark");
+				}
+				catch (Exception e) {
+					 remark =  "NA";
+				}
 			int stat1=Integer.parseInt(stat);
 			
            String msg=null;
@@ -127,7 +159,7 @@ public class LeaveApprovalController {
 			if (info.isError() == false) {
 				LeaveTrail lt = new LeaveTrail();
 
-				lt.setEmpRemarks("null");
+				lt.setEmpRemarks(remark);
 
 				lt.setLeaveId(leaveId);
 

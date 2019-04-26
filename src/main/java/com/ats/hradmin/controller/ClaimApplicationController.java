@@ -388,9 +388,31 @@ public class ClaimApplicationController {
 		}
 		return model;
 	}
-	
 
 	@RequestMapping(value = "/approveClaimByAuth", method = RequestMethod.GET)
+	public ModelAndView approveLeaveByInitialAuth(HttpServletRequest request, HttpServletResponse response) {
+		
+		ModelAndView model = new ModelAndView("claim/claimApprovalRemark");
+		try {
+
+			
+			int empId = Integer.parseInt(FormValidation.DecodeKey(request.getParameter("empId")));
+			int claimId = Integer.parseInt(FormValidation.DecodeKey(request.getParameter("claimId")));
+			String stat = request.getParameter("stat");
+			
+			model.addObject("empId",empId);
+			model.addObject("claimId", claimId);
+			model.addObject("stat", stat);
+			
+			
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+	return model;
+		
+	}
+
+	@RequestMapping(value = "/approveClaimByAuth1", method = RequestMethod.POST)
 	public String insertLeave(HttpServletRequest request,HttpServletResponse response) {
 		
 		try {
@@ -401,8 +423,8 @@ public class ClaimApplicationController {
 			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 			SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 			  System.err.println("emp data :::"+request.getParameter("empId"));
-			int  empId = Integer.parseInt(FormValidation.DecodeKey(request.getParameter("empId")));
-			int claimId=Integer.parseInt(FormValidation.DecodeKey(request.getParameter("claimId")));
+			int  empId = Integer.parseInt((request.getParameter("empId")));
+			int claimId=Integer.parseInt((request.getParameter("claimId")));
 			String stat=request.getParameter("stat");
 			int stat1=Integer.parseInt(stat);
 			
@@ -414,6 +436,14 @@ public class ClaimApplicationController {
                }else if(stat1==7){
             	   msg="Cancelled";
                    }
+			
+			String remark = null;
+			try {
+				 remark =  request.getParameter("remark");
+				}
+				catch (Exception e) {
+					 remark =  "NA";
+				}
 	       System.err.println("link data :::"+empId+claimId+stat);
 			
 			
@@ -426,7 +456,7 @@ public class ClaimApplicationController {
 				ClaimTrail lt = new ClaimTrail();
 				
 				
-				lt.setEmpRemarks("null");
+				lt.setEmpRemarks(remark);
 			
 				lt.setClaimId(claimId);;
 				
