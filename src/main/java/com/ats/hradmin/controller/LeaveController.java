@@ -665,7 +665,7 @@ public class LeaveController {
 				map.add("leaveId", res.getLeaveId());
 				map.add("trailId", res1.getTrailPkey());
 				Info info = Constants.getRestTemplate().postForObject(Constants.url + "/updateTrailId", map, Info.class);
-				if (res.isError() == false) {
+				if (info.isError() == false) {
 					session.setAttribute("successMsg", "Record Inserted Successfully");
 				} else {
 					session.setAttribute("errorMsg", "Failed to Insert Record");

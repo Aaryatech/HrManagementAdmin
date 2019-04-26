@@ -105,7 +105,17 @@ public class LeaveApprovalController {
 			int empId = Integer.parseInt(FormValidation.DecodeKey(request.getParameter("empId")));
 			int leaveId = Integer.parseInt(FormValidation.DecodeKey(request.getParameter("leaveId")));
 			String stat = request.getParameter("stat");
+			int stat1=Integer.parseInt(stat);
+			
+           String msg=null;
 
+             if(stat1==2 ||  stat1==3) {
+	            msg="Approved";
+                }else if(stat1==8 ||  stat1==9) {
+            	 msg="Rejected";
+               }else if(stat1==7){
+            	   msg="Cancelled";
+                   }
 			System.err.println("link data :::" + empId + leaveId + stat);
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
@@ -142,12 +152,19 @@ public class LeaveApprovalController {
 					map.add("trailId", res1.getTrailPkey());
 					Info info1 = Constants.getRestTemplate().postForObject(Constants.url + "/updateTrailId", map,
 							Info.class);
+					
+					if (info1.isError() == false) {
+						session.setAttribute("successMsg", "Record "+msg+" Successfully");
+					} else {
+						session.setAttribute("errorMsg", "Failed to "+msg+" Record");
+					}
+					
 
 				}
 			}
 
 			else {
-				session.setAttribute("errorMsg", "Failed to Insert Record");
+				session.setAttribute("errorMsg", "Failed to "+msg+" Record");
 			}
 
 		} catch (Exception e) {

@@ -404,7 +404,16 @@ public class ClaimApplicationController {
 			int  empId = Integer.parseInt(FormValidation.DecodeKey(request.getParameter("empId")));
 			int claimId=Integer.parseInt(FormValidation.DecodeKey(request.getParameter("claimId")));
 			String stat=request.getParameter("stat");
+			int stat1=Integer.parseInt(stat);
 			
+	           String msg=null;
+			if(stat1==2 ||  stat1==3) {
+	            msg="Approved";
+                }else if(stat1==8 ||  stat1==9) {
+            	 msg="Rejected";
+               }else if(stat1==7){
+            	   msg="Cancelled";
+                   }
 	       System.err.println("link data :::"+empId+claimId+stat);
 			
 			
@@ -442,7 +451,12 @@ public class ClaimApplicationController {
 				map.add("claimId",claimId);
 				map.add("trailId", res1.getClaimTrailPkey());
 				Info info1 = Constants.getRestTemplate().postForObject(Constants.url + "/updateClaimTrailId", map, Info.class);
-
+				
+				if (info1.isError() == false) {
+					session.setAttribute("successMsg", "Record "+msg+" Successfully");
+				} else {
+					session.setAttribute("errorMsg", "Failed to "+msg+" Record");
+				}
 
 				}
 			}
