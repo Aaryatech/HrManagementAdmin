@@ -156,6 +156,14 @@ public class LeaveController {
 
 			LeaveType res = Constants.getRestTemplate().postForObject(Constants.url + "/saveLeaveType", leaveSummary,
 					LeaveType.class);
+			
+			if (res.isError() == false) {
+				session.setAttribute("successMsg", "Record Inserted Successfully");
+			} else {
+				session.setAttribute("errorMsg", "Failed to Insert Record");
+			}
+			
+			
 			} else {
 				session.setAttribute("errorMsg", "Failed to Insert Record");
 			}
@@ -237,7 +245,7 @@ public class LeaveController {
 	
 	@RequestMapping(value = "/deleteLeaveType", method = RequestMethod.GET)
 	public String deleteLeaveType(HttpServletRequest request, HttpServletResponse response) {
-
+		HttpSession session = request.getSession();
 		try {
 
 			String base64encodedString = request.getParameter("typeId");
@@ -246,6 +254,13 @@ public class LeaveController {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("lvTypeId", typeId);
 			Info info = Constants.getRestTemplate().postForObject(Constants.url + "/deleteLeaveType", map, Info.class);
+			
+
+			if (info.isError() == false) {
+				session.setAttribute("successMsg", "Record Deleted Successfully");
+			} else {
+				session.setAttribute("errorMsg", "Failed to Delete");
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -326,8 +341,15 @@ public class LeaveController {
 
 			LeaveType res = Constants.getRestTemplate().postForObject(Constants.url + "/saveLeaveType", editLeaveType,
 					LeaveType.class);
+			
+
+			if (res.isError() == false) {
+				session.setAttribute("successMsg", "Record Updated Successfully");
 			} else {
-				session.setAttribute("errorMsg", "Failed to Insert Record");
+				session.setAttribute("errorMsg", "Failed to Update Record");
+			}
+			} else {
+				session.setAttribute("errorMsg", "Failed to Update Record");
 			}
 
 			
@@ -643,7 +665,11 @@ public class LeaveController {
 				map.add("leaveId", res.getLeaveId());
 				map.add("trailId", res1.getTrailPkey());
 				Info info = Constants.getRestTemplate().postForObject(Constants.url + "/updateTrailId", map, Info.class);
-
+				if (res.isError() == false) {
+					session.setAttribute("successMsg", "Record Inserted Successfully");
+				} else {
+					session.setAttribute("errorMsg", "Failed to Insert Record");
+				}
 
 				}
 			}

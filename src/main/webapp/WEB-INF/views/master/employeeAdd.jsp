@@ -81,6 +81,7 @@
 							</div>
 
 							<div class="card-body">
+								
 								<%
 									if (session.getAttribute("errorMsg") != null) {
 								%>
@@ -118,7 +119,7 @@
 								%>
 
 								<form
-									action="${pageContext.request.contextPath}/submitInsertClaim"
+									action="${pageContext.request.contextPath}/submitInsertEmployeeUserInfo"
 									id="submitInsertEmp" method="post" enctype="multipart/form-data">
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="empCode">

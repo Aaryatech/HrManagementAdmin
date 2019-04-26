@@ -1400,13 +1400,13 @@ public class MasterController {
 						editEmployeeDepartment, EmployeeDepartment.class);
 
 				if (res.isError() == false) {
-					session.setAttribute("successMsg", "Record Updeted Successfully");
+					session.setAttribute("successMsg", "Record Updated Successfully");
 				} else {
-					session.setAttribute("errorMsg", "Failed to Updeted Record");
+					session.setAttribute("errorMsg", "Failed to Update Record");
 				}
 
 			} else {
-				session.setAttribute("errorMsg", "Failed to Updeted Record");
+				session.setAttribute("errorMsg", "Failed to Update Record");
 			}
 
 		} catch (Exception e) {
@@ -1599,6 +1599,12 @@ public class MasterController {
 			EmployeeInfo res = Constants.getRestTemplate().postForObject(Constants.url + "/saveEmpInfo", editEmp,
 					EmployeeInfo.class);
 			System.err.println("edited success");
+			
+			if (res.isError() == false) {
+				session.setAttribute("successMsg", "Record Edited Successfully");
+			} else {
+				session.setAttribute("errorMsg", "Failed to Edit Record");
+			}
 			
 			} else {
 				session.setAttribute("errorMsg", "Failed to Insert Record");
@@ -1897,8 +1903,13 @@ public class MasterController {
 			User res1 = Constants.getRestTemplate().postForObject(Constants.url + "/saveUserInfo", uinfo,
 					User.class);
 			
+			if (res1.isError() == false) {
+				session.setAttribute("successMsg", "Record Insert Successfully");
+			} else {
+				session.setAttribute("errorMsg", "Failed to Insert Record");
 			}
 			
+			}
 			
 			} else {
 				session.setAttribute("errorMsg", "Failed to Insert Record");
@@ -1950,15 +1961,21 @@ public class MasterController {
 	
 	@RequestMapping(value = "/deleteEmployee", method = RequestMethod.GET)
 	public String deleteEmployee(HttpServletRequest request, HttpServletResponse response) {
-
+		HttpSession session = request.getSession();
 		try {
-//System.err.println("request.getParameter(\"empId\")"+request.getParameter("typeId"));
+       //System.err.println("request.getParameter(\"empId\")"+request.getParameter("typeId"));
 			String base64encodedString = request.getParameter("typeId");
 			String typeId = FormValidation.DecodeKey(base64encodedString);
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("empId", typeId);
 			Info info = Constants.getRestTemplate().postForObject(Constants.url + "/deleteEmpInfo", map, Info.class);
+			
+			if (info.isError() == false) {
+				session.setAttribute("successMsg", "Record Deleted Successfully");
+			} else {
+				session.setAttribute("errorMsg", "Failed to Delete");
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();

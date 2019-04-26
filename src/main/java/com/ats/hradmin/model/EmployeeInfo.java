@@ -75,6 +75,17 @@ public class EmployeeInfo {
 	private String exVar2; 
 	
 	private String exVar3;
+	private boolean error;
+
+
+	public boolean isError() {
+		return error;
+	}
+
+	public void setError(boolean error) {
+		this.error = error;
+	}
+
 
 	public int getEmpId() {
 		return empId;

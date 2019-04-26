@@ -772,7 +772,7 @@
 
 			const diffTime = Math.abs(date2.getTime() - date1.getTime());
 			const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-			//document.getElementById("noOfDays").value = diffDays + 1;
+			document.getElementById("noOfDays").value = diffDays + 1;
 
 			//document.getElementById("noOfDaysExclude").value = diffDays + 1;
 			
