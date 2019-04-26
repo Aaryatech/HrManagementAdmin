@@ -27,6 +27,7 @@ import com.ats.hradmin.common.FormValidation;
 import com.ats.hradmin.common.VpsImageUpload;
 import com.ats.hradmin.leave.model.CalenderYear;
 import com.ats.hradmin.leave.model.GetLeaveStatus;
+import com.ats.hradmin.leave.model.LeaveDetail;
 import com.ats.hradmin.model.Company;
 import com.ats.hradmin.model.EmployeDoc;
 import com.ats.hradmin.model.EmployeeDepartment;
@@ -255,9 +256,9 @@ public class MasterEmpController {
 	}
 	
 	@RequestMapping(value = "/empInfoHistoryList", method = RequestMethod.GET)
-	public @ResponseBody List<EmployeeInfo> empInfoHistoryList(HttpServletRequest request, HttpServletResponse response) {
+	public @ResponseBody List<LeaveDetail> empInfoHistoryList(HttpServletRequest request, HttpServletResponse response) {
 
-		  List<EmployeeInfo> employeeInfoList=new ArrayList<EmployeeInfo>();
+		  List<LeaveDetail> employeeInfoList=new ArrayList<LeaveDetail>();
 		try {
 			
 		
@@ -268,13 +269,13 @@ public class MasterEmpController {
 			  map.add("empId",empId);
 			  map.add("calYrId",calYrId);
 			   
-			  EmployeeInfo[] employeeInfo = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpInfoByLocIdAndEmp",map,
-					  EmployeeInfo[].class);
+			  LeaveDetail[] employeeInfo = Constants.getRestTemplate().postForObject(Constants.url + "/getLeaveListByLocIdAndEmp",map,
+					  LeaveDetail[].class);
 			   
-			  employeeInfoList = new ArrayList<EmployeeInfo>(Arrays.asList(employeeInfo));
+			  employeeInfoList = new ArrayList<LeaveDetail>(Arrays.asList(employeeInfo));
 			  for (int i = 0; i < employeeInfoList.size(); i++) {
 
-				  employeeInfoList.get(i).setExVar1(FormValidation.Encrypt(String.valueOf(employeeInfoList.get(i).getEmpId())));
+				  employeeInfoList.get(i).setExVar1(FormValidation.Encrypt(String.valueOf(employeeInfoList.get(i).getLeaveId())));
 				}
 
 			  System.out.println("List : "+employeeInfoList.toString());
@@ -291,10 +292,10 @@ public class MasterEmpController {
 
 		try {
 		
-			String base64encodedString = request.getParameter("empId");			
-			String empId = FormValidation.DecodeKey(base64encodedString);			
+			String base64encodedString = request.getParameter("leaveId");			
+			String leaveId = FormValidation.DecodeKey(base64encodedString);			
 			  MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			  map.add("empId",empId);
+			  map.add("leaveId",leaveId);
 			  GetLeaveStatus[] employeeDoc = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpInfoListByTrailEmpId", map,GetLeaveStatus[].class);
 			  
 			  List<GetLeaveStatus> employeeList = new

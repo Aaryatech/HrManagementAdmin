@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%><%@ taglib
 	uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-	
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -113,49 +113,51 @@
 							session.removeAttribute("successMsg");
 							}
 						%>
-						
-						
-							<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="select2">Select
-											Employee :*</label>
-										<div class="col-md-2">
-											<select name="empId" data-placeholder="Select Employee"
-												id="empId"
-												class="form-control form-control-select2 select2-hidden-accessible"
-												tabindex="-1" aria-hidden="true">
-												<option value="">Select Employee </option>
-												<c:forEach items="${employeeInfoList}" var="empInfo">
-													<option value="${empInfo.empId}">${empInfo.empFname} </option>
-												</c:forEach>
-											</select> <span class="validation-invalid-label" id="error_empId"
-												style="display: none;">This field is required.</span>
-										</div>
-								
-								
-										<label class="col-form-label col-lg-2" for="select2">Select
-											 Year :*</label>
-										<div class="col-md-2">
-											<select name="calYrId" data-placeholder="Select Year"
-												id="calYrId" 
-												class="form-control form-control-select2 select2-hidden-accessible"
-												tabindex="-1" aria-hidden="true">
-												<option value="">Select Calendar Year</option>
-												<c:forEach items="${calYearList}" var="calYear">
-														<option value="${calYear.calYrId}">${calYear.calYrFromDate} to ${calYear.calYrToDate}</option>
-												</c:forEach>
-											</select> <span class="validation-invalid-label" id="error_calYrId"
-												style="display: none;">This field is required.</span>
-										</div>
-								
-									
-								
-											
-											<button type="button" class="btn bg-blue ml-3 legitRipple"
-												id="submtbtn" onclick="show()">
-												Submit <i class="icon-paperplane ml-2"></i>
-											</button>
-										
-									</div>
+
+
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2" for="select2">Select
+								Employee :*</label>
+							<div class="col-md-2">
+								<select name="empId" data-placeholder="Select Employee"
+									id="empId"
+									class="form-control form-control-select2 select2-hidden-accessible"
+									tabindex="-1" aria-hidden="true">
+									<option value="">Select Employee</option>
+									<c:forEach items="${employeeInfoList}" var="empInfo">
+										<option value="${empInfo.empId}">${empInfo.empFname}
+										</option>
+									</c:forEach>
+								</select> <span class="validation-invalid-label" id="error_empId"
+									style="display: none;">This field is required.</span>
+							</div>
+
+
+							<label class="col-form-label col-lg-2" for="select2">Select
+								Year :*</label>
+							<div class="col-md-2">
+								<select name="calYrId" data-placeholder="Select Year"
+									id="calYrId"
+									class="form-control form-control-select2 select2-hidden-accessible"
+									tabindex="-1" aria-hidden="true">
+									<option value="">Select Calendar Year</option>
+									<c:forEach items="${calYearList}" var="calYear">
+										<option value="${calYear.calYrId}">${calYear.calYrFromDate}
+											to ${calYear.calYrToDate}</option>
+									</c:forEach>
+								</select> <span class="validation-invalid-label" id="error_calYrId"
+									style="display: none;">This field is required.</span>
+							</div>
+
+
+
+
+							<button type="button" class="btn bg-blue ml-3 legitRipple"
+								id="submtbtn" onclick="show()">
+								Submit <i class="icon-paperplane ml-2"></i>
+							</button>
+
+						</div>
 						<table
 							class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic  datatable-button-print-columns1"
 							id="bootstrap-data-table">
@@ -163,18 +165,22 @@
 								<tr class="bg-blue">
 									<th width="10%">Sr.no</th>
 									<th>Name</th>
-									<th>Email</th>
-									<th>Mobile</th>
+									<th>Department Name</th>
+									<th>Leave Type</th>
 									<th>Code</th>
+									<th>Leave Days</th>
+									<th>Leave Duration</th>
+
+									<th>Date</th>
 									<th>Leave Status</th>
 
 									<th class="text-center" width="10%">Actions</th>
 								</tr>
 							</thead>
-							
 
 
-								
+
+
 						</table>
 					</div>
 
@@ -238,34 +244,34 @@
 
 					$.each(data, function(i, v) {
 					
-						var str = '<a href="${pageContext.request.contextPath}/empDetailHistory?empId='+v.exVar1+'" class="nav-link legitRipple"  style="color:black"><i class="icon-list-unordered"></i></a>'
+						var str = '<a href="${pageContext.request.contextPath}/empDetailHistory?leaveId='+v.exVar1+'" class="nav-link legitRipple"  style="color:black"><i class="icon-list-unordered"></i></a>'
 							
  	
 							var current_status;
-							if(v.exInt1==1)
+							if(v.finalStatus==1)
 								{
 								/* current_status="Pending"; */
 
 								current_status='<span class="badge badge-info">Initial Pending</span>';
 								}
-							else if(v.exInt1==2)
+							else if(v.finalStatus==2)
 								{
 								
 								current_status='<span class="badge badge-secondary">Final Pending</span>';
 								}
-							else if(v.exInt1==3)
+							else if(v.finalStatus==3)
 							{
 							current_status='<span class="badge badge-success">Final Approve</span>';
 							}
-							else if(v.exInt1==7)
+							else if(v.finalStatus==7)
 							{
 							current_status='<span class="badge badge-danger">Cancel By Employee</span>';
 							}
-							else if(v.exInt1==8)
+							else if(v.finalStatus==8)
 							{
 							current_status='<span class="badge badge-danger">Initial Rejected</span>';
 							}
-							else if(v.exInt1==9)
+							else if(v.finalStatus==9)
 							{
 							current_status='<span class="badge badge-danger">Final Rejected</span>';
 							}
@@ -274,7 +280,7 @@
 							
 						dataTable.row.add(
 								[ i + 1, v.empFname +" " +v.empMname +" "+v.empSname,
-										v.empEmail,	v.empMobile1,v.empCode,current_status,		
+										v.empDeptName,	v.lvTitle,v.empCode,v.leaveNumDays,v.leaveDuration, v.leaveFromdt +" To " +v.leaveTodt,current_status,		
 										str
 								]).draw();
 					});
