@@ -222,7 +222,7 @@
 											<select data-placeholder="Select a Day Type" id="dayTypeName"
 												name="dayTypeName"
 												class="form-control form-control-select2 select2-hidden-accessible"
-												data-fouc="" tabindex="-1" aria-hidden="true">
+												data-fouc="" tabindex="-1" aria-hidden="true" onchange="calholiday()">
 												<option></option>
 												<option value="1">Full Day</option>
 												<option value="2">Half Day</option>
@@ -319,9 +319,12 @@
 		function calholiday() {
 			
 			var daterange = document.getElementById("leaveDateRange").value;
+			var dayTypeName = document.getElementById("dayTypeName").value;
 			var res = daterange.split(" to ");
 			var empId = document.getElementById("empId").value;
-			
+			 
+			/* if(dayTypeName!=""){ */
+				 
 				$.getJSON('${getHolidayAndWeeklyOffList}', {
 
 					fromDate : res[0],
@@ -333,7 +336,9 @@
 
 					// alert("Data  " +JSON.stringify(data));
 					var diff = calculateDiff();
-					
+					if(dayTypeName==2){
+						diff=diff/2;
+					}
 					var totalSundays = 0;
 					var comndate = [];
 					 
@@ -365,13 +370,17 @@
 							var date1res = res[0].split("-");
 							var date2res = res[1].split("-");
 							var year = date1res[2];
-							//alert("year " + year);
+							 
 							
 							  for(k=(date1res[1] - 1) ; k<= (date2res[1]-1) ; k++){
-								
+								 
 								var date1 = new Date(year, k, 1);
 								var date2 = new Date(year, k, 7);
-								 
+								/*  
+								alert(date1);
+								alert(date2); */
+								//alert(year);
+								
 								var holfrstdt = new Date(date1res[2], date1res[1] - 1, date1res[0])//converts string to date object 
 								var holseconddt = new Date(date2res[2], date2res[1] - 1, date2res[0])
 								
@@ -382,13 +391,18 @@
 										
 										for (var j = m; j <= date2; ){
 											  
-								            if (j.getDay() == data.weeklyList[i].woDay){
+								            if (j.getDay() == data.weeklyList[i].woDay && m>=holfrstdt && m<=holseconddt){
 								            	 
-								            	alert(j+"matched 1st");
+								            	//alert(j+"matched 1st");
 								            	
 								            	 formatDate(m);
 								            	 comndate.push(formatDate(m));
-								                totalSundays++;
+								            	  /* if ( 'FULL DAY' == data.weeklyList[i].woPresently){
+								            		  totalSundays=totalSundays+1;
+								            	  }else{
+								            		  totalSundays=totalSundays+0.5;
+								            	  } */
+								            	  totalSundays++;
 								            }
 								            j.setTime(j.getTime() + 1000*60*60*24);
 								            
@@ -408,7 +422,7 @@
 							
 							 
 							
-						} /*else if(data.weeklyList[i].woType==4){
+						}else if(data.weeklyList[i].woType==4){
 							 
 							var date1res = res[0].split("-");
 							var date2res = res[1].split("-");
@@ -427,13 +441,12 @@
 									
 									
 									if(m>=date1 && m<=date2){
-										alert(m>=date1);
-										alert(m+ " " + date1);
+										
 										for (var j = m; j <= date2; ){
 											  
-								            if (j.getDay() == data.weeklyList[i].woDay){
+								            if (j.getDay() == data.weeklyList[i].woDay && m>=holfrstdt && m<=holseconddt){
 								            	 
-								            	alert(j+"matched 2nd");
+								            	//alert(j+"matched 2nd");
 								            	
 								            	 formatDate(m);
 								            	 comndate.push(formatDate(m));
@@ -452,12 +465,12 @@
 								nextDay.setDate(lastDay.getDate());
 								 var spltdt = formatDate(lastDay).split("-");
 								 year = spltdt[0];
-								 
-							}  
+								    
+							}
 							
 							 
 							
-						}else if(data.weeklyList[i].woType==5){
+						} else if(data.weeklyList[i].woType==5){
 							 
 							var date1res = res[0].split("-");
 							var date2res = res[1].split("-");
@@ -479,9 +492,9 @@
 										
 										for (var j = m; j <= date2; ){
 											  
-								            if (j.getDay() == data.weeklyList[i].woDay){
+								            if (j.getDay() == data.weeklyList[i].woDay && m>=holfrstdt && m<=holseconddt){
 								            	 
-								            	alert(j+"matched 3rd");
+								            	//alert(j+"matched 3rd");
 								            	
 								            	 formatDate(m);
 								            	 comndate.push(formatDate(m));
@@ -500,11 +513,9 @@
 								nextDay.setDate(lastDay.getDate());
 								 var spltdt = formatDate(lastDay).split("-");
 								 year = spltdt[0];
-								 
-							}  
-							
+								    
+							}
 							 
-							
 						}else if(data.weeklyList[i].woType==6){
 							 
 							var date1res = res[0].split("-");
@@ -527,9 +538,9 @@
 										
 										for (var j = m; j <= date2; ){
 											  
-								            if (j.getDay() == data.weeklyList[i].woDay){
+								            if (j.getDay() == data.weeklyList[i].woDay && m>=holfrstdt && m<=holseconddt){
 								            	 
-								            	alert(j+"matched 4th");
+								            	//alert(j+"matched 4th");
 								            	
 								            	 formatDate(m);
 								            	 comndate.push(formatDate(m));
@@ -548,14 +559,110 @@
 								nextDay.setDate(lastDay.getDate());
 								 var spltdt = formatDate(lastDay).split("-");
 								 year = spltdt[0];
-								   
-							}  
+								    
+							} 
 							
 							 
 							
-						} */
-						
-						
+						}else if(data.weeklyList[i].woType==1){
+							
+							
+							var date1res = res[0].split("-");
+							var date2res = res[1].split("-");
+							var year = date1res[2];
+							 
+							
+							  for(k=(date1res[1] - 1) ; k<= (date2res[1]-1) ; k++){
+								 
+								var date1 = new Date(year, k, 8);
+								var date2 = new Date(year, k, 14);
+								  
+								var holfrstdt = new Date(date1res[2], date1res[1] - 1, date1res[0])//converts string to date object 
+								var holseconddt = new Date(date2res[2], date2res[1] - 1, date2res[0])
+								 
+								var  fststwk = evenodd(date1,date2,holfrstdt,holseconddt,data.weeklyList[i].woDay);
+								
+								var date3 = new Date(year, k, 22);
+								var date4 = new Date(year, k, 28);
+								
+								var holfrstdt1 = new Date(date1res[2], date1res[1] - 1, date1res[0])//converts string to date object 
+								var holseconddt1 = new Date(date2res[2], date2res[1] - 1, date2res[0])
+								  
+								var sndwk = evenodd(date3,date4,holfrstdt1,holseconddt1,data.weeklyList[i].woDay);
+								
+								totalSundays = totalSundays+fststwk[fststwk.length-1]+sndwk[sndwk.length-1];
+								
+								    for(var a=0; a<(fststwk.length-1) ; a++){
+									comndate.push(fststwk[a]);
+								}
+								for(var a=0; a<(sndwk.length-1) ; a++){
+									comndate.push(sndwk[a]);
+								}   
+								
+								var lastDay = new Date(year, k , 0); 
+								var nextDay = new Date();
+								nextDay.setDate(lastDay.getDate());
+								 var spltdt = formatDate(lastDay).split("-");
+								 year = spltdt[0];
+								    
+							}  
+							   
+						}else if(data.weeklyList[i].woType==2){
+							
+							
+							var date1res = res[0].split("-");
+							var date2res = res[1].split("-");
+							var year = date1res[2];
+							 
+							
+							  for(k=(date1res[1] - 1) ; k<= (date2res[1]-1) ; k++){
+								 
+								var date1 = new Date(year, k, 1);
+								var date2 = new Date(year, k, 7);
+								  
+								var holfrstdt = new Date(date1res[2], date1res[1] - 1, date1res[0])//converts string to date object 
+								var holseconddt = new Date(date2res[2], date2res[1] - 1, date2res[0])
+								 
+								var  fststwk = evenodd(date1,date2,holfrstdt,holseconddt,data.weeklyList[i].woDay);
+								
+								var date3 = new Date(year, k, 15);
+								var date4 = new Date(year, k, 22);
+								
+								var holfrstdt1 = new Date(date1res[2], date1res[1] - 1, date1res[0])//converts string to date object 
+								var holseconddt1 = new Date(date2res[2], date2res[1] - 1, date2res[0])
+								  
+								var sndwk = evenodd(date3,date4,holfrstdt1,holseconddt1,data.weeklyList[i].woDay);
+								
+								var date5 = new Date(year, k, 29);
+								var date6 = new Date(year, k, 0);
+								
+								var holfrstdt2 = new Date(date1res[2], date1res[1] - 1, date1res[0])//converts string to date object 
+								var holseconddt2 = new Date(date2res[2], date2res[1] - 1, date2res[0])
+								  
+								var thrdwk = evenodd(date5,date6,holfrstdt2,holseconddt2,data.weeklyList[i].woDay);
+								
+								totalSundays = totalSundays+fststwk[fststwk.length-1]+sndwk[sndwk.length-1]+thrdwk[thrdwk.length-1];
+								
+								    for(var a=0; a<(fststwk.length-1) ; a++){
+									comndate.push(fststwk[a]);
+								}
+								for(var a=0; a<(sndwk.length-1) ; a++){
+									comndate.push(sndwk[a]);
+								} 
+								for(var a=0; a<(thrdwk.length-1) ; a++){
+									comndate.push(thrdwk[a]);
+								} 
+								
+								var lastDay = new Date(year, k , 0); 
+								var nextDay = new Date();
+								nextDay.setDate(lastDay.getDate());
+								 var spltdt = formatDate(lastDay).split("-");
+								 year = spltdt[0];
+								    
+							}  
+							   
+						}
+						 
 					}
 					
 				 	for(var i=0 ; i<data.holidayList.length ;i++){
@@ -588,6 +695,10 @@
 					document.getElementById("noOfDaysExclude").value =totalSundays;
 					 
 				});
+			/* }else{
+				
+				alert("select Day Type ");
+			} */
 		}
 		
 		function formatDate(date) {
@@ -610,6 +721,39 @@
 			//document.getElementById("noOfDaysExclude").value = diffDays + 1;
 			
 			return (diffDays + 1);
+		}
+		
+		function evenodd(date1,date2,holfrstdt,holseconddt,day) {
+			 
+			//alert("date1 " + date1 + "date2 " + date2 + "holfrstdt " + holfrstdt + "holseconddt " + holseconddt + "day" +day)
+			
+			var totalcount = 0;
+			var tempcomndate = [];
+			
+			for (var m = holfrstdt; m <= holseconddt; ){
+				
+				
+				if(m>=date1 && m<=date2){
+					
+					for (var j = m; j <= date2; ){
+						  
+			            if (j.getDay() == day && m>=holfrstdt && m<=holseconddt){
+			            	 
+			            	//alert(j+"matched 1st");
+			            	
+			            	 formatDate(m);
+			            	 tempcomndate.push(formatDate(m)); 
+			            	 totalcount++;
+			            }
+			            j.setTime(j.getTime() + 1000*60*60*24);
+			            
+			        }
+					
+				} 
+				 m.setTime(m.getTime() + 1000*60*60*24);
+			}
+			tempcomndate.push(totalcount);
+			return tempcomndate;
 		}
 	</script>
 
