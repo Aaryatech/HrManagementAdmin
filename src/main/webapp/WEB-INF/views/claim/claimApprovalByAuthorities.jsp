@@ -62,7 +62,7 @@
 				<!-- Highlighting rows and columns -->
 				<div class="card">
 					<div class="card-header header-elements-inline">
-						<h5 class="card-title">Leave Application List</h5>
+						<h5 class="card-title">Claim List</h5>
 						<div class="header-elements">
 							<div class="list-icons">
 								<a class="list-icons-item" data-action="collapse"></a>
@@ -87,9 +87,9 @@
 									<th>Employee Code</th>
 									<th>Employee Name</th>
 									<th>Type</th>
-									<th>From Date</th>
-									<th>To Date</th>
-									<th>No. Of Days</th>
+									<th>Claim Date</th>
+									<th>Claim Amount</th>
+									<th>Project</th>
 									<th>Status</th>
 									
 									<th class="text-center" width="10%">Actions</th>
@@ -98,22 +98,23 @@
 							<tbody>
 
 
-								<c:forEach items="${leaveListForApproval}" var="leaveList" varStatus="count">
+								<c:forEach items="${claimListForApproval}" var="claimList" varStatus="count">
 								
 									<tr>
 										<td>${count.index+1}</td>
-										<td>${leaveList.empCode}</td>
-										<td>${leaveList.empName}</td>
-										<td>${leaveList.leaveTitle}</td>
-										<td>${leaveList.leaveFromdt}</td>
-										<td>${leaveList.leaveTodt}</td>
-										<td>${leaveList.leaveNumDays}</td>
+										<td>${claimList.empCode}</td>
+										<td>${claimList.empName}</td>
+										<td>${claimList.claimTypeName}</td>
+										<td>${claimList.claimDate}</td>
+										<td>${claimList.claimAmount}</td>
+										<td>${claimList.projectTitle}</td>
+										
 										
 										<c:choose>
-										<c:when test="${leaveList.exInt1==1}">
+										<c:when test="${claimList.exInt1==1}">
 										<td><span class="badge badge-info">Initial Pending</span></td>
 										</c:when>
-										<c:when test="${leaveList.exInt1==2}">
+										<c:when test="${claimList.exInt1==2}">
 										<td><span class="badge badge-secondary">Final Pending</span></td>
 										</c:when>
 									
@@ -128,32 +129,32 @@
 
 													<div class="dropdown-menu dropdown-menu-right">
 														<c:choose>
-															<c:when test="${leaveList.finAuthEmpId==empIdOrig}">
+															<c:when test="${claimList.caFinAuthEmpId==empIdOrig}">
 															
 													<a
-															href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList.leaveTypeName}&leaveId=${leaveList.circulatedTo}&stat=3"
-															onClick="return confirm('Are you sure want to Approve this Leave');"
+															href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList.claimRemarks}&claimId=${claimList.circulatedTo}&stat=3"
+															onClick="return confirm('Are you sure want to Approve this Claim');"
 															class="dropdown-item"><i class="icon-checkmark4 "></i>Approve</a>
 															
 													<a
-															href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList.leaveTypeName}&leaveId=${leaveList.circulatedTo}&stat=9"
-															onClick="return confirm('Are you sure want to Reject this Leave');"
+															href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList.claimRemarks}&claimId=${claimList.claimRemarks}&stat=9"
+															onClick="return confirm('Are you sure want to Reject this Claim');"
 															class="dropdown-item"><i class="icon-x"></i>Reject</a>
 																
 														
 															
 															</c:when>
 															
-															<c:when test="${leaveList.iniAuthEmpId==empIdOrig}">
+															<c:when test="${claimList.caIniAuthEmpId==empIdOrig}">
 															
 												<a
-															href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList.leaveTypeName}&leaveId=${leaveList.circulatedTo}&stat=2"
-															onClick="return confirm('Are you sure want to Approve this Leave');"
+															href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList.claimRemarks}&claimId=${claimList.claimRemarks}&stat=2"
+															onClick="return confirm('Are you sure want to Approve this Claim');"
 															class="dropdown-item"><i class="icon-checkmark4 "></i>Approve</a>
 															
 													<a
-															href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList.leaveTypeName}&leaveId=${leaveList.circulatedTo}&stat=8"
-															onClick="return confirm('Are you sure want to Reject this Leave');"
+															href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList.claimRemarks}&claimId=${claimList.claimRemarks}&stat=8"
+															onClick="return confirm('Are you sure want to Reject this Claim');"
 															class="dropdown-item"><i class="icon-x"></i>Reject</a>
 															
 															</c:when>
@@ -161,8 +162,8 @@
 															<c:when test="${leaveList.empId==empIdOrig}">
 															
 												<a
-															href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList.leaveTypeName}&leaveId=${leaveList.circulatedTo}&stat=7"
-															onClick="return confirm('Are you sure want to Cancel this Leave');"
+															href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList.claimRemarks}&claimId=${claimList.claimRemarks}&stat=7"
+															onClick="return confirm('Are you sure want to Cancel this Claim');"
 															class="dropdown-item"><i class="icon-cancel-square
 ed65"></i>Cancel</a>
 														
@@ -198,32 +199,34 @@ ed65"></i>Cancel</a>
 									<th>Employee Code</th>
 									<th>Employee Name</th>
 									<th>Type</th>
-									<th>From Date</th>
-									<th>To Date</th>
-									<th>No. Of Days</th>
-								    <th>Status</th>
+									<th>Claim Date</th>
+									<th>Claim Amount</th>
+									<th>Project</th>
+									<th>Status</th>
+									
 									<th class="text-center" width="10%">Actions</th>
 								</tr>
 							</thead>
 							<tbody>
 
 
-								<c:forEach items="${leaveListForApproval1}" var="leaveList1" varStatus="count">
+								<c:forEach items="${claimListForApproval1}" var="claimList1" varStatus="count">
 								
 									<tr>
 										<td>${count.index+1}</td>
-										<td>${leaveList1.empCode}</td>
-										<td>${leaveList1.empName}</td>
-										<td>${leaveList1.leaveTitle}</td>
-										<td>${leaveList1.leaveFromdt}</td>
-										<td>${leaveList1.leaveTodt}</td>
-										<td>${leaveList1.leaveNumDays}</td>
+										<td>${claimList1.empCode}</td>
+										<td>${claimList1.empName}</td>
+										<td>${claimList1.claimTypeName}</td>
+										<td>${claimList1.claimDate}</td>
+										<td>${claimList1.claimAmount}</td>
+										<td>${claimList1.projectTitle}</td>
+										
 										
 										<c:choose>
-										<c:when test="${leaveList1.exInt1==2}">
+										<c:when test="${claimList1.exInt1==2}">
 										<td><span class="badge badge-success">Initial Approved</span></td>
 										</c:when>
-										<c:when test="${leaveList1.exInt1==1}">
+										<c:when test="${claimList1.exInt1==1}">
 										<td><span class="badge badge-danger">Final & Initial Pending</span></td>
 										</c:when>
 									
@@ -242,23 +245,23 @@ ed65"></i>Cancel</a>
 
 													<div class="dropdown-menu dropdown-menu-right">
 														<c:choose>
-															<c:when test="${leaveList1.finAuthEmpId==empIdOrig}">
+														<c:when test="${claimList1.caFinAuthEmpId==empIdOrig}">
 															
 													<a
-															href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList1.leaveTypeName}&leaveId=${leaveList1.circulatedTo}&stat=3"
-															onClick="return confirm('Are you sure want to Approve this Leave');"
+															href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList.claimRemarks}&claimId=${claimList.claimRemarks}&stat=3"
+															onClick="return confirm('Are you sure want to Approve this Claim');"
 															class="dropdown-item"><i class="icon-checkmark4 "></i>Approve</a>
 															
 													<a
-															href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList1.leaveTypeName}&leaveId=${leaveList1.circulatedTo}&stat=9"
-															onClick="return confirm('Are you sure want to Reject this Leave');"
+															href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList.claimRemarks}&claimId=${claimList.claimRemarks}&stat=9"
+															onClick="return confirm('Are you sure want to Reject this Claim');"
 															class="dropdown-item"><i class="icon-x"></i>Reject</a>
 															</c:when>
 															
-															<c:when test="${leaveList1.iniAuthEmpId==empIdOrig}">
+														<c:when test="${claimList1.caIniAuthEmpId==empIdOrig}">
 															
 												<%-- <a
-															href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList.leaveTypeName}&leaveId=${leaveList.circulatedTo}&stat=2"
+															href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${leaveList.leaveTypeName}&leaveId=${leaveList.circulatedTo}&stat=2"
 															class="dropdown-item"><i class="icon-pencil7"></i>Approve</a>
 															
 													<a
@@ -275,11 +278,11 @@ ed65"></i>Cancel</a>
 															</c:choose>
 															
 															
-															<c:if test="${leaveList1.empId==empIdOrig}">
+															<c:if test="${claimList1.empId==empIdOrig}">
 															
 												<a
-															href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList1.leaveTypeName}&leaveId=${leaveList1.circulatedTo}&stat=7"
-													onClick="return confirm('Are you sure want to Cancel this Leave');"
+															href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList.claimRemarks}&claimId=${claimList.claimRemarks}&stat=7"
+													onClick="return confirm('Are you sure want to Cancel this Claim');"
 															
 															class="dropdown-item"><i class="icon-cancel-square "></i>Cancel</a>
 														

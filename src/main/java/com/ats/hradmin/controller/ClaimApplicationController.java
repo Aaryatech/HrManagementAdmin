@@ -21,13 +21,16 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ats.hradmin.claim.ClaimApply;
 import com.ats.hradmin.claim.ClaimTrail;
 import com.ats.hradmin.claim.ClaimType;
+import com.ats.hradmin.claim.GetClaimApplyAuthwise;
 import com.ats.hradmin.common.Constants;
 import com.ats.hradmin.common.DateConvertor;
 import com.ats.hradmin.common.FormValidation;
 import com.ats.hradmin.leave.model.GetAuthorityIds;
+import com.ats.hradmin.leave.model.GetLeaveApplyAuthwise;
 import com.ats.hradmin.model.EmployeeInfo;
 import com.ats.hradmin.model.GetEmployeeInfo;
 import com.ats.hradmin.model.Info;
+import com.ats.hradmin.model.LeaveTrail;
 import com.ats.hradmin.model.LoginResponse;
 import com.ats.hradmin.model.ProjectHeader;
 
@@ -322,6 +325,147 @@ public class ClaimApplicationController {
 }
 	
 	////////////////////////////////**********************Claim approvals******************************//////////////////
+	
+	
+	
+	@RequestMapping(value = "/showClaimApprovalByAuthority", method = RequestMethod.GET)
+	public ModelAndView showClaimApprovalByAuthority(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("claim/claimApprovalByAuthorities");
+		
+		//for pending 
+		try {
+			HttpSession session = request.getSession();
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+            MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("empId",userObj.getEmpId());
+			
+			
+			GetClaimApplyAuthwise[] employeeDoc = Constants.getRestTemplate().postForObject(Constants.url +
+					 "/getClaimApplyListForPending",map, GetClaimApplyAuthwise[].class);
+					
+			 List<GetClaimApplyAuthwise> claimList = new ArrayList<GetClaimApplyAuthwise>(Arrays.asList(employeeDoc));
+			 System.out.println("lv claimList list pending "+claimList.toString()); 
+			
+				for (int i = 0; i < claimList.size(); i++) {
+
+					claimList.get(i).setCirculatedTo(FormValidation.Encrypt(String.valueOf(claimList.get(i).getClaimId())));
+					claimList.get(i).setClaimRemarks(FormValidation.Encrypt(String.valueOf(claimList.get(i).getEmpId())));
+
+				}
+				 model.addObject("claimListForApproval",claimList);
+				 model.addObject("list1Count",claimList.size());
+				
+	//for Info	
+				 
+				 
+				 
+		 model.addObject("empIdOrig",userObj.getEmpId());
+				 
+		 map = new LinkedMultiValueMap<>();
+			map.add("empId",userObj.getEmpId());
+		
+			GetClaimApplyAuthwise[] employeeDoc1 = Constants.getRestTemplate().postForObject(Constants.url +
+						 "/getClaimApplyListForInformation",map, GetClaimApplyAuthwise[].class);
+						
+			List<GetClaimApplyAuthwise> claimList1 = new ArrayList<GetClaimApplyAuthwise>(Arrays.asList(employeeDoc1));
+		System.out.println("lv leaveList list1 info "+claimList1.toString()); 
+			for (int i = 0; i < claimList1.size(); i++) {
+
+				claimList1.get(i).setCirculatedTo(FormValidation.Encrypt(String.valueOf(claimList1.get(i).getClaimId())));
+				claimList1.get(i).setClaimRemarks(FormValidation.Encrypt(String.valueOf(claimList1.get(i).getEmpId())));
+
+			}
+			
+			model.addObject("list2Count",claimList1.size());
+			model.addObject("claimListForApproval1",claimList1);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+	}
+	
+
+	@RequestMapping(value = "/approveClaimByAuth", method = RequestMethod.GET)
+	public String insertLeave(HttpServletRequest request,HttpServletResponse response) {
+		
+		try {
+			HttpSession session = request.getSession();
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+
+			Date date = new Date();
+			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+			
+			int  empId = Integer.parseInt(FormValidation.DecodeKey(request.getParameter("empId")));
+			int claimId=Integer.parseInt(FormValidation.DecodeKey(request.getParameter("claimId")));
+			String stat=request.getParameter("stat");
+			
+	       System.err.println("link data :::"+empId+claimId+stat);
+			
+			
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("claimId", claimId);
+			map.add("status",stat);
+			Info info = Constants.getRestTemplate().postForObject(Constants.url + "/updateClaimStatus", map, Info.class);
+
+			if(info.isError()==false) {
+				ClaimTrail lt = new ClaimTrail();
+				
+				
+				lt.setEmpRemarks("null");
+			
+				lt.setClaimId(claimId);;
+				
+				lt.setClaimStatus(Integer.parseInt(stat));
+				lt.setEmpId(empId);
+				lt.setExInt1(1);
+				lt.setExInt2(1);
+				lt.setExInt3(1);
+				lt.setExVar1("NA");
+				lt.setExVar2("NA");
+				lt.setExVar3("NA");
+				
+				lt.setMakerUserId(userObj.getUserId());
+				lt.setMakerEnterDatetime(sf.format(date));
+				
+
+				ClaimTrail res1 = Constants.getRestTemplate().postForObject(Constants.url + "/saveClaimTrail", lt,
+						ClaimTrail.class);
+				if(res1!=null) {
+					
+				 map = new LinkedMultiValueMap<>();
+				map.add("claimId",claimId);
+				map.add("trailId", res1.getClaimTrailPkey());
+				Info info1 = Constants.getRestTemplate().postForObject(Constants.url + "/updateClaimTrailId", map, Info.class);
+
+
+				}
+			}
+			
+			 else {
+				session.setAttribute("errorMsg", "Failed to Insert Record");
+			}
+
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:/showClaimApprovalByAuthority";
+	
+
+}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
