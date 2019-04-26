@@ -139,7 +139,7 @@ public class LeaveHolidayController {
 
 				Holiday holiday = new Holiday();
 
-				holiday.setCalYrId((int) session.getAttribute("currYrId"));
+				holiday.setCalYrId((int) session.getAttribute("currYearId"));
 				holiday.setCompanyId(userObj.getCompanyId());
 				holiday.setDelStatus(1);
 
@@ -158,7 +158,7 @@ public class LeaveHolidayController {
 				Holiday res = Constants.getRestTemplate().postForObject(Constants.url + "/saveHoliday", holiday,
 						Holiday.class);
 
-				if (res != null) {
+				if (res.isError() == false) {
 					session.setAttribute("successMsg", "Record Insert Successfully");
 				} else {
 					session.setAttribute("errorMsg", "Failed to Insert Record");
@@ -172,7 +172,7 @@ public class LeaveHolidayController {
 			e.printStackTrace();
 		}
 
-		return "redirect:/holidayAdd";
+		return "redirect:/showHolidayList";
 	}
 
 	@RequestMapping(value = "/editHoliday", method = RequestMethod.GET)
@@ -311,7 +311,7 @@ public class LeaveHolidayController {
 				Holiday res = Constants.getRestTemplate().postForObject(Constants.url + "/saveHoliday", editHoliday,
 						Holiday.class);
 
-				if (res != null) {
+				if (res.isError() == false) {
 					session.setAttribute("successMsg", "Record Update Successfully");
 				} else {
 					session.setAttribute("errorMsg", "Failed to Update Record");

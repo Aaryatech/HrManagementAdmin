@@ -164,6 +164,14 @@ public class ProjectType {
 		this.exVar3 = exVar3;
 	}
 
+	public boolean isError() {
+		return error;
+	}
+
+	public void setError(boolean error) {
+		this.error = error;
+	}
+
 	@Override
 	public String toString() {
 		return "ProjectType [projectTypeId=" + projectTypeId + ", companyId=" + companyId + ", projectTypeTitle="
@@ -171,16 +179,7 @@ public class ProjectType {
 				+ projectTypeColor + ", projectTypeRemarks=" + projectTypeRemarks + ", delStatus=" + delStatus
 				+ ", isActive=" + isActive + ", makerUserId=" + makerUserId + ", makerEnterDatetime="
 				+ makerEnterDatetime + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exInt3=" + exInt3 + ", exVar1="
-				+ exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3 + ", error=" + error + ", getProjectTypeId()="
-				+ getProjectTypeId() + ", getCompanyId()=" + getCompanyId() + ", getProjectTypeTitle()="
-				+ getProjectTypeTitle() + ", getProjectTypeTitleShort()=" + getProjectTypeTitleShort()
-				+ ", getProjectTypeColor()=" + getProjectTypeColor() + ", getProjectTypeRemarks()="
-				+ getProjectTypeRemarks() + ", getDelStatus()=" + getDelStatus() + ", getIsActive()=" + getIsActive()
-				+ ", getMakerUserId()=" + getMakerUserId() + ", getMakerEnterDatetime()=" + getMakerEnterDatetime()
-				+ ", getExInt1()=" + getExInt1() + ", getExInt2()=" + getExInt2() + ", getExInt3()=" + getExInt3()
-				+ ", getExVar1()=" + getExVar1() + ", getExVar2()=" + getExVar2() + ", getExVar3()=" + getExVar3()
-				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString()
-				+ "]";
+				+ exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3 + ", error=" + error + "]";
 	}
 
 }

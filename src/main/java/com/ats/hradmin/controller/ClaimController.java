@@ -65,8 +65,8 @@ public class ClaimController {
 
 	@RequestMapping(value = "/submitInsertCustomer", method = RequestMethod.POST)
 	public String submitInsertCustomer(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
 		try {
-			HttpSession session = request.getSession();
 
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
@@ -103,7 +103,7 @@ public class ClaimController {
 				Customer res = Constants.getRestTemplate().postForObject(Constants.url + "/saveCustomer", save,
 						Customer.class);
 
-				if (res != null) {
+				if (res.isError() == false) {
 					session.setAttribute("successMsg", "Record Insert Successfully");
 				} else {
 					session.setAttribute("errorMsg", "Failed to Insert Record");
@@ -115,9 +115,10 @@ public class ClaimController {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			session.setAttribute("errorMsg", "Failed to Insert Record");
 		}
 
-		return "redirect:/addCustomer";
+		return "redirect:/showCustomerList";
 
 	}
 
@@ -210,10 +211,10 @@ public class ClaimController {
 				Customer res = Constants.getRestTemplate().postForObject(Constants.url + "/saveCustomer", editCust,
 						Customer.class);
 
-				if (res != null) {
-					session.setAttribute("successMsg", "Record Insert Successfully");
+				if (res.isError() == false) {
+					session.setAttribute("successMsg", "Record Update Successfully");
 				} else {
-					session.setAttribute("errorMsg", "Failed to Insert Record");
+					session.setAttribute("errorMsg", "Failed to Update Record");
 				}
 
 			} else {
@@ -321,7 +322,9 @@ public class ClaimController {
 				ClaimType res = Constants.getRestTemplate().postForObject(Constants.url + "/saveClaimType", save,
 						ClaimType.class);
 
-				if (res != null) {
+				System.out.println(res.toString());
+
+				if (res.isError() == false) {
 					session.setAttribute("successMsg", "Record Insert Successfully");
 				} else {
 					session.setAttribute("errorMsg", "Failed to Insert Record");
@@ -335,7 +338,7 @@ public class ClaimController {
 			e.printStackTrace();
 		}
 
-		return "redirect:/claimTypeAdd";
+		return "redirect:/showClaimTypeList";
 
 	}
 
@@ -377,7 +380,7 @@ public class ClaimController {
 	@RequestMapping(value = "/editClaimType", method = RequestMethod.GET)
 	public ModelAndView editClaimType(HttpServletRequest request, HttpServletResponse response) {
 
-		ModelAndView model = new ModelAndView("claim/claim_edit");
+		ModelAndView model = new ModelAndView("claim/claim_type_edit");
 
 		try {
 
@@ -445,6 +448,12 @@ public class ClaimController {
 
 				ClaimType res = Constants.getRestTemplate().postForObject(Constants.url + "/saveClaimType",
 						editClaimType, ClaimType.class);
+				if (res.isError() == false) {
+					session.setAttribute("successMsg", "Record Update Successfully");
+				} else {
+					session.setAttribute("errorMsg", "Failed to Update Record");
+				}
+
 			} else {
 				session.setAttribute("errorMsg", "Failed to Insert Record");
 			}

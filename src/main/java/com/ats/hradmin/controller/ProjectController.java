@@ -104,7 +104,7 @@ public class ProjectController {
 
 				ProjectType res = Constants.getRestTemplate().postForObject(Constants.url + "/saveProjectType", save,
 						ProjectType.class);
-				if (res != null) {
+				if (res.isError() == false) {
 					session.setAttribute("successMsg", "Record Insert Successfully");
 				} else {
 					session.setAttribute("errorMsg", "Failed to Insert Record");
@@ -228,14 +228,14 @@ public class ProjectController {
 
 				ProjectType res = Constants.getRestTemplate().postForObject(Constants.url + "/saveProjectType",
 						editproType, ProjectType.class);
-				if (res != null) {
-					session.setAttribute("successMsg", "Record Insert Successfully");
+				if (res.isError() == false) {
+					session.setAttribute("successMsg", "Record Update Successfully");
 				} else {
-					session.setAttribute("errorMsg", "Failed to Insert Record");
+					session.setAttribute("errorMsg", "Failed to Update Record");
 				}
 
 			} else {
-				session.setAttribute("errorMsg", "Failed to Insert Record");
+				session.setAttribute("errorMsg", "Failed to Update Record");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

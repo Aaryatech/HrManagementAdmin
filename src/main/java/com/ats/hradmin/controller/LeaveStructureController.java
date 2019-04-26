@@ -432,7 +432,6 @@ public class LeaveStructureController {
 
 				LeaveStructureHeader res = Constants.getRestTemplate()
 						.postForObject(Constants.url + "saveLeaveStruture", editStructure, LeaveStructureHeader.class);
-				System.out.println("docInsertRes" + res.toString());
 
 				if (res != null) {
 					session.setAttribute("successMsg", "Record Insert Successfully");
@@ -440,7 +439,10 @@ public class LeaveStructureController {
 					session.setAttribute("errorMsg", "Failed to Insert Record");
 				}
 
+			} else {
+				session.setAttribute("errorMsg", "Failed to Insert Record");
 			}
+
 		} catch (Exception e) {
 
 			System.err.println("Exce In editInsertLeaveStructure method  " + e.getMessage());
@@ -487,12 +489,6 @@ public class LeaveStructureController {
 			List<LeavesAllotment> calAllotList = new ArrayList<>(Arrays.asList(leavesAllotmentArray));
 			model.addObject("calAllotList", calAllotList);
 
-			/*
-			 * System.out.println("calYrId" + session.getAttribute("currYearId"));
-			 * 
-			 * System.out.println("calAllotList" + calAllotList.toString());
-			 */
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -520,29 +516,42 @@ public class LeaveStructureController {
 
 			String[] arrOfStr = items.split(",");
 
-			LeavesAllotment leavesAllotment = new LeavesAllotment();
-			for (int i = 0; i < arrOfStr.length; i++) {
+			Boolean ret = false;
 
-				leavesAllotment.setCalYrId((int) session.getAttribute("currYearId"));
+			/*if (FormValidation.Validaton(lvsId, "") == true) {
 
-				leavesAllotment.setDelStatus(1);
-				leavesAllotment.setEmpId(Integer.parseInt(arrOfStr[i]));
-				leavesAllotment.setExVar1("NA");
-				leavesAllotment.setExVar2("NA");
-				leavesAllotment.setExVar3("NA");
-				leavesAllotment.setIsActive(1);
-				leavesAllotment.setMakerUserId(userObj.getUserId());
-				leavesAllotment.setMakerEnterDatetime(dateTime);
-				leavesAllotment.setLvsId(lvsId);
+				ret = true;
 
-				LeavesAllotment res = Constants.getRestTemplate().postForObject(Constants.url + "/saveLeaveAllotment",
-						leavesAllotment, LeavesAllotment.class);
+			}
+*/
+			if (ret == false) {
 
-				if (res != null) {
-					session.setAttribute("successMsg", "Record Insert Successfully");
-				} else {
-					session.setAttribute("errorMsg", "Failed to Insert Record");
+				LeavesAllotment leavesAllotment = new LeavesAllotment();
+				for (int i = 0; i < arrOfStr.length; i++) {
+
+					leavesAllotment.setCalYrId((int) session.getAttribute("currYearId"));
+
+					leavesAllotment.setDelStatus(1);
+					leavesAllotment.setEmpId(Integer.parseInt(arrOfStr[i]));
+					leavesAllotment.setExVar1("NA");
+					leavesAllotment.setExVar2("NA");
+					leavesAllotment.setExVar3("NA");
+					leavesAllotment.setIsActive(1);
+					leavesAllotment.setMakerUserId(userObj.getUserId());
+					leavesAllotment.setMakerEnterDatetime(dateTime);
+					leavesAllotment.setLvsId(lvsId);
+
+					LeavesAllotment res = Constants.getRestTemplate().postForObject(
+							Constants.url + "/saveLeaveAllotment", leavesAllotment, LeavesAllotment.class);
+
+					if (res != null) {
+						session.setAttribute("successMsg", "Record Insert Successfully");
+					} else {
+						session.setAttribute("errorMsg", "Failed to Insert Record");
+					}
 				}
+			} else {
+				session.setAttribute("errorMsg", "Failed to Insert Record");
 			}
 
 		} catch (Exception e) {

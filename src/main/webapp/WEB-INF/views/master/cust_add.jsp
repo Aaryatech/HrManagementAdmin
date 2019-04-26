@@ -121,7 +121,7 @@
 
 										<div class="form-group row">
 											<label class="col-form-label col-lg-2" for="custName">
-												Project Type Title: *</label>
+												Customer Name: *</label>
 											<div class="col-lg-10">
 												<input type="text" class="form-control"
 													placeholder="Enter Customer Name" id="custName"

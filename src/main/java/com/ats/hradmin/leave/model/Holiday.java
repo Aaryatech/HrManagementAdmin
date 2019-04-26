@@ -35,6 +35,7 @@ public class Holiday {
 	private String exVar2;
 
 	private String exVar3;
+	private boolean error;
 
 	public int getHolidayId() {
 		return holidayId;
@@ -171,6 +172,16 @@ public class Holiday {
 	public void setExVar3(String exVar3) {
 		this.exVar3 = exVar3;
 	}
+	
+	
+
+	public boolean isError() {
+		return error;
+	}
+
+	public void setError(boolean error) {
+		this.error = error;
+	}
 
 	@Override
 	public String toString() {
@@ -178,7 +189,8 @@ public class Holiday {
 				+ locId + ", holidayFromdt=" + holidayFromdt + ", holidayTodt=" + holidayTodt + ", holidayRemark="
 				+ holidayRemark + ", delStatus=" + delStatus + ", isActive=" + isActive + ", makerUserId=" + makerUserId
 				+ ", makerEnterDatetime=" + makerEnterDatetime + ", exInt1=" + exInt1 + ", exInt2=" + exInt2
-				+ ", exInt3=" + exInt3 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3 + "]";
+				+ ", exInt3=" + exInt3 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3 + ", error="
+				+ error + "]";
 	}
 
 }
