@@ -24,17 +24,21 @@ import com.ats.hradmin.common.Constants;
 import com.ats.hradmin.common.DateConvertor;
 import com.ats.hradmin.common.FormValidation;
 import com.ats.hradmin.leave.model.GetAuthorityIds;
+import com.ats.hradmin.leave.model.GetHoliday;
+import com.ats.hradmin.leave.model.Holiday;
 import com.ats.hradmin.leave.model.LeaveHistory;
 import com.ats.hradmin.model.AccessRightModule;
 import com.ats.hradmin.model.Company;
 import com.ats.hradmin.model.EmployeeInfo;
 import com.ats.hradmin.model.GetEmployeeInfo;
+import com.ats.hradmin.model.HolidayAndWeeklyOff;
 import com.ats.hradmin.model.Info;
 import com.ats.hradmin.model.LeaveApply;
 import com.ats.hradmin.model.LeaveSummary;
 import com.ats.hradmin.model.LeaveTrail;
 import com.ats.hradmin.model.LeaveType;
 import com.ats.hradmin.model.LoginResponse;
+import com.ats.hradmin.model.WeeklyOff;
 
 @Controller
 @Scope("session")
@@ -462,6 +466,37 @@ public class LeaveController {
 			e.printStackTrace();
 		}
 		return model;
+	}
+	
+	@RequestMapping(value = "/getHolidayAndWeeklyOffList", method = RequestMethod.GET)
+	public @ResponseBody HolidayAndWeeklyOff getHolidayAndWeeklyOffList(HttpServletRequest request, HttpServletResponse response) {
+
+		 HolidayAndWeeklyOff  HolidayAndWeeklyOff = new HolidayAndWeeklyOff();
+		 
+		try {
+			String empId = request.getParameter("empId"); 
+			String fromDate = request.getParameter("fromDate");
+			String toDate = request.getParameter("toDate");
+		
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("empId", empId);
+			map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+			map.add("toDate", DateConvertor.convertToYMD(toDate));
+			System.out.println(map);
+			Holiday[]  holi = Constants.getRestTemplate().postForObject(Constants.url + "/getHolidayByEmpIdAndFromDateTodate", map,
+					Holiday[].class);
+			 List<Holiday> li = new ArrayList<>(Arrays.asList(holi));
+			 
+			 WeeklyOff[]  wee = Constants.getRestTemplate().postForObject(Constants.url + "/getWeeklyOffListByEmpId", map,
+					 WeeklyOff[].class);
+			 List<WeeklyOff> list = new ArrayList<>(Arrays.asList(wee));
+			 HolidayAndWeeklyOff.setHolidayList(li);
+			 HolidayAndWeeklyOff.setWeeklyList(list);
+			 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return HolidayAndWeeklyOff;
 	}
 	
 	@RequestMapping(value = "/insertLeave", method = RequestMethod.POST)

@@ -8,7 +8,7 @@
 <c:url var="addStrDetail" value="/addStrDetail" />
 
 <c:url var="getLeaveStructureForEdit" value="/getLeaveStructureForEdit" />
-
+<c:url var="getHolidayAndWeeklyOffList" value="/getHolidayAndWeeklyOffList" />
 <jsp:include page="/WEB-INF/views/include/metacssjs.jsp"></jsp:include>
 </head>
 
@@ -121,164 +121,170 @@
 									session.removeAttribute("successMsg");
 									}
 								%>
-<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="lvsName">
-											Employee Code : *</label>
-										<div class="col-lg-10">
-											<input type="text" class="form-control"
-												placeholder="Enter Leave Structure Name" id="lvsName"   value="${editEmp.empCode}" 
-												name="lvsName" autocomplete="off" onchange="trim(this)" readonly>
-											
-										</div>
+								<div class="form-group row">
+									<label class="col-form-label col-lg-2" for="lvsName">
+										Employee Code : *</label>
+									<div class="col-lg-10">
+										<input type="text" class="form-control"
+											placeholder="Enter Leave Structure Name" id="lvsName"
+											value="${editEmp.empCode}" name="lvsName" autocomplete="off"
+											onchange="trim(this)" readonly>
+
 									</div>
-									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="lvsName">
-											Employee Name : *</label>
-										<div class="col-lg-10">
-											<input type="text" class="form-control"
-												placeholder="Enter Leave Structure Name" id="lvsName"  value="${editEmp.empFname} ${editEmp.empMname} ${editEmp.empSname}   "
-												name="lvsName" autocomplete="off" onchange="trim(this)" readonly>
-											
-										</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-form-label col-lg-2" for="lvsName">
+										Employee Name : *</label>
+									<div class="col-lg-10">
+										<input type="text" class="form-control"
+											placeholder="Enter Leave Structure Name" id="lvsName"
+											value="${editEmp.empFname} ${editEmp.empMname} ${editEmp.empSname}   "
+											name="lvsName" autocomplete="off" onchange="trim(this)"
+											readonly>
+
 									</div>
-									<hr>
-									
+								</div>
+								<hr>
+
 								<table
-							class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic  datatable-button-print-columns1"
-							id="printtable1">
-						
-						
-							<thead>
-								<tr class="bg-blue">
-								
-									<th></th>
-									<th>OB</th>
-									<th>Earned</th>
-									<th>Sanction</th>
-									<th>Balanced</th>
-									<th>Applied</th>
-									
-									 
-									
-								</tr>
-							</thead>
-							<tbody>
-	<c:forEach items="${leaveHistoryList}" var="leaveHistoryList" >
-									<tr>
-										<td>${leaveHistoryList.lvTitleShort}</td>
-										<td>${leaveHistoryList.balLeave}</td>
-										<td>${leaveHistoryList.balLeave+leaveHistoryList.lvsAllotedLeaves}</td>
-										<td>${leaveHistoryList.sactionLeave}</td>
-										<td>${leaveHistoryList.lvsAllotedLeaves-leaveHistoryList.sactionLeave}</td>
-										<td>${leaveHistoryList.aplliedLeaeve}</td>
-										
-										
-									</tr>
-								</c:forEach>
-									
-							
+									class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic  datatable-button-print-columns1"
+									id="printtable1">
 
 
-							</tbody>
-						</table>
-								<form
-									action="${pageContext.request.contextPath}/insertLeave"
+									<thead>
+										<tr class="bg-blue">
+
+											<th></th>
+											<th>OB</th>
+											<th>Earned</th>
+											<th>Sanction</th>
+											<th>Balanced</th>
+											<th>Applied</th>
+
+
+
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach items="${leaveHistoryList}" var="leaveHistoryList">
+											<tr>
+												<td>${leaveHistoryList.lvTitleShort}</td>
+												<td>${leaveHistoryList.balLeave}</td>
+												<td>${leaveHistoryList.balLeave+leaveHistoryList.lvsAllotedLeaves}</td>
+												<td>${leaveHistoryList.sactionLeave}</td>
+												<td>${leaveHistoryList.lvsAllotedLeaves-leaveHistoryList.sactionLeave}</td>
+												<td>${leaveHistoryList.aplliedLeaeve}</td>
+
+
+											</tr>
+										</c:forEach>
+
+
+
+
+									</tbody>
+								</table>
+								<form action="${pageContext.request.contextPath}/insertLeave"
 									id="submitInsertLeave" method="post">
-									
-									
-									
-										<div class="form-group row">
+
+
+
+									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="leaveTypeId">Select
 											Leave Type :</label>
 										<div class="col-lg-4">
 											<select name="leaveTypeId"
 												data-placeholder="Select Leave Type" id="leaveTypeId"
 												class="form-control form-control-select2 select2-hidden-accessible"
-												 data-fouc="" tabindex="-1" aria-hidden="true">
+												data-fouc="" tabindex="-1" aria-hidden="true">
 												<option></option>
-												<c:forEach items="${leaveHistoryList}" var="leaveHistoryList">
+												<c:forEach items="${leaveHistoryList}"
+													var="leaveHistoryList">
 													<c:choose>
-														<c:when test="${leaveHistoryList.lvTypeId == editLeave.lvTypeId}">
-															<option value="${leaveHistoryList.lvTypeId}" selected="selected">${leaveHistoryList.lvTitle}</option>
+														<c:when
+															test="${leaveHistoryList.lvTypeId == editLeave.lvTypeId}">
+															<option value="${leaveHistoryList.lvTypeId}"
+																selected="selected">${leaveHistoryList.lvTitle}</option>
 														</c:when>
 														<c:otherwise>
 															<option value="${leaveHistoryList.lvTypeId}">${leaveHistoryList.lvTitle}</option>
 														</c:otherwise>
 													</c:choose>
 												</c:forEach>
-											</select> <span class="validation-invalid-label" id="error_leaveTypeId"
-												style="display: none;">This field is required.</span>
+											</select> <span class="validation-invalid-label"
+												id="error_leaveTypeId" style="display: none;">This
+												field is required.</span>
 										</div>
-										
-											
-										
-										<div class="col-lg-2">
-											<select  data-placeholder="Select a Day Type" id="dayTypeName" name="dayTypeName"
-												class="form-control form-control-select2 select2-hidden-accessible"
-												 data-fouc="" tabindex="-1" aria-hidden="true">
-												<option></option>		
-											<option value="1">Full Day</option>
-											<option value="2">Half Day</option>
 
-											
+
+
+										<div class="col-lg-2">
+											<select data-placeholder="Select a Day Type" id="dayTypeName"
+												name="dayTypeName"
+												class="form-control form-control-select2 select2-hidden-accessible"
+												data-fouc="" tabindex="-1" aria-hidden="true">
+												<option></option>
+												<option value="1">Full Day</option>
+												<option value="2">Half Day</option>
+
+
 											</select><span class="validation-invalid-label" id="error_dayType"
 												style="display: none;">This field is required.</span>
 										</div>
-										</div>
-											<div class="form-group row">
+									</div>
+									<div class="form-group row">
 										<label class="col-form-label col-lg-2">Date Range:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control daterange-basic_new "
 												name="leaveDateRange" data-placeholder="Select Date"
-												id="leaveDateRange" onchange="calculateDiff()"> <span
+												id="leaveDateRange" onchange="calholiday()"> <span
 												class="validation-invalid-label" id="error_Range"
 												style="display: none;">This field is required.</span>
 
 										</div>
 									</div>
-									
-										
-									
-									
-	<div class="form-group row">
+
+
+
+
+									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="noOfDays">
-										No. of Days : *</label>
+											No. of Days : *</label>
 										<div class="col-lg-4">
-											<input type="text" class="form-control numbersOnly" 
-												placeholder="No. of Days " id="noOfDays"
-												name="noOfDays" autocomplete="off" readonly>
-											<span class="validation-invalid-label" id="error_noOfDays"
+											<input type="text" class="form-control numbersOnly"
+												placeholder="No. of Days " id="noOfDays" name="noOfDays"
+												autocomplete="off" readonly> <span
+												class="validation-invalid-label" id="error_noOfDays"
 												style="display: none;">This field is required.</span>
 										</div>
-										</div>
+									</div>
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="noOfDaysExclude">
 											Excluding Weekly Off *</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control numbersOnly"
-												placeholder="Excluding Weekly Off: " id="noOfDaysExclude"  
-												name="noOfDaysExclude" autocomplete="off" onchange="trim(this)" readonly>
-											<span class="validation-invalid-label" id="error_noOfDaysExclude"
+												placeholder="Excluding Weekly Off: " id="noOfDaysExclude"
+												name="noOfDaysExclude" autocomplete="off"
+												onchange="trim(this)" readonly> <span
+												class="validation-invalid-label" id="error_noOfDaysExclude"
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
 
-						<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="lvngReson">Remark :  </label>
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="lvngReson">Remark
+											: </label>
 										<div class="col-lg-10">
 											<textarea rows="3" cols="3" class="form-control"
-												placeholder="Remark" onchange="trim(this)"
-												id="leaveRemark" name="leaveRemark"> </textarea>
-												</div>
+												placeholder="Remark" onchange="trim(this)" id="leaveRemark"
+												name="leaveRemark"> </textarea>
+										</div>
 									</div>
-										<input type="hidden" class="form-control numbersOnly"
-												id="empId"  value="${empId}"
-												name="empId" >
-												
-													<input type="hidden" class="form-control numbersOnly"
-												id="tempNoDays" 
-												name="tempNoDays" >
-									
+									<input type="hidden" class="form-control numbersOnly"
+										id="empId" value="${empId}" name="empId"> <input
+										type="hidden" class="form-control numbersOnly" id="tempNoDays"
+										name="tempNoDays">
+
 									<div class="form-group row mb-0">
 										<div class="col-lg-10 ml-lg-auto">
 
@@ -310,56 +316,346 @@
 	</div>
 	<!-- /page content -->
 	<script type="text/javascript">
-	function calculateDiff() {
-		 
-		var daterange = document.getElementById("leaveDateRange").value;
-		var res = daterange.split(" to ");
-		 
-		var date1res = res[0].split("-");
-		var date2res = res[1].split("-");
+		function calholiday() {
+			
+			var daterange = document.getElementById("leaveDateRange").value;
+			var res = daterange.split(" to ");
+			var empId = document.getElementById("empId").value;
+			
+				$.getJSON('${getHolidayAndWeeklyOffList}', {
+
+					fromDate : res[0],
+					toDate : res[1],
+					empId : empId,
+					ajax : 'true',
+
+				}, function(data) {
+
+					// alert("Data  " +JSON.stringify(data));
+					var diff = calculateDiff();
+					
+					var totalSundays = 0;
+					var comndate = [];
+					 
+					
+					for(var i=0 ; i<data.weeklyList.length ;i++){
+						  
+						if(data.weeklyList[i].woType==0){
+							
+							var date1res = res[0].split("-");
+							var date2res = res[1].split("-");
+							
+							var date1 = new Date(date1res[2], date1res[1] - 1, date1res[0])//converts string to date object 
+							var date2 = new Date(date2res[2], date2res[1] - 1, date2res[0])
+							
+							 for (var j = date1; j <= date2; ){
+								  
+						            if (j.getDay() == data.weeklyList[i].woDay){
+						            	 
+						            	 formatDate(date1);
+						            	 comndate.push(formatDate(date1));
+						                totalSundays++;
+						            }
+						            j.setTime(j.getTime() + 1000*60*60*24);
+						            
+						        }
+							 
+						}else if(data.weeklyList[i].woType==3){
+							 
+							var date1res = res[0].split("-");
+							var date2res = res[1].split("-");
+							var year = date1res[2];
+							//alert("year " + year);
+							
+							  for(k=(date1res[1] - 1) ; k<= (date2res[1]-1) ; k++){
+								
+								var date1 = new Date(year, k, 1);
+								var date2 = new Date(year, k, 7);
+								 
+								var holfrstdt = new Date(date1res[2], date1res[1] - 1, date1res[0])//converts string to date object 
+								var holseconddt = new Date(date2res[2], date2res[1] - 1, date2res[0])
+								
+								  for (var m = holfrstdt; m <= holseconddt; ){
+									
+									
+									if(m>=date1 && m<=date2){
+										
+										for (var j = m; j <= date2; ){
+											  
+								            if (j.getDay() == data.weeklyList[i].woDay){
+								            	 
+								            	alert(j+"matched 1st");
+								            	
+								            	 formatDate(m);
+								            	 comndate.push(formatDate(m));
+								                totalSundays++;
+								            }
+								            j.setTime(j.getTime() + 1000*60*60*24);
+								            
+								        }
+										
+									} 
+									 m.setTime(m.getTime() + 1000*60*60*24);
+								}  
+								 
+								var lastDay = new Date(year, k , 0); 
+								var nextDay = new Date();
+								nextDay.setDate(lastDay.getDate());
+								 var spltdt = formatDate(lastDay).split("-");
+								 year = spltdt[0];
+								    
+							}  
+							
+							 
+							
+						} /*else if(data.weeklyList[i].woType==4){
+							 
+							var date1res = res[0].split("-");
+							var date2res = res[1].split("-");
+							var year = date1res[2];
+							//alert("year " + year);
+							
+							  for(k=(date1res[1] - 1) ; k<= (date2res[1]-1) ; k++){
+								
+								var date1 = new Date(year, k, 8);
+								var date2 = new Date(year, k, 14);
+								 
+								var holfrstdt = new Date(date1res[2], date1res[1] - 1, date1res[0])//converts string to date object 
+								var holseconddt = new Date(date2res[2], date2res[1] - 1, date2res[0])
+								
+								  for (var m = holfrstdt; m <= holseconddt; ){
+									
+									
+									if(m>=date1 && m<=date2){
+										alert(m>=date1);
+										alert(m+ " " + date1);
+										for (var j = m; j <= date2; ){
+											  
+								            if (j.getDay() == data.weeklyList[i].woDay){
+								            	 
+								            	alert(j+"matched 2nd");
+								            	
+								            	 formatDate(m);
+								            	 comndate.push(formatDate(m));
+								                totalSundays++;
+								            }
+								            j.setTime(j.getTime() + 1000*60*60*24);
+								            
+								        }
+										
+									} 
+									 m.setTime(m.getTime() + 1000*60*60*24);
+								}  
+								 
+								var lastDay = new Date(year, k , 0); 
+								var nextDay = new Date();
+								nextDay.setDate(lastDay.getDate());
+								 var spltdt = formatDate(lastDay).split("-");
+								 year = spltdt[0];
+								 
+							}  
+							
+							 
+							
+						}else if(data.weeklyList[i].woType==5){
+							 
+							var date1res = res[0].split("-");
+							var date2res = res[1].split("-");
+							var year = date1res[2];
+							//alert("year " + year);
+							
+							  for(k=(date1res[1] - 1) ; k<= (date2res[1]-1) ; k++){
+								
+								var date1 = new Date(year, k, 15);
+								var date2 = new Date(year, k, 21);
+								 
+								var holfrstdt = new Date(date1res[2], date1res[1] - 1, date1res[0])//converts string to date object 
+								var holseconddt = new Date(date2res[2], date2res[1] - 1, date2res[0])
+								
+								  for (var m = holfrstdt; m <= holseconddt; ){
+									
+									
+									if(m>=date1 && m<=date2){
+										
+										for (var j = m; j <= date2; ){
+											  
+								            if (j.getDay() == data.weeklyList[i].woDay){
+								            	 
+								            	alert(j+"matched 3rd");
+								            	
+								            	 formatDate(m);
+								            	 comndate.push(formatDate(m));
+								                totalSundays++;
+								            }
+								            j.setTime(j.getTime() + 1000*60*60*24);
+								            
+								        }
+										
+									} 
+									 m.setTime(m.getTime() + 1000*60*60*24);
+								}  
+								 
+								var lastDay = new Date(year, k , 0); 
+								var nextDay = new Date();
+								nextDay.setDate(lastDay.getDate());
+								 var spltdt = formatDate(lastDay).split("-");
+								 year = spltdt[0];
+								 
+							}  
+							
+							 
+							
+						}else if(data.weeklyList[i].woType==6){
+							 
+							var date1res = res[0].split("-");
+							var date2res = res[1].split("-");
+							var year = date1res[2];
+							//alert("year " + year);
+							
+							  for(k=(date1res[1] - 1) ; k<= (date2res[1]-1) ; k++){
+								
+								var date1 = new Date(year, k, 22);
+								var date2 = new Date(year, k, 28);
+								 
+								var holfrstdt = new Date(date1res[2], date1res[1] - 1, date1res[0])//converts string to date object 
+								var holseconddt = new Date(date2res[2], date2res[1] - 1, date2res[0])
+								
+								  for (var m = holfrstdt; m <= holseconddt; ){
+									
+									
+									if(m>=date1 && m<=date2){
+										
+										for (var j = m; j <= date2; ){
+											  
+								            if (j.getDay() == data.weeklyList[i].woDay){
+								            	 
+								            	alert(j+"matched 4th");
+								            	
+								            	 formatDate(m);
+								            	 comndate.push(formatDate(m));
+								                totalSundays++;
+								            }
+								            j.setTime(j.getTime() + 1000*60*60*24);
+								            
+								        }
+										
+									} 
+									 m.setTime(m.getTime() + 1000*60*60*24);
+								}  
+								 
+								var lastDay = new Date(year, k , 0); 
+								var nextDay = new Date();
+								nextDay.setDate(lastDay.getDate());
+								 var spltdt = formatDate(lastDay).split("-");
+								 year = spltdt[0];
+								   
+							}  
+							
+							 
+							
+						} */
+						
+						
+					}
+					
+				 	for(var i=0 ; i<data.holidayList.length ;i++){
+						
+				 		//alert("Data  " +JSON.stringify(data.holidayList[i]));
+				 		
+						   var frdtres = data.holidayList[i].holidayFromdt.split("-");
+							var todtres = data.holidayList[i].holidayTodt.split("-");
+						   var frdt =  new Date(frdtres[0], frdtres[1] - 1, frdtres[2]);
+						   var todt =  new Date(todtres[0], todtres[1] - 1, todtres[2]);  
+						   var tempdiff = difffun(frdt,todt);
+						   
+						   
+						   for(var j=0 ; j<comndate.length ;j++){
+							   
+							   var tempres = comndate[j].split("-");
+							   var tempdt =  new Date(tempres[0], tempres[1] - 1, tempres[2]);
+							  
+							   if(tempdt>=frdt && tempdt<=todt){
+								   tempdiff--;
+							   } 
+						   }
+						   
+						   totalSundays=totalSundays+tempdiff;
+					}  
+					
+					//alert(comndate);
+					 
+					document.getElementById("noOfDays").value = diff-totalSundays;
+					document.getElementById("noOfDaysExclude").value =totalSundays;
+					 
+				});
+		}
 		
-		var date1 = new Date(date1res[2],date1res[1]-1,date1res[0])//converts string to date object
-        
-        var date2 = new Date(date2res[2],date2res[1]-1,date2res[0])
-         
-        const diffTime = Math.abs(date2.getTime() - date1.getTime());
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
-        document.getElementById("noOfDays").value =  diffDays+1 ;
-        
-        document.getElementById("noOfDaysExclude").value =  diffDays+1 ;
-	}
-	
-	
-	
+		function formatDate(date) {
+		    var d = new Date(date),
+		        month = '' + (d.getMonth() + 1),
+		        day = '' + d.getDate(),
+		        year = d.getFullYear();
+
+		    if (month.length < 2) month = '0' + month;
+		    if (day.length < 2) day = '0' + day;
+
+		    return [year, month, day].join('-');
+		}
+		function difffun(date1,date2) {
+ 
+			const diffTime = Math.abs(date2.getTime() - date1.getTime());
+			const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+			//document.getElementById("noOfDays").value = diffDays + 1;
+
+			//document.getElementById("noOfDaysExclude").value = diffDays + 1;
+			
+			return (diffDays + 1);
+		}
+	</script>
+
+	<script type="text/javascript">
+		function calculateDiff() {
+
+			var daterange = document.getElementById("leaveDateRange").value;
+			var res = daterange.split(" to ");
+
+			var date1res = res[0].split("-");
+			var date2res = res[1].split("-");
+
+			var date1 = new Date(date1res[2], date1res[1] - 1, date1res[0])//converts string to date object
+
+			var date2 = new Date(date2res[2], date2res[1] - 1, date2res[0])
+
+			const diffTime = Math.abs(date2.getTime() - date1.getTime());
+			const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+			//document.getElementById("noOfDays").value = diffDays + 1;
+
+			//document.getElementById("noOfDaysExclude").value = diffDays + 1;
+			
+			return (diffDays + 1);
+		}
+
 		function checkUnique() {
 			var inputValue = document.getElementById("leaveTypeId").value;
 			var valid = false;
-			
-			if(inputValue!=null){
+
+			if (inputValue != null) {
 				valid == true;
 			}
 			if (valid == true)
-				$
-						.getJSON(
-								'${chkNum}',
-								{
+				$.getJSON('${chkNum}', {
 
-									inputValue : inputValue,
-									ajax : 'true',
+					inputValue : inputValue,
+					ajax : 'true',
 
-								},
-								function(data) {
+				}, function(data) {
 
-									//alert("Data  " +JSON.stringify(data));
-									if (data.error == true) {
-										
-									}
-								});
+					//alert("Data  " +JSON.stringify(data));
+					if (data.error == true) {
+
+					}
+				});
 		}
-
-		
-	
-	
 	</script>
 	<script type="text/javascript">
 		// Single picker
@@ -393,83 +689,75 @@
 			return;
 		}
 
-		
-		$(document)
-				.ready(
-						function($) {
+		$(document).ready(function($) {
 
-							$("#submitInsertLeave")
-									.submit(
-											function(e) {
-												var isError = false;
-												var errMsg = "";
+			$("#submitInsertLeave").submit(function(e) {
+				var isError = false;
+				var errMsg = "";
 
-												if (!$("#leaveTypeId").val()) {
+				if (!$("#leaveTypeId").val()) {
 
-													isError = true;
+					isError = true;
 
-													$("#error_leaveTypeId").show()
-													//return false;
-												} else {
-													$("#error_leaveTypeId").hide()
-												}
+					$("#error_leaveTypeId").show()
+					//return false;
+				} else {
+					$("#error_leaveTypeId").hide()
+				}
 
-												if (!$("#dayTypeName").val()) {
+				if (!$("#dayTypeName").val()) {
 
-													isError = true;
+					isError = true;
 
-													$("#error_dayType")
-															.show()
+					$("#error_dayType").show()
 
-												} else {
-													$("#error_dayType")
-															.hide()
-												}
+				} else {
+					$("#error_dayType").hide()
+				}
 
-												if (!$("#leaveDateRange").val()) {
+				if (!$("#leaveDateRange").val()) {
 
-													isError = true;
+					isError = true;
 
-													$("#error_Range").show()
+					$("#error_Range").show()
 
-												} else {
-													$("#error_Range").hide()
-												}
+				} else {
+					$("#error_Range").hide()
+				}
 
-												if (!$("#noOfDays").val()) {
+				if (!$("#noOfDays").val()) {
 
-													isError = true;
+					isError = true;
 
-													$("#error_noOfDays").show()
+					$("#error_noOfDays").show()
 
-												} else {
-													$("#error_noOfDays").hide()
-												}
+				} else {
+					$("#error_noOfDays").hide()
+				}
 
-												if (!$("#noOfDaysExclude").val()) {
+				if (!$("#noOfDaysExclude").val()) {
 
-													isError = true;
+					isError = true;
 
-													$("#error_noOfDaysExclude").show()
+					$("#error_noOfDaysExclude").show()
 
-												} else {
-													$("#error_noOfDaysExclude").hide()
-												}
+				} else {
+					$("#error_noOfDaysExclude").hide()
+				}
 
-												if (!isError) {
+				if (!isError) {
 
-													var x = confirm("Do you really want to submit the form?");
-													if (x == true) {
+					var x = confirm("Do you really want to submit the form?");
+					if (x == true) {
 
-														document
-																.getElementById("submtbtn").disabled = true;
-														return true;
-													}
-													//end ajax send this to php page
-												}
-												return false;
-											});
-						});
+						document.getElementById("submtbtn").disabled = true;
+						return true;
+					}
+					//end ajax send this to php page
+				}
+				return false;
+			});
+		});
 		//
 	</script>
 
