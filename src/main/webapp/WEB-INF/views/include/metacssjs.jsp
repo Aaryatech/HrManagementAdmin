@@ -65,6 +65,10 @@
 	<script src="${pageContext.request.contextPath}/resources/global_assets/js/plugins/pickers/color/spectrum.js"></script>
 	  <script src="${pageContext.request.contextPath}/resources/global_assets/js/plugins/forms/styling/switchery.min.js"></script>  
 	  
+	<!-- Theme JS files -->
+	<script src="${pageContext.request.contextPath}/resources/global_assets/js/plugins/uploaders/fileinput/plugins/purify.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/global_assets/js/plugins/uploaders/fileinput/plugins/sortable.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/global_assets/js/plugins/uploaders/fileinput/fileinput.min.js"></script>
 	
 	<script src="${pageContext.request.contextPath}/resources/assets/js/app.js"></script>
 	<%-- <script src="${pageContext.request.contextPath}/resources/global_assets/js/demo_pages/dashboard.js"></script> --%>
@@ -77,6 +81,8 @@
 		<script src="${pageContext.request.contextPath}/resources/global_assets/js/demo_pages/picker_date.js"></script>
 			<script src="${pageContext.request.contextPath}/resources/global_assets/js/demo_pages/picker_color.js"></script>
 			<script src="${pageContext.request.contextPath}/resources/global_assets/js/demo_pages/form_select2.js"></script>
+	
+	<script src="${pageContext.request.contextPath}/resources/global_assets/js/demo_pages/uploader_bootstrap.js"></script>
 	<script>
 	 // Export options - column selector
     

@@ -248,12 +248,12 @@ ed65"></i>Cancel</a>
 														<c:when test="${claimList1.caFinAuthEmpId==empIdOrig}">
 															
 													<a
-															href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList.claimRemarks}&claimId=${claimList.claimRemarks}&stat=3"
+															href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList1.claimRemarks}&claimId=${claimList1.circulatedTo}&stat=3"
 															onClick="return confirm('Are you sure want to Approve this Claim');"
 															class="dropdown-item"><i class="icon-checkmark4 "></i>Approve</a>
 															
 													<a
-															href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList.claimRemarks}&claimId=${claimList.claimRemarks}&stat=9"
+															href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList1.claimRemarks}&claimId=${claimList1.circulatedTo}&stat=9"
 															onClick="return confirm('Are you sure want to Reject this Claim');"
 															class="dropdown-item"><i class="icon-x"></i>Reject</a>
 															</c:when>
@@ -281,7 +281,7 @@ ed65"></i>Cancel</a>
 															<c:if test="${claimList1.empId==empIdOrig}">
 															
 												<a
-															href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList.claimRemarks}&claimId=${claimList.claimRemarks}&stat=7"
+															href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList1.claimRemarks}&claimId=${claimList1.circulatedTo}&stat=7"
 													onClick="return confirm('Are you sure want to Cancel this Claim');"
 															
 															class="dropdown-item"><i class="icon-cancel-square "></i>Cancel</a>

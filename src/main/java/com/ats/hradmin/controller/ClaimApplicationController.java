@@ -345,7 +345,6 @@ public class ClaimApplicationController {
 					 "/getClaimApplyListForPending",map, GetClaimApplyAuthwise[].class);
 					
 			 List<GetClaimApplyAuthwise> claimList = new ArrayList<GetClaimApplyAuthwise>(Arrays.asList(employeeDoc));
-			 System.out.println("lv claimList list pending "+claimList.toString()); 
 			
 				for (int i = 0; i < claimList.size(); i++) {
 
@@ -355,7 +354,8 @@ public class ClaimApplicationController {
 				}
 				 model.addObject("claimListForApproval",claimList);
 				 model.addObject("list1Count",claimList.size());
-				
+				 System.out.println("lv claimList list pending "+claimList.toString()); 
+
 	//for Info	
 				 
 				 
@@ -369,7 +369,7 @@ public class ClaimApplicationController {
 						 "/getClaimApplyListForInformation",map, GetClaimApplyAuthwise[].class);
 						
 			List<GetClaimApplyAuthwise> claimList1 = new ArrayList<GetClaimApplyAuthwise>(Arrays.asList(employeeDoc1));
-		System.out.println("lv leaveList list1 info "+claimList1.toString()); 
+		
 			for (int i = 0; i < claimList1.size(); i++) {
 
 				claimList1.get(i).setCirculatedTo(FormValidation.Encrypt(String.valueOf(claimList1.get(i).getClaimId())));
@@ -379,6 +379,9 @@ public class ClaimApplicationController {
 			
 			model.addObject("list2Count",claimList1.size());
 			model.addObject("claimListForApproval1",claimList1);
+			System.out.println("lv leaveList list1 info "+claimList1.toString()); 
+			
+			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -397,7 +400,7 @@ public class ClaimApplicationController {
 			Date date = new Date();
 			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 			SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
-			
+			  System.err.println("emp data :::"+request.getParameter("empId"));
 			int  empId = Integer.parseInt(FormValidation.DecodeKey(request.getParameter("empId")));
 			int claimId=Integer.parseInt(FormValidation.DecodeKey(request.getParameter("claimId")));
 			String stat=request.getParameter("stat");
@@ -460,9 +463,22 @@ public class ClaimApplicationController {
 }
 	
 	
+	////////////////////////////////**********************Claim Proof******************************//////////////////
+
 	
-	
-	
+	@RequestMapping(value = "/showClaimProof", method = RequestMethod.GET)
+	public ModelAndView addCustomer(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("claim/claimProof");
+
+		try {
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+	}
+
 	
 	
 	

@@ -201,6 +201,15 @@
 											</button>
 										</div>
 									</div>
+									 
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2">Document:</label>
+										<div class="col-lg-10">
+											 <input type="file" class="file-input-ajax" multiple="multiple" data-fouc>
+									<span class="form-text text-muted">This scenario uses asynchronous/parallel uploads. Uploading itself is turned off in live preview.</span>
+										</div>
+									</div>
+									
 								</form>
 							</div>
 						</div>
