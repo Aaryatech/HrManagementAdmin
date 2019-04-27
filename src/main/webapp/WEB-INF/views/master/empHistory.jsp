@@ -170,17 +170,12 @@
 									<th>Code</th>
 									<th>Leave Days</th>
 									<th>Leave Duration</th>
-
 									<th>Date</th>
 									<th>Leave Status</th>
 
 									<th class="text-center" width="10%">Actions</th>
 								</tr>
 							</thead>
-
-
-
-
 						</table>
 					</div>
 
@@ -248,30 +243,30 @@
 							
  	
 							var current_status;
-							if(v.finalStatus==1)
+							if(v.exInt1==1)
 								{
 								/* current_status="Pending"; */
 
 								current_status='<span class="badge badge-info">Initial Pending</span>';
 								}
-							else if(v.finalStatus==2)
+							else if(v.exInt1==2)
 								{
 								
 								current_status='<span class="badge badge-secondary">Final Pending</span>';
 								}
-							else if(v.finalStatus==3)
+							else if(v.exInt1==3)
 							{
 							current_status='<span class="badge badge-success">Final Approve</span>';
 							}
-							else if(v.finalStatus==7)
+							else if(v.exInt1==7)
 							{
 							current_status='<span class="badge badge-danger">Cancel By Employee</span>';
 							}
-							else if(v.finalStatus==8)
+							else if(v.exInt1==8)
 							{
 							current_status='<span class="badge badge-danger">Initial Rejected</span>';
 							}
-							else if(v.finalStatus==9)
+							else if(v.exInt1==9)
 							{
 							current_status='<span class="badge badge-danger">Final Rejected</span>';
 							}
