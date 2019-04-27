@@ -16,17 +16,23 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.hradmin.claim.ClaimApply;
+import com.ats.hradmin.claim.ClaimDetail;
+import com.ats.hradmin.claim.ClaimProof;
 import com.ats.hradmin.claim.ClaimTrail;
 import com.ats.hradmin.claim.ClaimType;
 import com.ats.hradmin.claim.GetClaimApplyAuthwise;
 import com.ats.hradmin.common.Constants;
 import com.ats.hradmin.common.DateConvertor;
 import com.ats.hradmin.common.FormValidation;
+import com.ats.hradmin.common.VpsImageUpload;
 import com.ats.hradmin.leave.model.GetAuthorityIds;
 import com.ats.hradmin.leave.model.GetLeaveApplyAuthwise;
+import com.ats.hradmin.model.Company;
 import com.ats.hradmin.model.EmployeeInfo;
 import com.ats.hradmin.model.GetEmployeeInfo;
 import com.ats.hradmin.model.Info;
@@ -510,24 +516,127 @@ public class ClaimApplicationController {
 	////////////////////////////////**********************Claim Proof******************************//////////////////
 
 	
+	
+	@RequestMapping(value = "/showClaimList", method = RequestMethod.GET)
+	public ModelAndView showClaimList(HttpServletRequest request, HttpServletResponse response) {
+		
+		ModelAndView model = new ModelAndView("claim/claimHistory");
+		try {
+
+			
+			int empId = Integer.parseInt(FormValidation.DecodeKey(request.getParameter("empId")));
+			System.err.println("emp idis "+empId);
+			MultiValueMap<String, Object>  map = new LinkedMultiValueMap<>();
+				map.add("empId",empId);
+			
+			ClaimDetail[] employeeDoc1 = Constants.getRestTemplate().postForObject(Constants.url +
+							 "/getClaimListByEmpId",map, ClaimDetail[].class);
+							
+			List<ClaimDetail> claimList1 = new ArrayList<ClaimDetail>(Arrays.asList(employeeDoc1));			
+			System.err.println("claim list"+claimList1.toString());
+			
+			for (int i = 0; i < claimList1.size(); i++) {
+
+				claimList1.get(i).setCirculatedTo(FormValidation.Encrypt(String.valueOf(claimList1.get(i).getClaimId())));
+
+			}
+			 model.addObject("claimList1",claimList1);
+			
+			
+			
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+	return model;
+		
+	}
+	
 	@RequestMapping(value = "/showClaimProof", method = RequestMethod.GET)
 	public ModelAndView addCustomer(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("claim/claimProof");
+		int claimId = Integer.parseInt(FormValidation.DecodeKey(request.getParameter("claimId")));
+		model.addObject("claimId",claimId);
 
 		try {
 
+			MultiValueMap<String, Object>  map = new LinkedMultiValueMap<>();
+			map.add("claimId",claimId);
+		
+			ClaimProof[] employeeDoc1 = Constants.getRestTemplate().postForObject(Constants.url +
+						 "/getClaimProofByClaimId",map, ClaimProof[].class);
+						
+		List<ClaimProof> claimProofList1 = new ArrayList<ClaimProof>(Arrays.asList(employeeDoc1));			
+		System.err.println("claimProofList1 list"+claimProofList1.toString());
+		
+		
+		 model.addObject("claimProofList1",claimProofList1);
+		
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return model;
 	}
+	
+	
+	@RequestMapping(value = "/uploadClaimProof", method = RequestMethod.POST)
+	public void uploadClaimProof(@RequestParam("file") List<MultipartFile> file, HttpServletRequest request, HttpServletResponse response) {
 
-	
-	
-	
-	
-	
+		 
+		try {
+			
+			 
+		   Date date = new Date();
+		   SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+		   SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		   VpsImageUpload upload = new VpsImageUpload();
+		   System.out.println("sdfsdfsdf" + file.get(0).getOriginalFilename());
+			
+		   int claimId = Integer.parseInt(request.getParameter("claimId"));
+			String remark = request.getParameter("remark");
+
+			Boolean ret = false;
+
+			
+			if (FormValidation.Validaton(file.get(0).getOriginalFilename(), "") == true) {
+				ret = true;
+			}
+
+			if (ret == false) {
+
+				ClaimProof company = new ClaimProof();
+				
+				company.setCpDocRemark(remark);
+				company.setClaimId(claimId);				
+				company.setIsActive(1);
+				company.setDelStatus(1);
+				company.setMakerUserId(1);
+				company.setMakerEnterDatetime(sf.format(date));
+				
+
+				String imageName = new String();
+				imageName = dateTimeInGMT.format(date) + "_" + file.get(0).getOriginalFilename();
+
+				try {
+					upload.saveUploadedImge(file.get(0), Constants.imageSaveUrl, imageName, Constants.values, 0, 0,
+							0, 0, 0);
+					company.setCpDocPath(imageName);
+				} catch (Exception e) {
+					// TODO: handle exception
+					e.printStackTrace();
+				}
+
+				ClaimProof res = Constants.getRestTemplate().postForObject(Constants.url + "/saveClaimProof", company,
+						ClaimProof.class);
+
+			}
+				
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+
+	}
 	
 
 }

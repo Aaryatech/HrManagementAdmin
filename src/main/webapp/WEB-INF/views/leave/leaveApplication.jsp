@@ -289,7 +289,7 @@
 									<input type="hidden" class="form-control numbersOnly"
 										id="empId" value="${empId}" name="empId"> 
 										<input
-										type="text" class="form-control numbersOnly" id="tempNoDays"
+										type="hidden" class="form-control numbersOnly" id="tempNoDays"
 										name="tempNoDays"> 
 										<input type="hidden"
 										class="form-control numbersOnly" id="lvsId" value="${lvsId}"

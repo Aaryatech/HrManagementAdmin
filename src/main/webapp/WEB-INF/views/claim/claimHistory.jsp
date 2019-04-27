@@ -66,7 +66,7 @@
 				<!-- Highlighting rows and columns -->
 				<div class="card">
 					<div class="card-header header-elements-inline">
-						<h5 class="card-title">Employee List</h5>
+						<h5 class="card-title">Employee Claim List</h5>
 						<div class="header-elements">
 							<div class="list-icons">
 								<a class="list-icons-item" data-action="collapse"></a>
@@ -117,13 +117,11 @@
 							<thead>
 								<tr class="bg-blue">
 									<th width="10%">Sr.no</th>
-									<th>Name</th>
-									<th>Category</th>
-									<th>Type</th>
-									<th>Email</th>
-									<th>Mobile</th>
-									<th>Department</th>
-									<th>Rate Per Hour</th>
+									<th>Claim Type</th>
+									<th>Project</th>
+									<th>Claim Date</th>
+									<th>Claim Amount</th>
+									
 									 
 									<th class="text-center" width="10%">Actions</th>
 								</tr>
@@ -131,16 +129,14 @@
 							<tbody>
 
 
-								<c:forEach items="${empList}" var="lvTypeList" varStatus="count">
+								<c:forEach items="${claimList1}" var="lvTypeList" varStatus="count">
 									<tr>
 										<td>${count.index+1}</td>
-										<td>${lvTypeList.empFname}</td>
-										<td>${lvTypeList.empCategory}</td>
-										<td>${lvTypeList.empType}</td>
-										<td>${lvTypeList.empEmail}</td>
-										<td>${lvTypeList.empMobile1}</td>
-										<td>${lvTypeList.empDept}</td>
-										<td>${lvTypeList.empRatePerhr}</td>
+										<td>${lvTypeList.claimTypeTitle}</td>
+										<td>${lvTypeList.projectTypeTitle}</td>
+										<td>${lvTypeList.claimDate}</td>
+										<td>${lvTypeList.claimAmount}</td>
+										
 										 
 										
 										<td class="text-center">
@@ -152,11 +148,8 @@
 
 													<div class="dropdown-menu dropdown-menu-right">
 														<a
-															href="${pageContext.request.contextPath}/showClaimApply?empId=${lvTypeList.exVar1}"
-															class="dropdown-item"><i class="icon-diff-added "></i>Add Claim</a>
-															<a
-															href="${pageContext.request.contextPath}/showClaimList?empId=${lvTypeList.exVar1}"
-															class="dropdown-item"><i class="icon-history"></i>Employee Claim History</a>
+															href="${pageContext.request.contextPath}/showClaimProof?claimId=${lvTypeList.circulatedTo}"
+															class="dropdown-item"><i class="icon-upload "></i>Upload Document</a>
 														
 													</div>
 												</div>
