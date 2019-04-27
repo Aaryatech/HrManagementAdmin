@@ -122,7 +122,7 @@
 										<thead>
 											<tr class="bg-blue">
 												<th class="check" style="text-align: center; width: 5%;"><input
-													type="checkbox" name="selAll" id="selAll" />Select All</th>
+													type="checkbox" name="selAll" id="selAll" /></th>
 
 
 												<th>Employee Code</th>
@@ -190,14 +190,7 @@
 																<input type="radio" class="chk" name="finAuthEmpId"
 																	id="finAuthEmpId${count.index+1}" value="${emp.empId}" />Final
 																</c:otherwise>
-														</c:choose> 
-														
-														
-														
-														
-														
-														
-														<c:set var="countOf" value="0"></c:set> <c:forEach
+														</c:choose> <c:set var="countOf" value="0"></c:set> <c:forEach
 															items="${reportingIdList}" var="reportId"
 															varStatus="count">
 															<c:if test="${emp.empId==reportId}">
