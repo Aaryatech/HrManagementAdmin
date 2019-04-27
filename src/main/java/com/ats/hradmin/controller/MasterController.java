@@ -1687,9 +1687,10 @@ public class MasterController {
 			 */
 
 			Boolean ret = false;
-			if (FormValidation.Validaton(profilePic.get(0).getOriginalFilename(), "") == true) {
-				ret = true;
-			}
+			/*
+			 * if (FormValidation.Validaton(profilePic.get(0).getOriginalFilename(), "") ==
+			 * true) { ret = true; }
+			 */
 
 			if (FormValidation.Validaton(empCode, "") == true) {
 
@@ -1825,15 +1826,18 @@ public class MasterController {
 			{
 				
 				
-	  String imageName = new String(); imageName = dateTimeInGMT.format(date) + "_" + profilePic.get(0).getOriginalFilename();
-				 
-		  try {
-				  upload.saveUploadedImge(profilePic.get(0), Constants.imageSaveUrl, imageName,
-				  Constants.values, 0, 0, 0, 0, 0); leaveSummary.setEmpPhoto(imageName);
-				  }
-				  catch (Exception e) { 
-					 System.out.println(e.getMessage());  
-					   }
+	  String imageName = new String(); 
+	  imageName = dateTimeInGMT.format(date) + "_" + profilePic.get(0).getOriginalFilename();
+			if(profilePic.get(0).getOriginalFilename()!=null) {
+				 try {
+					  upload.saveUploadedImge(profilePic.get(0), Constants.imageSaveUrl, imageName,
+					  Constants.values, 0, 0, 0, 0, 0); leaveSummary.setEmpPhoto(imageName);
+					  }
+					  catch (Exception e) { 
+						 System.out.println(e.getMessage());  
+						   }
+			}
+		 
 				 
 				 
 

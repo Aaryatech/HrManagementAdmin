@@ -2,6 +2,7 @@ package com.ats.hradmin.controller;
 
 import java.text.SimpleDateFormat;
 
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -22,7 +23,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ats.hradmin.common.Constants;
 import com.ats.hradmin.common.FormValidation;
 import com.ats.hradmin.leave.model.GetLeaveApplyAuthwise;
-import com.ats.hradmin.leave.model.LeaveDetail;
 import com.ats.hradmin.model.Info;
 import com.ats.hradmin.model.LeaveTrail;
 import com.ats.hradmin.model.LoginResponse;
