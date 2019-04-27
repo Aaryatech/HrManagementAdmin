@@ -4,7 +4,6 @@ import java.util.List;
 
 public class LeaveDetail {
 	
-	
 	private int leaveId;
 	
 	private int calYrId;
@@ -61,6 +60,7 @@ public class LeaveDetail {
 	
 	private String lvTitle;
 	
+	private String userName;
 	
 	List<GetLeaveStatus>  GetLeaveStatusList;
 
@@ -298,6 +298,14 @@ public class LeaveDetail {
 		GetLeaveStatusList = getLeaveStatusList;
 	}
 
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
 	@Override
 	public String toString() {
 		return "LeaveDetail [leaveId=" + leaveId + ", calYrId=" + calYrId + ", empId=" + empId + ", lvTypeId="
@@ -308,6 +316,22 @@ public class LeaveDetail {
 				+ ", exInt2=" + exInt2 + ", exInt3=" + exInt3 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2
 				+ ", exVar3=" + exVar3 + ", empFname=" + empFname + ", empMname=" + empMname + ", empSname=" + empSname
 				+ ", empCode=" + empCode + ", empPhoto=" + empPhoto + ", empDeptName=" + empDeptName + ", lvTitle="
-				+ lvTitle + ", GetLeaveStatusList=" + GetLeaveStatusList + "]";
-	}	
+				+ lvTitle + ", userName=" + userName + ", GetLeaveStatusList=" + GetLeaveStatusList + ", getLeaveId()="
+				+ getLeaveId() + ", getCalYrId()=" + getCalYrId() + ", getEmpId()=" + getEmpId() + ", getLvTypeId()="
+				+ getLvTypeId() + ", getLeaveDuration()=" + getLeaveDuration() + ", getLeaveFromdt()="
+				+ getLeaveFromdt() + ", getLeaveTodt()=" + getLeaveTodt() + ", getLeaveNumDays()=" + getLeaveNumDays()
+				+ ", getLeaveEmpReason()=" + getLeaveEmpReason() + ", getFinalStatus()=" + getFinalStatus()
+				+ ", getCirculatedTo()=" + getCirculatedTo() + ", getDelStatus()=" + getDelStatus() + ", getIsActive()="
+				+ getIsActive() + ", getMakerUserId()=" + getMakerUserId() + ", getMakerEnterDatetime()="
+				+ getMakerEnterDatetime() + ", getExInt1()=" + getExInt1() + ", getExInt2()=" + getExInt2()
+				+ ", getExInt3()=" + getExInt3() + ", getExVar1()=" + getExVar1() + ", getExVar2()=" + getExVar2()
+				+ ", getExVar3()=" + getExVar3() + ", getEmpFname()=" + getEmpFname() + ", getEmpMname()="
+				+ getEmpMname() + ", getEmpSname()=" + getEmpSname() + ", getEmpCode()=" + getEmpCode()
+				+ ", getEmpPhoto()=" + getEmpPhoto() + ", getEmpDeptName()=" + getEmpDeptName() + ", getLvTitle()="
+				+ getLvTitle() + ", getGetLeaveStatusList()=" + getGetLeaveStatusList() + ", getUserName()="
+				+ getUserName() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
+				+ super.toString() + "]";
+	}
+
+	
 }

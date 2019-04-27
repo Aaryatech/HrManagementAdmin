@@ -119,6 +119,8 @@
 									<th width="10%">Sr.no</th>
 									<th> Name</th>								
 									<th>Remark</th>
+									<th>Date</th>
+									<th>Action By</th>
 									<th>Leave Status</th>
 									
 
@@ -141,27 +143,27 @@
 										<td>${empTrailList.empRemarks}</td>
 										</c:otherwise>
 										</c:choose>									
-										
+										<td>${empTrailList.makerEnterDatetime}</td>
+										<td>${empTrailList.userName}</td>
 										<c:if test="${empTrailList.leaveStatus==1}">
-										<td><span class="badge badge-info">Initial Pending</span></td>
+										<td><span class="badge badge-info">Initial Applied</span></td>
 										</c:if>
 										<c:if test="${empTrailList.leaveStatus==2}">
-										<td><span class="badge badge-secondary">Final Pending</span></td>
+										<td><span class="badge badge-secondary">Approve By Initial Authority</span></td>
 										</c:if>
 											<c:if test="${empTrailList.leaveStatus==3}">
-										<td><span class="badge badge-success">Final Approve</span></td>
+										<td><span class="badge badge-success">Approve By Final Authority</span></td>
 										</c:if>
 											<c:if test="${empTrailList.leaveStatus==7}">
 										<td><span class="badge badge-danger">Cancel By Employee</span></td>
 										</c:if>
 											<c:if test="${empTrailList.leaveStatus==8}">
-										<td><span class="badge badge-danger">Initial Rejected</span></td>
+										<td><span class="badge badge-danger">Reject By Initial Authority</span></td>
 										</c:if>
 											<c:if test="${empTrailList.leaveStatus==9}">
-										<td><span class="badge badge-danger">Final Rejected</span></td>
+										<td><span class="badge badge-danger">Reject By Final Authority</span></td>
 										</c:if>
-
-
+	
 									<%-- 	<td class="text-center">
 											<div class="list-icons">
 												<div class="dropdown">

@@ -49,11 +49,11 @@
 					</div>
 
 
-					<div class="breadcrumb justify-content-center">
+					<%-- <div class="breadcrumb justify-content-center">
 						<a href="${pageContext.request.contextPath}/employeeAdd"
 							class="breadcrumb-elements-item"> Add Employee </a>
 
-					</div>
+					</div> --%>
 
 
 				</div>
@@ -68,7 +68,7 @@
 				<!-- Highlighting rows and columns -->
 				<div class="card">
 					<div class="card-header header-elements-inline">
-						<h5 class="card-title">Employee List</h5>
+						<h5 class="card-title">Employee Leave History</h5>
 						<div class="header-elements">
 							<div class="list-icons">
 								<a class="list-icons-item" data-action="collapse"></a>
@@ -171,6 +171,7 @@
 									<th>Leave Days</th>
 									<th>Leave Duration</th>
 									<th>Date</th>
+									<th>Action By</th>
 									<th>Leave Status</th>
 
 									<th class="text-center" width="10%">Actions</th>
@@ -247,16 +248,16 @@
 								{
 								/* current_status="Pending"; */
 
-								current_status='<span class="badge badge-info">Initial Pending</span>';
+								current_status='<span class="badge badge-info">Initial Applied</span>';
 								}
 							else if(v.exInt1==2)
 								{
 								
-								current_status='<span class="badge badge-secondary">Final Pending</span>';
+								current_status='<span class="badge badge-secondary">Approve By Initial Authority</span>';
 								}
 							else if(v.exInt1==3)
 							{
-							current_status='<span class="badge badge-success">Final Approve</span>';
+							current_status='<span class="badge badge-success">Approve By Final Authority</span>';
 							}
 							else if(v.exInt1==7)
 							{
@@ -264,18 +265,18 @@
 							}
 							else if(v.exInt1==8)
 							{
-							current_status='<span class="badge badge-danger">Initial Rejected</span>';
+							current_status='<span class="badge badge-danger">Reject By Initial Authority</span>';
 							}
 							else if(v.exInt1==9)
 							{
-							current_status='<span class="badge badge-danger">Final Rejected</span>';
+							current_status='<span class="badge badge-danger">Reject By Final Authority</span>';
 							}
 							
 
 							
 						dataTable.row.add(
 								[ i + 1, v.empFname +" " +v.empMname +" "+v.empSname,
-										v.empDeptName,	v.lvTitle,v.empCode,v.leaveNumDays,v.leaveDuration, v.leaveFromdt +" To " +v.leaveTodt,current_status,		
+										v.empDeptName,	v.lvTitle,v.empCode,v.leaveNumDays,v.leaveDuration, v.leaveFromdt +" To " +v.leaveTodt,v.userName,current_status,		
 										str
 								]).draw();
 					});

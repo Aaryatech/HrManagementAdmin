@@ -1,11 +1,11 @@
 package com.ats.hradmin.leave.model;
 
+import java.util.Date;
 
-
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class GetLeaveStatus {
 
-	
 	private int trailPkey;
 	
 	private int leaveId ;
@@ -17,7 +17,7 @@ public class GetLeaveStatus {
 	private int leaveStatus;
 	
 	private int makerUserId ;
-	
+		
 	private String makerEnterDatetime;
 	
 	private String empFname;
@@ -27,6 +27,8 @@ public class GetLeaveStatus {
 	private String empSname;
 	
 	private String empPhoto;
+	
+	private String userName;
 
 	public int getTrailPkey() {
 		return trailPkey;
@@ -67,15 +69,7 @@ public class GetLeaveStatus {
 	public void setLeaveStatus(int leaveStatus) {
 		this.leaveStatus = leaveStatus;
 	}
-
-	public int getMakerUserId() {
-		return makerUserId;
-	}
-
-	public void setMakerUserId(int makerUserId) {
-		this.makerUserId = makerUserId;
-	}
-
+ 
 	public String getMakerEnterDatetime() {
 		return makerEnterDatetime;
 	}
@@ -116,15 +110,30 @@ public class GetLeaveStatus {
 		this.empPhoto = empPhoto;
 	}
 
+	public int getMakerUserId() {
+		return makerUserId;
+	}
+
+	public void setMakerUserId(int makerUserId) {
+		this.makerUserId = makerUserId;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
 	@Override
 	public String toString() {
 		return "GetLeaveStatus [trailPkey=" + trailPkey + ", leaveId=" + leaveId + ", empId=" + empId + ", empRemarks="
 				+ empRemarks + ", leaveStatus=" + leaveStatus + ", makerUserId=" + makerUserId + ", makerEnterDatetime="
 				+ makerEnterDatetime + ", empFname=" + empFname + ", empMname=" + empMname + ", empSname=" + empSname
-				+ ", empPhoto=" + empPhoto + "]";
+				+ ", empPhoto=" + empPhoto + ", userName=" + userName + "]";
 	}
-	
-	
+
 }
 
 
