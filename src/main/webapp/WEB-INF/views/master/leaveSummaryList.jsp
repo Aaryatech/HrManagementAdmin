@@ -114,9 +114,9 @@
 							id="printtable1">
 							<thead>
 								<tr class="bg-blue">
-									<th width="10%">Sr. No.</th>									
+									<th width="10%">Sr. No.</th>
 									<th>Leave Summary Title</th>
-									<th >Leave Summary Short Title</th>
+									<th>Leave Summary Short Title</th>
 
 									<th width="10%" class="text-center">Actions</th>
 								</tr>
@@ -128,7 +128,7 @@
 									varStatus="count">
 									<tr>
 
-										<td>${count.index+1}</td>										
+										<td>${count.index+1}</td>
 										<td>${lvsummaryList.lvSumupTitle}</td>
 										<td>${lvsummaryList.lvSumupTitleShort}</td>
 
@@ -146,6 +146,7 @@
 															class="dropdown-item"><i class="icon-pencil7"></i>Edit</a>
 														<a
 															href="${pageContext.request.contextPath}/deleteLeaveSummary?lvSumupId=${lvsummaryList.lvSumupId}"
+															onClick="return confirm('Are you sure want to delete this record');"
 															class="dropdown-item"><i class="icon-trash"></i>
 															Delete</a>
 													</div>

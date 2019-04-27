@@ -149,6 +149,7 @@
 															class="dropdown-item"><i class="icon-pencil7"></i>Edit</a>
 														<a
 															href="${pageContext.request.contextPath}/deleteCompany?compId=${compList.exVar1}"
+															onClick="return confirm('Are you sure want to delete this record');"
 															class="dropdown-item"><i class="icon-trash"></i>
 															Delete</a>
 													</div>

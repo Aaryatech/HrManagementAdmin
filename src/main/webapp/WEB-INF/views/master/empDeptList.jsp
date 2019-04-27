@@ -117,7 +117,7 @@
 									<th width="10%">Sr. No.</th>
 									<th>Department Name</th>
 									<th>Short Name</th>
-									<th >Remark</th>
+									<th>Remark</th>
 
 									<th width="10%" class="text-center">Actions</th>
 								</tr>
@@ -125,8 +125,7 @@
 							<tbody>
 
 
-								<c:forEach items="${deptList}" var="deptList"
-									varStatus="count">
+								<c:forEach items="${deptList}" var="deptList" varStatus="count">
 									<tr>
 
 										<td>${count.index+1}</td>
@@ -148,6 +147,7 @@
 															class="dropdown-item"><i class="icon-pencil7"></i>Edit</a>
 														<a
 															href="${pageContext.request.contextPath}/deleteEmpDept?deptId=${deptList.exVar1}"
+															onClick="return confirm('Are you sure want to delete this record');"
 															class="dropdown-item"><i class="icon-trash"></i>
 															Delete</a>
 													</div>

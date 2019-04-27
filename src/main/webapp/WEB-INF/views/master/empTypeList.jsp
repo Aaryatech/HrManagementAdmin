@@ -117,7 +117,7 @@
 									<th width="10%">Sr. No.</th>
 									<th>Type Name</th>
 									<th>Short Name</th>
-									<th >Remark</th>
+									<th>Remark</th>
 
 									<th width="10%" class="text-center">Actions</th>
 								</tr>
@@ -148,6 +148,7 @@
 															class="dropdown-item"><i class="icon-pencil7"></i>Edit</a>
 														<a
 															href="${pageContext.request.contextPath}/deleteEmpType?empTypeId=${empTypelist.exVar1}"
+															onClick="return confirm('Are you sure want to delete this record');"
 															class="dropdown-item"><i class="icon-trash"></i>
 															Delete</a>
 													</div>
