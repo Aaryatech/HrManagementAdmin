@@ -31,7 +31,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ats.hradmin.common.Constants;
 import com.ats.hradmin.leave.model.CalenderYear;
 import com.ats.hradmin.model.AccessRightModule;
-import com.ats.hradmin.model.LoginResponse; 
+import com.ats.hradmin.model.LoginResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
@@ -85,7 +85,7 @@ public class HomeController {
 
 		return mav;
 	}
-	
+
 	@RequestMapping(value = "/fileUpload", method = RequestMethod.GET)
 	public ModelAndView fileUpload(Locale locale, Model model) {
 
@@ -135,14 +135,14 @@ public class HomeController {
 
 				if (userObj.isError() == false) {
 
-					mav = new ModelAndView("formSample");
+					mav = new ModelAndView("welcome");
 					session.setAttribute("UserDetail", userObj);
 					CalenderYear currYr = Constants.getRestTemplate()
 							.getForObject(Constants.url + "getCalculateYearListIsCurrent", CalenderYear.class);
 					System.out.println("currYr.getCalYrId():" + currYr.getCalYrId());
 					session.setAttribute("currYearId", currYr.getCalYrId());
 					session.setAttribute("logoUrl", Constants.getImageSaveUrl);
-					
+
 					List<AccessRightModule> moduleJsonList = new ArrayList<AccessRightModule>();
 
 					try {
@@ -207,37 +207,36 @@ public class HomeController {
 		session.invalidate();
 		return "redirect:/";
 	}
-	
-	@RequestMapping(value = "/uploadOtherMediaProccess", method = RequestMethod.POST)
-	public void uploadOtherMediaProccess(@RequestParam("file") List<MultipartFile> file, HttpServletRequest request, HttpServletResponse response) {
 
-		 
+	@RequestMapping(value = "/uploadOtherMediaProccess", method = RequestMethod.POST)
+	public void uploadOtherMediaProccess(@RequestParam("file") List<MultipartFile> file, HttpServletRequest request,
+			HttpServletResponse response) {
+
 		try {
-			
-			 
-		   Date date = new Date();
-		   SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
-		   String imageName = new String(); 
-		   
-		   System.out.println("sdfsdfsdf" + file.get(0).getOriginalFilename());
-			/*imageName =  dateTimeInGMT.format(date)+"_"+file.get(0).getOriginalFilename();
-			VpsImageUpload upload = new VpsImageUpload();
-			 
-			 
-			 try {
-				 upload.saveUploadedImge(file.get(0), Constant.otherDocURL,imageName,Constant.values,0,0,0,0,0);
-				 upload.saveUploadedImge(file.get(0), Constant.uploadDocURL,imageName,Constant.DocValues,0,0,0,0,0);
-				 
-				}catch (Exception e) {
-					// TODO: handle exception
-					e.printStackTrace();
-				} */
-				
+
+			Date date = new Date();
+			SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+			String imageName = new String();
+
+			System.out.println("sdfsdfsdf" + file.get(0).getOriginalFilename());
+			/*
+			 * imageName = dateTimeInGMT.format(date)+"_"+file.get(0).getOriginalFilename();
+			 * VpsImageUpload upload = new VpsImageUpload();
+			 * 
+			 * 
+			 * try { upload.saveUploadedImge(file.get(0),
+			 * Constant.otherDocURL,imageName,Constant.values,0,0,0,0,0);
+			 * upload.saveUploadedImge(file.get(0),
+			 * Constant.uploadDocURL,imageName,Constant.DocValues,0,0,0,0,0);
+			 * 
+			 * }catch (Exception e) { // TODO: handle exception e.printStackTrace(); }
+			 */
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		//return "redirect:/fileUpload";
-		//return "{}";
+		// return "redirect:/fileUpload";
+		// return "{}";
 
 	}
 }
