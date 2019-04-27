@@ -219,7 +219,7 @@ public class MasterEmpController {
 		}
 		return "redirect:/showLeaveSummaryList";
 	}
-	
+	 
 	@RequestMapping(value = "/empInfoHistory", method = RequestMethod.GET)
 	public ModelAndView empInfoHistory(HttpServletRequest request, HttpServletResponse response) {
 
