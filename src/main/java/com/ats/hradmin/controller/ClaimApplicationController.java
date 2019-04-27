@@ -568,6 +568,12 @@ public class ClaimApplicationController {
 						
 		List<ClaimProof> claimProofList1 = new ArrayList<ClaimProof>(Arrays.asList(employeeDoc1));			
 		System.err.println("claimProofList1 list"+claimProofList1.toString());
+		for (int i = 0; i < claimProofList1.size(); i++) {
+
+			claimProofList1.get(i).setExVar1(FormValidation.Encrypt(String.valueOf(claimProofList1.get(i).getCpId())));
+			claimProofList1.get(i).setExVar2(FormValidation.Encrypt(String.valueOf(claimProofList1.get(i).getClaimId())));
+
+		}
 		
 		
 		 model.addObject("claimProofList1",claimProofList1);
@@ -638,5 +644,32 @@ public class ClaimApplicationController {
 
 	}
 	
+	
+	@RequestMapping(value = "/deleteClaimProof", method = RequestMethod.GET)
+	public String deletdeleteClaimProofeEmployee(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		String claimId1=new String();
+		try {
+      
+			String base64encodedString = request.getParameter("claimProofId");
+			String claimProofId = FormValidation.DecodeKey(base64encodedString);
+			String base64encodedString1 = request.getParameter("claimId");
+			claimId1 = FormValidation.DecodeKey(base64encodedString1);
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("cpId", claimProofId);
+			Info info = Constants.getRestTemplate().postForObject(Constants.url + "/deleteClaimProof", map, Info.class);
+			
+			if (info.isError() == false) {
+				session.setAttribute("successMsg", "Record Deleted Successfully");
+			} else {
+				session.setAttribute("errorMsg", "Failed to Delete");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.setAttribute("errorMsg", "Failed to Delete");
+		}
+		return "redirect:/showClaimProof?claimId="+claimId1;
+	}
 
 }

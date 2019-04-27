@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib
+	uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -123,6 +125,60 @@
 
 					</div>
 				</div>
+				
+				
+				<div class="card">
+<div class="card-body">
+							 
+							<div class="content">
+						
+						<table
+							class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic  datatable-button-print-columns1"
+							id="printtable1">
+							<thead>
+								<tr class="bg-blue">
+									<th width="10%">Sr.no</th>
+									<th>Image Name</th>
+									<th>Image</th>
+									
+									<th class="text-center" width="10%">Actions</th>
+								</tr>
+							</thead>
+							<tbody>
+
+
+								<c:forEach items="${claimProofList1}" var="lvTypeList" varStatus="count">
+									<tr>
+										<td>${count.index+1}</td>
+										<td>${lvTypeList.cpDocPath}</td>
+										<td>-</td>
+										
+										
+										<td class="text-center">
+											<div class="list-icons">
+												<div class="dropdown">
+													<a href="#" class="list-icons-item" data-toggle="dropdown">
+														<i class="icon-menu9"></i>
+													</a>
+
+													<div class="dropdown-menu dropdown-menu-right">
+														<a
+															href="${pageContext.request.contextPath}/deleteClaimProof?claimProofId=${lvTypeList.exVar1}?claimId=${lvTypeList.exVar2}"
+															onClick="return confirm('Are you sure want to Delete this Record');"
+															class="dropdown-item"><i class="icon-trash "></i>Delete Image</a>
+														
+													</div>
+												</div>
+											</div>
+										</td>
+									</tr>
+								</c:forEach>
+
+							</tbody>
+						</table>
+						</div>
+						</div>
+					</div>
 				<!-- /form validation -->
 				  
 			</div>
