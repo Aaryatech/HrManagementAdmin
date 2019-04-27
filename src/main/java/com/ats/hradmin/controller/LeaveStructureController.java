@@ -276,7 +276,7 @@ public class LeaveStructureController {
 				editStructure.setLvsName(lvsName);
 
 				for (int i = 0; i < leaveTypeList.size(); i++) {
-					int flag=0;
+					int flag = 0;
 					int noOfLeaves = 0;
 					try {
 						noOfLeaves = (Integer
@@ -285,49 +285,47 @@ public class LeaveStructureController {
 						noOfLeaves = 0;
 					}
 
-					
+					for (int j = 0; j < editStructure.getDetailList().size(); j++) {
 
-						for (int j = 0; j < editStructure.getDetailList().size(); j++) {
+						int noOfLeaves1 = 0;
+						try {
 
-							int noOfLeaves1 = 0;
-							try {
-
-								if (editStructure.getDetailList().get(j).getLvTypeId() == leaveTypeList.get(i)
-										.getLvTypeId()) {
-									flag=1;
-									editStructure.getDetailList().get(i)
-											.setLvsAllotedLeaves(Integer.parseInt(request.getParameter("noOfLeaves"
-													+ editStructure.getDetailList().get(i).getLvTypeId())));
-								}
-
-							} catch (Exception e) {
-								//editStructure.getDetailList().get(i).setLvsAllotedLeaves(noOfLeaves1);
+							if (editStructure.getDetailList().get(j).getLvTypeId() == leaveTypeList.get(i)
+									.getLvTypeId()) {
+								flag = 1;
+								editStructure.getDetailList().get(i)
+										.setLvsAllotedLeaves(Integer.parseInt(request.getParameter(
+												"noOfLeaves" + editStructure.getDetailList().get(i).getLvTypeId())));
 							}
-						}
-						if (noOfLeaves > 0) {
-						if(flag==0) {
-						LeaveStructureDetails detail = new LeaveStructureDetails();
-						detail.setDelStatus(1);
-						detail.setIsActive(1);
-						detail.setLvsAllotedLeaves(noOfLeaves);
-						detail.setLvTypeId(leaveTypeList.get(i).getLvTypeId());
-						detail.setMakerDatetime(dateTime);
-						detail.setLvsId(editStructure.getLvsId());
-						detail.setMakerUserId(userObj.getUserId());
 
-						//LeaveStructureDetails resDetails = Constants.getRestTemplate().postForObject(
-						//		Constants.url + "saveLeaveStructureDetail", detail, LeaveStructureDetails.class);
-						editStructure.getDetailList().add(detail);
-						System.out.println(detail.toString());
+						} catch (Exception e) {
+							// editStructure.getDetailList().get(i).setLvsAllotedLeaves(noOfLeaves1);
+						}
+					}
+					if (noOfLeaves > 0) {
+						if (flag == 0) {
+							LeaveStructureDetails detail = new LeaveStructureDetails();
+							detail.setDelStatus(1);
+							detail.setIsActive(1);
+							detail.setLvsAllotedLeaves(noOfLeaves);
+							detail.setLvTypeId(leaveTypeList.get(i).getLvTypeId());
+							detail.setMakerDatetime(dateTime);
+							detail.setLvsId(editStructure.getLvsId());
+							detail.setMakerUserId(userObj.getUserId());
+
+							// LeaveStructureDetails resDetails = Constants.getRestTemplate().postForObject(
+							// Constants.url + "saveLeaveStructureDetail", detail,
+							// LeaveStructureDetails.class);
+							editStructure.getDetailList().add(detail);
+							System.out.println(detail.toString());
 						}
 
 					}
-					System.err.println("editStructure"+editStructure.getDetailList().toString());
-				
+					System.err.println("editStructure" + editStructure.getDetailList().toString());
 
 				}
-				LeaveStructureHeader res = Constants.getRestTemplate().postForObject(
-						Constants.url + "saveLeaveStruture", editStructure, LeaveStructureHeader.class);
+				LeaveStructureHeader res = Constants.getRestTemplate()
+						.postForObject(Constants.url + "saveLeaveStruture", editStructure, LeaveStructureHeader.class);
 
 				if (res != null) {
 					session.setAttribute("successMsg", "Record Update Successfully");
@@ -557,7 +555,7 @@ public class LeaveStructureController {
 			e.printStackTrace();
 		}
 
-		return "redirect:/addLeaveAuthority";
+		return "redirect:/leaveAuthorityList";
 	}
 
 	@RequestMapping(value = "/leaveAuthorityList", method = RequestMethod.GET)
@@ -674,9 +672,9 @@ public class LeaveStructureController {
 					leaveAuthority, LeaveAuthority.class);
 
 			if (res != null) {
-				session.setAttribute("successMsg", "Record Insert Successfully");
+				session.setAttribute("successMsg", "Record Update Successfully");
 			} else {
-				session.setAttribute("errorMsg", "Failed to Insert Record");
+				session.setAttribute("errorMsg", "Failed to Upadate Record");
 			}
 
 		} catch (
@@ -685,7 +683,7 @@ public class LeaveStructureController {
 			e.printStackTrace();
 		}
 
-		return "redirect:/addLeaveAuthority";
+		return "redirect:/leaveAuthorityList";
 	}
 
 	/*
