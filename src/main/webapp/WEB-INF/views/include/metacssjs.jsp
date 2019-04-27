@@ -12,9 +12,11 @@
 	<link href="${pageContext.request.contextPath}/resources/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 	<link href="${pageContext.request.contextPath}/resources/assets/css/bootstrap_limitless.min.css" rel="stylesheet" type="text/css">
 	<link href="${pageContext.request.contextPath}/resources/assets/css/layout.min.css" rel="stylesheet" type="text/css">
-	<link href="${pageContext.request.contextPath}/resources/assets/css/components.min.css" rel="stylesheet" type="text/css">
+	  <link href="${pageContext.request.contextPath}/resources/assets/css/components.min.css" rel="stylesheet" type="text/css">  
 	<link href="${pageContext.request.contextPath}/resources/assets/css/colors.min.css" rel="stylesheet" type="text/css">
+	    <link href="${pageContext.request.contextPath}/resources/global_assets/css/dropzone/css/dropzone.css" rel="stylesheet" type="text/css" media="screen"/>
 	<link href="${pageContext.request.contextPath}/resources/assets/css/customecss.css" rel="stylesheet" type="text/css">
+
 	
 	<!-- /global stylesheets -->
 
@@ -82,11 +84,14 @@
 			<script src="${pageContext.request.contextPath}/resources/global_assets/js/demo_pages/picker_color.js"></script>
 			<script src="${pageContext.request.contextPath}/resources/global_assets/js/demo_pages/form_select2.js"></script>
 	
-	<script src="${pageContext.request.contextPath}/resources/global_assets/js/demo_pages/uploader_bootstrap.js"></script>
+	<%-- <script src="${pageContext.request.contextPath}/resources/global_assets/js/demo_pages/uploader_bootstrap.js"></script> --%>
+
+	
 	<script>
 	 // Export options - column selector
     
 	 
 	</script> 
 	<!-- /theme JS files -->
+
  

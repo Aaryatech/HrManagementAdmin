@@ -52,150 +52,6 @@ public class LeaveStructureController {
 	List<LeaveStructureDetails> tempDetailList = new ArrayList<LeaveStructureDetails>();
 	LeaveAuthority leaveAuthority = new LeaveAuthority();
 
-	@RequestMapping(value = "/addLeaveStructureHeader", method = RequestMethod.GET)
-	public ModelAndView addLeaveStructureHeader(HttpServletRequest request, HttpServletResponse response) {
-
-		ModelAndView model = null;
-		try {
-			tempDetailList = new ArrayList<LeaveStructureDetails>();
-
-			model = new ModelAndView("leave/leave_structure");
-
-			LeaveType[] leaveArray = Constants.getRestTemplate()
-					.getForObject(Constants.url + "/getLeaveTypeListIsStructure", LeaveType[].class);
-
-			List<LeaveType> leaveTypeList = new ArrayList<>(Arrays.asList(leaveArray));
-
-			model.addObject("leaveTypeList", leaveTypeList);
-
-			model.addObject("title", "Add Leave Structure");
-
-		} catch (Exception e) {
-
-			System.err.println("exception In addLeaveStructureHeader at leave structure Contr" + e.getMessage());
-
-			e.printStackTrace();
-
-		}
-
-		return model;
-
-	}
-
-	@RequestMapping(value = "/addStrDetail", method = RequestMethod.GET)
-	public @ResponseBody List<LeaveStructureDetails> addStrDetail(HttpServletRequest request,
-			HttpServletResponse response) {
-
-		try {
-
-			int isDelete = Integer.parseInt(request.getParameter("isDelete"));
-
-			int isEdit = Integer.parseInt(request.getParameter("isEdit"));
-
-			if (isDelete == 1) {
-				System.out.println("IsDelete" + isDelete);
-				int key = Integer.parseInt(request.getParameter("key"));
-
-				tempDetailList.remove(key);
-
-			} else if (isEdit == 1) {
-				System.out.println("hii is edit");
-				int index = Integer.parseInt(request.getParameter("index"));
-
-				int noOfLeaves = Integer.parseInt(request.getParameter("noOfLeaves"));
-				int lvTypeId = Integer.parseInt(request.getParameter("leaveTypeId"));
-
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-				map.add("lvTypeId", lvTypeId);
-				LeaveType editLeaveType = Constants.getRestTemplate().postForObject(Constants.url + "/getLeaveTypeById",
-						map, LeaveType.class);
-
-				tempDetailList.get(index).setLvTypeId(lvTypeId);
-				tempDetailList.get(index).setLvsAllotedLeaves(noOfLeaves);
-				tempDetailList.get(index).setExVar1(editLeaveType.getLvTitle());
-
-			}
-
-			else {
-
-				int noOfLeaves = Integer.parseInt(request.getParameter("noOfLeaves"));
-				int lvTypeId = Integer.parseInt(request.getParameter("leaveTypeId"));
-
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-				map.add("lvTypeId", lvTypeId);
-				LeaveType editLeaveType = Constants.getRestTemplate().postForObject(Constants.url + "/getLeaveTypeById",
-						map, LeaveType.class);
-
-				LeaveStructureDetails tempDetail = new LeaveStructureDetails();
-				tempDetail.setLvTypeId(lvTypeId);
-				tempDetail.setLvsAllotedLeaves(noOfLeaves);
-				tempDetail.setLvsDetailsId(0);
-				tempDetail.setExVar1(editLeaveType.getLvTitle());
-				tempDetail.setDelStatus(1);
-				tempDetail.setExInt1(1);
-				tempDetail.setExInt2(1);
-				tempDetail.setExVar2("NA");
-				tempDetail.setIsActive(1);
-				tempDetail.setMakerDatetime(dateTime);
-				tempDetail.setMakerUserId(1);
-
-				tempDetailList.add(tempDetail);
-			}
-
-		} catch (Exception e) {
-			System.err.println("Exce In atempDocList  temp List " + e.getMessage());
-			e.printStackTrace();
-		}
-		System.err.println(" enq Item List " + tempDetailList.toString());
-
-		return tempDetailList;
-
-	}
-
-	@RequestMapping(value = "/getLeaveStructureForEdit", method = RequestMethod.GET)
-	public @ResponseBody LeaveStructureDetails getLeaveStructureForEdit(HttpServletRequest request,
-			HttpServletResponse response) {
-
-		int index = Integer.parseInt(request.getParameter("index"));
-
-		return tempDetailList.get(index);
-
-	}
-
-	// submitInsertLeaveStructure
-	@RequestMapping(value = "/submitInsertLeaveStructure", method = RequestMethod.POST)
-	public String submitInsertLeaveStructure(HttpServletRequest request, HttpServletResponse response) {
-		try {
-			System.err.println("Inside insert submitInsertLeaveStructure method");
-
-			String lvsName = request.getParameter("lvsName");
-
-			LeaveStructureHeader head = new LeaveStructureHeader();
-
-			head.setCompanyId(1);
-			head.setDelStatus(1);
-			head.setIsActive(1);
-			head.setLvsName(lvsName);
-			head.setMakerDatetime(dateTime);
-			head.setMakerUserId(1);
-
-			head.setDetailList(tempDetailList);
-
-			LeaveStructureHeader docInsertRes = Constants.getRestTemplate()
-					.postForObject(Constants.url + "saveLeaveStruture", head, LeaveStructureHeader.class);
-			System.out.println("docInsertRes" + docInsertRes.toString());
-
-		} catch (Exception e) {
-
-			System.err.println("Exce In submitInsertLeaveStructure method  " + e.getMessage());
-			e.printStackTrace();
-
-		}
-
-		return "redirect:/addLeaveStructureHeader";
-
-	}
-
 	List<LeaveType> leaveTypeList;
 
 	@RequestMapping(value = "/addLeaveStructure", method = RequestMethod.GET)
@@ -259,26 +115,31 @@ public class LeaveStructureController {
 				List<LeaveStructureDetails> detailList = new ArrayList<>();
 				for (int i = 0; i < leaveTypeList.size(); i++) {
 
-					LeaveStructureDetails detail = new LeaveStructureDetails();
-					detail.setDelStatus(1);
-					detail.setExInt1(0);
-					detail.setExInt2(0);
-					detail.setExVar1("NA");
-					detail.setExVar2("NA");
-					detail.setIsActive(1);
 					int noOfLeaves = 0;
 					try {
+						noOfLeaves = (Integer
+								.parseInt(request.getParameter("noOfLeaves" + leaveTypeList.get(i).getLvTypeId())));
+					} catch (Exception e) {
+						noOfLeaves = 0;
+					}
+
+					if (noOfLeaves > 0) {
+						LeaveStructureDetails detail = new LeaveStructureDetails();
+						detail.setDelStatus(1);
+						detail.setExInt1(0);
+						detail.setExInt2(0);
+						detail.setExVar1("NA");
+						detail.setExVar2("NA");
+						detail.setIsActive(1);
+
 						detail.setLvsAllotedLeaves(Integer
 								.parseInt(request.getParameter("noOfLeaves" + leaveTypeList.get(i).getLvTypeId())));
 
-					} catch (Exception e) {
-						detail.setLvsAllotedLeaves(noOfLeaves);
+						detail.setLvTypeId(leaveTypeList.get(i).getLvTypeId());
+						detail.setMakerUserId(userObj.getUserId());
+						detail.setMakerDatetime(dateTime);
+						detailList.add(detail);
 					}
-
-					detail.setLvTypeId(leaveTypeList.get(i).getLvTypeId());
-					detail.setMakerUserId(userObj.getUserId());
-					detail.setMakerDatetime(dateTime);
-					detailList.add(detail);
 				}
 
 				head.setDetailList(detailList);
@@ -399,6 +260,7 @@ public class LeaveStructureController {
 		try {
 			System.err.println("Inside insert editInsertLeaveStructure method");
 			HttpSession session = request.getSession();
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 			String lvsName = request.getParameter("lvsName");
 
 			Boolean ret = false;
@@ -413,36 +275,66 @@ public class LeaveStructureController {
 
 				editStructure.setLvsName(lvsName);
 
-				for (int i = 0; i < editStructure.getDetailList().size(); i++) {
-
+				for (int i = 0; i < leaveTypeList.size(); i++) {
+					int flag = 0;
 					int noOfLeaves = 0;
 					try {
-						editStructure.getDetailList().get(i).setLvsAllotedLeaves(Integer.parseInt(request
-								.getParameter("noOfLeaves" + editStructure.getDetailList().get(i).getLvTypeId())));
-
+						noOfLeaves = (Integer
+								.parseInt(request.getParameter("noOfLeaves" + leaveTypeList.get(i).getLvTypeId())));
 					} catch (Exception e) {
-						editStructure.getDetailList().get(i).setLvsAllotedLeaves(noOfLeaves);
+						noOfLeaves = 0;
 					}
 
+					for (int j = 0; j < editStructure.getDetailList().size(); j++) {
+
+						int noOfLeaves1 = 0;
+						try {
+
+							if (editStructure.getDetailList().get(j).getLvTypeId() == leaveTypeList.get(i)
+									.getLvTypeId()) {
+								flag = 1;
+								editStructure.getDetailList().get(i)
+										.setLvsAllotedLeaves(Integer.parseInt(request.getParameter(
+												"noOfLeaves" + editStructure.getDetailList().get(i).getLvTypeId())));
+							}
+
+						} catch (Exception e) {
+							// editStructure.getDetailList().get(i).setLvsAllotedLeaves(noOfLeaves1);
+						}
+					}
+					if (noOfLeaves > 0) {
+						if (flag == 0) {
+							LeaveStructureDetails detail = new LeaveStructureDetails();
+							detail.setDelStatus(1);
+							detail.setIsActive(1);
+							detail.setLvsAllotedLeaves(noOfLeaves);
+							detail.setLvTypeId(leaveTypeList.get(i).getLvTypeId());
+							detail.setMakerDatetime(dateTime);
+							detail.setLvsId(editStructure.getLvsId());
+							detail.setMakerUserId(userObj.getUserId());
+
+							// LeaveStructureDetails resDetails = Constants.getRestTemplate().postForObject(
+							// Constants.url + "saveLeaveStructureDetail", detail,
+							// LeaveStructureDetails.class);
+							editStructure.getDetailList().add(detail);
+							System.out.println(detail.toString());
+						}
+
+					}
+					System.err.println("editStructure" + editStructure.getDetailList().toString());
+
 				}
-				// System.err.println("detailList" + detailList.toString());
-				System.err.println("editStructure" + editStructure.toString());
-
-				// editStructure.setDetailList(detailList);
-
 				LeaveStructureHeader res = Constants.getRestTemplate()
 						.postForObject(Constants.url + "saveLeaveStruture", editStructure, LeaveStructureHeader.class);
 
 				if (res != null) {
-					session.setAttribute("successMsg", "Record Insert Successfully");
+					session.setAttribute("successMsg", "Record Update Successfully");
 				} else {
-					session.setAttribute("errorMsg", "Failed to Insert Record");
+					session.setAttribute("errorMsg", "Failed to Update Record");
 				}
-
 			} else {
-				session.setAttribute("errorMsg", "Failed to Insert Record");
+				session.setAttribute("errorMsg", "Failed to Update Record");
 			}
-
 		} catch (Exception e) {
 
 			System.err.println("Exce In editInsertLeaveStructure method  " + e.getMessage());
@@ -518,12 +410,13 @@ public class LeaveStructureController {
 
 			Boolean ret = false;
 
-			/*if (FormValidation.Validaton(lvsId, "") == true) {
-
-				ret = true;
-
-			}
-*/
+			/*
+			 * if (FormValidation.Validaton(lvsId, "") == true) {
+			 * 
+			 * ret = true;
+			 * 
+			 * }
+			 */
 			if (ret == false) {
 
 				LeavesAllotment leavesAllotment = new LeavesAllotment();
@@ -662,7 +555,7 @@ public class LeaveStructureController {
 			e.printStackTrace();
 		}
 
-		return "redirect:/addLeaveAuthority";
+		return "redirect:/leaveAuthorityList";
 	}
 
 	@RequestMapping(value = "/leaveAuthorityList", method = RequestMethod.GET)
@@ -779,9 +672,9 @@ public class LeaveStructureController {
 					leaveAuthority, LeaveAuthority.class);
 
 			if (res != null) {
-				session.setAttribute("successMsg", "Record Insert Successfully");
+				session.setAttribute("successMsg", "Record Update Successfully");
 			} else {
-				session.setAttribute("errorMsg", "Failed to Insert Record");
+				session.setAttribute("errorMsg", "Failed to Upadate Record");
 			}
 
 		} catch (
@@ -790,7 +683,148 @@ public class LeaveStructureController {
 			e.printStackTrace();
 		}
 
-		return "redirect:/addLeaveAuthority";
+		return "redirect:/leaveAuthorityList";
 	}
+
+	/*
+	 * @RequestMapping(value = "/addLeaveStructureHeader", method =
+	 * RequestMethod.GET) public ModelAndView
+	 * addLeaveStructureHeader(HttpServletRequest request, HttpServletResponse
+	 * response) {
+	 * 
+	 * ModelAndView model = null; try { tempDetailList = new
+	 * ArrayList<LeaveStructureDetails>();
+	 * 
+	 * model = new ModelAndView("leave/leave_structure");
+	 * 
+	 * LeaveType[] leaveArray = Constants.getRestTemplate()
+	 * .getForObject(Constants.url + "/getLeaveTypeListIsStructure",
+	 * LeaveType[].class);
+	 * 
+	 * List<LeaveType> leaveTypeList = new ArrayList<>(Arrays.asList(leaveArray));
+	 * 
+	 * model.addObject("leaveTypeList", leaveTypeList);
+	 * 
+	 * model.addObject("title", "Add Leave Structure");
+	 * 
+	 * } catch (Exception e) {
+	 * 
+	 * System.err.
+	 * println("exception In addLeaveStructureHeader at leave structure Contr" +
+	 * e.getMessage());
+	 * 
+	 * e.printStackTrace();
+	 * 
+	 * }
+	 * 
+	 * return model;
+	 * 
+	 * }
+	 * 
+	 * @RequestMapping(value = "/addStrDetail", method = RequestMethod.GET)
+	 * public @ResponseBody List<LeaveStructureDetails>
+	 * addStrDetail(HttpServletRequest request, HttpServletResponse response) {
+	 * 
+	 * try {
+	 * 
+	 * int isDelete = Integer.parseInt(request.getParameter("isDelete"));
+	 * 
+	 * int isEdit = Integer.parseInt(request.getParameter("isEdit"));
+	 * 
+	 * if (isDelete == 1) { System.out.println("IsDelete" + isDelete); int key =
+	 * Integer.parseInt(request.getParameter("key"));
+	 * 
+	 * tempDetailList.remove(key);
+	 * 
+	 * } else if (isEdit == 1) { System.out.println("hii is edit"); int index =
+	 * Integer.parseInt(request.getParameter("index"));
+	 * 
+	 * int noOfLeaves = Integer.parseInt(request.getParameter("noOfLeaves")); int
+	 * lvTypeId = Integer.parseInt(request.getParameter("leaveTypeId"));
+	 * 
+	 * MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+	 * map.add("lvTypeId", lvTypeId); LeaveType editLeaveType =
+	 * Constants.getRestTemplate().postForObject(Constants.url +
+	 * "/getLeaveTypeById", map, LeaveType.class);
+	 * 
+	 * tempDetailList.get(index).setLvTypeId(lvTypeId);
+	 * tempDetailList.get(index).setLvsAllotedLeaves(noOfLeaves);
+	 * tempDetailList.get(index).setExVar1(editLeaveType.getLvTitle());
+	 * 
+	 * }
+	 * 
+	 * else {
+	 * 
+	 * int noOfLeaves = Integer.parseInt(request.getParameter("noOfLeaves")); int
+	 * lvTypeId = Integer.parseInt(request.getParameter("leaveTypeId"));
+	 * 
+	 * MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+	 * map.add("lvTypeId", lvTypeId); LeaveType editLeaveType =
+	 * Constants.getRestTemplate().postForObject(Constants.url +
+	 * "/getLeaveTypeById", map, LeaveType.class);
+	 * 
+	 * LeaveStructureDetails tempDetail = new LeaveStructureDetails();
+	 * tempDetail.setLvTypeId(lvTypeId); tempDetail.setLvsAllotedLeaves(noOfLeaves);
+	 * tempDetail.setLvsDetailsId(0);
+	 * tempDetail.setExVar1(editLeaveType.getLvTitle()); tempDetail.setDelStatus(1);
+	 * tempDetail.setExInt1(1); tempDetail.setExInt2(1); tempDetail.setExVar2("NA");
+	 * tempDetail.setIsActive(1); tempDetail.setMakerDatetime(dateTime);
+	 * tempDetail.setMakerUserId(1);
+	 * 
+	 * tempDetailList.add(tempDetail); }
+	 * 
+	 * } catch (Exception e) { System.err.println("Exce In atempDocList  temp List "
+	 * + e.getMessage()); e.printStackTrace(); }
+	 * System.err.println(" enq Item List " + tempDetailList.toString());
+	 * 
+	 * return tempDetailList;
+	 * 
+	 * }
+	 * 
+	 * @RequestMapping(value = "/getLeaveStructureForEdit", method =
+	 * RequestMethod.GET) public @ResponseBody LeaveStructureDetails
+	 * getLeaveStructureForEdit(HttpServletRequest request, HttpServletResponse
+	 * response) {
+	 * 
+	 * int index = Integer.parseInt(request.getParameter("index"));
+	 * 
+	 * return tempDetailList.get(index);
+	 * 
+	 * }
+	 * 
+	 * // submitInsertLeaveStructure
+	 * 
+	 * @RequestMapping(value = "/submitInsertLeaveStructure", method =
+	 * RequestMethod.POST) public String
+	 * submitInsertLeaveStructure(HttpServletRequest request, HttpServletResponse
+	 * response) { try {
+	 * System.err.println("Inside insert submitInsertLeaveStructure method");
+	 * 
+	 * String lvsName = request.getParameter("lvsName");
+	 * 
+	 * LeaveStructureHeader head = new LeaveStructureHeader();
+	 * 
+	 * head.setCompanyId(1); head.setDelStatus(1); head.setIsActive(1);
+	 * head.setLvsName(lvsName); head.setMakerDatetime(dateTime);
+	 * head.setMakerUserId(1);
+	 * 
+	 * head.setDetailList(tempDetailList);
+	 * 
+	 * LeaveStructureHeader docInsertRes = Constants.getRestTemplate()
+	 * .postForObject(Constants.url + "saveLeaveStruture", head,
+	 * LeaveStructureHeader.class); System.out.println("docInsertRes" +
+	 * docInsertRes.toString());
+	 * 
+	 * } catch (Exception e) {
+	 * 
+	 * System.err.println("Exce In submitInsertLeaveStructure method  " +
+	 * e.getMessage()); e.printStackTrace();
+	 * 
+	 * }
+	 * 
+	 * return "redirect:/addLeaveStructureHeader";
+	 * 
+	 * }
+	 */
 
 }

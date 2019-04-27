@@ -124,7 +124,7 @@
 										<thead>
 											<tr class="bg-blue">
 												<th class="check" style="text-align: center; width: 5%;"><input
-													type="checkbox" name="selAll" id="selAll" />Select All</th>
+													type="checkbox" name="selAll" id="selAll" /></th>
 
 
 												<th>Employee Code</th>

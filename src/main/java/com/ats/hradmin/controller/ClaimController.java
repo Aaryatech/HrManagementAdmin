@@ -589,7 +589,7 @@ public class ClaimController {
 			e.printStackTrace();
 		}
 
-		return "redirect:/addClaimAuthority";
+		return "redirect:/claimAuthorityList";
 	}
 
 	@RequestMapping(value = "/claimAuthorityList", method = RequestMethod.GET)
@@ -705,9 +705,9 @@ public class ClaimController {
 					claimAuthority, ClaimAuthority.class);
 
 			if (res != null) {
-				session.setAttribute("successMsg", "Record Insert Successfully");
+				session.setAttribute("successMsg", "Record Update Successfully");
 			} else {
-				session.setAttribute("errorMsg", "Failed to Insert Record");
+				session.setAttribute("errorMsg", "Failed to Update Record");
 			}
 
 		} catch (
@@ -716,7 +716,7 @@ public class ClaimController {
 			e.printStackTrace();
 		}
 
-		return "redirect:/addClaimAuthority";
+		return "redirect:/claimAuthorityList";
 	}
 
 }

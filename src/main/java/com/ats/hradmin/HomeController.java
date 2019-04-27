@@ -3,6 +3,7 @@ package com.ats.hradmin;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -21,8 +22,10 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.hradmin.common.Constants;
@@ -83,6 +86,14 @@ public class HomeController {
 		return mav;
 	}
 
+	@RequestMapping(value = "/fileUpload", method = RequestMethod.GET)
+	public ModelAndView fileUpload(Locale locale, Model model) {
+
+		ModelAndView mav = new ModelAndView("fileUpload");
+
+		return mav;
+	}
+
 	@RequestMapping(value = "/listSample", method = RequestMethod.GET)
 	public ModelAndView listSample(Locale locale, Model model) {
 
@@ -124,14 +135,14 @@ public class HomeController {
 
 				if (userObj.isError() == false) {
 
-					mav = new ModelAndView("formSample");
+					mav = new ModelAndView("welcome");
 					session.setAttribute("UserDetail", userObj);
 					CalenderYear currYr = Constants.getRestTemplate()
 							.getForObject(Constants.url + "getCalculateYearListIsCurrent", CalenderYear.class);
 					System.out.println("currYr.getCalYrId():" + currYr.getCalYrId());
 					session.setAttribute("currYearId", currYr.getCalYrId());
 					session.setAttribute("logoUrl", Constants.getImageSaveUrl);
-					
+
 					List<AccessRightModule> moduleJsonList = new ArrayList<AccessRightModule>();
 
 					try {
@@ -195,5 +206,37 @@ public class HomeController {
 
 		session.invalidate();
 		return "redirect:/";
+	}
+
+	@RequestMapping(value = "/uploadOtherMediaProccess", method = RequestMethod.POST)
+	public void uploadOtherMediaProccess(@RequestParam("file") List<MultipartFile> file, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		try {
+
+			Date date = new Date();
+			SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+			String imageName = new String();
+
+			System.out.println("sdfsdfsdf" + file.get(0).getOriginalFilename());
+			/*
+			 * imageName = dateTimeInGMT.format(date)+"_"+file.get(0).getOriginalFilename();
+			 * VpsImageUpload upload = new VpsImageUpload();
+			 * 
+			 * 
+			 * try { upload.saveUploadedImge(file.get(0),
+			 * Constant.otherDocURL,imageName,Constant.values,0,0,0,0,0);
+			 * upload.saveUploadedImge(file.get(0),
+			 * Constant.uploadDocURL,imageName,Constant.DocValues,0,0,0,0,0);
+			 * 
+			 * }catch (Exception e) { // TODO: handle exception e.printStackTrace(); }
+			 */
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// return "redirect:/fileUpload";
+		// return "{}";
+
 	}
 }
