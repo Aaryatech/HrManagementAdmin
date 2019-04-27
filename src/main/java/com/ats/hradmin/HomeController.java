@@ -3,6 +3,7 @@ package com.ats.hradmin;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -21,14 +22,16 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.hradmin.common.Constants;
 import com.ats.hradmin.leave.model.CalenderYear;
 import com.ats.hradmin.model.AccessRightModule;
-import com.ats.hradmin.model.LoginResponse;
+import com.ats.hradmin.model.LoginResponse; 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
@@ -79,6 +82,14 @@ public class HomeController {
 	public ModelAndView formSample(Locale locale, Model model) {
 
 		ModelAndView mav = new ModelAndView("formSample");
+
+		return mav;
+	}
+	
+	@RequestMapping(value = "/fileUpload", method = RequestMethod.GET)
+	public ModelAndView fileUpload(Locale locale, Model model) {
+
+		ModelAndView mav = new ModelAndView("fileUpload");
 
 		return mav;
 	}
@@ -195,5 +206,38 @@ public class HomeController {
 
 		session.invalidate();
 		return "redirect:/";
+	}
+	
+	@RequestMapping(value = "/uploadOtherMediaProccess", method = RequestMethod.POST)
+	public void uploadOtherMediaProccess(@RequestParam("file") List<MultipartFile> file, HttpServletRequest request, HttpServletResponse response) {
+
+		 
+		try {
+			
+			 
+		   Date date = new Date();
+		   SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+		   String imageName = new String(); 
+		   
+		   System.out.println("sdfsdfsdf" + file.get(0).getOriginalFilename());
+			/*imageName =  dateTimeInGMT.format(date)+"_"+file.get(0).getOriginalFilename();
+			VpsImageUpload upload = new VpsImageUpload();
+			 
+			 
+			 try {
+				 upload.saveUploadedImge(file.get(0), Constant.otherDocURL,imageName,Constant.values,0,0,0,0,0);
+				 upload.saveUploadedImge(file.get(0), Constant.uploadDocURL,imageName,Constant.DocValues,0,0,0,0,0);
+				 
+				}catch (Exception e) {
+					// TODO: handle exception
+					e.printStackTrace();
+				} */
+				
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		//return "redirect:/fileUpload";
+		//return "{}";
+
 	}
 }

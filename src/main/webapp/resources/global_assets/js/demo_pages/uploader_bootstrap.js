@@ -240,12 +240,12 @@ var FileUpload = function() {
         //
         // AJAX upload
         //
-
+ 
         $('.file-input-ajax').fileinput({
             browseLabel: 'Browse',
-            uploadUrl: "http://localhost", // server upload action
-            uploadAsync: true,
-            maxFileCount: 5,
+            uploadUrl: "http://localhost:8081/hradmin/uploadOtherMediaProccess", // server upload action
+            uploadAsync: false,
+            maxFileCount: 100,
             initialPreview: [],
             browseIcon: '<i class="icon-file-plus mr-2"></i>',
             uploadIcon: '<i class="icon-file-upload2 mr-2"></i>',
@@ -269,8 +269,7 @@ var FileUpload = function() {
             previewZoomButtonClasses: previewZoomButtonClasses,
             previewZoomButtonIcons: previewZoomButtonIcons
         });
-
-
+  
         //
         // Misc
         //
