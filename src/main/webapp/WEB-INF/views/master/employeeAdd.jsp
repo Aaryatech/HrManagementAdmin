@@ -339,7 +339,10 @@
 												onchange="checkUnique(this.value,1)" autocomplete="off"
 												onchange="trim(this)" maxlength="10"> <span
 												class="validation-invalid-label" id="error_mobile1"
-												style="display: none;">This field is required.</span>
+												style="display: none;">This field is required.</span> <span
+												class="validation-invalid-label" id="error_mobile1_unique"
+												style="display: none;">This Mobile No. is already
+												exist.</span>
 										</div>
 
 										<label class="col-form-label col-lg-2" for="mobile2">Alternate
@@ -360,7 +363,9 @@
 												id="email" name="email" onchange="checkUnique(this.value,2)"
 												autocomplete="off" onchange="trim(this)"> <span
 												class="validation-invalid-label" id="error_email"
-												style="display: none;">This field is required.</span>
+												style="display: none;">This field is required.</span> <span
+												class="validation-invalid-label" id="error_email_unique"
+												style="display: none;">This Email is already exist.</span>
 										</div>
 									</div>
 
@@ -1007,14 +1012,14 @@
 				}, function(data) {
 					//alert("Data  " + JSON.stringify(data));
 					if (valueType == 2) {
-						$("#error_email").show()
+						$("#error_email_unique").show()
 						document.getElementById("email").value = "";
 						/* alert("This email id already exist "); */
 
 						document.getElementById("submtbtn").disabled = true;
 
 					} else {
-						$("#error_mobile1").show()
+						$("#error_mobile1_unique").show()
 						document.getElementById("mobile1").value = "";
 
 						/* alert("This contact no  already exist"); */
