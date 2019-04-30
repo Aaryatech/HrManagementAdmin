@@ -688,8 +688,7 @@ public class ClaimApplicationController {
 			  GetClaimTrailStatus[] employeeDoc = Constants.getRestTemplate().postForObject(Constants.url + "/getClaimTrailList", map,GetClaimTrailStatus[].class);
 			  
 			  List<GetClaimTrailStatus> employeeList = new
-			  ArrayList<GetClaimTrailStatus>(Arrays.asList(employeeDoc));
-			  System.out.println(employeeList);
+			  ArrayList<GetClaimTrailStatus>(Arrays.asList(employeeDoc));			  
 			  model.addObject("employeeList",employeeList);
 		} catch (Exception e) {
 			e.printStackTrace();

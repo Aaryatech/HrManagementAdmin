@@ -53,7 +53,6 @@ public class MasterEmpController {
 			 "/getEmpDocList", EmployeDoc[].class);
 			
 			 List<EmployeDoc> employeeList = new ArrayList<EmployeDoc>(Arrays.asList(employeeDoc));
-			 System.out.println(employeeList); 
 			 model.addObject("employeeList",employeeList);
 			
 		} catch (Exception e) {
@@ -68,17 +67,7 @@ public class MasterEmpController {
 		ModelAndView model = new ModelAndView("leave/leaveSummeryAdd");
 
 		try {
-			/*
-			 * EmployeDoc[] employeeDoc =
-			 * Constants.getRestTemplate().getForObject(Constants.url + "/getEmpDocList",
-			 * EmployeDoc[].class);
-			 * 
-			 * List<EmployeDoc> employeeList = new
-			 * ArrayList<EmployeDoc>(Arrays.asList(employeeDoc));
-			 * System.out.println(employeeList);
-			 * model.addObject("employeeList",employeeList);
-			 */
-			
+					
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -191,7 +180,6 @@ public class MasterEmpController {
 					 "/getLeaveSummaryList",map, LeaveSummary[].class);
 					
 			 List<LeaveSummary> sumList = new ArrayList<LeaveSummary>(Arrays.asList(employeeDoc));
-			 System.out.println("lv sum list "+sumList); 
 			 model.addObject("sumList",sumList);
 			
 
@@ -240,11 +228,6 @@ public class MasterEmpController {
 					  EmployeeInfo[].class);
 			  
 			  List<EmployeeInfo> employeeInfoList = new ArrayList<EmployeeInfo>(Arrays.asList(employeeInfo));
-			  System.out.println(employeeInfoList);
-			  
-			 
-				 
-			//String dateConvertor=  DateConvertor.convertToDMY(calYearList.get(0).get);
 			  model.addObject("calYearList",calYearList);
 			  model.addObject("employeeInfoList",employeeInfoList);
 			 
@@ -278,7 +261,6 @@ public class MasterEmpController {
 				  employeeInfoList.get(i).setExVar1(FormValidation.Encrypt(String.valueOf(employeeInfoList.get(i).getLeaveId())));
 				}
 
-			  System.out.println("List : "+employeeInfoList.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -300,8 +282,7 @@ public class MasterEmpController {
 			  
 			  List<GetLeaveStatus> employeeList = new
 			  ArrayList<GetLeaveStatus>(Arrays.asList(employeeDoc));
-			  System.out.println(employeeList);
-			  model.addObject("employeeList",employeeList);
+		      model.addObject("employeeList",employeeList);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
