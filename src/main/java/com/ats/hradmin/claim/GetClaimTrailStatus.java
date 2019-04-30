@@ -1,9 +1,10 @@
 package com.ats.hradmin.claim;
 
- 
+import java.util.Date;
+
 public class GetClaimTrailStatus {
 	
- 	private int claimTrailPkey;
+private int claimTrailPkey;
 	
 	private int claimId ;
 	
@@ -12,7 +13,9 @@ public class GetClaimTrailStatus {
 	private String empRemarks;
 	
 	private int claimStatus;
-		
+	
+	private String userName;
+	
 	private String makerEnterDatetime;
 	
 	private String empFname;
@@ -103,13 +106,22 @@ public class GetClaimTrailStatus {
 		this.empPhoto = empPhoto;
 	}
 
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
 	@Override
 	public String toString() {
 		return "GetClaimTrailStatus [claimTrailPkey=" + claimTrailPkey + ", claimId=" + claimId + ", empId=" + empId
-				+ ", empRemarks=" + empRemarks + ", claimStatus=" + claimStatus + ", makerEnterDatetime="
-				+ makerEnterDatetime + ", empFname=" + empFname + ", empMname=" + empMname + ", empSname=" + empSname
-				+ ", empPhoto=" + empPhoto + "]";
+				+ ", empRemarks=" + empRemarks + ", claimStatus=" + claimStatus + ", userName=" + userName
+				+ ", makerEnterDatetime=" + makerEnterDatetime + ", empFname=" + empFname + ", empMname=" + empMname
+				+ ", empSname=" + empSname + ", empPhoto=" + empPhoto + "]";
 	}
+
 
 	
 }

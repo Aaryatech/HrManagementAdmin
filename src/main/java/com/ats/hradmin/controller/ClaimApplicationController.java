@@ -26,6 +26,7 @@ import com.ats.hradmin.claim.ClaimProof;
 import com.ats.hradmin.claim.ClaimTrail;
 import com.ats.hradmin.claim.ClaimType;
 import com.ats.hradmin.claim.GetClaimApplyAuthwise;
+import com.ats.hradmin.claim.GetClaimTrailStatus;
 import com.ats.hradmin.common.Constants;
 import com.ats.hradmin.common.DateConvertor;
 import com.ats.hradmin.common.FormValidation;
@@ -670,6 +671,30 @@ public class ClaimApplicationController {
 			session.setAttribute("errorMsg", "Failed to Delete");
 		}
 		return "redirect:/showClaimProof?claimId="+claimId1;
+	}
+	@RequestMapping(value = "/claimDetailHistory", method = RequestMethod.GET)
+	public ModelAndView claimDetailHistory(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("claim/claim_trail_history");
+
+		try {
+		
+			String base64encodedString = request.getParameter("claimId");			
+			String claimId = FormValidation.DecodeKey(base64encodedString);		
+			
+			System.out.println("ID: "+claimId);
+			  MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			  map.add("claimId",claimId);
+			  GetClaimTrailStatus[] employeeDoc = Constants.getRestTemplate().postForObject(Constants.url + "/getClaimTrailList", map,GetClaimTrailStatus[].class);
+			  
+			  List<GetClaimTrailStatus> employeeList = new
+			  ArrayList<GetClaimTrailStatus>(Arrays.asList(employeeDoc));
+			  System.out.println(employeeList);
+			  model.addObject("employeeList",employeeList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
 	}
 
 }
