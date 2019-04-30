@@ -13,6 +13,7 @@
 <c:url var="getLeaveStructureForEdit" value="/getLeaveStructureForEdit" />
 <c:url var="getHolidayAndWeeklyOffList"
 	value="/getHolidayAndWeeklyOffList" />
+<c:url var="calholidayWebservice" value="/calholidayWebservice" />
 <jsp:include page="/WEB-INF/views/include/metacssjs.jsp"></jsp:include>
 </head>
 
@@ -228,7 +229,7 @@
 												name="dayTypeName"
 												class="form-control form-control-select2 select2-hidden-accessible"
 												data-fouc="" tabindex="-1" aria-hidden="true"
-												onchange="calholiday()">
+												onchange="calholidayWebservice()">
 												<option></option>
 												<option value="1">Full Day</option>
 												<option value="2">Half Day</option>
@@ -243,8 +244,8 @@
 										<div class="col-lg-10">
 											<input type="text" class="form-control daterange-basic_new "
 												name="leaveDateRange" data-placeholder="Select Date"
-												id="leaveDateRange" onchange="calholiday()"> <span
-												class="validation-invalid-label" id="error_Range"
+												id="leaveDateRange" onchange="calholidayWebservice()">
+											<span class="validation-invalid-label" id="error_Range"
 												style="display: none;">This field is required.</span>
 
 										</div>
@@ -270,8 +271,8 @@
 										<div class="col-lg-4">
 											<input type="text" class="form-control numbersOnly"
 												placeholder="Excluding Weekly Off: " id="noOfDaysExclude"
-												name="noOfDaysExclude" autocomplete="off" readonly
-										> <span
+												name="noOfDaysExclude" autocomplete="off"
+												oninput="checkTotal()" readonly> <span
 												class="validation-invalid-label" id="error_noOfDaysExclude"
 												style="display: none;">This field is required.</span>
 										</div>
@@ -287,11 +288,9 @@
 										</div>
 									</div>
 									<input type="hidden" class="form-control numbersOnly"
-										id="empId" value="${empId}" name="empId"> 
-										<input
+										id="empId" value="${empId}" name="empId"> <input
 										type="hidden" class="form-control numbersOnly" id="tempNoDays"
-										name="tempNoDays"> 
-										<input type="hidden"
+										name="tempNoDays"> <input type="hidden"
 										class="form-control numbersOnly" id="lvsId" value="${lvsId}"
 										name="lvsId">
 
@@ -299,7 +298,7 @@
 										<div class="col-lg-10 ml-lg-auto">
 
 											<button type="submit" class="btn bg-blue ml-3 legitRipple"
-												id="submtbtn" >
+												id="submtbtn">
 												Submit <i class="icon-paperplane ml-2"></i>
 											</button>
 										</div>
@@ -333,44 +332,39 @@
 			var lvsId = document.getElementById("lvsId").value;
 			//alert(lvsId);
 			var valid = false;
-/* 
-			if (inputValue != null) {
-				valid == true;
-			}
-			if (valid == true) */
-				$.getJSON('${chkNumber}', {
+			/* 
+			 if (inputValue != null) {
+			 valid == true;
+			 }
+			 if (valid == true) */
+			$.getJSON('${chkNumber}', {
 
-					inputValue : inputValue,
-					lvsId : lvsId,
-					ajax : 'true',
+				inputValue : inputValue,
+				lvsId : lvsId,
+				ajax : 'true',
 
-				}, function(data) {
-					//alert(data.balLeave);
-					document.getElementById("tempNoDays").value=data.balLeave;
-					
-				});
+			}, function(data) {
+				//alert(data.balLeave);
+				document.getElementById("tempNoDays").value = data.balLeave;
+
+			});
 		}
 	</script>
 	<script type="text/javascript">
-	function checkDays(x2) {
-		//alert("hii..");
-		var x1=	document.getElementById("tempNoDays").value;
-		//var x2=	document.getElementById("noOfDaysExclude").value;
-		//alert("x1 is "+x1);
-		//alert("x2 is "+x2);
-		
-		if(parseInt(x2,10)>parseInt(x1,10)){
-			alert("Insufficient Leaves");
-			 document.getElementById("noOfDaysExclude").value="";
-			 document.getElementById("noOfDays").value="";
+		function checkTotal() {
+			alert("hii..");
+			var x1 = document.getElementById("tempNoDays").value;
+			var x2 = document.getElementById("noOfDaysExclude").value;
+			alert("x1 is " + x1);
+			alert("x2 is " + x2);
+
+			if (parseInt(x2, 10) > parseInt(x1, 10)) {
+				alert("Insufficient Leaves");
+			}
+
 		}
-		
-		
-	
-	}
-	
 	</script>
-	
+
 	<script type="text/javascript">
 		function calholiday() {
 
@@ -484,7 +478,8 @@
 														* 60 * 60 * 24);
 											}
 
-											var lastDay = new Date(year, k, 0);
+											var lastDay = new Date(year, k + 1,
+													0);
 											var nextDay = new Date();
 											nextDay.setDate(lastDay.getDate());
 											var spltdt = formatDate(lastDay)
@@ -542,7 +537,8 @@
 														* 60 * 60 * 24);
 											}
 
-											var lastDay = new Date(year, k, 0);
+											var lastDay = new Date(year, k + 1,
+													0);
 											var nextDay = new Date();
 											nextDay.setDate(lastDay.getDate());
 											var spltdt = formatDate(lastDay)
@@ -600,7 +596,9 @@
 														* 60 * 60 * 24);
 											}
 
-											var lastDay = new Date(year, k, 0);
+											var lastDay = new Date(year, k + 1,
+													0);
+
 											var nextDay = new Date();
 											nextDay.setDate(lastDay.getDate());
 											var spltdt = formatDate(lastDay)
@@ -658,7 +656,9 @@
 														* 60 * 60 * 24);
 											}
 
-											var lastDay = new Date(year, k, 0);
+											var lastDay = new Date(year, k + 1,
+													0);
+
 											var nextDay = new Date();
 											nextDay.setDate(lastDay.getDate());
 											var spltdt = formatDate(lastDay)
@@ -718,7 +718,8 @@
 												comndate.push(sndwk[a]);
 											}
 
-											var lastDay = new Date(year, k, 0);
+											var lastDay = new Date(year, k + 1,
+													0);
 											var nextDay = new Date();
 											nextDay.setDate(lastDay.getDate());
 											var spltdt = formatDate(lastDay)
@@ -768,7 +769,7 @@
 													data.weeklyList[i].woDay);
 
 											var date5 = new Date(year, k, 29);
-											var date6 = new Date(year, k, 0);
+											var date6 = new Date(year, k + 1, 0);
 
 											var holfrstdt2 = new Date(
 													date1res[2],
@@ -798,7 +799,8 @@
 												comndate.push(thrdwk[a]);
 											}
 
-											var lastDay = new Date(year, k, 0);
+											var lastDay = new Date(year, k + 1,
+													0);
 											var nextDay = new Date();
 											nextDay.setDate(lastDay.getDate());
 											var spltdt = formatDate(lastDay)
@@ -844,8 +846,6 @@
 								document.getElementById("noOfDays").value = diff
 										- totalSundays;
 								document.getElementById("noOfDaysExclude").value = totalSundays;
-								
-								checkDays(totalSundays);
 
 							});
 			/* }else{
@@ -957,6 +957,33 @@
 	</script>
 
 	<script>
+		function calholidayWebservice() {
+
+			var daterange = document.getElementById("leaveDateRange").value;
+			var dayTypeName = document.getElementById("dayTypeName").value;
+			var res = daterange.split(" to ");
+			var empId = document.getElementById("empId").value;
+
+			$
+					.getJSON(
+							'${calholidayWebservice}',
+							{
+
+								fromDate : res[0],
+								toDate : res[1],
+								empId : empId,
+								ajax : 'true',
+
+							},
+							function(data) {
+
+								document.getElementById("noOfDays").value = data.leavecount;
+								document.getElementById("noOfDaysExclude").value = data.holidaycount;
+
+							});
+
+		}
+
 		function trim(el) {
 			el.value = el.value.replace(/(^\s*)|(\s*$)/gi, ""). // removes leading and trailing spaces
 			replace(/[ ]{2,}/gi, " "). // replaces multiple spaces with one space 
