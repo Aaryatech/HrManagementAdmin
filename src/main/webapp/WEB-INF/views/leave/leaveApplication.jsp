@@ -977,9 +977,8 @@
 							},
 							function(data) {
 
-								document.getElementById("noOfDays").value = diff
-										- totalSundays;
-								document.getElementById("noOfDaysExclude").value = totalSundays;
+								document.getElementById("noOfDays").value = data.leavecount;
+								document.getElementById("noOfDaysExclude").value = data.holidaycount;
 
 							});
 

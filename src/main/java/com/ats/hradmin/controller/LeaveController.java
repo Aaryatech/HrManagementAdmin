@@ -34,6 +34,7 @@ import com.ats.hradmin.model.GetEmployeeInfo;
 import com.ats.hradmin.model.HolidayAndWeeklyOff;
 import com.ats.hradmin.model.Info;
 import com.ats.hradmin.model.LeaveApply;
+import com.ats.hradmin.model.LeaveCount;
 import com.ats.hradmin.model.LeaveSummary;
 import com.ats.hradmin.model.LeaveTrail;
 import com.ats.hradmin.model.LeaveType;
@@ -486,6 +487,32 @@ public class LeaveController {
 			e.printStackTrace();
 		}
 		return HolidayAndWeeklyOff;
+	}
+	
+	@RequestMapping(value = "/calholidayWebservice", method = RequestMethod.GET)
+	public @ResponseBody LeaveCount calholidayWebservice(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		LeaveCount leaveCount = new LeaveCount();
+
+		try {
+			String empId = request.getParameter("empId");
+			String fromDate = request.getParameter("fromDate");
+			String toDate = request.getParameter("toDate");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("empId", empId);
+			map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+			map.add("toDate", DateConvertor.convertToYMD(toDate));
+			System.out.println(map);
+			leaveCount  = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/calculateHolidayBetweenDate", map, LeaveCount.class); 
+ 
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return leaveCount;
 	}
 
 	@RequestMapping(value = "/insertLeave", method = RequestMethod.POST)
