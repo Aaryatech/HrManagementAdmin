@@ -78,10 +78,11 @@ public class LeaveController {
 	public String submitInsertLeaveType(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			HttpSession session = request.getSession();
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 			Date date = new Date();
 			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 			SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
-			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+			
 
 			String compName = request.getParameter("1");
 			String leaveTypeTitle = request.getParameter("leaveTypeTitle");

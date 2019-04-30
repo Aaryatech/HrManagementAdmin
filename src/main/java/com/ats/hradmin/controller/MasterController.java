@@ -35,6 +35,7 @@ import com.ats.hradmin.model.GetEmployeeInfo;
 import com.ats.hradmin.model.Info;
 import com.ats.hradmin.model.LeaveType;
 import com.ats.hradmin.model.Location;
+import com.ats.hradmin.model.LoginResponse;
 import com.ats.hradmin.model.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -1516,7 +1517,7 @@ public class MasterController {
 			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 			SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 			VpsImageUpload upload = new VpsImageUpload();
-
+ 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 			
 			String empCode = request.getParameter("empCode");
 			String fname = request.getParameter("fname");
@@ -1591,7 +1592,7 @@ public class MasterController {
 			editEmp.setEmpLeavingReason(lvngReson);
 			
 			
-			editEmp.setMakerUserId(1);
+			editEmp.setMakerUserId(userObj.getUserId());
 			editEmp.setMakerEnterDatetime(sf.format(date));
 
 			
@@ -1635,6 +1636,7 @@ public class MasterController {
 			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 			SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 			VpsImageUpload upload = new VpsImageUpload();
+ 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
 			
 			
@@ -1878,7 +1880,7 @@ public class MasterController {
 			leaveSummary.setExVar3("NA");
 			leaveSummary.setIsActive(1);
 			leaveSummary.setDelStatus(1);
-			leaveSummary.setMakerUserId(1);
+			leaveSummary.setMakerUserId(userObj.getUserId());
 			leaveSummary.setMakerEnterDatetime(sf.format(date));
 
 			
