@@ -351,18 +351,23 @@
 		}
 	</script>
 	<script type="text/javascript">
-		function checkTotal() {
-			alert("hii..");
-			var x1 = document.getElementById("tempNoDays").value;
-			var x2 = document.getElementById("noOfDaysExclude").value;
-			alert("x1 is " + x1);
-			alert("x2 is " + x2);
-
-			if (parseInt(x2, 10) > parseInt(x1, 10)) {
-				alert("Insufficient Leaves");
-			}
-
+	function checkDays(x2) {
+		//alert("hii..");
+		var x1=	document.getElementById("tempNoDays").value;
+		//var x2=	document.getElementById("noOfDaysExclude").value;
+		//alert("x1 is "+x1);
+		//alert("x2 is "+x2);
+		
+		if(parseInt(x2,10)>parseInt(x1,10)){
+			alert("Insufficient Leaves");
+			 document.getElementById("noOfDaysExclude").value="";
+			 document.getElementById("noOfDays").value="";
 		}
+		
+		
+	
+	}
+	
 	</script>
 
 	<script type="text/javascript">
@@ -841,12 +846,13 @@
 									totalSundays = totalSundays + tempdiff;
 								}
 
-								//alert(comndate);
+								
 
 								document.getElementById("noOfDays").value = diff
 										- totalSundays;
 								document.getElementById("noOfDaysExclude").value = totalSundays;
-
+								alert(totalSundays);
+								
 							});
 			/* }else{
 				
@@ -979,6 +985,9 @@
 
 								document.getElementById("noOfDays").value = data.leavecount;
 								document.getElementById("noOfDaysExclude").value = data.holidaycount;
+								
+								checkDays(data.holidaycount);
+								
 
 							});
 

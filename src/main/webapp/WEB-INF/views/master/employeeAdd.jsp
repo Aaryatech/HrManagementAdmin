@@ -136,26 +136,7 @@
 										</div>
 									</div>
 
-									<!-- <div class="form-group row">
-										<label class="col-form-label col-lg-2" for="profilePic">
-											Profile Pic : </label>
-										<div class="col-lg-6">
-											<div class="uniform-uploader">
-												<input type="file" name="profilePic"
-													class="form-input-styled" data-fouc="" id="profilePic"><span
-													class="filename" style="user-select: none;">No file
-													selected</span><span class="action btn bg-blue legitRipple"
-													style="user-select: none;">Choose File</span>
-											</div>
-										</div>
-										
-										
-										<div class="col-lg-2">
-										<img id="image1" name="image1"
-											alt="l" height="50px;" width="50px;">
-									</div>
-									</div>
-									 -->
+									
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="profilePic">
 											Profile Pic :</label>
