@@ -7,6 +7,8 @@
 
 <jsp:include page="/WEB-INF/views/include/metacssjs.jsp"></jsp:include>
 <c:url var="getSubmoduleList" value="/getSubmoduleList" />
+<c:url value="/getUserInfo" var="getUserInfo"></c:url>
+
 </head>
 
 <body>
@@ -81,7 +83,7 @@
 							</div>
 
 							<div class="card-body">
-								
+
 								<%
 									if (session.getAttribute("errorMsg") != null) {
 								%>
@@ -120,7 +122,8 @@
 
 								<form
 									action="${pageContext.request.contextPath}/submitInsertEmployeeUserInfo"
-									id="submitInsertEmp" method="post" enctype="multipart/form-data">
+									id="submitInsertEmp" method="post"
+									enctype="multipart/form-data">
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="empCode">
 											Employee Code : *</label>
@@ -132,7 +135,7 @@
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
-									
+
 									<!-- <div class="form-group row">
 										<label class="col-form-label col-lg-2" for="profilePic">
 											Profile Pic : </label>
@@ -154,23 +157,20 @@
 									</div>
 									 -->
 									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="profilePic">	Profile Pic 
-											:</label>
+										<label class="col-form-label col-lg-2" for="profilePic">
+											Profile Pic :</label>
 										<div class="col-lg-6">
 											<input type="file" class="form-control" id="profilePic"
-												name="profilePic" accept=".jpg,.png,.gif">
-											
-											<span
-													class="filename" style="user-select: none;">
-													</span>
+												name="profilePic" accept=".jpg,.png,.gif"> <span
+												class="filename" style="user-select: none;"> </span>
 										</div>
-										
+
 										<div class="col-lg-2">
-										<img id="image1" name="image1"
-											alt="l" height="50px;" width="50px;">
+											<img id="image1" name="image1" alt="l" height="50px;"
+												width="50px;">
+										</div>
 									</div>
-									</div>
-									
+
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="fname">
@@ -182,9 +182,9 @@
 												class="validation-invalid-label" id="error_fname"
 												style="display: none;">This field is required.</span>
 										</div>
-									
-									
-										
+
+
+
 										<div class="col-lg-3">
 											<input type="text" class="form-control  "
 												placeholder="Middle Name" id="mname" name="mname"
@@ -192,10 +192,10 @@
 												class="validation-invalid-label" id="error_mname"
 												style="display: none;">This field is required.</span>
 										</div>
-									
 
-									
-										
+
+
+
 										<div class="col-lg-3">
 											<input type="text" class="form-control  "
 												placeholder="Surname Name" id="sname" name="sname"
@@ -207,7 +207,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="locId">
-											 Location : *</label>
+											Location : *</label>
 										<div class="col-lg-10">
 											<select name="locId" data-placeholder="Select Location"
 												id="locId"
@@ -226,7 +226,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="catId">
-											 Category : *</label>
+											Category : *</label>
 										<div class="col-lg-10">
 											<select name="catId" data-placeholder="Select Category"
 												id="catId"
@@ -245,7 +245,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="typeId">
-											 Type : *</label>
+											Type : *</label>
 										<div class="col-lg-10">
 											<select name="typeId" data-placeholder="Select Type"
 												id="typeId"
@@ -264,7 +264,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="deptId">
-											 Department : *</label>
+											Department : *</label>
 										<div class="col-lg-10">
 											<select name="deptId" data-placeholder="Select Department"
 												id="deptId"
@@ -280,8 +280,8 @@
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
-									
-									
+
+
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="tempAdd">Temporary
 											Address : *</label>
@@ -295,7 +295,7 @@
 										</div>
 									</div>
 
-									
+
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="checkSameAdd">
 											Same As Permanent Address : </label>
@@ -318,14 +318,14 @@
 
 										</div>
 									</div>
-									
-								<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="bloodGrp">Blood Group
-											: *</label>
+
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="bloodGrp">Blood
+											Group : *</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control" placeholder="Blood Group"
-												id="bloodGrp" name="bloodGrp" autocomplete="off"
-												onchange="trim(this)"> <span
+											<input type="text" class="form-control"
+												placeholder="Blood Group" id="bloodGrp" name="bloodGrp"
+												autocomplete="off" onchange="trim(this)"> <span
 												class="validation-invalid-label" id="error_bloodGrp"
 												style="display: none;">This field is required.</span>
 										</div>
@@ -336,11 +336,12 @@
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
 												placeholder="Contact No." id="mobile1" name="mobile1"
-												autocomplete="off" onchange="trim(this)" maxlength="10">
-											<span class="validation-invalid-label" id="error_mobile1"
+												onchange="checkUnique(this.value,1)" autocomplete="off"
+												onchange="trim(this)" maxlength="10"> <span
+												class="validation-invalid-label" id="error_mobile1"
 												style="display: none;">This field is required.</span>
 										</div>
-									
+
 										<label class="col-form-label col-lg-2" for="mobile2">Alternate
 											Contact No : </label>
 										<div class="col-lg-4">
@@ -356,8 +357,8 @@
 											: *</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control" placeholder="Email"
-												id="email" name="email" autocomplete="off"
-												onchange="trim(this)"> <span
+												id="email" name="email" onchange="checkUnique(this.value,2)"
+												autocomplete="off" onchange="trim(this)"> <span
 												class="validation-invalid-label" id="error_email"
 												style="display: none;">This field is required.</span>
 										</div>
@@ -374,8 +375,8 @@
 												id="error_emgContPrsn1" style="display: none;">This
 												field is required.</span>
 										</div>
-								
-									
+
+
 										<label class="col-form-label col-lg-2" for="emgContNo1">Emergency
 											Contact No 1: *</label>
 										<div class="col-lg-4">
@@ -399,7 +400,7 @@
 												class="validation-invalid-label" id="error_emgContPrsn2"
 												style="display: none;">This field is required.</span>
 										</div>
-									
+
 										<label class="col-form-label col-lg-2" for="emgContNo2">Emergency
 											Contact No 2 : *</label>
 										<div class="col-lg-4">
@@ -446,7 +447,7 @@
 											<span class="validation-invalid-label" id="error_prevsExpYr"
 												style="display: none;">This field is required.</span>
 										</div>
-									
+
 										<label class="col-form-label col-lg-2" for="prevsExpMn">
 											Previous Experience in Month : *</label>
 										<div class="col-lg-4">
@@ -457,39 +458,40 @@
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
-									
+
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="leavingDate">Leaving
 											Date : </label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control datepickerclass "
 												name="leavingDate" id="leavingDate"
-												placeholder="Leaving Date">  
+												placeholder="Leaving Date">
 										</div>
 									</div>
-									
+
 									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="lvngReson"> Leaving Reason :  </label>
+										<label class="col-form-label col-lg-2" for="lvngReson">
+											Leaving Reason : </label>
 										<div class="col-lg-10">
 											<textarea rows="3" cols="3" class="form-control"
 												placeholder="Leaving Reason" onchange="trim(this)"
 												id="lvngReson" name="lvngReson"></textarea>
-											 
+
 
 										</div>
 									</div>
-									
-									
+
+
 									<div class="card-header header-elements-inline">
-								<h6 class="card-title">Add User</h6>
-								<div class="header-elements">
-									<div class="list-icons">
-										<a class="list-icons-item" data-action="collapse"></a>
+										<h6 class="card-title">Add User</h6>
+										<div class="header-elements">
+											<div class="list-icons">
+												<a class="list-icons-item" data-action="collapse"></a>
+											</div>
+										</div>
 									</div>
-								</div>
-							</div>
-									
-<div class="form-group row">
+
+									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="uname">
 											User Name : *</label>
 										<div class="col-lg-10">
@@ -500,7 +502,7 @@
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
-									
+
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="upass">
 											User Password : *</label>
@@ -512,27 +514,27 @@
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
-									
+
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="locId2">
-											 Location : *</label>
+											Location : *</label>
 										<div class="col-lg-10">
-											
-											<select multiple="multiple" data-placeholder="Select Location" name="locId2" 
-											id="locId2" class="form-control form-control-sm select" data-container-css-class="select-sm" data-fouc>
-										<option value="">Select Location</option>
+
+											<select multiple="multiple"
+												data-placeholder="Select Location" name="locId2" id="locId2"
+												class="form-control form-control-sm select"
+												data-container-css-class="select-sm" data-fouc>
+												<option value="">Select Location</option>
 												<c:forEach items="${locationList}" var="locationList">
 													<option value="${locationList.locId}">${locationList.locName}</option>
 												</c:forEach>
-										
-									</select>
-										
-											 <span class="validation-invalid-label" id="error_locId2"
+
+											</select> <span class="validation-invalid-label" id="error_locId2"
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
-									
-									 
+
+
 									<div class="form-group row mb-0">
 										<div class="col-lg-10 ml-lg-auto">
 											<button type="reset" class="btn btn-light legitRipple">Reset</button>
@@ -569,8 +571,8 @@
 
 			if (document.getElementById("checkSameAdd").checked == true) {
 
-				document.getElementById("permntAdd").value = document.getElementById("tempAdd").value;
-					
+				document.getElementById("permntAdd").value = document
+						.getElementById("tempAdd").value;
 
 			} else {
 
@@ -722,21 +724,17 @@
 													$("#error_permntAdd")
 															.hide()
 												}
-												
-												
+
 												if (!$("#bloodGrp").val()) {
 
 													isError = true;
 
-													$("#error_bloodGrp")
-															.show()
+													$("#error_bloodGrp").show()
 
 												} else {
-													$("#error_bloodGrp")
-															.hide()
+													$("#error_bloodGrp").hide()
 												}
-												
-												
+
 												if (!$("#tempAdd").val()) {
 
 													isError = true;
@@ -770,7 +768,7 @@
 													$("#error_emgContPrsn2")
 															.hide()
 												}
-												
+
 												if (!$("#ratePerHr").val()) {
 
 													isError = true;
@@ -782,7 +780,7 @@
 													$("#error_ratePerHr")
 															.hide()
 												}
-												
+
 												if (!$("#prevsExpYr").val()) {
 
 													isError = true;
@@ -794,7 +792,7 @@
 													$("#error_prevsExpYr")
 															.hide()
 												}
-												
+
 												if (!$("#prevsExpMn").val()) {
 
 													isError = true;
@@ -806,8 +804,6 @@
 													$("#error_prevsExpMn")
 															.hide()
 												}
-												
-												   
 
 												if (!$("#mobile1").val()
 														|| !validateMobile($(
@@ -895,28 +891,24 @@
 												} else {
 													$("#error_email").hide()
 												}
-												
+
 												if (!$("#uname").val()) {
 
 													isError = true;
 
-													$("#error_uname")
-															.show()
+													$("#error_uname").show()
 
 												} else {
-													$("#error_uname")
-															.hide()
+													$("#error_uname").hide()
 												}
 												if (!$("#upass").val()) {
 
 													isError = true;
 
-													$("#error_upass")
-															.show()
+													$("#error_upass").show()
 
 												} else {
-													$("#error_upass")
-															.hide()
+													$("#error_upass").hide()
 												}
 												if (!isError) {
 
@@ -957,8 +949,8 @@
 			}
 		});
 	</script>
-	
-	
+
+
 	<script type="text/javascript">
 		function readURL(input) {
 			if (input.files && input.files[0]) {
@@ -973,11 +965,67 @@
 		}
 
 		$("#profilePic").change(function() {
-			
 
 			readURL(this);
 		});
 	</script>
+
+	<script type="text/javascript">
+		function checkUnique(inputValue, valueType) {
+			//alert("hi");
+
+			document.getElementById("submtbtn").disabled = false;
+
+			var valid = false;
+			if (valueType == 1) {
+				//alert("Its Mob no");
+				if (inputValue.length == 10) {
+					valid = true;
+					//alert("Len 10")
+				} else {
+					//alert("Not 10");
+				}
+			} else if (valueType == 2) {
+				//alert("Its Email " );
+
+				var mailformat = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+				if (inputValue.match(mailformat)) {
+					valid = true;
+					//alert("Valid Email Id");
+				} else {
+					valid = false;
+					//alert("InValid Email Id");
+				}
+			}
+			if (valid == true)
+
+				$.getJSON('${getUserInfo}', {
+					inputValue : inputValue,
+					valueType : valueType,
+					ajax : 'true',
+
+				}, function(data) {
+					//alert("Data  " + JSON.stringify(data));
+					if (valueType == 2) {
+						$("#error_email").show()
+						document.getElementById("email").value = "";
+						/* alert("This email id already exist "); */
+
+						document.getElementById("submtbtn").disabled = true;
+
+					} else {
+						$("#error_mobile1").show()
+						document.getElementById("mobile1").value = "";
+
+						/* alert("This contact no  already exist"); */
+						document.getElementById("submtbtn").disabled = true;
+
+					}
+
+				});
+		}
+	</script>
+
 	<!-- <script type="text/javascript">
 	$('#submtbtn').on('click', function() {
         swalInit({
@@ -1023,4 +1071,3 @@
 													<option value="${locationList.locId}">${locationList.locName}</option>
 												</c:forEach>
 											</select> --%>
-											

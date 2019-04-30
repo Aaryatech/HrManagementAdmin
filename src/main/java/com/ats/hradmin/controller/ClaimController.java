@@ -1,6 +1,7 @@
 package com.ats.hradmin.controller;
 
 import java.text.DateFormat;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,6 +20,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.hradmin.claim.ClaimAuthority;
@@ -31,6 +33,7 @@ import com.ats.hradmin.leave.model.GetLeaveAuthority;
 import com.ats.hradmin.leave.model.Holiday;
 import com.ats.hradmin.leave.model.LeaveAuthority;
 import com.ats.hradmin.model.Customer;
+import com.ats.hradmin.model.EmployeeInfo;
 import com.ats.hradmin.model.GetEmployeeInfo;
 import com.ats.hradmin.model.Info;
 import com.ats.hradmin.model.LeaveSummary;
@@ -717,6 +720,34 @@ public class ClaimController {
 		}
 
 		return "redirect:/claimAuthorityList";
+	}
+
+	@RequestMapping(value = "/getUserInfo", method = RequestMethod.GET)
+	public @ResponseBody EmployeeInfo getUserInfo(HttpServletRequest request, HttpServletResponse response) {
+
+		EmployeeInfo employeeInfo = new EmployeeInfo();
+
+		try {
+			HttpSession session = request.getSession();
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			String inputValue = request.getParameter("inputValue");
+			int valueType = Integer.parseInt(request.getParameter("valueType"));
+
+			map.add("inputValue", inputValue);
+			map.add("checkValue", valueType);
+
+			employeeInfo = Constants.getRestTemplate().postForObject(Constants.url + "getUserInfoByContcAndEmail", map,
+					EmployeeInfo.class);
+
+		} catch (Exception e) {
+			System.err.println("Exce in checkUniqueField  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return employeeInfo;
+
 	}
 
 }
