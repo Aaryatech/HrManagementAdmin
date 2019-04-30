@@ -144,7 +144,7 @@
 														value="${emp.empId}" /></td>
 
 													<td width="10%">${emp.empCode}</td>
-													<td>${emp.empFname}${emp.empMname}${emp.empSname}</td>
+													<td>${emp.empSname} ${emp.empFname}</td>
 													<td width="10%">${emp.empDept}</td>
 													<td width="10%">${emp.empCategory}</td>
 												</tr>
@@ -182,7 +182,7 @@
 														id="repToEmpIds${count.index+1}" value="${emp.empId}" />Reporting</td>
 													<%-- <td>${count.index+1}</td> --%>
 													<td width="10%">${emp.empCode}</td>
-													<td>${emp.empFname}${emp.empMname}${emp.empSname}</td>
+													<td>${emp.empSname} ${emp.empFname}</td>
 													<td width="10%">${emp.empDept}</td>
 													<td width="10%">${emp.empCategory}</td>
 												</tr>
