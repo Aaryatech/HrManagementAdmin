@@ -578,6 +578,7 @@ public class ClaimApplicationController {
 		
 		
 		 model.addObject("claimProofList1",claimProofList1);
+		 model.addObject("fileUrl",Constants.getImageSaveUrl);
 		
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -665,12 +666,13 @@ public class ClaimApplicationController {
 			} else {
 				session.setAttribute("errorMsg", "Failed to Delete");
 			}
+			System.out.println("claimProofId " + claimProofId + " claimId1 " + claimId1);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			session.setAttribute("errorMsg", "Failed to Delete");
 		}
-		return "redirect:/showClaimProof?claimId="+claimId1;
+		return "redirect:/showClaimProof?claimId="+FormValidation.Encrypt(claimId1);
 	}
 	@RequestMapping(value = "/claimDetailHistory", method = RequestMethod.GET)
 	public ModelAndView claimDetailHistory(HttpServletRequest request, HttpServletResponse response) {
@@ -688,7 +690,8 @@ public class ClaimApplicationController {
 			  GetClaimTrailStatus[] employeeDoc = Constants.getRestTemplate().postForObject(Constants.url + "/getClaimTrailList", map,GetClaimTrailStatus[].class);
 			  
 			  List<GetClaimTrailStatus> employeeList = new
-			  ArrayList<GetClaimTrailStatus>(Arrays.asList(employeeDoc));			  
+			  ArrayList<GetClaimTrailStatus>(Arrays.asList(employeeDoc));
+			  System.out.println(employeeList);
 			  model.addObject("employeeList",employeeList);
 		} catch (Exception e) {
 			e.printStackTrace();
