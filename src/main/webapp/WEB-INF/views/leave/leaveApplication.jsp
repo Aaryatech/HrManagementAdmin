@@ -270,8 +270,8 @@
 										<div class="col-lg-4">
 											<input type="text" class="form-control numbersOnly"
 												placeholder="Excluding Weekly Off: " id="noOfDaysExclude"
-												name="noOfDaysExclude" autocomplete="off"
-												oninput="checkTotal()" readonly> <span
+												name="noOfDaysExclude" autocomplete="off" readonly
+										> <span
 												class="validation-invalid-label" id="error_noOfDaysExclude"
 												style="display: none;">This field is required.</span>
 										</div>
@@ -299,7 +299,7 @@
 										<div class="col-lg-10 ml-lg-auto">
 
 											<button type="submit" class="btn bg-blue ml-3 legitRipple"
-												id="submtbtn">
+												id="submtbtn" >
 												Submit <i class="icon-paperplane ml-2"></i>
 											</button>
 										</div>
@@ -352,15 +352,17 @@
 		}
 	</script>
 	<script type="text/javascript">
-	function checkTotal() {
-		alert("hii..");
+	function checkDays(x2) {
+		//alert("hii..");
 		var x1=	document.getElementById("tempNoDays").value;
-		var x2=	document.getElementById("noOfDaysExclude").value;
-		alert("x1 is "+x1);
-		alert("x2 is "+x2);
+		//var x2=	document.getElementById("noOfDaysExclude").value;
+		//alert("x1 is "+x1);
+		//alert("x2 is "+x2);
 		
 		if(parseInt(x2,10)>parseInt(x1,10)){
 			alert("Insufficient Leaves");
+			 document.getElementById("noOfDaysExclude").value="";
+			 document.getElementById("noOfDays").value="";
 		}
 		
 		
@@ -842,6 +844,8 @@
 								document.getElementById("noOfDays").value = diff
 										- totalSundays;
 								document.getElementById("noOfDaysExclude").value = totalSundays;
+								
+								checkDays(totalSundays);
 
 							});
 			/* }else{
