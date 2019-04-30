@@ -628,7 +628,7 @@
 				.ready(
 						function($) {
 
-							$("#submitInsertEmp")
+							$("#SubmitEditEmp")
 									.submit(
 											function(e) {
 												var isError = false;
