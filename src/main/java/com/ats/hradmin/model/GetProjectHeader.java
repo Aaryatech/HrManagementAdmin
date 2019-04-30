@@ -1,6 +1,7 @@
 package com.ats.hradmin.model;
 
-public class ProjectHeader {
+public class GetProjectHeader {
+
 	private int projectId;
 
 	private int companyId;
@@ -55,15 +56,14 @@ public class ProjectHeader {
 
 	private int projectManagerEmpId;
 
-	private boolean error;
-
-	public int getProjectManagerEmpId() {
-		return projectManagerEmpId;
-	}
-
-	public void setProjectManagerEmpId(int projectManagerEmpId) {
-		this.projectManagerEmpId = projectManagerEmpId;
-	}
+	private String empCode;
+	private String locName;
+	private String custName;
+	private String empFname;
+	private String empMname;
+	private String empSname;
+	private String projectTypeTitle;
+	private String projectTypeTitleShort;
 
 	public int getProjectId() {
 		return projectId;
@@ -273,17 +273,81 @@ public class ProjectHeader {
 		this.projectCity = projectCity;
 	}
 
-	public boolean isError() {
-		return error;
+	public int getProjectManagerEmpId() {
+		return projectManagerEmpId;
 	}
 
-	public void setError(boolean error) {
-		this.error = error;
+	public void setProjectManagerEmpId(int projectManagerEmpId) {
+		this.projectManagerEmpId = projectManagerEmpId;
+	}
+
+	public String getEmpCode() {
+		return empCode;
+	}
+
+	public void setEmpCode(String empCode) {
+		this.empCode = empCode;
+	}
+
+	public String getLocName() {
+		return locName;
+	}
+
+	public void setLocName(String locName) {
+		this.locName = locName;
+	}
+
+	public String getCustName() {
+		return custName;
+	}
+
+	public void setCustName(String custName) {
+		this.custName = custName;
+	}
+
+	public String getEmpFname() {
+		return empFname;
+	}
+
+	public void setEmpFname(String empFname) {
+		this.empFname = empFname;
+	}
+
+	public String getEmpMname() {
+		return empMname;
+	}
+
+	public void setEmpMname(String empMname) {
+		this.empMname = empMname;
+	}
+
+	public String getEmpSname() {
+		return empSname;
+	}
+
+	public void setEmpSname(String empSname) {
+		this.empSname = empSname;
+	}
+
+	public String getProjectTypeTitle() {
+		return projectTypeTitle;
+	}
+
+	public void setProjectTypeTitle(String projectTypeTitle) {
+		this.projectTypeTitle = projectTypeTitle;
+	}
+
+	public String getProjectTypeTitleShort() {
+		return projectTypeTitleShort;
+	}
+
+	public void setProjectTypeTitleShort(String projectTypeTitleShort) {
+		this.projectTypeTitleShort = projectTypeTitleShort;
 	}
 
 	@Override
 	public String toString() {
-		return "ProjectHeader [projectId=" + projectId + ", companyId=" + companyId + ", locId=" + locId
+		return "GetProjectHeader [projectId=" + projectId + ", companyId=" + companyId + ", locId=" + locId
 				+ ", projectTypeId=" + projectTypeId + ", custId=" + custId + ", projectTitle=" + projectTitle
 				+ ", projectDesc=" + projectDesc + ", projectEstStartdt=" + projectEstStartdt + ", projectEstEnddt="
 				+ projectEstEnddt + ", projectEstManhrs=" + projectEstManhrs + ", projectEstBudget=" + projectEstBudget
@@ -291,8 +355,11 @@ public class ProjectHeader {
 				+ ", projectStatus=" + projectStatus + ", projectCompletion=" + projectCompletion + ", delStatus="
 				+ delStatus + ", isActive=" + isActive + ", makerUserId=" + makerUserId + ", makerEnterDatetime="
 				+ makerEnterDatetime + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exInt3=" + exInt3 + ", exVar1="
-				+ exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3 + ", projectCity=" + projectCity + ", error="
-				+ error + ", projectManagerEmpId=" + projectManagerEmpId + "]";
+				+ exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3 + ", projectCity=" + projectCity
+				+ ", projectManagerEmpId=" + projectManagerEmpId + ", empCode=" + empCode + ", locName=" + locName
+				+ ", custName=" + custName + ", empFname=" + empFname + ", empMname=" + empMname + ", empSname="
+				+ empSname + ", projectTypeTitle=" + projectTypeTitle + ", projectTypeTitleShort="
+				+ projectTypeTitleShort + "]";
 	}
 
 }

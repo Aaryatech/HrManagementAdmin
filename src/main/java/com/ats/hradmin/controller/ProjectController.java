@@ -21,9 +21,17 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.hradmin.claim.ClaimType;
 import com.ats.hradmin.common.Constants;
+import com.ats.hradmin.common.DateConvertor;
 import com.ats.hradmin.common.FormValidation;
+import com.ats.hradmin.model.Customer;
+import com.ats.hradmin.model.EmployeeInfo;
+import com.ats.hradmin.model.GetEmployeeInfo;
+import com.ats.hradmin.model.GetProjectHeader;
 import com.ats.hradmin.model.Info;
+import com.ats.hradmin.model.Location;
 import com.ats.hradmin.model.LoginResponse;
+import com.ats.hradmin.model.ProjectHeader;
+import com.ats.hradmin.model.ProjectTrail;
 import com.ats.hradmin.model.project.ProjectType;
 
 @Controller
@@ -267,6 +275,219 @@ public class ProjectController {
 			session.setAttribute("errorMsg", "Failed to Delete");
 		}
 		return "redirect:/showProjectTypeList";
+	}
+
+	@RequestMapping(value = "/addProjectHeader", method = RequestMethod.GET)
+	public ModelAndView addProjectHeader(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("project/project_header");
+
+		try {
+
+			HttpSession session = request.getSession();
+
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("companyId", userObj.getCompanyId());
+
+			ProjectType[] projectTypeListArray = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getProjectListByCompanyId", map, ProjectType[].class);
+
+			List<ProjectType> projectTypelist = new ArrayList<ProjectType>(Arrays.asList(projectTypeListArray));
+
+			model.addObject("projectTypelist", projectTypelist);
+
+			Customer[] custListArray = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getCustListByCompanyId", map, Customer[].class);
+
+			List<Customer> custlist = new ArrayList<Customer>(Arrays.asList(custListArray));
+
+			model.addObject("custlist", custlist);
+
+			Location[] location = Constants.getRestTemplate().postForObject(Constants.url + "/getLocationList", map,
+					Location[].class);
+
+			List<Location> locationList = new ArrayList<Location>(Arrays.asList(location));
+			model.addObject("locationList", locationList);
+
+			map = new LinkedMultiValueMap<>();
+			map.add("companyId", userObj.getCompanyId());
+			map.add("locIdList", userObj.getLocationIds());
+
+			GetEmployeeInfo[] employeeDepartment = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getEmpInfoList", map, GetEmployeeInfo[].class);
+
+			List<GetEmployeeInfo> employeeDepartmentlist = new ArrayList<GetEmployeeInfo>(
+					Arrays.asList(employeeDepartment));
+
+			model.addObject("empList", employeeDepartmentlist);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+	}
+
+	@RequestMapping(value = "/submitInsertProjectHeader", method = RequestMethod.POST)
+	public String submitInsertProjectHeader(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			HttpSession session = request.getSession();
+
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+
+			int empId = Integer.parseInt(request.getParameter("empId"));
+			int locId = Integer.parseInt(request.getParameter("locId"));
+			int projectTypeId = Integer.parseInt(request.getParameter("projectTypeId"));
+			int custId = Integer.parseInt(request.getParameter("custId"));
+			String projectTitle = request.getParameter("projectTitle");
+			String projectDesc = request.getParameter("projectDesc");
+			String projectCity = request.getParameter("projectCity");
+			String dateRange = request.getParameter("dateRange");
+
+			int project_est_manhrs = Integer.parseInt(request.getParameter("project_est_manhrs"));
+			int project_est_budget = Integer.parseInt(request.getParameter("project_est_budget"));
+
+			String[] arrOfStr = dateRange.split("to", 2);
+
+			String remark = null;
+			try {
+				remark = request.getParameter("remark");
+			} catch (Exception e) {
+				remark = "NA";
+			}
+
+			Boolean ret = false;
+
+			if (FormValidation.Validaton(projectTitle, "") == true) {
+
+				ret = true;
+
+			}
+			if (FormValidation.Validaton(projectDesc, "") == true) {
+
+				ret = true;
+
+			}
+
+			if (FormValidation.Validaton(request.getParameter("projectCity"), "") == true) {
+
+				ret = true;
+
+			}
+
+			if (ret == false) {
+
+				ProjectHeader save = new ProjectHeader();
+
+				save.setCompanyId(userObj.getCompanyId());
+
+				save.setDelStatus(1);
+				save.setIsActive(1);
+				save.setMakerUserId(userObj.getUserId());
+				save.setMakerEnterDatetime(dateTime);
+				save.setCustId(custId);
+				save.setLocId(locId);
+
+				save.setProjectCity(projectCity);
+
+				save.setProjectCompletion(0);
+				save.setProjectDesc(projectDesc);
+				save.setProjectEstBudget(project_est_budget);
+				save.setProjectEstManhrs(project_est_manhrs);
+				save.setProjectEstStartdt(DateConvertor.convertToYMD(arrOfStr[0].toString().trim()));
+				save.setProjectEstEnddt(DateConvertor.convertToYMD(arrOfStr[1].toString().trim()));
+				save.setProjectStatus("aaa");
+				save.setProjectTypeId(projectTypeId);
+				save.setProjectManagerEmpId(empId);
+
+				save.setProjectTitle(projectTitle);
+
+				ProjectHeader res = Constants.getRestTemplate().postForObject(Constants.url + "/saveProjectHeader",
+						save, ProjectHeader.class);
+				if (res.isError() == false) {
+					session.setAttribute("successMsg", "Record Insert Successfully");
+
+					ProjectTrail projectTrail = new ProjectTrail();
+					projectTrail.setDelStatus(1);
+					projectTrail.setIsActive(1);
+					projectTrail.setMakerEnterDatetime(dateTime);
+					projectTrail.setMakerUserId(userObj.getUserId());
+					projectTrail.setProjectCompletion(0);
+					projectTrail.setProjectId(res.getProjectId());
+					projectTrail.setProjectRemarks("NULL");
+					projectTrail.setProjectStatus("Null");
+
+					ProjectTrail res1 = Constants.getRestTemplate().postForObject(Constants.url + "/saveProjectTrail",
+							projectTrail, ProjectTrail.class);
+				} else {
+					session.setAttribute("errorMsg", "Failed to Insert Record");
+				}
+
+			} else {
+				session.setAttribute("errorMsg", "Failed to Insert Record");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:/addProjectHeader";
+
+	}
+
+	@RequestMapping(value = "/showProjectHeaderList", method = RequestMethod.GET)
+	public ModelAndView showProjectHeaderList(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("project/project_header_list");
+
+		try {
+			HttpSession session = request.getSession();
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("companyId", userObj.getCompanyId());
+
+			GetProjectHeader[] proHeaderArray = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getProjectAllListByCompanyId", map, GetProjectHeader[].class);
+			List<GetProjectHeader> projectHeaderList = new ArrayList<GetProjectHeader>(Arrays.asList(proHeaderArray));
+
+			for (int i = 0; i < projectHeaderList.size(); i++) {
+
+				projectHeaderList.get(i)
+						.setExVar1(FormValidation.Encrypt(String.valueOf(projectHeaderList.get(i).getProjectId())));
+			}
+
+			model.addObject("projectHeaderList", projectHeaderList);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+	}
+
+	@RequestMapping(value = "/deleteProject", method = RequestMethod.GET)
+	public String deleteProject(HttpServletRequest request, HttpServletResponse response) {
+
+		HttpSession session = request.getSession();
+		try {
+			String base64encodedString = request.getParameter("projectId");
+			String projectId = FormValidation.DecodeKey(base64encodedString);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("projectId", projectId);
+			Info info = Constants.getRestTemplate().postForObject(Constants.url + "/deleteProjectHeader", map,
+					Info.class);
+
+			if (info.isError() == false) {
+				session.setAttribute("successMsg", "Deleted Successfully");
+			} else {
+				session.setAttribute("errorMsg", "Failed to Delete");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.setAttribute("errorMsg", "Failed to Delete");
+		}
+		return "redirect:/showProjectHeaderList";
 	}
 
 }
