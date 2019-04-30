@@ -192,7 +192,7 @@
 
 											<td>${count.index+1}</td>
 											<td>${structure.empCode}</td>
-											<td>${structure.empFname}${structure.empMname}${structure.empSname}</td>
+											<td>${structure.empSname} ${structure.empFname}</td>
 											<td>${structure.empDeptName}</td>
 											<td>${structure.empCatName}</td>
 											<td>${structure.lvsName}</td>

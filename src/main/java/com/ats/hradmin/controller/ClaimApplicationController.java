@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.ats.hradmin.claim.ClaimApply;
 import com.ats.hradmin.claim.ClaimDetail;
 import com.ats.hradmin.claim.ClaimProof;
@@ -32,12 +31,9 @@ import com.ats.hradmin.common.DateConvertor;
 import com.ats.hradmin.common.FormValidation;
 import com.ats.hradmin.common.VpsImageUpload;
 import com.ats.hradmin.leave.model.GetAuthorityIds;
-import com.ats.hradmin.leave.model.GetLeaveApplyAuthwise;
-import com.ats.hradmin.model.Company;
 import com.ats.hradmin.model.EmployeeInfo;
 import com.ats.hradmin.model.GetEmployeeInfo;
 import com.ats.hradmin.model.Info;
-import com.ats.hradmin.model.LeaveTrail;
 import com.ats.hradmin.model.LoginResponse;
 import com.ats.hradmin.model.ProjectHeader;
 

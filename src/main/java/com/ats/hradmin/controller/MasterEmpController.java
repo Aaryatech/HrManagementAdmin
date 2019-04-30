@@ -5,36 +5,26 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import com.ats.hradmin.common.Constants;
-import com.ats.hradmin.common.DateConvertor;
 import com.ats.hradmin.common.FormValidation;
-import com.ats.hradmin.common.VpsImageUpload;
 import com.ats.hradmin.leave.model.CalenderYear;
 import com.ats.hradmin.leave.model.GetLeaveStatus;
 import com.ats.hradmin.leave.model.LeaveDetail;
-import com.ats.hradmin.model.Company;
 import com.ats.hradmin.model.EmployeDoc;
-import com.ats.hradmin.model.EmployeeDepartment;
 import com.ats.hradmin.model.EmployeeInfo;
 import com.ats.hradmin.model.Info;
 import com.ats.hradmin.model.LeaveSummary;
-import com.ats.hradmin.model.LeaveType;
 import com.ats.hradmin.model.LoginResponse;
 
  

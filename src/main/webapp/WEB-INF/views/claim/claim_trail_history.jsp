@@ -130,7 +130,7 @@
 								<c:forEach items="${employeeList}" var="empTrailList" varStatus="count">
 									<tr>
 										<td>${count.index+1}</td>
-										<td>${empTrailList.empFname} ${empTrailList.empMname} ${empTrailList.empSname}</td>
+										<td>${empTrailList.empSname} ${empTrailList.empFname} </td>
 									
 										
 										<c:choose>

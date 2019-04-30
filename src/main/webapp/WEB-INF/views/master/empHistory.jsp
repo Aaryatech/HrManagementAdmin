@@ -275,7 +275,7 @@
 
 							
 						dataTable.row.add(
-								[ i + 1, v.empFname +" " +v.empMname +" "+v.empSname,
+								[ i + 1, v.empSname +" " +v.empFname ,
 										v.empDeptName,	v.lvTitle,v.empCode,v.leaveNumDays,v.leaveDuration, v.leaveFromdt +" To " +v.leaveTodt,v.userName,current_status,		
 										str
 								]).draw();

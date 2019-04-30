@@ -139,9 +139,9 @@
 											id="empIds${count.index+1}" value="${structure.empId}" /></td> --%>
 										<td>${count.index+1}</td>
 										<td>${leaveAuth.empCode}</td>
-										<td>${leaveAuth.empFname}${leaveAuth.empMname}${leaveAuth.empSname}</td>
-										<td>${leaveAuth.iniEmpFname}${leaveAuth.iniEmpMname}${leaveAuth.iniEmpSname}</td>
-										<td>${leaveAuth.finiEmpFname}${leaveAuth.finiEmpMname}${leaveAuth.finiEmpSname}</td>
+										<td>${leaveAuth.empSname} ${leaveAuth.empFname}</td>
+										<td>${leaveAuth.iniEmpSname} ${leaveAuth.iniEmpFname}</td>
+										<td>${leaveAuth.finiEmpSname} ${leaveAuth.finiEmpFname}</td>
 
 
 										<td class="text-center">

@@ -134,7 +134,7 @@
 								<c:forEach items="${empList}" var="lvTypeList" varStatus="count">
 									<tr>
 										<td>${count.index+1}</td>
-										<td>${lvTypeList.empFname}</td>
+										<td>${lvTypeList.empSname}  ${lvTypeList.empFname}</td>
 										<td>${lvTypeList.empCategory}</td>
 										<td>${lvTypeList.empType}</td>
 										<td>${lvTypeList.empEmail}</td>

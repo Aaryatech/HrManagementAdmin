@@ -117,7 +117,7 @@
 							<thead>
 								<tr class="bg-blue">
 									<th width="10%">Sr.no</th>
-									<th> Name</th>								
+									<th>Name</th>								
 									<th>Remark</th>
 									<th>Date</th>
 									<th>Action By</th>
@@ -132,7 +132,7 @@
 								<c:forEach items="${employeeList}" var="empTrailList" varStatus="count">
 									<tr>
 										<td>${count.index+1}</td>
-										<td>${empTrailList.empFname} ${empTrailList.empMname} ${empTrailList.empSname}</td>
+										<td>${empTrailList.empSname} ${empTrailList.empFname}</td>
 									
 										
 										<c:choose>
