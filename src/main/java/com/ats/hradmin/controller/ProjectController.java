@@ -443,7 +443,7 @@ public class ProjectController {
 			e.printStackTrace();
 		}
 
-		return "redirect:/addProjectHeader";
+		return "redirect:/showProjectHeaderList";
 
 	}
 
@@ -561,6 +561,97 @@ public class ProjectController {
 			e.printStackTrace();
 		}
 		return model;
+	}
+
+	@RequestMapping(value = "/submitEditProjectHeader", method = RequestMethod.POST)
+	public String submitEditProjectHeader(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			HttpSession session = request.getSession();
+
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+
+			int empId = Integer.parseInt(request.getParameter("empId"));
+			int locId = Integer.parseInt(request.getParameter("locId"));
+			int projectTypeId = Integer.parseInt(request.getParameter("projectTypeId"));
+			int custId = Integer.parseInt(request.getParameter("custId"));
+			String projectTitle = request.getParameter("projectTitle");
+			String projectDesc = request.getParameter("projectDesc");
+			String projectCity = request.getParameter("projectCity");
+			/* String dateRange = request.getParameter("dateRange"); */
+			String fromDate = request.getParameter("fromDate");
+			String toDate = request.getParameter("toDate");
+
+			int project_est_manhrs = Integer.parseInt(request.getParameter("project_est_manhrs"));
+			int project_est_budget = Integer.parseInt(request.getParameter("project_est_budget"));
+
+			// String[] arrOfStr = dateRange.split("to", 2);
+
+			Boolean ret = false;
+
+			if (FormValidation.Validaton(projectTitle, "") == true) {
+
+				ret = true;
+
+			}
+			if (FormValidation.Validaton(projectDesc, "") == true) {
+
+				ret = true;
+
+			}
+
+			if (FormValidation.Validaton(request.getParameter("projectCity"), "") == true) {
+
+				ret = true;
+
+			}
+
+			if (ret == false) {
+
+				editProjectHeader.setCompanyId(userObj.getCompanyId());
+
+				editProjectHeader.setCustId(custId);
+				editProjectHeader.setLocId(locId);
+
+				editProjectHeader.setProjectCity(projectCity);
+
+				editProjectHeader.setProjectCompletion(0);
+				editProjectHeader.setProjectDesc(projectDesc);
+				editProjectHeader.setProjectEstBudget(project_est_budget);
+				editProjectHeader.setProjectEstManhrs(project_est_manhrs);
+				/*
+				 * save.setProjectEstStartdt(DateConvertor.convertToYMD(arrOfStr[0].toString().
+				 * trim()));
+				 * save.setProjectEstEnddt(DateConvertor.convertToYMD(arrOfStr[1].toString().
+				 * trim()));
+				 */
+
+				editProjectHeader.setProjectEstStartdt(DateConvertor.convertToYMD(fromDate));
+				editProjectHeader.setProjectEstEnddt(DateConvertor.convertToYMD(toDate));
+				editProjectHeader.setProjectStatus("aaa");
+				editProjectHeader.setProjectTypeId(projectTypeId);
+				editProjectHeader.setProjectManagerEmpId(empId);
+
+				editProjectHeader.setProjectTitle(projectTitle);
+
+				ProjectHeader res = Constants.getRestTemplate().postForObject(Constants.url + "/saveProjectHeader",
+						editProjectHeader, ProjectHeader.class);
+				if (res.isError() == false) {
+					session.setAttribute("successMsg", "Record Insert Successfully");
+
+				} else {
+					session.setAttribute("errorMsg", "Failed to Insert Record");
+				}
+
+			} else {
+				session.setAttribute("errorMsg", "Failed to Insert Record");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:/showProjectHeaderList";
+
 	}
 
 }

@@ -118,7 +118,7 @@
 								%>
 
 								<form
-									action="${pageContext.request.contextPath}/submitInsertProjectHeader"
+									action="${pageContext.request.contextPath}/submitEditProjectHeader"
 									id="submitInsertProjectHeader" method="post">
 
 									<div class="form-group row">
