@@ -215,7 +215,7 @@ public class ClaimController {
 						Customer.class);
 
 				if (res.isError() == false) {
-					session.setAttribute("successMsg", "Record Update Successfully");
+					session.setAttribute("successMsg", "Record Updated Successfully");
 				} else {
 					session.setAttribute("errorMsg", "Failed to Update Record");
 				}
@@ -452,7 +452,7 @@ public class ClaimController {
 				ClaimType res = Constants.getRestTemplate().postForObject(Constants.url + "/saveClaimType",
 						editClaimType, ClaimType.class);
 				if (res.isError() == false) {
-					session.setAttribute("successMsg", "Record Update Successfully");
+					session.setAttribute("successMsg", "Record Updated Successfully");
 				} else {
 					session.setAttribute("errorMsg", "Failed to Update Record");
 				}
@@ -710,7 +710,7 @@ public class ClaimController {
 					claimAuthority, ClaimAuthority.class);
 
 			if (res != null) {
-				session.setAttribute("successMsg", "Record Update Successfully");
+				session.setAttribute("successMsg", "Record Updated Successfully");
 			} else {
 				session.setAttribute("errorMsg", "Failed to Update Record");
 			}
@@ -739,7 +739,7 @@ public class ClaimController {
 
 			map.add("inputValue", inputValue);
 			map.add("checkValue", valueType);
-
+ 
 			employeeInfo = Constants.getRestTemplate().postForObject(Constants.url + "getUserInfoByContcAndEmail", map,
 					EmployeeInfo.class);
 
