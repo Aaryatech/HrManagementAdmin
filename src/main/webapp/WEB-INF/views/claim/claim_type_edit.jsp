@@ -48,7 +48,7 @@
 							class="breadcrumb-elements-item"> Claim Type List </a>
 
 					</div>
-				</div>
+				</div></div>
 				<!-- /page header -->
 
 

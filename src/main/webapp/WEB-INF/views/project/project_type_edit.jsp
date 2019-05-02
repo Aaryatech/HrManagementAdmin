@@ -48,7 +48,7 @@
 							class="breadcrumb-elements-item"> Project Type List </a>
 
 					</div>
-				</div>
+				</div></div>
 				<!-- /page header -->
 
 

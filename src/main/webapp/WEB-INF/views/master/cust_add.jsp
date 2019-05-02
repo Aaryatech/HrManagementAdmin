@@ -48,7 +48,7 @@
 							class="breadcrumb-elements-item"> Customer List </a>
 
 					</div>
-				</div>
+				</div></div>
 				<!-- /page header -->
 
 

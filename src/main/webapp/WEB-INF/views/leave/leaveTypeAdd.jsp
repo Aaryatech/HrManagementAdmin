@@ -44,12 +44,12 @@
 						<a href="#" class="header-elements-toggle text-default d-md-none"><i
 							class="icon-more"></i></a>
 					</div>
-<div class="breadcrumb justify-content-center">
+					<div class="breadcrumb justify-content-center">
 						<a href="${pageContext.request.contextPath}/showLeaveTypeList"
 							class="breadcrumb-elements-item">  Leave Type List </a>
 
 				</div>
-			</div>
+			</div></div>
 			<!-- /page header -->
 
 
