@@ -45,6 +45,8 @@ public class ProjectController {
 
 	ProjectType editproType = new ProjectType();
 
+	ProjectHeader editProjectHeader = new ProjectHeader();
+
 	@RequestMapping(value = "/projectTypeAdd", method = RequestMethod.GET)
 	public ModelAndView projectTypeAdd(HttpServletRequest request, HttpServletResponse response) {
 
@@ -343,12 +345,14 @@ public class ProjectController {
 			String projectTitle = request.getParameter("projectTitle");
 			String projectDesc = request.getParameter("projectDesc");
 			String projectCity = request.getParameter("projectCity");
-			String dateRange = request.getParameter("dateRange");
+			/* String dateRange = request.getParameter("dateRange"); */
+			String fromDate = request.getParameter("fromDate");
+			String toDate = request.getParameter("toDate");
 
 			int project_est_manhrs = Integer.parseInt(request.getParameter("project_est_manhrs"));
 			int project_est_budget = Integer.parseInt(request.getParameter("project_est_budget"));
 
-			String[] arrOfStr = dateRange.split("to", 2);
+			// String[] arrOfStr = dateRange.split("to", 2);
 
 			String remark = null;
 			try {
@@ -395,8 +399,15 @@ public class ProjectController {
 				save.setProjectDesc(projectDesc);
 				save.setProjectEstBudget(project_est_budget);
 				save.setProjectEstManhrs(project_est_manhrs);
-				save.setProjectEstStartdt(DateConvertor.convertToYMD(arrOfStr[0].toString().trim()));
-				save.setProjectEstEnddt(DateConvertor.convertToYMD(arrOfStr[1].toString().trim()));
+				/*
+				 * save.setProjectEstStartdt(DateConvertor.convertToYMD(arrOfStr[0].toString().
+				 * trim()));
+				 * save.setProjectEstEnddt(DateConvertor.convertToYMD(arrOfStr[1].toString().
+				 * trim()));
+				 */
+
+				save.setProjectEstStartdt(DateConvertor.convertToYMD(fromDate));
+				save.setProjectEstEnddt(DateConvertor.convertToYMD(toDate));
 				save.setProjectStatus("aaa");
 				save.setProjectTypeId(projectTypeId);
 				save.setProjectManagerEmpId(empId);
@@ -488,6 +499,68 @@ public class ProjectController {
 			session.setAttribute("errorMsg", "Failed to Delete");
 		}
 		return "redirect:/showProjectHeaderList";
+	}
+
+	@RequestMapping(value = "/editProject", method = RequestMethod.GET)
+	public ModelAndView editProject(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("project/project_header_edit");
+
+		try {
+
+			String base64encodedString = request.getParameter("projectId");
+			String projectId = FormValidation.DecodeKey(base64encodedString);
+			// System.out.println("claimTypeId" + claimTypeId);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("projectId", projectId);
+			editProjectHeader = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getProjectHeaderByProjectId", map, ProjectHeader.class);
+			model.addObject("editProjectHeader", editProjectHeader);
+
+			HttpSession session = request.getSession();
+
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+
+			map = new LinkedMultiValueMap<>();
+			map.add("companyId", userObj.getCompanyId());
+
+			ProjectType[] projectTypeListArray = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getProjectListByCompanyId", map, ProjectType[].class);
+
+			List<ProjectType> projectTypelist = new ArrayList<ProjectType>(Arrays.asList(projectTypeListArray));
+
+			model.addObject("projectTypelist", projectTypelist);
+
+			Customer[] custListArray = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getCustListByCompanyId", map, Customer[].class);
+
+			List<Customer> custlist = new ArrayList<Customer>(Arrays.asList(custListArray));
+
+			model.addObject("custlist", custlist);
+
+			Location[] location = Constants.getRestTemplate().postForObject(Constants.url + "/getLocationList", map,
+					Location[].class);
+
+			List<Location> locationList = new ArrayList<Location>(Arrays.asList(location));
+			model.addObject("locationList", locationList);
+
+			map = new LinkedMultiValueMap<>();
+			map.add("companyId", userObj.getCompanyId());
+			map.add("locIdList", userObj.getLocationIds());
+
+			GetEmployeeInfo[] employeeDepartment = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getEmpInfoList", map, GetEmployeeInfo[].class);
+
+			List<GetEmployeeInfo> employeeDepartmentlist = new ArrayList<GetEmployeeInfo>(
+					Arrays.asList(employeeDepartment));
+
+			model.addObject("empList", employeeDepartmentlist);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
 	}
 
 }

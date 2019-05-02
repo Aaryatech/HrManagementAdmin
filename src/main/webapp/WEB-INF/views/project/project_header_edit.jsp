@@ -72,7 +72,7 @@
 
 						<div class="card">
 							<div class="card-header header-elements-inline">
-								<h6 class="card-title">Add Project</h6>
+								<h6 class="card-title">Edit Project</h6>
 								<div class="header-elements">
 									<div class="list-icons">
 										<a class="list-icons-item" data-action="collapse"></a>
@@ -130,8 +130,20 @@
 												class="form-control form-control-select2 select2-hidden-accessible"
 												tabindex="-1" aria-hidden="true">
 												<option value="">Select Location</option>
-												<c:forEach items="${locationList}" var="location">
+												<%-- <c:forEach items="${locationList}" var="location">
 													<option value="${location.locId}">${location.locName}</option>
+												</c:forEach> --%>
+												<c:forEach items="${locationList}" var="location">
+													<c:choose>
+														<c:when
+															test="${location.locId == editProjectHeader.locId}">
+															<option selected value="${location.locId}">${location.locName}</option>
+														</c:when>
+														<c:otherwise>
+															<option value="${location.locId}">${location.locName}</option>
+														</c:otherwise>
+
+													</c:choose>
 												</c:forEach>
 											</select> <span class="validation-invalid-label" id="error_locId"
 												style="display: none;">This field is required.</span>
@@ -147,9 +159,22 @@
 												class="form-control form-control-select2 select2-hidden-accessible"
 												tabindex="-1" aria-hidden="true">
 												<option value="">Select Project Type</option>
+
 												<c:forEach items="${projectTypelist}" var="projectType">
-													<option value="${projectType.projectTypeId}">${projectType.projectTypeTitle}</option>
+													<c:choose>
+														<c:when
+															test="${projectType.projectTypeId == editProjectHeader.projectTypeId}">
+															<option selected value="${projectType.projectTypeId}">${projectType.projectTypeTitle}</option>
+														</c:when>
+														<c:otherwise>
+															<option value="${projectType.projectTypeId}">${projectType.projectTypeTitle}</option>
+														</c:otherwise>
+
+													</c:choose>
 												</c:forEach>
+												<%-- <c:forEach items="${projectTypelist}" var="projectType">
+													<option value="${projectType.projectTypeId}">${projectType.projectTypeTitle}</option>
+												</c:forEach> --%>
 											</select> <span class="validation-invalid-label"
 												id="error_projectTypeId" style="display: none;">This
 												field is required.</span>
@@ -166,9 +191,26 @@
 												class="form-control form-control-select2 select2-hidden-accessible"
 												tabindex="-1" aria-hidden="true">
 												<option value="">Select Customer</option>
+
+
+
 												<c:forEach items="${custlist}" var="cust">
-													<option value="${cust.custId}">${cust.custName}</option>
+													<c:choose>
+														<c:when test="${cust.custId == editProjectHeader.custId}">
+															<option selected value="${cust.custId}">${cust.custName}</option>
+														</c:when>
+														<c:otherwise>
+															<option value="${cust.custId}">${cust.custName}</option>
+														</c:otherwise>
+
+													</c:choose>
 												</c:forEach>
+
+
+
+												<%-- 	<c:forEach items="${custlist}" var="cust">
+													<option value="${cust.custId}">${cust.custName}</option>
+												</c:forEach> --%>
 											</select> <span class="validation-invalid-label" id="error_custId"
 												style="display: none;">This field is required.</span>
 										</div>
@@ -185,9 +227,22 @@
 												class="form-control form-control-select2 select2-hidden-accessible"
 												tabindex="-1" aria-hidden="true">
 												<option value="">Select Project Manager</option>
+
 												<c:forEach items="${empList}" var="emp">
-													<option value="${emp.empId}">${emp.empSname}${emp.empFname}</option>
+													<c:choose>
+														<c:when
+															test="${emp.empId == editProjectHeader.projectManagerEmpId}">
+															<option selected value="${emp.empId}">${emp.empSname}${emp.empFname}</option>
+														</c:when>
+														<c:otherwise>
+															<option value="${emp.empId}">${emp.empSname}${emp.empFname}</option>
+														</c:otherwise>
+
+													</c:choose>
 												</c:forEach>
+												<%-- <c:forEach items="${empList}" var="emp">
+													<option value="${emp.empId}">${emp.empSname}${emp.empFname}</option>
+												</c:forEach> --%>
 											</select> <span class="validation-invalid-label" id="error_empId"
 												style="display: none;">This field is required.</span>
 										</div>
@@ -200,6 +255,7 @@
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Enter Project Title" id="projectTitle"
+												value="${editProjectHeader.projectTitle}"
 												name="projectTitle" autocomplete="off" onchange="trim(this)">
 											<span class="validation-invalid-label"
 												id="error_projectTitle" style="display: none;">This
@@ -213,8 +269,9 @@
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Enter Project Description" id="projectDesc"
-												name="projectDesc" autocomplete="off" onchange="trim(this)">
-											<span class="validation-invalid-label" id="error_projectDesc"
+												value="${editProjectHeader.projectDesc}" name="projectDesc"
+												autocomplete="off" onchange="trim(this)"> <span
+												class="validation-invalid-label" id="error_projectDesc"
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
@@ -228,8 +285,9 @@
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Enter Project City" id="projectCity"
-												name="projectCity" autocomplete="off" onchange="trim(this)">
-											<span class="validation-invalid-label" id="error_projectCity"
+												value="${editProjectHeader.projectCity}" name="projectCity"
+												autocomplete="off" onchange="trim(this)"> <span
+												class="validation-invalid-label" id="error_projectCity"
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
@@ -256,6 +314,7 @@
 											Establishment Start Date:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control datepickerclass "
+												value="${editProjectHeader.projectEstStartdt}"
 												value="21-04-2019" name="fromDate" id="fromDate">
 										</div>
 									</div>
@@ -266,6 +325,7 @@
 											Establishment End Date:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control datepickerclass "
+												value="${editProjectHeader.projectEstEnddt}"
 												value="21-04-2019" name="toDate" id="toDate">
 										</div>
 									</div>
@@ -277,6 +337,7 @@
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Project Establishment Man Hours"
+												value="${editProjectHeader.projectEstManhrs}"
 												id="project_est_manhrs" name="project_est_manhrs"
 												autocomplete="off" onchange="trim(this)"> <span
 												class="validation-invalid-label"
@@ -293,6 +354,7 @@
 											<input type="text" class="form-control"
 												placeholder="Project Establishment Budget"
 												id="project_est_budget" name="project_est_budget"
+												value="${editProjectHeader.projectEstBudget}"
 												autocomplete="off" onchange="trim(this)"> <span
 												class="validation-invalid-label"
 												id="error_project_est_budget" style="display: none;">This

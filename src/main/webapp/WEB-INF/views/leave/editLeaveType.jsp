@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib
-	uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>	
-	
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -115,105 +114,114 @@
 
 								<form
 									action="${pageContext.request.contextPath}/submitEditLeaveType"
-									id="submitInsertCompany" method="post"
-									>
-									
-									
+									id="submitInsertCompany" method="post">
+
+
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="leaveTypeTitle">
-											 Title:</label>
+											Title:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Enter Leave Type" id="leaveTypeTitle"
-											 value="${editCompany.lvTitle}"	name="leaveTypeTitle" autocomplete="off" onchange="trim(this)">
-											<span class="validation-invalid-label" id="error_leaveType" 
+												value="${editCompany.lvTitle}" name="leaveTypeTitle"
+												autocomplete="off" onchange="trim(this)"> <span
+												class="validation-invalid-label" id="error_leaveType"
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
 
-												<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="leaveShortTypeTitle">
-											Short Title:</label>
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2"
+											for="leaveShortTypeTitle"> Short Title:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
-												placeholder="Enter Leave Short Name " id="leaveShortTypeTitle"
-												   value="${editCompany.lvTitleShort}" name="leaveShortTypeTitle" autocomplete="off" onchange="trim(this)">
-											<span class="validation-invalid-label" id="error_leaveScType" 
+												placeholder="Enter Leave Short Name "
+												id="leaveShortTypeTitle" value="${editCompany.lvTitleShort}"
+												name="leaveShortTypeTitle" autocomplete="off"
+												onchange="trim(this)"> <span
+												class="validation-invalid-label" id="error_leaveScType"
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
 
 
-								<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="leaveWorlHrs">Working Hours
-										</label>
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="leaveWorlHrs">Working
+											Hours </label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Enter Leave Working Hours " id="leaveWorlHrs"
-											 value="${editCompany.lvWorkingHrs}" 	name="leaveWorlHrs" autocomplete="off" onchange="trim(this)">
-											<span class="validation-invalid-label" id="error_leaveWHours"
+												value="${editCompany.lvWorkingHrs}" name="leaveWorlHrs"
+												autocomplete="off" onchange="trim(this)"> <span
+												class="validation-invalid-label" id="error_leaveWHours"
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
 
 
-								<div class="form-group row">
+									<div class="form-group row">
 										<label class="col-form-label col-lg-2">Color:</label>
 										<div class="col-lg-10">
-											<input type="text" id="leaveColor" name="leaveColor" 
-											class="form-control colorpicker-show-input" data-preferred-format="hex" value="${editCompany.lvColor}" data-fouc>
+											<input type="text" id="leaveColor" name="leaveColor"
+												class="form-control colorpicker-show-input"
+												data-preferred-format="hex" value="${editCompany.lvColor}"
+												data-fouc>
 										</div>
 									</div>
-											<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="comoffallowed">Is Structured
-											: *</label>
-										<div class="form-check form-check-inline">
-											<label class="form-check-label"> <input type="radio"
-											${editCompany.isStructured==1 ? 'checked' : ''}
-												class="form-check-input" name="isStructured"
-												id="isStructured"  value="1"> Yes
-											</label>
-										</div>
-										<div class="form-check form-check-inline">
-											<label class="form-check-label"> <input type="radio"
-												class="form-check-input" name="isStructured"
-												${editCompany.isStructured==0 ? 'checked' : ''} id="isStructured" value="0"> No
-											</label>
-										</div>
-									</div>
-									
-									
 									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="select2">Leave Summary:</label>
+										<label class="col-form-label col-lg-2" for="comoffallowed">Is
+											Structured : *</label>
+										<div class="form-check form-check-inline">
+											<label class="form-check-label"> <input type="radio"
+												${editCompany.isStructured==1 ? 'checked' : ''}
+												class="form-check-input" name="isStructured"
+												id="isStructured" value="1"> Yes
+											</label>
+										</div>
+										<div class="form-check form-check-inline">
+											<label class="form-check-label"> <input type="radio"
+												class="form-check-input" name="isStructured"
+												${editCompany.isStructured==0 ? 'checked' : ''}
+												id="isStructured" value="0"> No
+											</label>
+										</div>
+									</div>
+
+
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="select2">Leave
+											Summary:</label>
 										<div class="col-lg-10">
-											<select name="summId" data-placeholder="Select a Summary" id="summId"
+											<select name="summId" data-placeholder="Select a Summary"
+												id="summId"
 												class="form-control form-control-select2 select2-hidden-accessible"
 												required data-fouc="" tabindex="-1" aria-hidden="true">
-										
-									<c:forEach items="${sumList}" var="sumList">
-									<c:choose>
-									<c:when test="${sumList.lvSumupId == editCompany.lvSumupId}">
-									<option selected value="${sumList.lvSumupId}">${sumList.lvSumupTitle}</option>
-									</c:when>
-								<c:otherwise>
-								<option value="${sumList.lvSumupId}">${sumList.lvSumupTitle}</option>
-								</c:otherwise>
 
-								</c:choose>
-									</c:forEach>
-	</select>
-										
+												<c:forEach items="${sumList}" var="sumList">
+													<c:choose>
+														<c:when
+															test="${sumList.lvSumupId == editCompany.lvSumupId}">
+															<option selected value="${sumList.lvSumupId}">${sumList.lvSumupTitle}</option>
+														</c:when>
+														<c:otherwise>
+															<option value="${sumList.lvSumupId}">${sumList.lvSumupTitle}</option>
+														</c:otherwise>
+
+													</c:choose>
+												</c:forEach>
+											</select>
+
 										</div>
 									</div>
-											
-										
+
+
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="remark">Any
 											Remark:</label>
 										<div class="col-lg-10">
-											<textarea rows="3" cols="3" class="form-control" 
+											<textarea rows="3" cols="3" class="form-control"
 												placeholder="Any Remark" onchange="trim(this)" id="remark"
-											name="remark">${editCompany.lvRmarks}</textarea>
+												name="remark">${editCompany.lvRmarks}</textarea>
 										</div>
 									</div>
 
@@ -269,7 +277,6 @@
 			return true;
 		}
 
-		
 		$(document).ready(function($) {
 
 			$("#submitInsertCompany").submit(function(e) {
@@ -286,7 +293,6 @@
 					$("#error_leaveType").hide()
 				}
 
-
 				if (!$("#leaveShortTypeTitle").val()) {
 
 					isError = true;
@@ -297,8 +303,6 @@
 					$("#error_leaveScType").hide()
 				}
 
-				
-
 				if (!$("#leaveWorlHrs").val()) {
 
 					isError = true;
@@ -308,11 +312,6 @@
 				} else {
 					$("#error_leaveWHours").hide()
 				}
-
-				
-				
-				
-				
 
 				if (!isError) {
 
@@ -331,4 +330,5 @@
 	</script>
 
 </body>
-</html>s
+</html>
+s

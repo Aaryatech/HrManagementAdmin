@@ -504,7 +504,7 @@ public class ClaimController {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("companyId", userObj.getCompanyId());
-			map.add("locIdList", userObj.getLocId());
+			map.add("locIdList", userObj.getLocationIds());
 
 			GetEmployeeInfo[] employeeDepartment = Constants.getRestTemplate()
 					.postForObject(Constants.url + "/getEmpInfoList", map, GetEmployeeInfo[].class);
@@ -516,6 +516,8 @@ public class ClaimController {
 
 			map = new LinkedMultiValueMap<>();
 			map.add("companyId", userObj.getCompanyId());
+			map.add("locIdList", userObj.getLocationIds());
+
 			GetEmployeeInfo[] empInfoError = Constants.getRestTemplate()
 					.postForObject(Constants.url + "/getEmpInfoListForClaimAuth", map, GetEmployeeInfo[].class);
 
