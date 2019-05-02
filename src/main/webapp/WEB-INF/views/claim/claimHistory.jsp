@@ -149,7 +149,7 @@
 													<div class="dropdown-menu dropdown-menu-right">
 														<a
 															href="${pageContext.request.contextPath}/showClaimProof?claimId=${lvTypeList.circulatedTo}"
-															class="dropdown-item"><i class="icon-upload "></i>Upload Document</a>
+															class="dropdown-item"><i class="icon-file-upload  "></i>Upload Document</a>
 														
 													</div>
 												</div>
