@@ -608,6 +608,7 @@ public class ClaimController {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("companyId", userObj.getCompanyId());
+			map.add("locIdList", userObj.getLocationIds());
 
 			GetClaimAuthority[] empInfoError = Constants.getRestTemplate()
 					.postForObject(Constants.url + "/getClaimAuthorityList", map, GetClaimAuthority[].class);
