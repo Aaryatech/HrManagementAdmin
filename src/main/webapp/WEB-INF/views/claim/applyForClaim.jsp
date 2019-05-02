@@ -124,7 +124,7 @@
 									<th>Mobile</th>
 									<th>Department</th>
 									<th>Rate Per Hour</th>
-									 
+									  
 									<th class="text-center" width="10%">Actions</th>
 								</tr>
 							</thead>
