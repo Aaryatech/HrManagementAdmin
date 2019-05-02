@@ -55,11 +55,12 @@ public class LeaveController {
 	public ModelAndView empDocAdd(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("leave/leaveTypeAdd");
-
+		HttpSession session = request.getSession();
+		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 		try {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			map.add("compId", 1);
+			map.add("compId", userObj.getCompanyId());
 
 			LeaveSummary[] employeeDoc = Constants.getRestTemplate()
 					.postForObject(Constants.url + "/getLeaveSummaryList", map, LeaveSummary[].class);
@@ -129,7 +130,7 @@ public class LeaveController {
 
 				LeaveType leaveSummary = new LeaveType();
 
-				leaveSummary.setCompanyId(1);
+				leaveSummary.setCompanyId(userObj.getCompanyId());
 				leaveSummary.setIsStructured(isStructured);
 				leaveSummary.setLvColor(leaveColor);
 				leaveSummary.setLvTitle(leaveTypeTitle);
@@ -176,8 +177,10 @@ public class LeaveController {
 
 		try {
 
+			HttpSession session = request.getSession();
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			map.add("compId", 1);
+			map.add("compId", userObj.getCompanyId());
 			LeaveType[] leaveSummary = Constants.getRestTemplate().postForObject(Constants.url + "/getLeaveTypeList",
 					map, LeaveType[].class);
 
@@ -201,7 +204,8 @@ public class LeaveController {
 	public ModelAndView editLeaveType(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("leave/editLeaveType");
-
+		HttpSession session = request.getSession();
+		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 		try {
 			String base64encodedString = request.getParameter("typeId");
 			String lvTypeId = FormValidation.DecodeKey(base64encodedString);
@@ -213,7 +217,7 @@ public class LeaveController {
 			model.addObject("editCompany", editLeaveType);
 
 			map = new LinkedMultiValueMap<>();
-			map.add("compId", 1);
+			map.add("compId", userObj.getCompanyId());
 
 			LeaveSummary[] employeeDoc = Constants.getRestTemplate()
 					.postForObject(Constants.url + "/getLeaveSummaryList", map, LeaveSummary[].class);
@@ -305,7 +309,7 @@ public class LeaveController {
 
 			if (ret == false) {
 
-				editLeaveType.setCompanyId(1);
+				editLeaveType.setCompanyId(userObj.getCompanyId());
 				editLeaveType.setIsStructured(isStructured);
 				editLeaveType.setLvColor(leaveColor);
 				editLeaveType.setLvTitle(leaveTypeTitle);
@@ -336,9 +340,9 @@ public class LeaveController {
 
 	}
 
-	// ******************************Apply for
-	// leave***********************************************
+	// ******************************Apply for leave***********************************************
 
+	 
 	@RequestMapping(value = "/showApplyForLeave", method = RequestMethod.GET)
 	public ModelAndView showEmpList(HttpServletRequest request, HttpServletResponse response) {
 

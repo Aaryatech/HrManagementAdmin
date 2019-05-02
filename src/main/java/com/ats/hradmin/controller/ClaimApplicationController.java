@@ -588,7 +588,8 @@ public class ClaimApplicationController {
 
 		 
 		try {
-			
+			HttpSession session = request.getSession();
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 			 
 		   Date date = new Date();
 		   SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
@@ -614,7 +615,7 @@ public class ClaimApplicationController {
 				company.setClaimId(claimId);				
 				company.setIsActive(1);
 				company.setDelStatus(1);
-				company.setMakerUserId(1);
+				company.setMakerUserId(userObj.getUserId());
 				company.setMakerEnterDatetime(sf.format(date));
 				
 

@@ -81,6 +81,7 @@ public class MasterController {
 
 		try {
 			HttpSession session = request.getSession();
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 			Date date = new Date();
 			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 			SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
@@ -107,7 +108,7 @@ public class MasterController {
 				company.setCompanyRemarks(remark);
 				company.setIsActive(1);
 				company.setDelStatus(1);
-				company.setMakerUserId(1);
+				company.setMakerUserId(userObj.getUserId());
 				company.setMakerEnterDatetime(sf.format(date));
 
 				String imageName = new String();
@@ -204,6 +205,7 @@ public class MasterController {
 
 		try {
 			HttpSession session = request.getSession();
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 			Date date = new Date();
 			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 			SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
@@ -227,7 +229,7 @@ public class MasterController {
 
 				editCompany.setCompanyName(compName);
 				editCompany.setCompanyRemarks(remark);
-				editCompany.setMakerUserId(1);
+				editCompany.setMakerUserId(userObj.getUserId());
 				editCompany.setMakerEnterDatetime(sf.format(date));
 
 				if (!compImg.get(0).getOriginalFilename().equals(null)
@@ -274,6 +276,7 @@ public class MasterController {
 	public String submitInsertLocation(HttpServletRequest request, HttpServletResponse response) {
 
 		HttpSession session = request.getSession();
+		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
 		try {
 
@@ -334,8 +337,8 @@ public class MasterController {
 				location.setLocRemarks(remark);
 				location.setIsActive(1);
 				location.setDelStatus(1);
-				location.setMakerUserId(1);
-				location.setCompId(1);
+				location.setMakerUserId(userObj.getUserId());
+				location.setCompId(userObj.getCompanyId());
 				location.setMakerEnterDatetime(sf.format(date));
 
 				Location res = Constants.getRestTemplate().postForObject(Constants.url + "/saveLocation", location,
@@ -363,11 +366,13 @@ public class MasterController {
 	public ModelAndView showLocationList(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("master/locationList");
-
+		HttpSession session = request.getSession();
+		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+		
 		try {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			map.add("companyId", 1);
+			map.add("companyId", userObj.getCompanyId());
 			Location[] location = Constants.getRestTemplate().postForObject(Constants.url + "/getLocationList", map,
 					Location[].class);
 
@@ -435,6 +440,7 @@ public class MasterController {
 	public String submitEditLocation(HttpServletRequest request, HttpServletResponse response) {
 
 		HttpSession session = request.getSession();
+		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
 		try {
 
@@ -491,7 +497,7 @@ public class MasterController {
 				editLocation.setLocHrContactNumber(contactNo);
 				editLocation.setLocHrContactEmail(email);
 				editLocation.setLocRemarks(remark);
-				editLocation.setMakerUserId(1);
+				editLocation.setMakerUserId(userObj.getUserId());
 				editLocation.setMakerEnterDatetime(sf.format(date));
 
 				Location res = Constants.getRestTemplate().postForObject(Constants.url + "/saveLocation", editLocation,
@@ -566,6 +572,7 @@ public class MasterController {
 	public String submitInsertEmpType(HttpServletRequest request, HttpServletResponse response) {
 
 		HttpSession session = request.getSession();
+		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
 		try {
 
@@ -601,8 +608,8 @@ public class MasterController {
 				empType.setCompOffRequestAllowed(comoffallowed);
 				empType.setIsActive(1);
 				empType.setDelStatus(1);
-				empType.setMakerUserId(1);
-				empType.setCompanyId(1);
+				empType.setMakerUserId(userObj.getUserId());
+				empType.setCompanyId(userObj.getCompanyId());
 				empType.setEmpTypeRemarks(remark);
 				empType.setEmpTypeAccess("");
 				empType.setMakerEnterDatetime(sf.format(date));
@@ -730,11 +737,13 @@ public class MasterController {
 	public ModelAndView showEmpTypeList(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("master/empTypeList");
+		HttpSession session = request.getSession();
+		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
 		try {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			map.add("compId", 1);
+			map.add("compId", userObj.getCompanyId());
 			EmpType[] EmpType = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpTypeList", map,
 					EmpType[].class);
 
@@ -862,6 +871,7 @@ public class MasterController {
 	public String submitEditEmpType(HttpServletRequest request, HttpServletResponse response) {
 
 		HttpSession session = request.getSession();
+		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
 		try {
 
@@ -893,7 +903,7 @@ public class MasterController {
 				editEmpType.setEmpTypeName(empTypeName);
 				editEmpType.setEmpTypeShortName(empShortName);
 				editEmpType.setCompOffRequestAllowed(comoffallowed);
-				editEmpType.setCompanyId(1);
+				editEmpType.setCompanyId(userObj.getCompanyId());
 				editEmpType.setEmpTypeRemarks(remark);
 				editEmpType.setEmpTypeAccess("");
 				editEmpType.setMakerEnterDatetime(sf.format(date));
@@ -1035,6 +1045,7 @@ public class MasterController {
 	public String submitInsertEmpCat(HttpServletRequest request, HttpServletResponse response) {
 
 		HttpSession session = request.getSession();
+		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
 		try {
 
@@ -1065,8 +1076,8 @@ public class MasterController {
 				employeeCategory.setEmpCatRemarks(remark);
 				employeeCategory.setIsActive(1);
 				employeeCategory.setDelStatus(1);
-				employeeCategory.setMakerUserId(1);
-				employeeCategory.setCompanyId(1);
+				employeeCategory.setMakerUserId(userObj.getUserId());
+				employeeCategory.setCompanyId(userObj.getCompanyId());
 				employeeCategory.setMakerEnterDatetime(sf.format(date));
 
 				EmployeeCategory res = Constants.getRestTemplate().postForObject(Constants.url + "/saveEmpCategory",
@@ -1092,13 +1103,14 @@ public class MasterController {
 
 	@RequestMapping(value = "/showEmpCatList", method = RequestMethod.GET)
 	public ModelAndView showEmpCatList(HttpServletRequest request, HttpServletResponse response) {
-
+		HttpSession session = request.getSession(); 
 		ModelAndView model = new ModelAndView("master/empCatList");
+		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
 		try {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			map.add("compId", 1);
+			map.add("compId", userObj.getCompanyId());
 			EmployeeCategory[] employeeCategory = Constants.getRestTemplate()
 					.postForObject(Constants.url + "/getEmpCategoryList", map, EmployeeCategory[].class);
 
@@ -1169,6 +1181,7 @@ public class MasterController {
 	public String submitEditEmpCat(HttpServletRequest request, HttpServletResponse response) {
 
 		HttpSession session = request.getSession();
+		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
 		try {
 
@@ -1195,8 +1208,8 @@ public class MasterController {
 				editEmpCategory.setEmpCatName(catName);
 				editEmpCategory.setEmpCatShortName(catShortName);
 				editEmpCategory.setEmpCatRemarks(remark);
-				editEmpCategory.setMakerUserId(1);
-				editEmpCategory.setCompanyId(1);
+				editEmpCategory.setMakerUserId(userObj.getUserId());
+				editEmpCategory.setCompanyId(userObj.getCompanyId());
 				editEmpCategory.setMakerEnterDatetime(sf.format(date));
 
 				EmployeeCategory res = Constants.getRestTemplate().postForObject(Constants.url + "/saveEmpCategory",
@@ -1237,6 +1250,7 @@ public class MasterController {
 	public String submitInsertEmpDept(HttpServletRequest request, HttpServletResponse response) {
 
 		HttpSession session = request.getSession();
+		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
 		try {
 
@@ -1267,8 +1281,8 @@ public class MasterController {
 				employeeDepartment.setEmpDeptRemarks(remark);
 				employeeDepartment.setIsActive(1);
 				employeeDepartment.setDelStatus(1);
-				employeeDepartment.setMakerUserId(1);
-				employeeDepartment.setCompanyId(1);
+				employeeDepartment.setMakerUserId(userObj.getUserId());
+				employeeDepartment.setCompanyId(userObj.getCompanyId());
 				employeeDepartment.setMakerEnterDatetime(sf.format(date));
 
 				EmployeeDepartment res = Constants.getRestTemplate().postForObject(Constants.url + "/saveEmpDept",
@@ -1296,11 +1310,12 @@ public class MasterController {
 	public ModelAndView showEmpDeptList(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("master/empDeptList");
-
+		HttpSession session = request.getSession();
+		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 		try {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			map.add("compId", 1);
+			map.add("compId", userObj.getCompanyId());
 			EmployeeDepartment[] employeeDepartment = Constants.getRestTemplate()
 					.postForObject(Constants.url + "/getEmpDeptList", map, EmployeeDepartment[].class);
 
@@ -1347,6 +1362,7 @@ public class MasterController {
 
 	@RequestMapping(value = "/editEmpDept", method = RequestMethod.GET)
 	public ModelAndView editEmpDept(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
 
 		ModelAndView model = new ModelAndView("master/empDeptEdit");
 
@@ -1370,6 +1386,7 @@ public class MasterController {
 	public String submitEditEmpDept(HttpServletRequest request, HttpServletResponse response) {
 
 		HttpSession session = request.getSession();
+		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
 		try {
 
@@ -1396,8 +1413,8 @@ public class MasterController {
 				editEmployeeDepartment.setEmpDeptName(deptName);
 				editEmployeeDepartment.setEmpDeptShortName(deptShortName);
 				editEmployeeDepartment.setEmpDeptRemarks(remark);
-				editEmployeeDepartment.setMakerUserId(1);
-				editEmployeeDepartment.setCompanyId(1);
+				editEmployeeDepartment.setMakerUserId(userObj.getUserId());
+				editEmployeeDepartment.setCompanyId(userObj.getCompanyId());
 				editEmployeeDepartment.setMakerEnterDatetime(sf.format(date));
 
 				EmployeeDepartment res = Constants.getRestTemplate().postForObject(Constants.url + "/saveEmpDept",
@@ -1429,8 +1446,9 @@ public class MasterController {
 	public ModelAndView employeeAdd(HttpServletRequest request, HttpServletResponse response) {
 
 		HttpSession session = request.getSession();
-		ModelAndView model = new ModelAndView("master/employeeAdd");
 		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+		ModelAndView model = new ModelAndView("master/employeeAdd");
+		
 		try {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
