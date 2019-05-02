@@ -157,6 +157,7 @@ public class WeeklyOffController {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("companyId", userObj.getCompanyId());
+			map.add("locIdList", userObj.getLocationIds());
 
 			GetWeeklyOff[] holListArray = Constants.getRestTemplate().postForObject(Constants.url + "/getWeeklyOffList",
 					map, GetWeeklyOff[].class);
