@@ -65,7 +65,7 @@
 	<script src="${pageContext.request.contextPath}/resources/global_assets/js/plugins/tables/datatables/extensions/buttons.min.js"></script>
 	 
 	<script src="${pageContext.request.contextPath}/resources/global_assets/js/plugins/pickers/color/spectrum.js"></script>
-	  <script src="${pageContext.request.contextPath}/resources/global_assets/js/plugins/forms/styling/switchery.min.js"></script>  
+	<%--   <script src="${pageContext.request.contextPath}/resources/global_assets/js/plugins/forms/styling/switchery.min.js"></script>   --%>
 	  
 	<!-- Theme JS files -->
 	<script src="${pageContext.request.contextPath}/resources/global_assets/js/plugins/uploaders/fileinput/plugins/purify.min.js"></script>

@@ -12,8 +12,7 @@
 
 				<div class="navbar-collapse collapse" id="navbar-footer">
 					<span class="navbar-text">
-						&copy; 2015 - 2018. <a href="#">Limitless Web App Kit</a> by <a href="http://themeforest.net/user/Kopyov" target="_blank">Eugene Kopyov</a>
-					</span>
+						&copy; 2019 - 2022. <a href="#">Powered </a> by <a href="http://aaryatechindia.in/atsuc/" target="_blank">AARYATECH SOLUTIOIN</a></span>
 
 					<ul class="navbar-nav ml-lg-auto">
 						<li class="nav-item"><a href="https://kopyov.ticksy.com/" class="navbar-nav-link" target="_blank"><i class="icon-lifebuoy mr-2"></i> Support</a></li>
