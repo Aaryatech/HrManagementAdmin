@@ -327,7 +327,7 @@ public class ClaimApplicationController {
 
 }
 	
-	////////////////////////////////**********************Claim approvals******************************//////////////////
+	////////////////////////////////**********************Claim Approvals******************************//////////////////
 	
 	
 	
@@ -360,8 +360,6 @@ public class ClaimApplicationController {
 				 System.out.println("lv claimList list pending "+claimList.toString()); 
 
 	//for Info	
-				 
-				 
 				 
 		 model.addObject("empIdOrig",userObj.getEmpId());
 				 

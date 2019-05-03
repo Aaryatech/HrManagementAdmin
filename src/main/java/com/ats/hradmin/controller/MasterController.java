@@ -145,8 +145,6 @@ try {
 	@RequestMapping(value = "/showCompanyList", method = RequestMethod.GET)
 	public ModelAndView showCompanyList(HttpServletRequest request, HttpServletResponse response) {
 
-	
-
 		ModelAndView model = null;
 		try {
 			HttpSession session = request.getSession();
@@ -878,12 +876,22 @@ try {
 	@RequestMapping(value = "/showEmpTypeList", method = RequestMethod.GET)
 	public ModelAndView showEmpTypeList(HttpServletRequest request, HttpServletResponse response) {
 
-		ModelAndView model = new ModelAndView("master/empTypeList");
+		
 		HttpSession session = request.getSession();
 		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+		ModelAndView model =null;
 
 		try {
+			
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("showEmpTypeList", "showEmpTypeList", 1, 0, 0, 0, newModuleList);
 
+			if (view.isError() == true) {
+
+				model = new ModelAndView("accessDenied");
+
+			} else {
+				 model = new ModelAndView("master/empTypeList");
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("compId", userObj.getCompanyId());
 			EmpType[] EmpType = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpTypeList", map,
@@ -898,6 +906,26 @@ try {
 
 			model.addObject("empTypelist", empTypelist);
 
+			Info add = AcessController.checkAccess("showEmpTypeList", "showEmpTypeList", 0, 1, 0, 0, newModuleList);
+			Info edit = AcessController.checkAccess("showEmpTypeList", "showEmpTypeList", 0, 0, 1, 0, newModuleList);
+			Info delete = AcessController.checkAccess("showEmpTypeList", "showEmpTypeList", 0, 0, 0, 1, newModuleList);
+
+			if (add.isError() == false) {
+				System.out.println(" add   Accessable ");
+				model.addObject("addAccess", 0);
+
+			}
+			if (edit.isError() == false) {
+				System.out.println(" edit   Accessable ");
+				model.addObject("editAccess", 0);
+			}
+			if (delete.isError() == false) {
+				System.out.println(" delete   Accessable ");
+				model.addObject("deleteAccess", 0);
+
+			}
+
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -908,7 +936,20 @@ try {
 	public String deleteEmpType(HttpServletRequest request, HttpServletResponse response) {
 
 		HttpSession session = request.getSession();
+		String a = null;
+		List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+
+		Info view = AcessController.checkAccess("deleteEmpType", "showEmpTypeList", 0, 0, 0, 1, newModuleList);
+
 		try {
+			if (view.isError() == true) {
+
+				a = "redirect:/accessDenied";
+
+			}
+
+			else {
+				a="redirect:/showEmpTypeList";
 			String base64encodedString = request.getParameter("empTypeId");
 			String empTypeId = FormValidation.DecodeKey(base64encodedString);
 
@@ -920,20 +961,30 @@ try {
 				session.setAttribute("successMsg", "Deleted Successfully");
 			} else {
 				session.setAttribute("errorMsg", "Failed to Delete");
-			}
+			}}
 		} catch (Exception e) {
 			e.printStackTrace();
 			session.setAttribute("errorMsg", "Failed to Delete");
 		}
-		return "redirect:/showEmpTypeList";
+		return a;
 	}
 
 	@RequestMapping(value = "/editEmpType", method = RequestMethod.GET)
 	public ModelAndView editEmpType(HttpServletRequest request, HttpServletResponse response) {
-
-		ModelAndView model = new ModelAndView("master/empTypeEdit");
-
+		HttpSession session = request.getSession();
+		ModelAndView model =null;
 		try {
+
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("editEmpType", "showEmpTypeList", 0, 0, 1, 0, newModuleList);
+
+			if (view.isError() == true) {
+
+				model = new ModelAndView("accessDenied");
+
+			} else {
+				 model = new ModelAndView("master/empTypeEdit");
+			}
 			String base64encodedString = request.getParameter("empTypeId");
 			String empTypeId = FormValidation.DecodeKey(base64encodedString);
 
@@ -1260,11 +1311,22 @@ try {
 	@RequestMapping(value = "/showEmpCatList", method = RequestMethod.GET)
 	public ModelAndView showEmpCatList(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
-		ModelAndView model = new ModelAndView("master/empCatList");
+		 
 		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
-		try {
+		ModelAndView model =null;
 
+		try {
+		
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("showEmpCatList", "showEmpCatList", 1, 0, 0, 0, newModuleList);
+
+			if (view.isError() == true) {
+
+				model = new ModelAndView("accessDenied");
+
+			} else {
+				model = new ModelAndView("master/empCatList");
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("compId", userObj.getCompanyId());
 			EmployeeCategory[] employeeCategory = Constants.getRestTemplate()
@@ -1280,7 +1342,26 @@ try {
 			}
 
 			model.addObject("empCatList", employeeCategorylist);
+			
+			Info add = AcessController.checkAccess("showEmpCatList", "showEmpCatList", 0, 1, 0, 0, newModuleList);
+			Info edit = AcessController.checkAccess("showEmpCatList", "showEmpCatList", 0, 0, 1, 0, newModuleList);
+			Info delete = AcessController.checkAccess("showEmpCatList", "showEmpCatList", 0, 0, 0, 1, newModuleList);
 
+			if (add.isError() == false) {
+				System.out.println(" add   Accessable ");
+				model.addObject("addAccess", 0);
+
+			}
+			if (edit.isError() == false) {
+				System.out.println(" edit   Accessable ");
+				model.addObject("editAccess", 0);
+			}
+			if (delete.isError() == false) {
+				System.out.println(" delete   Accessable ");
+				model.addObject("deleteAccess", 0);
+
+			}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -1291,7 +1372,19 @@ try {
 	public String deleteEmpCategory(HttpServletRequest request, HttpServletResponse response) {
 
 		HttpSession session = request.getSession();
+		String a = null;
+		List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+
+		Info view = AcessController.checkAccess("deleteEmpCategory", "showEmpCatList", 0, 0, 0, 1, newModuleList);
+
 		try {
+			if (view.isError() == true) {
+
+				a = "redirect:/accessDenied";
+
+			}
+			else {
+				a= "redirect:/showEmpCatList";
 			String base64encodedString = request.getParameter("catId");
 			String empCatId = FormValidation.DecodeKey(base64encodedString);
 
@@ -1304,20 +1397,32 @@ try {
 				session.setAttribute("successMsg", "Deleted Successfully");
 			} else {
 				session.setAttribute("errorMsg", "Failed to Delete");
-			}
+			}}
 		} catch (Exception e) {
 			e.printStackTrace();
 			session.setAttribute("errorMsg", "Failed to Delete");
 		}
-		return "redirect:/showEmpCatList";
+		return a;
 	}
 
 	@RequestMapping(value = "/editEmpCategory", method = RequestMethod.GET)
 	public ModelAndView editEmpCategory(HttpServletRequest request, HttpServletResponse response) {
 
-		ModelAndView model = new ModelAndView("master/empCatEdit");
+		ModelAndView model = null;
+		HttpSession session = request.getSession();
 
 		try {
+
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("editEmpCategory", "showEmpCatList", 0, 0, 1, 0, newModuleList);
+
+			if (view.isError() == true) {
+
+				model = new ModelAndView("accessDenied");
+
+			} else {
+				 model = new ModelAndView("master/empCatEdit");
+			}
 			String base64encodedString = request.getParameter("catId");
 			String catId = FormValidation.DecodeKey(base64encodedString);
 
@@ -1481,11 +1586,23 @@ try {
 	@RequestMapping(value = "/showEmpDeptList", method = RequestMethod.GET)
 	public ModelAndView showEmpDeptList(HttpServletRequest request, HttpServletResponse response) {
 
-		ModelAndView model = new ModelAndView("master/empDeptList");
+		 
 		HttpSession session = request.getSession();
 		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
-		try {
+		ModelAndView model =null;
 
+		try {
+			
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("showEmpDeptList", "showEmpDeptList", 1, 0, 0, 0, newModuleList);
+
+			if (view.isError() == true) {
+
+				model = new ModelAndView("accessDenied");
+
+			} else {
+
+				model = new ModelAndView("master/empDeptList");
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("compId", userObj.getCompanyId());
 			EmployeeDepartment[] employeeDepartment = Constants.getRestTemplate()
@@ -1501,7 +1618,25 @@ try {
 			}
 
 			model.addObject("deptList", employeeDepartmentlist);
+			Info add = AcessController.checkAccess("showEmpDeptList", "showEmpDeptList", 0, 1, 0, 0, newModuleList);
+			Info edit = AcessController.checkAccess("showEmpDeptList", "showEmpDeptList", 0, 0, 1, 0, newModuleList);
+			Info delete = AcessController.checkAccess("showEmpDeptList", "showEmpDeptList", 0, 0, 0, 1, newModuleList);
 
+			if (add.isError() == false) {
+				System.out.println(" add   Accessable ");
+				model.addObject("addAccess", 0);
+
+			}
+			if (edit.isError() == false) {
+				System.out.println(" edit   Accessable ");
+				model.addObject("editAccess", 0);
+			}
+			if (delete.isError() == false) {
+				System.out.println(" delete   Accessable ");
+				model.addObject("deleteAccess", 0);
+
+			}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -1512,7 +1647,18 @@ try {
 	public String deleteEmpDept(HttpServletRequest request, HttpServletResponse response) {
 
 		HttpSession session = request.getSession();
+		String a = null;
+		List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+		Info view = AcessController.checkAccess("deleteEmpDept", "showEmpDeptList", 0, 0, 0, 1, newModuleList);
+
 		try {
+			if (view.isError() == true) {
+
+				a = "redirect:/accessDenied";
+
+			}
+			else {
+				a="redirect:/showEmpDeptList";
 			String base64encodedString = request.getParameter("deptId");
 			String deptId = FormValidation.DecodeKey(base64encodedString);
 
@@ -1525,20 +1671,32 @@ try {
 			} else {
 				session.setAttribute("errorMsg", "Failed to Delete");
 			}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			session.setAttribute("errorMsg", "Failed to Delete");
 		}
-		return "redirect:/showEmpDeptList";
+		return a;
 	}
 
 	@RequestMapping(value = "/editEmpDept", method = RequestMethod.GET)
 	public ModelAndView editEmpDept(HttpServletRequest request, HttpServletResponse response) {
+		
 		HttpSession session = request.getSession();
-
-		ModelAndView model = new ModelAndView("master/empDeptEdit");
+		ModelAndView model = null;
 
 		try {
+
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("editEmpDept", "showEmpDeptList", 0, 0, 1, 0, newModuleList);
+
+			if (view.isError() == true) {
+
+				model = new ModelAndView("accessDenied");
+
+			} else {
+				model = new ModelAndView("master/empDeptEdit");
+			
 			String base64encodedString = request.getParameter("deptId");
 			String deptId = FormValidation.DecodeKey(base64encodedString);
 
@@ -1547,7 +1705,7 @@ try {
 			editEmployeeDepartment = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpDeptById", map,
 					EmployeeDepartment.class);
 			model.addObject("editEmpDept", editEmployeeDepartment);
-
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
