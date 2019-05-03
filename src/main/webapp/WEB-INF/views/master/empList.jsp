@@ -48,8 +48,10 @@
 
 
 					<div class="breadcrumb justify-content-center">
+					<c:if test="${addAccess == 0}">
 						<a href="${pageContext.request.contextPath}/employeeAdd"
 							class="breadcrumb-elements-item"> Add Employee </a>
+							</c:if>
 
 					</div>
 
@@ -151,14 +153,19 @@
 													</a>
 
 													<div class="dropdown-menu dropdown-menu-right">
+													<c:if test="${editAccess == 0}">
 														<a
 															href="${pageContext.request.contextPath}/editEmp?typeId=${lvTypeList.exVar1}"
 															class="dropdown-item"><i class="icon-pencil7"></i>Edit</a>
+															</c:if>
+															<c:if
+																test="${deleteAccess == 0}">
 														<a
 															href="${pageContext.request.contextPath}/deleteEmployee?typeId=${lvTypeList.exVar1}"
 																onClick="return confirm('Are you sure want to Delete this Record');"
 															class="dropdown-item"><i class="icon-trash"></i>
-															Delete</a> <a
+															Delete</a>
+															</c:if> <a
 															href="${pageContext.request.contextPath}/uploadDocument?empId=${lvTypeList.exVar1}"
 															class="dropdown-item"><i class="icon-file-upload"></i> 
 															Document upload</a>

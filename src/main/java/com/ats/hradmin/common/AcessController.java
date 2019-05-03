@@ -9,7 +9,7 @@ import com.ats.hradmin.model.Info;
 public class AcessController {
 	
 
-	public static Info checkAccess(String currentMapping, String viewMapping, String view, int add, int edit,
+	public static Info checkAccess(String currentMapping, String viewMapping, int view, int add, int edit,
 			int delete, List<AccessRightModule> newModuleList) {
 
 		Info info = new Info();
@@ -29,7 +29,7 @@ public class AcessController {
 
 						//System.out.println("Mapping Found");
 
-						if (view.equals("1")) {
+						if (view == 1) {
 
 							//System.out.println("in view");
 							info.setError(false);

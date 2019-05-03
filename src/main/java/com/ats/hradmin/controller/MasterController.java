@@ -1,6 +1,7 @@
 package com.ats.hradmin.controller;
 
 import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -22,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.ats.hradmin.common.AcessController;
 import com.ats.hradmin.common.Constants;
 import com.ats.hradmin.common.DateConvertor;
 import com.ats.hradmin.common.FormValidation;
@@ -1985,9 +1988,19 @@ public class MasterController {
 	public ModelAndView showEmpList(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("master/empList");
+		try {
 		HttpSession session = request.getSession();
 		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
-		try {
+		List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+		Info view = AcessController.checkAccess("showEmpList", "showEmpList", 1, 0, 0, 0,
+				newModuleList);
+
+		if (view.isError() == true) {
+
+			model = new ModelAndView("accessDenied");
+
+		} else {
+	
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("companyId", userObj.getCompanyId());
@@ -2000,14 +2013,35 @@ public class MasterController {
 					Arrays.asList(employeeDepartment));
 
 			for (int i = 0; i < employeeDepartmentlist.size(); i++) {
-//System.out.println("employeeDepartmentlist.get(i).getEmpId()"+employeeDepartmentlist.get(i).getEmpId());
 				employeeDepartmentlist.get(i)
 						.setExVar1(FormValidation.Encrypt(String.valueOf(employeeDepartmentlist.get(i).getEmpId())));
 			}
 
 			model.addObject("empList", employeeDepartmentlist);
 			System.err.println("emp list is  " + employeeDepartment.toString());
+			
+			Info add = AcessController.checkAccess("showEmpList", "showEmpList", 0, 1, 0,
+					0, newModuleList);
+			Info edit = AcessController.checkAccess("showEmpList", "showEmpList", 0, 0, 1,
+					0, newModuleList);
+			Info delete = AcessController.checkAccess("showEmpList", "showEmpList", 0, 0, 0,
+					1, newModuleList);
 
+			if (add.isError() == false) {
+				System.out.println(" add   Accessable ");
+				model.addObject("addAccess", 0);
+
+			}
+			if (edit.isError() == false) {
+				System.out.println(" edit   Accessable ");
+				model.addObject("editAccess", 0);
+			}
+			if (delete.isError() == false) {
+				System.out.println(" delete   Accessable ");
+				model.addObject("deleteAccess", 0);
+
+			}
+		}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
