@@ -993,18 +993,19 @@
 				}, function(data) {
 					//alert("Data  " + JSON.stringify(data));
 					if (valueType == 2) {
-						$("#error_email_unique").show()
+						$("#error_email").show()
 						document.getElementById("email").value = "";
+						document .getElementById("error_email").innerHTML = "This Email is already exist.";
 						/* alert("This email id already exist "); */
 
-						document.getElementById("submtbtn").disabled = true;
+						//document.getElementById("submtbtn").disabled = true;
 
 					} else {
-						$("#error_mobile1_unique").show()
+						$("#error_mobile1").show()
 						document.getElementById("mobile1").value = "";
-
+						document .getElementById("error_mobile1").innerHTML = "This Mobile No. is already exist.";
 						/* alert("This contact no  already exist"); */
-						document.getElementById("submtbtn").disabled = true;
+						//document.getElementById("submtbtn").disabled = true;
 
 					}
 
