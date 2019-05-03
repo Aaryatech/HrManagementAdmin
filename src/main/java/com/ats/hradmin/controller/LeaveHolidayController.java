@@ -25,12 +25,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ats.hradmin.common.AcessController;
 import com.ats.hradmin.common.Constants;
 import com.ats.hradmin.common.DateConvertor;
 import com.ats.hradmin.common.FormValidation;
 import com.ats.hradmin.leave.model.CalenderYear;
 import com.ats.hradmin.leave.model.GetHoliday;
 import com.ats.hradmin.leave.model.Holiday;
+import com.ats.hradmin.model.AccessRightModule;
 import com.ats.hradmin.model.Company;
 import com.ats.hradmin.model.Info;
 import com.ats.hradmin.model.Location;
@@ -49,10 +51,24 @@ public class LeaveHolidayController {
 	@RequestMapping(value = "/holidayAdd", method = RequestMethod.GET)
 	public ModelAndView holidayAdd(HttpServletRequest request, HttpServletResponse response) {
 
-		ModelAndView model = new ModelAndView("leave/holiday");
+	
 
-		try {
-			HttpSession session = request.getSession();
+		HttpSession session = request.getSession();
+		ModelAndView model = null;
+
+     try {
+			
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("holidayAdd", "showHolidayList",0, 1,0, 0,
+					newModuleList);
+
+			if (view.isError() == true) {
+
+				model = new ModelAndView("accessDenied");
+
+			} else {
+				model = new ModelAndView("leave/holiday");
+			
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
@@ -69,17 +85,8 @@ public class LeaveHolidayController {
 
 			model.addObject("locationList", locationList);
 
-			// getCalculateYearList
-
-			/*
-			 * CalenderYear[] calculateYear = Constants.getRestTemplate()
-			 * .getForObject(Constants.url + "/getCalculateYearListIsCurrent",
-			 * CalenderYear[].class);
-			 * 
-			 * List<CalenderYear> yearList = new ArrayList<>(Arrays.asList(calculateYear));
-			 * 
-			 * model.addObject("yearList", yearList);
-			 */
+			
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -178,11 +185,24 @@ public class LeaveHolidayController {
 	@RequestMapping(value = "/editHoliday", method = RequestMethod.GET)
 	public ModelAndView editHoliday(HttpServletRequest request, HttpServletResponse response) {
 
-		ModelAndView model = new ModelAndView("leave/holiday_edit");
+		 
+
+		ModelAndView model = null;
+		HttpSession session = request.getSession();
 
 		try {
 
-			HttpSession session = request.getSession();
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("editHoliday", "showHolidayList", 0, 0, 1, 0, newModuleList);
+
+			if (view.isError() == true) {
+
+				model = new ModelAndView("accessDenied");
+
+			} else {
+				model = new ModelAndView("leave/holiday_edit");
+			
+		
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
@@ -224,6 +244,7 @@ public class LeaveHolidayController {
 					.collect(Collectors.toList());
 
 			model.addObject("locIdList", locIdList);
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -234,13 +255,23 @@ public class LeaveHolidayController {
 	@RequestMapping(value = "/showHolidayList", method = RequestMethod.GET)
 	public ModelAndView showHolidayList(HttpServletRequest request, HttpServletResponse response) {
 
-		ModelAndView model = new ModelAndView("leave/holiday_list");
+		ModelAndView model = null;
+		HttpSession session = request.getSession();
+		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
-		try {
+try {
+			
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("showHolidayList", "showHolidayList", 1, 0, 0, 0, newModuleList);
 
-			HttpSession session = request.getSession();
-			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+			if (view.isError() == true) {
 
+				model = new ModelAndView("accessDenied");
+
+			} else {
+
+				 model = new ModelAndView("leave/holiday_list");
+		
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("companyId", userObj.getCompanyId());
 
@@ -255,8 +286,26 @@ public class LeaveHolidayController {
 			}
 
 			model.addObject("holList", holList);
-			// System.out.println("HolidayList" + holList.toString());
+			Info add = AcessController.checkAccess("showHolidayList", "showHolidayList", 0, 1, 0, 0, newModuleList);
+			Info edit = AcessController.checkAccess("showHolidayList", "showHolidayList", 0, 0, 1, 0, newModuleList);
+			Info delete = AcessController.checkAccess("showHolidayList", "showHolidayList", 0, 0, 0, 1, newModuleList);
 
+			if (add.isError() == false) {
+				System.out.println(" add   Accessable ");
+				model.addObject("addAccess", 0);
+
+			}
+			if (edit.isError() == false) {
+				System.out.println(" edit   Accessable ");
+				model.addObject("editAccess", 0);
+			}
+			if (delete.isError() == false) {
+				System.out.println(" delete   Accessable ");
+				model.addObject("deleteAccess", 0);
+
+			}
+			// System.out.println("HolidayList" + holList.toString());
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -333,7 +382,19 @@ public class LeaveHolidayController {
 	public String deleteHoliday(HttpServletRequest request, HttpServletResponse response) {
 
 		HttpSession session = request.getSession();
+		String a = null;
+		List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+		Info view = AcessController.checkAccess("deleteHoliday", "showHolidayList", 0, 0, 0, 1, newModuleList);
+
 		try {
+			if (view.isError() == true) {
+
+				a = "redirect:/accessDenied";
+
+			}
+			else {
+				a = "redirect:/showHolidayList";
+
 			String base64encodedString = request.getParameter("holidayId");
 			String holidayId = FormValidation.DecodeKey(base64encodedString);
 
@@ -346,11 +407,12 @@ public class LeaveHolidayController {
 			} else {
 				session.setAttribute("errorMsg", "Failed to Delete");
 			}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			session.setAttribute("errorMsg", "Failed to Delete");
 		}
-		return "redirect:/showHolidayList";
+		return a;
 	}
 
 }
