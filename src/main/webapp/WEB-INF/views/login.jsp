@@ -1,4 +1,6 @@
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%><%@ taglib
+	uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +9,9 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>HR Management</title>
-
+<link rel="shortcut icon"
+	href="${pageContext.request.contextPath}/resources/global_assets/images/companylogo.png"
+	type="image/x-icon" />
 <!-- Global stylesheets -->
 <link
 	href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900"
@@ -60,7 +64,9 @@
 				src="${pageContext.request.contextPath}/resources/global_assets/images/logo_light.png"
 				alt="">
 			</a> --%>
-			<img src="${pageContext.request.contextPath}/resources/global_assets/images/companylogo.png" alt="" style="height: 80px; width: 150px;" >
+			<img
+				src="${pageContext.request.contextPath}/resources/global_assets/images/companylogo.png"
+				alt="" style="height: 80px; width: 150px;">
 		</div>
 
 		<div class="d-md-none">
@@ -120,6 +126,12 @@
 								<div class="form-control-feedback">
 									<i class="icon-lock2 text-muted"></i>
 								</div>
+								<c:if test="${sessionScope.errorMsg!=null}">
+									<span style="color: red;">${sessionScope.errorMsg}</span>
+									<%
+										session.removeAttribute("errorMsg");
+									%>
+								</c:if>
 							</div>
 
 							<div class="form-group">
