@@ -534,9 +534,20 @@ try {
 	@RequestMapping(value = "/editLocation", method = RequestMethod.GET)
 	public ModelAndView editLocation(HttpServletRequest request, HttpServletResponse response) {
 
-		ModelAndView model = new ModelAndView("master/locationEdit");
+		HttpSession session = request.getSession();
+		ModelAndView model = null;
 
 		try {
+
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("editLocation", "showLocationList", 0, 0, 1, 0, newModuleList);
+
+			if (view.isError() == true) {
+
+				model = new ModelAndView("accessDenied");
+
+			} else {
+				model = new ModelAndView("master/locationEdit");
 			String base64encodedString = request.getParameter("locId");
 			String locId = FormValidation.DecodeKey(base64encodedString);
 
@@ -545,7 +556,7 @@ try {
 			editLocation = Constants.getRestTemplate().postForObject(Constants.url + "/getLocationById", map,
 					Location.class);
 			model.addObject("editLocation", editLocation);
-
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -643,17 +654,28 @@ try {
 	@RequestMapping(value = "/empTypeAdd", method = RequestMethod.GET)
 	public ModelAndView empTypeAdd(HttpServletRequest request, HttpServletResponse response) {
 
-		ModelAndView model = new ModelAndView("master/empTypeAdd");
 
-		try {
+		HttpSession session = request.getSession();
+		ModelAndView model = null;
 
+     try {
+			
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("empTypeAdd", "showEmpTypeList",0, 1,0, 0,
+					newModuleList);
+
+			if (view.isError() == true) {
+
+				model = new ModelAndView("accessDenied");
+
+			} else {model = new ModelAndView("master/empTypeAdd");
 			AccessRightModule[] accessRightModule = Constants.getRestTemplate()
 					.getForObject(Constants.url + "/getModuleAndSubModuleList", AccessRightModule[].class);
 
 			moduleList = new ArrayList<AccessRightModule>(Arrays.asList(accessRightModule));
 
 			model.addObject("moduleList", moduleList);
-
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -1153,10 +1175,22 @@ try {
 	@RequestMapping(value = "/employeeCatAdd", method = RequestMethod.GET)
 	public ModelAndView employeeCatAdd(HttpServletRequest request, HttpServletResponse response) {
 
-		ModelAndView model = new ModelAndView("master/employeeCatAdd");
 
-		try {
+		HttpSession session = request.getSession();
+		ModelAndView model = null;
 
+     try {
+			
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("employeeCatAdd", "showEmpCatList",0, 1,0, 0,
+					newModuleList);
+
+			if (view.isError() == true) {
+
+				model = new ModelAndView("accessDenied");
+
+			} else {model = new ModelAndView("master/employeeCatAdd");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -1360,9 +1394,23 @@ try {
 	@RequestMapping(value = "/empDeptAdd", method = RequestMethod.GET)
 	public ModelAndView empDeptAdd(HttpServletRequest request, HttpServletResponse response) {
 
-		ModelAndView model = new ModelAndView("master/empDeptAdd");
+		
+		HttpSession session = request.getSession();
+		ModelAndView model = null;
 
-		try {
+     try {
+			
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("empDeptAdd", "showEmpDeptList",0, 1,0, 0,
+					newModuleList);
+
+			if (view.isError() == true) {
+
+				model = new ModelAndView("accessDenied");
+
+			} else {
+				model = new ModelAndView("master/empDeptAdd");
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();

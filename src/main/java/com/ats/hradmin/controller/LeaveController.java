@@ -702,7 +702,7 @@ try {
 					System.err.println("res.getLeaveId()" + res.getLeaveId());
 					lt.setLeaveId(res.getLeaveId());
 
-					lt.setLeaveStatus(1);
+					lt.setLeaveStatus(stat);
 					lt.setEmpId(empId);
 					lt.setExInt1(1);
 					lt.setExInt2(1);
