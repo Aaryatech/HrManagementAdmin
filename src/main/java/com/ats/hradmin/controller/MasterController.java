@@ -38,10 +38,10 @@ import com.ats.hradmin.model.EmployeeDepartment;
 import com.ats.hradmin.model.EmployeeInfo;
 import com.ats.hradmin.model.GetEmployeeInfo;
 import com.ats.hradmin.model.Info;
-import com.ats.hradmin.model.LeaveType;
 import com.ats.hradmin.model.Location;
 import com.ats.hradmin.model.LoginResponse;
 import com.ats.hradmin.model.User;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -57,23 +57,26 @@ public class MasterController {
 	EmployeeDepartment editEmployeeDepartment = new EmployeeDepartment();
 	List<AccessRightModule> moduleList = new ArrayList<>();
 
+	//****************************Company********************************************************
+	
 	@RequestMapping(value = "/companyAdd", method = RequestMethod.GET)
 	public ModelAndView companyAdd(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		ModelAndView model = null;
 
-		ModelAndView model = new ModelAndView("master/companyAdd");
+try {
+			
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("companyAdd", "showCompanyList",0, 1,0, 0,
+					newModuleList);
 
-		
-		try {
+			if (view.isError() == true) {
 
-			/*
-			 * Company[] company = Constants.getRestTemplate().getForObject(Constants.url +
-			 * "/getCompanyList", Company[].class);
-			 * 
-			 * List<Company> compList = new ArrayList<Company>(Arrays.asList(company));
-			 * 
-			 * System.out.println(compList); //System.out.println("asdfsdf");
-			 */
-		} catch (Exception e) {
+				model = new ModelAndView("accessDenied");
+
+			} else {
+				model = new ModelAndView("master/companyAdd");
+		}} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return model;
@@ -142,10 +145,23 @@ public class MasterController {
 	@RequestMapping(value = "/showCompanyList", method = RequestMethod.GET)
 	public ModelAndView showCompanyList(HttpServletRequest request, HttpServletResponse response) {
 
-		ModelAndView model = new ModelAndView("master/companyList");
+	
 
+		ModelAndView model = null;
 		try {
+			HttpSession session = request.getSession();
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("showCompanyList", "showCompanyList", 1, 0, 0, 0,
+					newModuleList);
 
+			if (view.isError() == true) {
+
+				model = new ModelAndView("accessDenied");
+
+			} else {
+				model = new ModelAndView("master/companyList");
+			}
 			Company[] company = Constants.getRestTemplate().getForObject(Constants.url + "/getCompanyList",
 					Company[].class);
 
@@ -157,6 +173,27 @@ public class MasterController {
 			}
 
 			model.addObject("compList", compList);
+			Info add = AcessController.checkAccess("showCompanyList", "showCompanyList", 0, 1, 0,
+					0, newModuleList);
+			Info edit = AcessController.checkAccess("showCompanyList", "showCompanyList", 0, 0, 1,
+					0, newModuleList);
+			Info delete = AcessController.checkAccess("showCompanyList", "showCompanyList", 0, 0, 0,
+					1, newModuleList);
+
+			if (add.isError() == false) {
+				System.out.println(" add   Accessable ");
+				model.addObject("addAccess", 0);
+
+			}
+			if (edit.isError() == false) {
+				System.out.println(" edit   Accessable ");
+				model.addObject("editAccess", 0);
+			}
+			if (delete.isError() == false) {
+				System.out.println(" delete   Accessable ");
+				model.addObject("deleteAccess", 0);
+
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -262,6 +299,8 @@ public class MasterController {
 
 		return "redirect:/showCompanyList";
 	}
+
+	//****************************Location********************************************************
 
 	@RequestMapping(value = "/locationAdd", method = RequestMethod.GET)
 	public ModelAndView locationAdd(HttpServletRequest request, HttpServletResponse response) {
@@ -372,7 +411,7 @@ public class MasterController {
 		ModelAndView model = new ModelAndView("master/locationList");
 		HttpSession session = request.getSession();
 		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
-		
+
 		try {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
@@ -524,6 +563,9 @@ public class MasterController {
 
 		return "redirect:/showLocationList";
 	}
+
+	
+	//****************************emp Type********************************************************
 
 	@RequestMapping(value = "/empTypeAdd", method = RequestMethod.GET)
 	public ModelAndView empTypeAdd(HttpServletRequest request, HttpServletResponse response) {
@@ -1032,6 +1074,8 @@ public class MasterController {
 		return "redirect:/showEmpTypeList";
 	}
 
+	//****************************Emp Cat********************************************************
+
 	@RequestMapping(value = "/employeeCatAdd", method = RequestMethod.GET)
 	public ModelAndView employeeCatAdd(HttpServletRequest request, HttpServletResponse response) {
 
@@ -1107,7 +1151,7 @@ public class MasterController {
 
 	@RequestMapping(value = "/showEmpCatList", method = RequestMethod.GET)
 	public ModelAndView showEmpCatList(HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession(); 
+		HttpSession session = request.getSession();
 		ModelAndView model = new ModelAndView("master/empCatList");
 		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
@@ -1236,6 +1280,8 @@ public class MasterController {
 
 		return "redirect:/showEmpCatList";
 	}
+	//****************************emp Dept********************************************************
+
 
 	@RequestMapping(value = "/empDeptAdd", method = RequestMethod.GET)
 	public ModelAndView empDeptAdd(HttpServletRequest request, HttpServletResponse response) {
@@ -1442,47 +1488,55 @@ public class MasterController {
 		return "redirect:/showEmpDeptList";
 	}
 
-	
-	
-	//********************************************Employeee & User***********************************************
-	
+	// ********************************************Employeee &
+	// User***********************************************
+
 	@RequestMapping(value = "/employeeAdd", method = RequestMethod.GET)
 	public ModelAndView employeeAdd(HttpServletRequest request, HttpServletResponse response) {
 
 		HttpSession session = request.getSession();
 		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
-		ModelAndView model = new ModelAndView("master/employeeAdd");
 		
+		ModelAndView model = null;
 		try {
 
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			map.add("companyId", userObj.getCompanyId());
-			Location[] location = Constants.getRestTemplate().postForObject(Constants.url + "/getLocationList", map,
-					Location[].class);
-			List<Location> locationList = new ArrayList<Location>(Arrays.asList(location));
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("employeeAdd", "showEmpList", 0, 1, 0, 0, newModuleList);
 
-			map = new LinkedMultiValueMap<>();
-			map.add("compId", userObj.getCompanyId());
+			if (view.isError() == true) {
 
-			EmpType[] EmpType = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpTypeList", map,
-					EmpType[].class);
-			List<EmpType> empTypelist = new ArrayList<EmpType>(Arrays.asList(EmpType));
+				model = new ModelAndView("accessDenied");
 
-			EmployeeDepartment[] employeeDepartment = Constants.getRestTemplate()
-					.postForObject(Constants.url + "/getEmpDeptList", map, EmployeeDepartment[].class);
-			List<EmployeeDepartment> employeeDepartmentlist = new ArrayList<EmployeeDepartment>(
-					Arrays.asList(employeeDepartment));
+			} else {
+			 model = new ModelAndView("master/employeeAdd");
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+				map.add("companyId", userObj.getCompanyId());
+				Location[] location = Constants.getRestTemplate().postForObject(Constants.url + "/getLocationList", map,
+						Location[].class);
+				List<Location> locationList = new ArrayList<Location>(Arrays.asList(location));
 
-			EmployeeCategory[] employeeCategory = Constants.getRestTemplate()
-					.postForObject(Constants.url + "/getEmpCategoryList", map, EmployeeCategory[].class);
-			List<EmployeeCategory> employeeCategorylist = new ArrayList<EmployeeCategory>(
-					Arrays.asList(employeeCategory));
+				map = new LinkedMultiValueMap<>();
+				map.add("compId", userObj.getCompanyId());
 
-			model.addObject("empTypelist", empTypelist);
-			model.addObject("locationList", locationList);
-			model.addObject("deptList", employeeDepartmentlist);
-			model.addObject("catList", employeeCategorylist);
+				EmpType[] EmpType = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpTypeList", map,
+						EmpType[].class);
+				List<EmpType> empTypelist = new ArrayList<EmpType>(Arrays.asList(EmpType));
 
+				EmployeeDepartment[] employeeDepartment = Constants.getRestTemplate()
+						.postForObject(Constants.url + "/getEmpDeptList", map, EmployeeDepartment[].class);
+				List<EmployeeDepartment> employeeDepartmentlist = new ArrayList<EmployeeDepartment>(
+						Arrays.asList(employeeDepartment));
+
+				EmployeeCategory[] employeeCategory = Constants.getRestTemplate()
+						.postForObject(Constants.url + "/getEmpCategoryList", map, EmployeeCategory[].class);
+				List<EmployeeCategory> employeeCategorylist = new ArrayList<EmployeeCategory>(
+						Arrays.asList(employeeCategory));
+
+				model.addObject("empTypelist", empTypelist);
+				model.addObject("locationList", locationList);
+				model.addObject("deptList", employeeDepartmentlist);
+				model.addObject("catList", employeeCategorylist);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -1493,62 +1547,72 @@ public class MasterController {
 	public ModelAndView empEdit(HttpServletRequest request, HttpServletResponse response) {
 
 		HttpSession session = request.getSession();
-		ModelAndView model = new ModelAndView("master/empEdit");
+		ModelAndView model = null;
+		
 		model.addObject("weighImageUrl", Constants.imageSaveUrl);
 		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
-
 		try {
-			String base64encodedString = request.getParameter("typeId");
-			String compId = FormValidation.DecodeKey(base64encodedString);
 
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			map.add("empId", compId);
-			editEmp = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpInfoById", map,
-					EmployeeInfo.class);
-			model.addObject("editEmp", editEmp);
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("editEmp", "showEmpList", 0, 0, 1, 0, newModuleList);
 
-			map = new LinkedMultiValueMap<>();
-			map.add("empId", compId);
-			editUser = Constants.getRestTemplate().postForObject(Constants.url + "/getUserInfoByEmpId", map,
-					User.class);
-			model.addObject("editUser", editUser);
+			if (view.isError() == true) {
 
-			List<Integer> locIdList = Stream.of(editUser.getLocId().split(",")).map(Integer::parseInt)
-					.collect(Collectors.toList());
-			System.out.println("locIdList" + locIdList.toString());
+				model = new ModelAndView("accessDenied");
 
-			model.addObject("locIdList", locIdList);
+			} else {
+				 model = new ModelAndView("master/empEdit");
+				String base64encodedString = request.getParameter("typeId");
+				String compId = FormValidation.DecodeKey(base64encodedString);
 
-			map = new LinkedMultiValueMap<>();
-			map.add("companyId", userObj.getCompanyId());
-			Location[] location = Constants.getRestTemplate().postForObject(Constants.url + "/getLocationList", map,
-					Location[].class);
-			List<Location> locationList = new ArrayList<Location>(Arrays.asList(location));
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+				map.add("empId", compId);
+				editEmp = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpInfoById", map,
+						EmployeeInfo.class);
+				model.addObject("editEmp", editEmp);
 
-			map = new LinkedMultiValueMap<>();
-			map.add("compId", userObj.getCompanyId());
+				map = new LinkedMultiValueMap<>();
+				map.add("empId", compId);
+				editUser = Constants.getRestTemplate().postForObject(Constants.url + "/getUserInfoByEmpId", map,
+						User.class);
+				model.addObject("editUser", editUser);
 
-			EmpType[] EmpType = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpTypeList", map,
-					EmpType[].class);
-			List<EmpType> empTypelist = new ArrayList<EmpType>(Arrays.asList(EmpType));
+				List<Integer> locIdList = Stream.of(editUser.getLocId().split(",")).map(Integer::parseInt)
+						.collect(Collectors.toList());
+				System.out.println("locIdList" + locIdList.toString());
 
-			EmployeeDepartment[] employeeDepartment = Constants.getRestTemplate()
-					.postForObject(Constants.url + "/getEmpDeptList", map, EmployeeDepartment[].class);
-			List<EmployeeDepartment> employeeDepartmentlist = new ArrayList<EmployeeDepartment>(
-					Arrays.asList(employeeDepartment));
+				model.addObject("locIdList", locIdList);
 
-			EmployeeCategory[] employeeCategory = Constants.getRestTemplate()
-					.postForObject(Constants.url + "/getEmpCategoryList", map, EmployeeCategory[].class);
-			List<EmployeeCategory> employeeCategorylist = new ArrayList<EmployeeCategory>(
-					Arrays.asList(employeeCategory));
+				map = new LinkedMultiValueMap<>();
+				map.add("companyId", userObj.getCompanyId());
+				Location[] location = Constants.getRestTemplate().postForObject(Constants.url + "/getLocationList", map,
+						Location[].class);
+				List<Location> locationList = new ArrayList<Location>(Arrays.asList(location));
 
-			model.addObject("empTypelist", empTypelist);
-			model.addObject("locationList", locationList);
-			model.addObject("deptList", employeeDepartmentlist);
-			model.addObject("catList", employeeCategorylist);
+				map = new LinkedMultiValueMap<>();
+				map.add("compId", userObj.getCompanyId());
 
-			System.out.println(locationList.toString());
+				EmpType[] EmpType = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpTypeList", map,
+						EmpType[].class);
+				List<EmpType> empTypelist = new ArrayList<EmpType>(Arrays.asList(EmpType));
 
+				EmployeeDepartment[] employeeDepartment = Constants.getRestTemplate()
+						.postForObject(Constants.url + "/getEmpDeptList", map, EmployeeDepartment[].class);
+				List<EmployeeDepartment> employeeDepartmentlist = new ArrayList<EmployeeDepartment>(
+						Arrays.asList(employeeDepartment));
+
+				EmployeeCategory[] employeeCategory = Constants.getRestTemplate()
+						.postForObject(Constants.url + "/getEmpCategoryList", map, EmployeeCategory[].class);
+				List<EmployeeCategory> employeeCategorylist = new ArrayList<EmployeeCategory>(
+						Arrays.asList(employeeCategory));
+
+				model.addObject("empTypelist", empTypelist);
+				model.addObject("locationList", locationList);
+				model.addObject("deptList", employeeDepartmentlist);
+				model.addObject("catList", employeeCategorylist);
+
+				System.out.println(locationList.toString());
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -1658,9 +1722,9 @@ public class MasterController {
 				System.err.println("edited success");
 
 				if (res.isError() == false) {
-					
+
 					System.err.println("User loc are 2 :::" + items);
-				
+
 					editUser.setEmpId(res.getEmpId());
 					editUser.setEmpTypeId(typeId);
 					editUser.setUserName(uname);
@@ -1668,7 +1732,7 @@ public class MasterController {
 					editUser.setLocId(items);
 					editUser.setMakerUserId(userObj.getUserId());
 					editUser.setMakerEnterDatetime(sf.format(date));
-					
+
 					System.err.println("uinfo  :::" + editUser.toString());
 					User res1 = Constants.getRestTemplate().postForObject(Constants.url + "/saveUserInfo", editUser,
 							User.class);
@@ -1986,62 +2050,58 @@ public class MasterController {
 
 	@RequestMapping(value = "/showEmpList", method = RequestMethod.GET)
 	public ModelAndView showEmpList(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView model = null;
 
-		ModelAndView model = new ModelAndView("master/empList");
-		try {
-		HttpSession session = request.getSession();
-		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
-		List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
-		Info view = AcessController.checkAccess("showEmpList", "showEmpList", 1, 0, 0, 0,
-				newModuleList);
-
-		if (view.isError() == true) {
-
-			model = new ModelAndView("accessDenied");
-
-		} else {
 	
+		try {
+			HttpSession session = request.getSession();
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("showEmpList", "showEmpList", 1, 0, 0, 0, newModuleList);
 
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			map.add("companyId", userObj.getCompanyId());
-			map.add("locIdList", userObj.getLocationIds());
+			if (view.isError() == true) {
 
-			GetEmployeeInfo[] employeeDepartment = Constants.getRestTemplate()
-					.postForObject(Constants.url + "/getEmpInfoList", map, GetEmployeeInfo[].class);
+				model = new ModelAndView("accessDenied");
 
-			List<GetEmployeeInfo> employeeDepartmentlist = new ArrayList<GetEmployeeInfo>(
-					Arrays.asList(employeeDepartment));
+			} else {
+				 model = new ModelAndView("master/empList");
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+				map.add("companyId", userObj.getCompanyId());
+				map.add("locIdList", userObj.getLocationIds());
 
-			for (int i = 0; i < employeeDepartmentlist.size(); i++) {
-				employeeDepartmentlist.get(i)
-						.setExVar1(FormValidation.Encrypt(String.valueOf(employeeDepartmentlist.get(i).getEmpId())));
+				GetEmployeeInfo[] employeeDepartment = Constants.getRestTemplate()
+						.postForObject(Constants.url + "/getEmpInfoList", map, GetEmployeeInfo[].class);
+
+				List<GetEmployeeInfo> employeeDepartmentlist = new ArrayList<GetEmployeeInfo>(
+						Arrays.asList(employeeDepartment));
+
+				for (int i = 0; i < employeeDepartmentlist.size(); i++) {
+					employeeDepartmentlist.get(i).setExVar1(
+							FormValidation.Encrypt(String.valueOf(employeeDepartmentlist.get(i).getEmpId())));
+				}
+
+				model.addObject("empList", employeeDepartmentlist);
+				System.err.println("emp list is  " + employeeDepartment.toString());
+
+				Info add = AcessController.checkAccess("showEmpList", "showEmpList", 0, 1, 0, 0, newModuleList);
+				Info edit = AcessController.checkAccess("showEmpList", "showEmpList", 0, 0, 1, 0, newModuleList);
+				Info delete = AcessController.checkAccess("showEmpList", "showEmpList", 0, 0, 0, 1, newModuleList);
+
+				if (add.isError() == false) {
+					System.out.println(" add   Accessable ");
+					model.addObject("addAccess", 0);
+
+				}
+				if (edit.isError() == false) {
+					System.out.println(" edit   Accessable ");
+					model.addObject("editAccess", 0);
+				}
+				if (delete.isError() == false) {
+					System.out.println(" delete   Accessable ");
+					model.addObject("deleteAccess", 0);
+
+				}
 			}
-
-			model.addObject("empList", employeeDepartmentlist);
-			System.err.println("emp list is  " + employeeDepartment.toString());
-			
-			Info add = AcessController.checkAccess("showEmpList", "showEmpList", 0, 1, 0,
-					0, newModuleList);
-			Info edit = AcessController.checkAccess("showEmpList", "showEmpList", 0, 0, 1,
-					0, newModuleList);
-			Info delete = AcessController.checkAccess("showEmpList", "showEmpList", 0, 0, 0,
-					1, newModuleList);
-
-			if (add.isError() == false) {
-				System.out.println(" add   Accessable ");
-				model.addObject("addAccess", 0);
-
-			}
-			if (edit.isError() == false) {
-				System.out.println(" edit   Accessable ");
-				model.addObject("editAccess", 0);
-			}
-			if (delete.isError() == false) {
-				System.out.println(" delete   Accessable ");
-				model.addObject("deleteAccess", 0);
-
-			}
-		}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -2051,25 +2111,39 @@ public class MasterController {
 	@RequestMapping(value = "/deleteEmployee", method = RequestMethod.GET)
 	public String deleteEmployee(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
+		String a = null;
+		List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+
+		Info view = AcessController.checkAccess("deleteEmployee", "showEmpList", 0, 0, 0, 1, newModuleList);
+
 		try {
-			// System.err.println("request.getParameter(\"empId\")"+request.getParameter("typeId"));
-			String base64encodedString = request.getParameter("typeId");
-			String typeId = FormValidation.DecodeKey(base64encodedString);
+			if (view.isError() == true) {
 
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			map.add("empId", typeId);
-			Info info = Constants.getRestTemplate().postForObject(Constants.url + "/deleteEmpInfo", map, Info.class);
+				a = "redirect:/accessDenied";
 
-			if (info.isError() == false) {
-				session.setAttribute("successMsg", "Record Deleted Successfully");
-			} else {
-				session.setAttribute("errorMsg", "Failed to Delete");
 			}
 
+			else {
+				a = "redirect:/showEmpList";
+				// System.err.println("request.getParameter(\"empId\")"+request.getParameter("typeId"));
+				String base64encodedString = request.getParameter("typeId");
+				String typeId = FormValidation.DecodeKey(base64encodedString);
+
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+				map.add("empId", typeId);
+				Info info = Constants.getRestTemplate().postForObject(Constants.url + "/deleteEmpInfo", map,
+						Info.class);
+
+				if (info.isError() == false) {
+					session.setAttribute("successMsg", "Record Deleted Successfully");
+				} else {
+					session.setAttribute("errorMsg", "Failed to Delete");
+				}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:/showEmpList";
+		return a;
 	}
 
 }

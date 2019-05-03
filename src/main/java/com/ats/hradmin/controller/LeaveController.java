@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ats.hradmin.common.AcessController;
 import com.ats.hradmin.common.Constants;
 import com.ats.hradmin.common.DateConvertor;
 import com.ats.hradmin.common.FormValidation;
@@ -53,12 +54,23 @@ public class LeaveController {
 
 	@RequestMapping(value = "/leaveTypeAdd", method = RequestMethod.GET)
 	public ModelAndView empDocAdd(HttpServletRequest request, HttpServletResponse response) {
-
-		ModelAndView model = new ModelAndView("leave/leaveTypeAdd");
+		ModelAndView model = null;
+		
 		HttpSession session = request.getSession();
 		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 		try {
+			
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("leaveTypeAdd", "showLeaveTypeList",0, 1,0, 0,
+					newModuleList);
 
+			if (view.isError() == true) {
+
+				model = new ModelAndView("accessDenied");
+
+			} else {
+		
+			 model = new ModelAndView("leave/leaveTypeAdd");
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("compId", userObj.getCompanyId());
 
@@ -68,7 +80,7 @@ public class LeaveController {
 			List<LeaveSummary> sumList = new ArrayList<LeaveSummary>(Arrays.asList(employeeDoc));
 			System.out.println("lv sum list " + sumList);
 			model.addObject("sumList", sumList);
-
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -173,12 +185,22 @@ public class LeaveController {
 	@RequestMapping(value = "/showLeaveTypeList", method = RequestMethod.GET)
 	public ModelAndView showLeaveSummaryList(HttpServletRequest request, HttpServletResponse response) {
 
-		ModelAndView model = new ModelAndView("leave/leaveTypeList");
-
+		
+		ModelAndView model = null;
 		try {
-
 			HttpSession session = request.getSession();
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("showLeaveTypeList", "showLeaveTypeList", 1, 0, 0, 0,
+					newModuleList);
+
+			if (view.isError() == true) {
+
+				model = new ModelAndView("accessDenied");
+
+			} else {
+
+			 model = new ModelAndView("leave/leaveTypeList");
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("companyId", userObj.getCompanyId());
 			LeaveType[] leaveSummary = Constants.getRestTemplate().postForObject(Constants.url + "/getLeaveTypeListIsStructure",
@@ -193,7 +215,28 @@ public class LeaveController {
 			}
 
 			model.addObject("lvTypeList", leaveSummarylist);
+			Info add = AcessController.checkAccess("showLeaveTypeList", "showLeaveTypeList", 0, 1, 0,
+					0, newModuleList);
+			Info edit = AcessController.checkAccess("showLeaveTypeList", "showLeaveTypeList", 0, 0, 1,
+					0, newModuleList);
+			Info delete = AcessController.checkAccess("showLeaveTypeList", "showLeaveTypeList", 0, 0, 0,
+					1, newModuleList);
 
+			if (add.isError() == false) {
+				System.out.println(" add   Accessable ");
+				model.addObject("addAccess", 0);
+
+			}
+			if (edit.isError() == false) {
+				System.out.println(" edit   Accessable ");
+				model.addObject("editAccess", 0);
+			}
+			if (delete.isError() == false) {
+				System.out.println(" delete   Accessable ");
+				model.addObject("deleteAccess", 0);
+
+			}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -203,10 +246,23 @@ public class LeaveController {
 	@RequestMapping(value = "/editLeaveType", method = RequestMethod.GET)
 	public ModelAndView editLeaveType(HttpServletRequest request, HttpServletResponse response) {
 
-		ModelAndView model = new ModelAndView("leave/editLeaveType");
+		ModelAndView model = null;
+
+	
 		HttpSession session = request.getSession();
 		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
-		try {
+try {
+			
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("editLeaveType", "showLeaveTypeList",0, 0,1,0,
+					newModuleList);
+
+			if (view.isError() == true) {
+
+				model = new ModelAndView("accessDenied");
+
+			} else {
+				  model = new ModelAndView("leave/editLeaveType");
 			String base64encodedString = request.getParameter("typeId");
 			String lvTypeId = FormValidation.DecodeKey(base64encodedString);
 
@@ -225,7 +281,7 @@ public class LeaveController {
 			List<LeaveSummary> sumList = new ArrayList<LeaveSummary>(Arrays.asList(employeeDoc));
 			System.out.println("lv sum list " + sumList);
 			model.addObject("sumList", sumList);
-
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -235,7 +291,20 @@ public class LeaveController {
 	@RequestMapping(value = "/deleteLeaveType", method = RequestMethod.GET)
 	public String deleteLeaveType(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
+		List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+		String a = null;
+		Info view = AcessController.checkAccess("deleteLeaveType", "showLeaveTypeList", 0, 0, 0,1,
+				newModuleList);
+
 		try {
+			if (view.isError() == true) {
+
+				a = "redirect:/showLeaveTypeList";
+
+			}
+
+			else {
+				a = "redirect:/accessDenied";
 
 			String base64encodedString = request.getParameter("typeId");
 			String typeId = FormValidation.DecodeKey(base64encodedString);
@@ -249,11 +318,11 @@ public class LeaveController {
 			} else {
 				session.setAttribute("errorMsg", "Failed to Delete");
 			}
-
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:/showLeaveTypeList";
+		return a;
 	}
 
 	@RequestMapping(value = "/submitEditLeaveType", method = RequestMethod.POST)
