@@ -180,8 +180,8 @@ public class LeaveController {
 			HttpSession session = request.getSession();
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			map.add("compId", userObj.getCompanyId());
-			LeaveType[] leaveSummary = Constants.getRestTemplate().postForObject(Constants.url + "/getLeaveTypeList",
+			map.add("companyId", userObj.getCompanyId());
+			LeaveType[] leaveSummary = Constants.getRestTemplate().postForObject(Constants.url + "/getLeaveTypeListIsStructure",
 					map, LeaveType[].class);
 
 			List<LeaveType> leaveSummarylist = new ArrayList<LeaveType>(Arrays.asList(leaveSummary));
@@ -435,12 +435,15 @@ public class LeaveController {
 					EmployeeInfo.class);
 			model.addObject("editEmp", editEmp);
 
-			LeaveType[] leaveArray = Constants.getRestTemplate()
-					.getForObject(Constants.url + "/getLeaveTypeListIsStructure", LeaveType[].class);
-
-			List<LeaveType> leaveTypeList = new ArrayList<>(Arrays.asList(leaveArray));
-
-			model.addObject("leaveTypeList", leaveTypeList);
+			/*
+			 * LeaveType[] leaveArray = Constants.getRestTemplate()
+			 * .getForObject(Constants.url + "/getLeaveTypeListIsStructure",
+			 * LeaveType[].class);
+			 * 
+			 * List<LeaveType> leaveTypeList = new ArrayList<>(Arrays.asList(leaveArray));
+			 * 
+			 * model.addObject("leaveTypeList", leaveTypeList);
+			 */
 			model.addObject("empId", empId);
 
 			map = new LinkedMultiValueMap<>();
