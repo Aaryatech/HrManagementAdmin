@@ -604,7 +604,7 @@ public class LeaveController {
 				leaveSummary.setCalYrId((int) session.getAttribute("currYearId"));
 				leaveSummary.setEmpId(empId);
 				leaveSummary.setFinalStatus(1);
-				leaveSummary.setLeaveNumDays(noOfDaysExclude);
+				leaveSummary.setLeaveNumDays(noOfDays);
 				leaveSummary.setCirculatedTo("1");
 				leaveSummary.setLeaveDuration(dayTypeName);
 				leaveSummary.setLeaveEmpReason(remark);

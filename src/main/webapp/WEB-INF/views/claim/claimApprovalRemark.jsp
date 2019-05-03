@@ -64,7 +64,7 @@
 
 						<div class="card">
 							<div class="card-header header-elements-inline">
-								
+								<h6 class="card-title"></h6>
 								<div class="header-elements">
 									<div class="list-icons">
 										<a class="list-icons-item" data-action="collapse"></a>
@@ -135,8 +135,8 @@
 
 									<div class="form-group row mb-0">
 										<div class="col-lg-10 ml-lg-auto">
-											<button type="reset" class="btn btn-light legitRipple">Reset</button>
-											<button type="submit" class="btn bg-blue ml-3 legitRipple"
+<!-- 											<button type="reset" class="btn btn-light legitRipple">Reset</button>
+ -->											<button type="submit" class="btn bg-blue ml-3 legitRipple"
 												id="submtbtn">
 												Submit <i class="icon-paperplane ml-2"></i>
 											</button>
