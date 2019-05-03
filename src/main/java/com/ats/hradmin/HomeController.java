@@ -101,6 +101,14 @@ public class HomeController {
 
 		return mav;
 	}
+	
+	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
+	public ModelAndView dashboard(HttpServletRequest request, HttpServletResponse res) {
+
+		ModelAndView mav = new ModelAndView("welcome");
+
+		return mav;
+	}
 
 	@RequestMapping("/loginProcess")
 	public ModelAndView helloWorld(HttpServletRequest request, HttpServletResponse res) throws IOException {
