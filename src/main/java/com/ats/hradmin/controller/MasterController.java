@@ -733,6 +733,7 @@ try {
 						moduleJson.setModuleName(moduleList.get(i).getModuleName());
 						moduleJson.setModuleDesc(moduleList.get(i).getModuleDesc());
 						moduleJson.setOrderBy(moduleList.get(i).getOrderBy());
+						moduleJson.setIconDiv(moduleList.get(i).getIconDiv());
 						moduleJson.setAccessRightSubModuleList(subModuleJsonList);
 						moduleJsonList.add(moduleJson);
 					}

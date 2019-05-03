@@ -106,6 +106,9 @@ public class HomeController {
 	public ModelAndView dashboard(HttpServletRequest request, HttpServletResponse res) {
 
 		ModelAndView mav = new ModelAndView("welcome");
+		HttpSession session = request.getSession();
+		session.setAttribute("sessionModuleId", 0);
+		session.setAttribute("sessionSubModuleId", 0);
 
 		return mav;
 	}
@@ -216,6 +219,14 @@ public class HomeController {
 		return "redirect:/";
 	}
 
+	@RequestMapping(value = "/sessionTimeOut", method = RequestMethod.GET)
+	public String sessionTimeOut(HttpSession session) {
+		System.out.println("User Logout");
+
+		session.invalidate();
+		return "redirect:/";
+	}
+	
 	@RequestMapping(value = "/uploadOtherMediaProccess", method = RequestMethod.POST)
 	public void uploadOtherMediaProccess(@RequestParam("file") List<MultipartFile> file, HttpServletRequest request,
 			HttpServletResponse response) {

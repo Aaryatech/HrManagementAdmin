@@ -60,6 +60,7 @@
 				src="${pageContext.request.contextPath}/resources/global_assets/images/logo_light.png"
 				alt="">
 			</a> --%>
+			<img src="${pageContext.request.contextPath}/resources/global_assets/images/companylogo.png" alt="" style="height: 80px; width: 150px;" >
 		</div>
 
 		<div class="d-md-none">

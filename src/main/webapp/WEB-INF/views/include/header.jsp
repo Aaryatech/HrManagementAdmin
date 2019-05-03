@@ -3,8 +3,9 @@
  
  <div class="navbar navbar-expand-md navbar-dark bg-indigo navbar-static">
 		<div class="navbar-brand">
-			<a href="index.html" class="d-inline-block">
-				<img src="${pageContext.request.contextPath}/resources/global_assets/images/logo_light.png" alt="">
+			<a href="${pageContext.request.contextPath}/dashboard" class="d-inline-block">
+				<%-- <img src="${pageContext.request.contextPath}/resources/global_assets/images/logo_light.png" alt=""> --%>
+				<img src="${pageContext.request.contextPath}/resources/global_assets/images/companylogo.png" alt="" style="height: 80px; width: 150px;" >
 			</a>
 		</div>
 
