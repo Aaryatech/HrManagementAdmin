@@ -48,9 +48,10 @@
 
 
 					<div class="breadcrumb justify-content-center">
+						<c:if test="${addAccess == 0}">
 						<a href="${pageContext.request.contextPath}/addCustomer"
 							class="breadcrumb-elements-item"> Add Customer </a>
-
+</c:if>
 					</div>
 
 
@@ -139,14 +140,17 @@
 													</a>
 
 													<div class="dropdown-menu dropdown-menu-right">
+														<c:if test="${editAccess == 0}">
 														<a
 															href="${pageContext.request.contextPath}/editCustomer?custId=${cust.exVar1}"
-															class="dropdown-item"><i class="icon-pencil7"></i>Edit</a>
+															class="dropdown-item"><i class="icon-pencil7"></i>Edit</a></c:if>
+															<c:if
+																test="${deleteAccess == 0}">
 														<a
 															href="${pageContext.request.contextPath}/deleteCustomer?custId=${cust.exVar1}"
 															onClick="return confirm('Are you sure want to delete this record');"
 															class="dropdown-item"><i class="icon-trash"></i>
-															Delete</a>
+															Delete</a></c:if>
 													</div>
 												</div>
 											</div>

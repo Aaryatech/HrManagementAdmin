@@ -26,12 +26,14 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ats.hradmin.claim.ClaimAuthority;
 import com.ats.hradmin.claim.ClaimType;
 import com.ats.hradmin.claim.GetClaimAuthority;
+import com.ats.hradmin.common.AcessController;
 import com.ats.hradmin.common.Constants;
 import com.ats.hradmin.common.DateConvertor;
 import com.ats.hradmin.common.FormValidation;
 import com.ats.hradmin.leave.model.GetLeaveAuthority;
 import com.ats.hradmin.leave.model.Holiday;
 import com.ats.hradmin.leave.model.LeaveAuthority;
+import com.ats.hradmin.model.AccessRightModule;
 import com.ats.hradmin.model.Customer;
 import com.ats.hradmin.model.EmployeeInfo;
 import com.ats.hradmin.model.GetEmployeeInfo;
@@ -55,12 +57,23 @@ public class ClaimController {
 	// ************************************Customer***************************
 	@RequestMapping(value = "/addCustomer", method = RequestMethod.GET)
 	public ModelAndView addCustomer(HttpServletRequest request, HttpServletResponse response) {
+		 
+		HttpSession session = request.getSession();
+		ModelAndView model = null;
 
-		ModelAndView model = new ModelAndView("master/cust_add");
+     try {
+			
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("addCustomer", "showCustomerList",0, 1,0, 0,
+					newModuleList);
 
-		try {
+			if (view.isError() == true) {
 
-		} catch (Exception e) {
+				model = new ModelAndView("accessDenied");
+
+			} else {
+				model = new ModelAndView("master/cust_add");
+			}	} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return model;
@@ -128,14 +141,21 @@ public class ClaimController {
 	@RequestMapping(value = "/showCustomerList", method = RequestMethod.GET)
 	public ModelAndView showCustomerList(HttpServletRequest request, HttpServletResponse response) {
 
-		ModelAndView model = new ModelAndView("master/cust_list");
+		ModelAndView model =null;
 
 		try {
-
 			HttpSession session = request.getSession();
-
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("showCustomerList", "showCustomerList", 1, 0, 0, 0, newModuleList);
 
+			if (view.isError() == true) {
+
+				model = new ModelAndView("accessDenied");
+
+			} else {
+
+				model = new ModelAndView("master/cust_list");
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("companyId", userObj.getCompanyId());
 
@@ -150,8 +170,28 @@ public class ClaimController {
 			}
 
 			model.addObject("custlist", custlist);
+			
+			Info add = AcessController.checkAccess("showCustomerList", "showCustomerList", 0, 1, 0, 0, newModuleList);
+			Info edit = AcessController.checkAccess("showCustomerList", "showCustomerList", 0, 0, 1, 0, newModuleList);
+			Info delete = AcessController.checkAccess("showCustomerList", "showCustomerList", 0, 0, 0, 1, newModuleList);
+
+			if (add.isError() == false) {
+				System.out.println(" add   Accessable ");
+				model.addObject("addAccess", 0);
+
+			}
+			if (edit.isError() == false) {
+				System.out.println(" edit   Accessable ");
+				model.addObject("editAccess", 0);
+			}
+			if (delete.isError() == false) {
+				System.out.println(" delete   Accessable ");
+				model.addObject("deleteAccess", 0);
+
+			}
 
 			System.out.println("" + custlist.toString());
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -162,11 +202,21 @@ public class ClaimController {
 
 	@RequestMapping(value = "/editCustomer", method = RequestMethod.GET)
 	public ModelAndView editCustomer(HttpServletRequest request, HttpServletResponse response) {
-
-		ModelAndView model = new ModelAndView("master/cust_edit");
+		HttpSession session = request.getSession();
+		ModelAndView model = null;
 
 		try {
 
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("editCustomer", "showCustomerList", 0, 0, 1, 0, newModuleList);
+
+			if (view.isError() == true) {
+
+				model = new ModelAndView("accessDenied");
+
+			} else {
+				 model = new ModelAndView("master/cust_edit");
+			
 			String base64encodedString = request.getParameter("custId");
 			String custId = FormValidation.DecodeKey(base64encodedString);
 			// System.out.println("claimTypeId" + claimTypeId);
@@ -176,7 +226,7 @@ public class ClaimController {
 			editCust = Constants.getRestTemplate().postForObject(Constants.url + "/getCustByCustId", map,
 					Customer.class);
 			model.addObject("editCust", editCust);
-
+		}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -236,7 +286,21 @@ public class ClaimController {
 	public String deleteCustomer(HttpServletRequest request, HttpServletResponse response) {
 
 		HttpSession session = request.getSession();
+		String a = null;
+		List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+
+		Info view = AcessController.checkAccess("deleteCustomer", "showCustomerList", 0, 0, 0, 1, newModuleList);
+
 		try {
+			if (view.isError() == true) {
+
+				a = "redirect:/accessDenied";
+
+			}
+
+			else {
+				a="redirect:/showCustomerList";
+			
 			String base64encodedString = request.getParameter("custId");
 			String custId = FormValidation.DecodeKey(base64encodedString);
 
@@ -249,22 +313,33 @@ public class ClaimController {
 			} else {
 				session.setAttribute("errorMsg", "Failed to Delete");
 			}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			session.setAttribute("errorMsg", "Failed to Delete");
 		}
-		return "redirect:/showClaimTypeList";
+		return a ;
 	}
 
 	// ************************************Claim Type***************************
 
 	@RequestMapping(value = "/claimTypeAdd", method = RequestMethod.GET)
 	public ModelAndView claimTypeAdd(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
 
-		ModelAndView model = new ModelAndView("claim/claim_type_add");
-
+ 		ModelAndView model = null;
 		try {
 
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("claimTypeAdd", "showClaimTypeList", 0, 1, 0, 0, newModuleList);
+
+			if (view.isError() == true) {
+
+				model = new ModelAndView("accessDenied");
+
+			} else {
+				model = new ModelAndView("claim/claim_type_add");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -348,14 +423,22 @@ public class ClaimController {
 	@RequestMapping(value = "/showClaimTypeList", method = RequestMethod.GET)
 	public ModelAndView showClaimTypeList(HttpServletRequest request, HttpServletResponse response) {
 
-		ModelAndView model = new ModelAndView("claim/claim_type_list");
+		ModelAndView model = null;
 
 		try {
-
 			HttpSession session = request.getSession();
-
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("showClaimTypeList", "showClaimTypeList", 1, 0, 0, 0, newModuleList);
 
+			if (view.isError() == true) {
+
+				model = new ModelAndView("accessDenied");
+
+			} else {
+
+			
+				model = new ModelAndView("claim/claim_type_list");
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("companyId", userObj.getCompanyId());
 
@@ -371,9 +454,27 @@ public class ClaimController {
 			}
 
 			model.addObject("claimTypelist", claimTypelist);
+			Info add = AcessController.checkAccess("showClaimTypeList", "showClaimTypeList", 0, 1, 0, 0, newModuleList);
+			Info edit = AcessController.checkAccess("showClaimTypeList", "showClaimTypeList", 0, 0, 1, 0, newModuleList);
+			Info delete = AcessController.checkAccess("showClaimTypeList", "showClaimTypeList", 0, 0, 0, 1, newModuleList);
+
+			if (add.isError() == false) {
+				System.out.println(" add   Accessable ");
+				model.addObject("addAccess", 0);
+
+			}
+			if (edit.isError() == false) {
+				System.out.println(" edit   Accessable ");
+				model.addObject("editAccess", 0);
+			}
+			if (delete.isError() == false) {
+				System.out.println(" delete   Accessable ");
+				model.addObject("deleteAccess", 0);
+
+			}
 
 			// System.out.println("" + claimTypelist.toString());
-
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -383,10 +484,21 @@ public class ClaimController {
 	@RequestMapping(value = "/editClaimType", method = RequestMethod.GET)
 	public ModelAndView editClaimType(HttpServletRequest request, HttpServletResponse response) {
 
-		ModelAndView model = new ModelAndView("claim/claim_type_edit");
+		ModelAndView model = null;
+		HttpSession session = request.getSession();
 
 		try {
 
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("editClaimType", "showClaimTypeList", 0, 0, 1, 0, newModuleList);
+
+			if (view.isError() == true) {
+
+				model = new ModelAndView("accessDenied");
+
+			} else {
+				model = new ModelAndView("claim/claim_type_edit");
+			
 			String base64encodedString = request.getParameter("claimTypeId");
 			String claimTypeId = FormValidation.DecodeKey(base64encodedString);
 			// System.out.println("claimTypeId" + claimTypeId);
@@ -396,7 +508,7 @@ public class ClaimController {
 			editClaimType = Constants.getRestTemplate().postForObject(Constants.url + "/getClaimById", map,
 					ClaimType.class);
 			model.addObject("editClaimType", editClaimType);
-
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -473,7 +585,20 @@ public class ClaimController {
 	public String deleteClaimType(HttpServletRequest request, HttpServletResponse response) {
 
 		HttpSession session = request.getSession();
+		String a = null;
+		List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+
+		Info view = AcessController.checkAccess("deleteClaimType", "showClaimTypeList", 0, 0, 0, 1, newModuleList);
+
 		try {
+			if (view.isError() == true) {
+
+				a = "redirect:/accessDenied";
+
+			}
+
+			else {
+				a = "redirect:/showClaimTypeList";
 			String base64encodedString = request.getParameter("claimTypeId");
 			String claimTypeId = FormValidation.DecodeKey(base64encodedString);
 
@@ -486,11 +611,12 @@ public class ClaimController {
 			} else {
 				session.setAttribute("errorMsg", "Failed to Delete");
 			}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			session.setAttribute("errorMsg", "Failed to Delete");
 		}
-		return "redirect:/showClaimTypeList";
+		return a;
 	}
 
 	@RequestMapping(value = "/addClaimAuthority", method = RequestMethod.GET)

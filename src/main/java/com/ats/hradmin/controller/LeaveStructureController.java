@@ -56,15 +56,18 @@ public class LeaveStructureController {
 
 	@RequestMapping(value = "/addLeaveStructure", method = RequestMethod.GET)
 	public ModelAndView addLeaveStructure(HttpServletRequest request, HttpServletResponse response) {
-
+		
+		HttpSession session = request.getSession();
+		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 		ModelAndView model = null;
 		try {
 			tempDetailList = new ArrayList<LeaveStructureDetails>();
 
 			model = new ModelAndView("leave/add_leave_structure");
-
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("companyId", userObj.getCompanyId());
 			LeaveType[] leaveArray = Constants.getRestTemplate()
-					.getForObject(Constants.url + "/getLeaveTypeListIsStructure", LeaveType[].class);
+					.postForObject(Constants.url + "/getLeaveTypeListIsStructure",map, LeaveType[].class);
 
 			leaveTypeList = new ArrayList<>(Arrays.asList(leaveArray));
 
@@ -201,7 +204,8 @@ public class LeaveStructureController {
 	public ModelAndView editLeaveStructure(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("leave/edit_leave_structure");
-
+		HttpSession session = request.getSession();
+		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 		try {
 			String base64encodedString = request.getParameter("lvsId");
 			String lvsId = FormValidation.DecodeKey(base64encodedString);
@@ -214,9 +218,9 @@ public class LeaveStructureController {
 
 			model.addObject("editStructureDetail", editStructure.getDetailList());
 
+			map.add("companyId", userObj.getCompanyId());
 			LeaveType[] leaveArray = Constants.getRestTemplate()
-					.getForObject(Constants.url + "/getLeaveTypeListIsStructure", LeaveType[].class);
-
+					.postForObject(Constants.url + "/getLeaveTypeListIsStructure",map, LeaveType[].class);
 			leaveTypeList = new ArrayList<>(Arrays.asList(leaveArray));
 
 			model.addObject("leaveTypeList", leaveTypeList);

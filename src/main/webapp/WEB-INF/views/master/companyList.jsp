@@ -41,6 +41,15 @@
 
 						<a href="#" class="header-elements-toggle text-default d-md-none"><i
 							class="icon-more"></i></a>
+							
+					<div class="breadcrumb justify-content-center">
+					<c:if test="${addAccess == 0}">
+						<a href="${pageContext.request.contextPath}/companyAdd"
+							class="breadcrumb-elements-item"> Add Comapny </a>
+							</c:if>
+
+					</div>
+							
 					</div>
 
 
@@ -144,14 +153,17 @@
 													</a>
 
 													<div class="dropdown-menu dropdown-menu-right">
+													<c:if test="${editAccess == 0}">
 														<a
 															href="${pageContext.request.contextPath}/editCompany?compId=${compList.exVar1}"
-															class="dropdown-item"><i class="icon-pencil7"></i>Edit</a>
+															class="dropdown-item"><i class="icon-pencil7"></i>Edit</a></c:if>
+															<c:if
+																test="${deleteAccess == 0}">
 														<a
 															href="${pageContext.request.contextPath}/deleteCompany?compId=${compList.exVar1}"
 															onClick="return confirm('Are you sure want to delete this record');"
 															class="dropdown-item"><i class="icon-trash"></i>
-															Delete</a>
+															Delete</a></c:if>
 													</div>
 												</div>
 											</div>

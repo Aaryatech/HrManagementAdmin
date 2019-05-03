@@ -20,9 +20,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.hradmin.claim.ClaimType;
+import com.ats.hradmin.common.AcessController;
 import com.ats.hradmin.common.Constants;
 import com.ats.hradmin.common.DateConvertor;
 import com.ats.hradmin.common.FormValidation;
+import com.ats.hradmin.model.AccessRightModule;
 import com.ats.hradmin.model.Customer;
 import com.ats.hradmin.model.EmployeeInfo;
 import com.ats.hradmin.model.GetEmployeeInfo;
@@ -46,14 +48,26 @@ public class ProjectController {
 	ProjectType editproType = new ProjectType();
 
 	ProjectHeader editProjectHeader = new ProjectHeader();
-
+	
+//***************************************Project Type***************************************************************
+	
 	@RequestMapping(value = "/projectTypeAdd", method = RequestMethod.GET)
 	public ModelAndView projectTypeAdd(HttpServletRequest request, HttpServletResponse response) {
-
-		ModelAndView model = new ModelAndView("project/project_type_add");
-
+	
+		HttpSession session = request.getSession();
+		ModelAndView model = null;
 		try {
 
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("projectTypeAdd", "showProjectTypeList", 0, 1, 0, 0, newModuleList);
+
+			if (view.isError() == true) {
+
+				model = new ModelAndView("accessDenied");
+
+			} else {
+				model = new ModelAndView("project/project_type_add");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -135,14 +149,21 @@ public class ProjectController {
 	@RequestMapping(value = "/showProjectTypeList", method = RequestMethod.GET)
 	public ModelAndView showProjectTypeList(HttpServletRequest request, HttpServletResponse response) {
 
-		ModelAndView model = new ModelAndView("project/project_type_list");
+		ModelAndView model = null;
 
 		try {
-
 			HttpSession session = request.getSession();
-
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("showProjectTypeList", "showProjectTypeList", 1, 0, 0, 0, newModuleList);
 
+			if (view.isError() == true) {
+
+				model = new ModelAndView("accessDenied");
+
+			} else {
+
+				model = new ModelAndView("project/project_type_list");
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("companyId", userObj.getCompanyId());
 			System.out.println(userObj.getCompanyId());
@@ -161,6 +182,25 @@ public class ProjectController {
 
 			model.addObject("projectTypelist", projectTypelist);
 
+			Info add = AcessController.checkAccess("showProjectTypeList", "showProjectTypeList", 0, 1, 0, 0, newModuleList);
+			Info edit = AcessController.checkAccess("showProjectTypeList", "showProjectTypeList", 0, 0, 1, 0, newModuleList);
+			Info delete = AcessController.checkAccess("showProjectTypeList", "showProjectTypeList", 0, 0, 0, 1, newModuleList);
+
+			if (add.isError() == false) {
+				System.out.println(" add   Accessable ");
+				model.addObject("addAccess", 0);
+
+			}
+			if (edit.isError() == false) {
+				System.out.println(" edit   Accessable ");
+				model.addObject("editAccess", 0);
+			}
+			if (delete.isError() == false) {
+				System.out.println(" delete   Accessable ");
+				model.addObject("deleteAccess", 0);
+
+			}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -169,11 +209,20 @@ public class ProjectController {
 
 	@RequestMapping(value = "/editProjectType", method = RequestMethod.GET)
 	public ModelAndView editProjectType(HttpServletRequest request, HttpServletResponse response) {
-
-		ModelAndView model = new ModelAndView("project/project_type_edit");
+		HttpSession session = request.getSession();
+		ModelAndView model = null;
 
 		try {
 
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("editProjectType", "showProjectTypeList", 0, 0, 1, 0, newModuleList);
+
+			if (view.isError() == true) {
+
+				model = new ModelAndView("accessDenied");
+
+			} else {
+				model = new ModelAndView("project/project_type_edit");
 			String base64encodedString = request.getParameter("projectTypeId");
 			String projectTypeId = FormValidation.DecodeKey(base64encodedString);
 			// System.out.println("claimTypeId" + claimTypeId);
@@ -183,7 +232,7 @@ public class ProjectController {
 			editproType = Constants.getRestTemplate().postForObject(Constants.url + "/getProjectById", map,
 					ProjectType.class);
 			model.addObject("editproType", editproType);
-
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -258,7 +307,20 @@ public class ProjectController {
 	public String deleteProjectType(HttpServletRequest request, HttpServletResponse response) {
 
 		HttpSession session = request.getSession();
+		String a = null;
+		List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+
+		Info view = AcessController.checkAccess("deleteProjectType", "showProjectTypeList", 0, 0, 0, 1, newModuleList);
+
 		try {
+			if (view.isError() == true) {
+
+				a = "redirect:/accessDenied";
+
+			}
+
+			else {
+				a = "redirect:/showProjectTypeList";
 			String base64encodedString = request.getParameter("projectTypeId");
 			String projectTypeId = FormValidation.DecodeKey(base64encodedString);
 
@@ -272,24 +334,39 @@ public class ProjectController {
 			} else {
 				session.setAttribute("errorMsg", "Failed to Delete");
 			}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			session.setAttribute("errorMsg", "Failed to Delete");
 		}
-		return "redirect:/showProjectTypeList";
+		return a;
 	}
 
+	
+	
+	//***********************************************Project Header*********************************************
+	
 	@RequestMapping(value = "/addProjectHeader", method = RequestMethod.GET)
 	public ModelAndView addProjectHeader(HttpServletRequest request, HttpServletResponse response) {
 
-		ModelAndView model = new ModelAndView("project/project_header");
+	
+		HttpSession session = request.getSession();
 
+		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+
+		ModelAndView model = null;
 		try {
 
-			HttpSession session = request.getSession();
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("addProjectHeader", "showProjectHeaderList", 0, 1, 0, 0, newModuleList);
 
-			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+			if (view.isError() == true) {
 
+				model = new ModelAndView("accessDenied");
+
+			} else {
+				model = new ModelAndView("project/project_header");
+			}
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("companyId", userObj.getCompanyId());
 
@@ -450,11 +527,20 @@ public class ProjectController {
 	@RequestMapping(value = "/showProjectHeaderList", method = RequestMethod.GET)
 	public ModelAndView showProjectHeaderList(HttpServletRequest request, HttpServletResponse response) {
 
-		ModelAndView model = new ModelAndView("project/project_header_list");
+		ModelAndView model = null;
 
 		try {
 			HttpSession session = request.getSession();
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("showProjectHeaderList", "showProjectHeaderList", 1, 0, 0, 0, newModuleList);
+
+			if (view.isError() == true) {
+
+				model = new ModelAndView("accessDenied");
+
+			} else {
+				 model = new ModelAndView("project/project_header_list");
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("companyId", userObj.getCompanyId());
 
@@ -469,7 +555,25 @@ public class ProjectController {
 			}
 
 			model.addObject("projectHeaderList", projectHeaderList);
+			Info add = AcessController.checkAccess("showProjectHeaderList", "showProjectHeaderList", 0, 1, 0, 0, newModuleList);
+			Info edit = AcessController.checkAccess("showProjectHeaderList", "showProjectHeaderList", 0, 0, 1, 0, newModuleList);
+			Info delete = AcessController.checkAccess("showProjectHeaderList", "showProjectHeaderList", 0, 0, 0, 1, newModuleList);
 
+			if (add.isError() == false) {
+				System.out.println(" add   Accessable ");
+				model.addObject("addAccess", 0);
+
+			}
+			if (edit.isError() == false) {
+				System.out.println(" edit   Accessable ");
+				model.addObject("editAccess", 0);
+			}
+			if (delete.isError() == false) {
+				System.out.println(" delete   Accessable ");
+				model.addObject("deleteAccess", 0);
+
+			}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -480,7 +584,20 @@ public class ProjectController {
 	public String deleteProject(HttpServletRequest request, HttpServletResponse response) {
 
 		HttpSession session = request.getSession();
+		String a = null;
+		List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+
+		Info view = AcessController.checkAccess("deleteProject", "showProjectHeaderList", 0, 0, 0, 1, newModuleList);
+
 		try {
+			if (view.isError() == true) {
+
+				a = "redirect:/accessDenied";
+
+			}
+
+			else {
+				a = "redirect:/showProjectHeaderList";
 			String base64encodedString = request.getParameter("projectId");
 			String projectId = FormValidation.DecodeKey(base64encodedString);
 
@@ -494,32 +611,42 @@ public class ProjectController {
 			} else {
 				session.setAttribute("errorMsg", "Failed to Delete");
 			}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			session.setAttribute("errorMsg", "Failed to Delete");
 		}
-		return "redirect:/showProjectHeaderList";
+		return a;
 	}
 
 	@RequestMapping(value = "/editProject", method = RequestMethod.GET)
 	public ModelAndView editProject(HttpServletRequest request, HttpServletResponse response) {
 
-		ModelAndView model = new ModelAndView("project/project_header_edit");
-
+		ModelAndView model = null;
+		HttpSession session = request.getSession();
 		try {
 
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("editProject", "showProjectHeaderList", 0, 0, 1, 0, newModuleList);
+
+			if (view.isError() == true) {
+
+				model = new ModelAndView("accessDenied");
+
+			} else {
+				
+				model = new ModelAndView("project/project_header_edit");
 			String base64encodedString = request.getParameter("projectId");
 			String projectId = FormValidation.DecodeKey(base64encodedString);
 			// System.out.println("claimTypeId" + claimTypeId);
-
+			
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("projectId", projectId);
 			editProjectHeader = Constants.getRestTemplate()
 					.postForObject(Constants.url + "/getProjectHeaderByProjectId", map, ProjectHeader.class);
 			model.addObject("editProjectHeader", editProjectHeader);
 
-			HttpSession session = request.getSession();
-
+			
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
 			map = new LinkedMultiValueMap<>();
@@ -556,7 +683,7 @@ public class ProjectController {
 					Arrays.asList(employeeDepartment));
 
 			model.addObject("empList", employeeDepartmentlist);
-
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

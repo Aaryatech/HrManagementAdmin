@@ -161,7 +161,7 @@ try {
 
 			} else {
 				model = new ModelAndView("master/companyList");
-			}
+			
 			Company[] company = Constants.getRestTemplate().getForObject(Constants.url + "/getCompanyList",
 					Company[].class);
 
@@ -194,7 +194,7 @@ try {
 				model.addObject("deleteAccess", 0);
 
 			}
-
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -203,28 +203,48 @@ try {
 
 	@RequestMapping(value = "/deleteCompany", method = RequestMethod.GET)
 	public String deleteCompany(HttpServletRequest request, HttpServletResponse response) {
+		String a = null;
+		HttpSession session = request.getSession();
+		List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+
+		Info view = AcessController.checkAccess("deleteCompany", "showCompanyList", 0, 0, 0, 1, newModuleList);
 
 		try {
+			if (view.isError() == true) {
 
+				a = "redirect:/accessDenied";
+
+			}
+
+			else {
+				a = "redirect:/showCompanyList";
 			String base64encodedString = request.getParameter("compId");
 			String compId = FormValidation.DecodeKey(base64encodedString);
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("compId", compId);
 			Info info = Constants.getRestTemplate().postForObject(Constants.url + "/deleteCompany", map, Info.class);
-
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:/showCompanyList";
+		return a ;
 	}
 
 	@RequestMapping(value = "/editCompany", method = RequestMethod.GET)
 	public ModelAndView editCompany(HttpServletRequest request, HttpServletResponse response) {
-
-		ModelAndView model = new ModelAndView("master/companyEdit");
-
+		HttpSession session = request.getSession();
+		ModelAndView model = null;
 		try {
+
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("editCompany", "showCompanyList", 0, 0, 1, 0, newModuleList);
+
+			if (view.isError() == true) {
+
+				model = new ModelAndView("accessDenied");
+
+			} else {model = new ModelAndView("master/companyEdit");
 			String base64encodedString = request.getParameter("compId");
 			String compId = FormValidation.DecodeKey(base64encodedString);
 
@@ -233,7 +253,7 @@ try {
 			editCompany = Constants.getRestTemplate().postForObject(Constants.url + "/getCompanyById", map,
 					Company.class);
 			model.addObject("editCompany", editCompany);
-
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -305,10 +325,21 @@ try {
 	@RequestMapping(value = "/locationAdd", method = RequestMethod.GET)
 	public ModelAndView locationAdd(HttpServletRequest request, HttpServletResponse response) {
 
-		ModelAndView model = new ModelAndView("master/locationAdd");
 
-		try {
+		HttpSession session = request.getSession();
+		ModelAndView model = null;
 
+     try {
+			
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("locationAdd", "showLocationList",0, 1,0, 0,
+					newModuleList);
+
+			if (view.isError() == true) {
+
+				model = new ModelAndView("accessDenied");
+
+			} else { model = new ModelAndView("master/locationAdd");}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -408,12 +439,22 @@ try {
 	@RequestMapping(value = "/showLocationList", method = RequestMethod.GET)
 	public ModelAndView showLocationList(HttpServletRequest request, HttpServletResponse response) {
 
-		ModelAndView model = new ModelAndView("master/locationList");
 		HttpSession session = request.getSession();
 		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
-		try {
+		ModelAndView model =null;
 
+		try {
+			
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("showLocationList", "showLocationList", 1, 0, 0, 0, newModuleList);
+
+			if (view.isError() == true) {
+
+				model = new ModelAndView("accessDenied");
+
+			} else {
+				model = new ModelAndView("master/locationList");
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("companyId", userObj.getCompanyId());
 			Location[] location = Constants.getRestTemplate().postForObject(Constants.url + "/getLocationList", map,
@@ -427,7 +468,25 @@ try {
 			}
 
 			model.addObject("locationList", locationList);
+			Info add = AcessController.checkAccess("showLocationList", "showLocationList", 0, 1, 0, 0, newModuleList);
+			Info edit = AcessController.checkAccess("showLocationList", "showLocationList", 0, 0, 1, 0, newModuleList);
+			Info delete = AcessController.checkAccess("showLocationList", "showLocationList", 0, 0, 0, 1, newModuleList);
 
+			if (add.isError() == false) {
+				System.out.println(" add   Accessable ");
+				model.addObject("addAccess", 0);
+
+			}
+			if (edit.isError() == false) {
+				System.out.println(" edit   Accessable ");
+				model.addObject("editAccess", 0);
+			}
+			if (delete.isError() == false) {
+				System.out.println(" delete   Accessable ");
+				model.addObject("deleteAccess", 0);
+
+			}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -438,7 +497,21 @@ try {
 	public String deleteLocation(HttpServletRequest request, HttpServletResponse response) {
 
 		HttpSession session = request.getSession();
+		String a = null;
+		List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+
+		Info view = AcessController.checkAccess("deleteLocation", "showLocationList", 0, 0, 0, 1, newModuleList);
+
 		try {
+			if (view.isError() == true) {
+
+				a = "redirect:/accessDenied";
+
+			}
+
+			else {
+				a="redirect:/showLocationList";
+			}
 			String base64encodedString = request.getParameter("locId");
 			String locId = FormValidation.DecodeKey(base64encodedString);
 
@@ -455,7 +528,7 @@ try {
 			e.printStackTrace();
 			session.setAttribute("errorMsg", "Failed to Delete");
 		}
-		return "redirect:/showLocationList";
+		return a;
 	}
 
 	@RequestMapping(value = "/editLocation", method = RequestMethod.GET)
@@ -1550,7 +1623,7 @@ try {
 		HttpSession session = request.getSession();
 		ModelAndView model = null;
 		
-		model.addObject("weighImageUrl", Constants.imageSaveUrl);
+		//model.addObject("weighImageUrl", Constants.imageSaveUrl);
 		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 		try {
 
