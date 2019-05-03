@@ -571,6 +571,8 @@ public class LeaveStructureController {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("companyId", userObj.getCompanyId());
 			map.add("locIdList", userObj.getLocationIds());
+			
+			
 
 			GetLeaveAuthority[] empInfoError = Constants.getRestTemplate()
 					.postForObject(Constants.url + "/getLeaveAuthorityList", map, GetLeaveAuthority[].class);
