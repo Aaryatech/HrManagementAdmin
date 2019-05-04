@@ -73,7 +73,8 @@ public class ClaimController {
 
 			} else {
 				model = new ModelAndView("master/cust_add");
-			}	} catch (Exception e) {
+			}	
+			} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return model;
@@ -142,13 +143,12 @@ public class ClaimController {
 	public ModelAndView showCustomerList(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model =null;
-
+		HttpSession session = request.getSession();
 		try {
-			HttpSession session = request.getSession();
-			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+			
 			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
 			Info view = AcessController.checkAccess("showCustomerList", "showCustomerList", 1, 0, 0, 0, newModuleList);
-
+System.out.println("View is "+view.toString());
 			if (view.isError() == true) {
 
 				model = new ModelAndView("accessDenied");
@@ -156,6 +156,8 @@ public class ClaimController {
 			} else {
 
 				model = new ModelAndView("master/cust_list");
+				
+				LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("companyId", userObj.getCompanyId());
 

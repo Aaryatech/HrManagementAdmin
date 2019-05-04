@@ -30,6 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.hradmin.common.Constants;
 import com.ats.hradmin.leave.model.CalenderYear;
+import com.ats.hradmin.leave.model.GetAuthorityIds;
 import com.ats.hradmin.model.AccessRightModule;
 import com.ats.hradmin.model.LoginResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -132,6 +133,9 @@ public class HomeController {
 				mav = new ModelAndView("login");
 			} else {
 
+				
+				
+				
 				RestTemplate restTemplate = new RestTemplate();
 
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
@@ -153,6 +157,17 @@ public class HomeController {
 					System.out.println("currYr.getCalYrId():" + currYr.getCalYrId());
 					session.setAttribute("currYearId", currYr.getCalYrId());
 					session.setAttribute("logoUrl", Constants.getImageSaveUrl);
+					
+					
+				 map = new LinkedMultiValueMap<>();
+					map.add("empId", userObj.getEmpId());
+
+					GetAuthorityIds editEmp = Constants.getRestTemplate().postForObject(Constants.url + "/getAuthIdByEmpId",
+							map, GetAuthorityIds.class);
+					
+					
+					
+					
 
 					List<AccessRightModule> moduleJsonList = new ArrayList<AccessRightModule>();
 
