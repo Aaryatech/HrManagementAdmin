@@ -166,7 +166,7 @@ public class LeaveHolidayController {
 						Holiday.class);
 
 				if (res.isError() == false) {
-					session.setAttribute("successMsg", "Record Insert Successfully");
+					session.setAttribute("successMsg", "Record Inserted Successfully");
 				} else {
 					session.setAttribute("errorMsg", "Failed to Insert Record");
 				}
@@ -361,7 +361,7 @@ try {
 						Holiday.class);
 
 				if (res.isError() == false) {
-					session.setAttribute("successMsg", "Record Update Successfully");
+					session.setAttribute("successMsg", "Record Updated Successfully");
 				} else {
 					session.setAttribute("errorMsg", "Failed to Update Record");
 				}

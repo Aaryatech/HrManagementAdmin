@@ -152,7 +152,7 @@ public class DocUploadController {
 				
 				EmployeDoc[] res = Constants.getRestTemplate().postForObject(Constants.url + "/saveEmpDocList", list,
 						EmployeDoc[].class);
-				session.setAttribute("successMsg", "Record Insert Successfully");
+				session.setAttribute("successMsg", "Record Inserted Successfully");
 			} else {
 				
 				session.setAttribute("errorMsg", "Failed to Insert Record");

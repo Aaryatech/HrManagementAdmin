@@ -417,7 +417,7 @@ try {
 						Location.class);
 
 				if (res != null) {
-					session.setAttribute("successMsg", "Record Insert Successfully");
+					session.setAttribute("successMsg", "Record Inserted Successfully");
 				} else {
 					session.setAttribute("errorMsg", "Failed to Insert Record");
 				}
@@ -629,7 +629,7 @@ try {
 						Location.class);
 
 				if (res != null) {
-					session.setAttribute("successMsg", "Record Update Successfully");
+					session.setAttribute("successMsg", "Record Updated Successfully");
 				} else {
 					session.setAttribute("errorMsg", "Failed to Update Record");
 				}
@@ -852,7 +852,7 @@ try {
 							EmpType.class);
 
 					if (res.isError() == false) {
-						session.setAttribute("successMsg", "Record Insert Successfully");
+						session.setAttribute("successMsg", "Record Inserted Successfully");
 					} else {
 						session.setAttribute("errorMsg", "Failed to Insert Record");
 					}
@@ -1291,7 +1291,7 @@ try {
 						employeeCategory, EmployeeCategory.class);
 
 				if (res.isError() == false) {
-					session.setAttribute("successMsg", "Record Insert Successfully");
+					session.setAttribute("successMsg", "Record Inserted Successfully");
 				} else {
 					session.setAttribute("errorMsg", "Failed to Insert Record");
 				}
@@ -1477,7 +1477,7 @@ try {
 						editEmpCategory, EmployeeCategory.class);
 
 				if (res.isError() == false) {
-					session.setAttribute("successMsg", "Record Update Successfully");
+					session.setAttribute("successMsg", "Record Updated Successfully");
 				} else {
 					session.setAttribute("errorMsg", "Failed to Update Record");
 				}
@@ -1566,7 +1566,7 @@ try {
 						employeeDepartment, EmployeeDepartment.class);
 
 				if (res.isError() == false) {
-					session.setAttribute("successMsg", "Record Insert Successfully");
+					session.setAttribute("successMsg", "Record Inserted Successfully");
 				} else {
 					session.setAttribute("errorMsg", "Failed to Insert Record");
 				}
@@ -2018,7 +2018,7 @@ try {
 							User.class);
 
 					if (res1.isError() == false) {
-						session.setAttribute("successMsg", "Record Insert Successfully");
+						session.setAttribute("successMsg", "Record Inserted Successfully");
 					} else {
 						session.setAttribute("errorMsg", "Failed to Insert Record");
 					}
@@ -2309,7 +2309,7 @@ try {
 							User.class);
 
 					if (res1.isError() == false) {
-						session.setAttribute("successMsg", "Record Insert Successfully");
+						session.setAttribute("successMsg", "Record Inserted Successfully");
 					} else {
 						session.setAttribute("errorMsg", "Failed to Insert Record");
 					}

@@ -141,7 +141,7 @@ public class WeeklyOffController {
 						WeeklyOff.class);
 
 				if (res != null) {
-					session.setAttribute("successMsg", "Record Insert Successfully");
+					session.setAttribute("successMsg", "Record Inserted Successfully");
 				} else {
 					session.setAttribute("errorMsg", "Failed to Insert Record");
 				}
@@ -360,7 +360,7 @@ public class WeeklyOffController {
 						editWeeklyOff, WeeklyOff.class);
 
 				if (res != null) {
-					session.setAttribute("successMsg", "Record Update Successfully");
+					session.setAttribute("successMsg", "Record Updated Successfully");
 				} else {
 					session.setAttribute("errorMsg", "Failed to Update Record");
 				}

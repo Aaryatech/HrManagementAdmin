@@ -166,7 +166,7 @@ try {
 						.postForObject(Constants.url + "saveLeaveStruture", head, LeaveStructureHeader.class);
 
 				if (res != null) {
-					session.setAttribute("successMsg", "Record Insert Successfully");
+					session.setAttribute("successMsg", "Record Inserted Successfully");
 				} else {
 					session.setAttribute("errorMsg", "Failed to Insert Record");
 				}
@@ -405,7 +405,7 @@ try {
 						.postForObject(Constants.url + "saveLeaveStruture", editStructure, LeaveStructureHeader.class);
 
 				if (res != null) {
-					session.setAttribute("successMsg", "Record Update Successfully");
+					session.setAttribute("successMsg", "Record Updated Successfully");
 				} else {
 					session.setAttribute("errorMsg", "Failed to Update Record");
 				}
@@ -515,7 +515,7 @@ try {
 							Constants.url + "/saveLeaveAllotment", leavesAllotment, LeavesAllotment.class);
 
 					if (res != null) {
-						session.setAttribute("successMsg", "Record Insert Successfully");
+						session.setAttribute("successMsg", "Record Inserted Successfully");
 					} else {
 						session.setAttribute("errorMsg", "Failed to Insert Record");
 					}
@@ -623,7 +623,7 @@ try {
 						leaves, LeaveAuthority.class);
 
 				if (res != null) {
-					session.setAttribute("successMsg", "Record Insert Successfully");
+					session.setAttribute("successMsg", "Record Inserted Successfully");
 				} else {
 					session.setAttribute("errorMsg", "Failed to Insert Record");
 				}
@@ -753,7 +753,7 @@ try {
 					leaveAuthority, LeaveAuthority.class);
 
 			if (res != null) {
-				session.setAttribute("successMsg", "Record Update Successfully");
+				session.setAttribute("successMsg", "Record Updated Successfully");
 			} else {
 				session.setAttribute("errorMsg", "Failed to Upadate Record");
 			}
