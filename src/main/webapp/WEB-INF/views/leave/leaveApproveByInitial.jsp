@@ -153,12 +153,10 @@
 
 												<c:choose>
 													<c:when test="${leaveList.exInt1==1}">
-														<td><span class="badge badge-info">Initial
-																Pending</span></td>
+														<td><span class="badge badge-info">Initial Applied</span></td>
 													</c:when>
 													<c:when test="${leaveList.exInt1==2}">
-														<td><span class="badge badge-secondary">Final
-																Pending</span></td>
+														<td><span class="badge badge-secondary">Approve By Initial Authority</span></td>
 													</c:when>
 
 												</c:choose>
@@ -282,16 +280,15 @@
 												<td>${leaveList1.leaveNumDays}</td>
 
 												<c:choose>
-													<c:when test="${leaveList1.exInt1==2}">
-														<td><span class="badge badge-success">Initial
-																Approved</span></td>
-													</c:when>
 													<c:when test="${leaveList1.exInt1==1}">
-														<td><span class="badge badge-danger">Final &
-																Initial Pending</span></td>
+														<td><span class="badge badge-info">Initial Applied</span></td>
+													</c:when>
+													<c:when test="${leaveList1.exInt1==2}">
+														<td><span class="badge badge-secondary">Approve By Initial Authority</span></td>
 													</c:when>
 
 												</c:choose>
+
 
 
 
