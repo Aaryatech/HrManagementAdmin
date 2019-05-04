@@ -135,7 +135,7 @@
 											Short Name : *</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
-												placeholder="Employee Type Short Name" id="deptShortName"
+												placeholder="Employee Department Short Name" id="deptShortName"
 												name=deptShortName autocomplete="off" onchange="trim(this)"
 												maxlength="5"> <span
 												class="validation-invalid-label" id="error_deptShortName"
@@ -154,7 +154,7 @@
 										</div>
 									</div>
 
-									Remaining assign role
+								
 
 									<div class="form-group row mb-0">
 										<div class="col-lg-10 ml-lg-auto">

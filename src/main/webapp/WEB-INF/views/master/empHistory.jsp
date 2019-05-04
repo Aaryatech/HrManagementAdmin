@@ -272,11 +272,23 @@
 							current_status='<span class="badge badge-danger">Reject By Final Authority</span>';
 							}
 							
+							var duration;
+							if(v.leaveDuration==1)
+								{
+								/* current_status="Pending"; */
 
+								duration='Full Day';
+								}
+							if(v.leaveDuration==2)
+							{
+							/* current_status="Pending"; */
+
+							duration='Half Day';
+							}
 							
 						dataTable.row.add(
 								[ i + 1, v.empSname +" " +v.empFname ,
-										v.empDeptName,	v.lvTitle,v.empCode,v.leaveNumDays,v.leaveDuration, v.leaveFromdt +" To " +v.leaveTodt,v.userName,current_status,		
+										v.empDeptName,	v.lvTitle,v.empCode,v.leaveNumDays,duration, v.leaveFromdt +" To " +v.leaveTodt,v.userName,current_status,		
 										str
 								]).draw();
 					});
