@@ -730,7 +730,7 @@ try {
 							session.setAttribute("errorMsg", "Failed to Insert Record");
 						}
 
-					}
+					} 
 				}
 
 			} else {
