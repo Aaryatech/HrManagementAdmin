@@ -142,7 +142,7 @@
 											<select name="leaveTypeId"
 												data-placeholder="Select Leave Type" id="leaveTypeId"
 												class="form-control form-control-select2 select2-hidden-accessible"
-												required="" data-fouc="" tabindex="-1" aria-hidden="true">
+												data-fouc=""  aria-hidden="true">
 												<option></option>
 												<c:forEach items="${leaveTypeList}" var="leaveType">
 													<c:choose>

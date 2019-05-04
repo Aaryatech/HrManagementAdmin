@@ -55,8 +55,8 @@
 
 					<div class="breadcrumb justify-content-center">
 						<a
-							href="${pageContext.request.contextPath}/showLeaveStructureList"
-							class="breadcrumb-elements-item"> Leave Structure List</a>
+							href="${pageContext.request.contextPath}/showApplyForLeave"
+							class="breadcrumb-elements-item">Employee List</a>
 
 					</div>
 
@@ -159,7 +159,7 @@
 									<thead>
 										<tr class="bg-blue">
 
-											<th></th>
+											<th>Leave Type</th>
 											<th>OB</th>
 											<th>Earned</th>
 											<th>Sanction</th>
@@ -201,7 +201,7 @@
 											<select name="leaveTypeId"
 												data-placeholder="Select Leave Type" id="leaveTypeId"
 												class="form-control form-control-select2 select2-hidden-accessible"
-												data-fouc="" tabindex="-1" aria-hidden="true"
+												data-fouc=""  aria-hidden="true"
 												onchange="checkUnique()">
 												<option></option>
 												<c:forEach items="${leaveHistoryList}"
@@ -228,7 +228,7 @@
 											<select data-placeholder="Select a Day Type" id="dayTypeName"
 												name="dayTypeName"
 												class="form-control form-control-select2 select2-hidden-accessible"
-												data-fouc="" tabindex="-1" aria-hidden="true"
+												data-fouc=""  aria-hidden="true"
 												onchange="calholidayWebservice()">
 												<option></option>
 												<option value="1">Full Day</option>

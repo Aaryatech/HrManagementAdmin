@@ -127,7 +127,7 @@
 											<th width="10%">Sr.no</th>
 											<th>Employee Code</th>
 											<th>Employee Name</th>
-											<th>Type</th>
+											<th>Leave Type</th>
 											<th>From Date</th>
 											<th>To Date</th>
 											<th>No. Of Days</th>

@@ -243,6 +243,16 @@
 					$("#error_lvsName").hide()
 				}
 
+			/* 	if (!$("#lvsName").val()) {
+
+					isError = true;
+
+					$("#error_prsnName").show()
+					//return false;
+				} else {
+					$("#error_prsnName").hide()
+				} */
+				
 				if (!isError) {
 
 					var x = confirm("Do you really want to submit the form?");
