@@ -163,9 +163,8 @@
 											<th>OB</th>
 											<th>Earned</th>
 											<th>Sanction</th>
-											<th>Balanced</th>
 											<th>Applied</th>
-
+											<th>Balanced</th>
 
 
 										</tr>
@@ -175,10 +174,11 @@
 											<tr>
 												<td>${leaveHistoryList.lvTitleShort}</td>
 												<td>${leaveHistoryList.balLeave}</td>
-												<td>${leaveHistoryList.balLeave+leaveHistoryList.lvsAllotedLeaves}</td>
+												<td>${leaveHistoryList.lvsAllotedLeaves}</td>
 												<td>${leaveHistoryList.sactionLeave}</td>
-												<td>${leaveHistoryList.lvsAllotedLeaves-leaveHistoryList.sactionLeave}</td>
 												<td>${leaveHistoryList.aplliedLeaeve}</td>
+												<td>${leaveHistoryList.balLeave+leaveHistoryList.lvsAllotedLeaves-leaveHistoryList.sactionLeave-leaveHistoryList.aplliedLeaeve}</td>
+												
 
 
 											</tr>

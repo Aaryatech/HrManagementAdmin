@@ -23,11 +23,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ats.hradmin.common.AcessController;
 import com.ats.hradmin.common.Constants;
 import com.ats.hradmin.common.DateConvertor;
 import com.ats.hradmin.common.FormValidation;
 import com.ats.hradmin.leave.model.GetHoliday;
 import com.ats.hradmin.leave.model.Holiday;
+import com.ats.hradmin.model.AccessRightModule;
 import com.ats.hradmin.model.GetWeeklyOff;
 import com.ats.hradmin.model.Info;
 import com.ats.hradmin.model.Location;
@@ -47,11 +49,20 @@ public class WeeklyOffController {
 
 	@RequestMapping(value = "/addWeeklyOff", method = RequestMethod.GET)
 	public ModelAndView addWeeklyOff(HttpServletRequest request, HttpServletResponse response) {
-
-		ModelAndView model = new ModelAndView("master/weekly_off_add");
-
+		HttpSession session = request.getSession();
+		ModelAndView model = null;
 		try {
-			HttpSession session = request.getSession();
+
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("addWeeklyOff", "showWeeklyOffList", 0, 1, 0, 0, newModuleList);
+
+			if (view.isError() == true) {
+
+				model = new ModelAndView("accessDenied");
+
+			} else {
+				model = new ModelAndView("master/weekly_off_add");
+			
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
@@ -67,7 +78,7 @@ public class WeeklyOffController {
 			}
 
 			model.addObject("locationList", locationList);
-
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -148,13 +159,25 @@ public class WeeklyOffController {
 	@RequestMapping(value = "/showWeeklyOffList", method = RequestMethod.GET)
 	public ModelAndView showWeeklyOffList(HttpServletRequest request, HttpServletResponse response) {
 
-		ModelAndView model = new ModelAndView("master/weekly_off_list");
+		HttpSession session = request.getSession();
+		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
+
+		ModelAndView model = null;
+
+		
 		try {
+		
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("showWeeklyOffList", "showWeeklyOffList", 1, 0, 0, 0, newModuleList);
 
-			HttpSession session = request.getSession();
-			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+			if (view.isError() == true) {
 
+				model = new ModelAndView("accessDenied");
+
+			} else {
+				model = new ModelAndView("master/weekly_off_list");
+			
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("companyId", userObj.getCompanyId());
 			map.add("locIdList", userObj.getLocationIds());
@@ -170,7 +193,25 @@ public class WeeklyOffController {
 			}
 
 			model.addObject("weekOffList", weekOffList);
+			Info add = AcessController.checkAccess("showWeeklyOffList", "showWeeklyOffList", 0, 1, 0, 0, newModuleList);
+			Info edit = AcessController.checkAccess("showWeeklyOffList", "showWeeklyOffList", 0, 0, 1, 0, newModuleList);
+			Info delete = AcessController.checkAccess("showWeeklyOffList", "showWeeklyOffList", 0, 0, 0, 1, newModuleList);
 
+			if (add.isError() == false) {
+				System.out.println(" add   Accessable ");
+				model.addObject("addAccess", 0);
+
+			}
+			if (edit.isError() == false) {
+				System.out.println(" edit   Accessable ");
+				model.addObject("editAccess", 0);
+			}
+			if (delete.isError() == false) {
+				System.out.println(" delete   Accessable ");
+				model.addObject("deleteAccess", 0);
+
+			}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -181,7 +222,19 @@ public class WeeklyOffController {
 	public String deleteWeeklyOff(HttpServletRequest request, HttpServletResponse response) {
 
 		HttpSession session = request.getSession();
+		String a = null;
+		List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+
+		Info view = AcessController.checkAccess("deleteWeeklyOff", "showWeeklyOffList", 0, 0, 0, 1, newModuleList);
+
 		try {
+			if (view.isError() == true) {
+
+				a = "redirect:/accessDenied";
+
+			}
+			else {
+				a="redirect:/showWeeklyOffList";
 			String base64encodedString = request.getParameter("woId");
 			String woId = FormValidation.DecodeKey(base64encodedString);
 
@@ -193,23 +246,36 @@ public class WeeklyOffController {
 				session.setAttribute("successMsg", "Deleted Successfully");
 			} else {
 				session.setAttribute("errorMsg", "Failed to Delete");
-			}
+			}}
 		} catch (Exception e) {
 			e.printStackTrace();
 			session.setAttribute("errorMsg", "Failed to Delete");
 		}
-		return "redirect:/showWeeklyOffList";
+		return a;
 	}
 
 	@RequestMapping(value = "/editWeeklyOff", method = RequestMethod.GET)
 	public ModelAndView editWeeklyOff(HttpServletRequest request, HttpServletResponse response) {
 
-		ModelAndView model = new ModelAndView("master/weekly_off_edit");
 
+		HttpSession session = request.getSession();
+		ModelAndView model = null;
+		
+		//model.addObject("weighImageUrl", Constants.imageSaveUrl);
+		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 		try {
 
-			HttpSession session = request.getSession();
-			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("editWeeklyOff", "showWeeklyOffList", 0, 0, 1, 0, newModuleList);
+
+			if (view.isError() == true) {
+
+				model = new ModelAndView("accessDenied");
+
+			} else {
+				model = new ModelAndView("master/weekly_off_edit");
+			
+			
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("companyId", userObj.getCompanyId());
@@ -239,7 +305,7 @@ public class WeeklyOffController {
 					.collect(Collectors.toList());
 
 			model.addObject("locIdList", locIdList);
-
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

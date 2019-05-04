@@ -466,6 +466,7 @@ try {
 				temp.setEmpMname(editEmp.getEmpMname());
 				temp.setEmpMobile1(editEmp.getEmpMobile1());
 				temp.setEmpPrevExpYrs(editEmp.getEmpPrevExpYrs());
+				temp.setEmpRatePerhr(editEmp.getEmpRatePerhr());
 				temp.setEmpSname(editEmp.getEmpSname());
 				temp.setEmpType(editEmp.getEmpType());
 				temp.setEmpTypeId(editEmp.getEmpTypeId());
