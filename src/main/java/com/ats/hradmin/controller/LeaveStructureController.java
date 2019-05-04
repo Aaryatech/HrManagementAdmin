@@ -19,27 +19,20 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.hradmin.common.AcessController;
 import com.ats.hradmin.common.Constants;
-import com.ats.hradmin.common.DateConvertor;
 import com.ats.hradmin.common.FormValidation;
 import com.ats.hradmin.leave.model.GetLeaveAuthority;
 import com.ats.hradmin.leave.model.GetStructureAllotment;
-import com.ats.hradmin.leave.model.Holiday;
 import com.ats.hradmin.leave.model.LeaveAuthority;
-import com.ats.hradmin.leave.model.LeaveBalanceCal;
 import com.ats.hradmin.leave.model.LeaveStructureDetails;
 import com.ats.hradmin.leave.model.LeaveStructureHeader;
 import com.ats.hradmin.leave.model.LeavesAllotment;
 import com.ats.hradmin.model.AccessRightModule;
-import com.ats.hradmin.model.Company;
-import com.ats.hradmin.model.EmployeeInfo;
 import com.ats.hradmin.model.GetEmployeeInfo;
 import com.ats.hradmin.model.Info;
-import com.ats.hradmin.model.LeaveSummary;
 import com.ats.hradmin.model.LeaveType;
 import com.ats.hradmin.model.LoginResponse;
 
@@ -703,6 +696,7 @@ try {
 
 			List<GetEmployeeInfo> employeeInfo = new ArrayList<>(Arrays.asList(empInfoError));
 			model.addObject("empListAuth", employeeInfo);
+			model.addObject("space", " ");
 
 			model.addObject("empIdForEdit", empId);
 

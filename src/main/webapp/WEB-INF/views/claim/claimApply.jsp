@@ -155,7 +155,7 @@
 											<select name="claimTypeId"
 												data-placeholder="Select Claim Type" id="claimTypeId"
 												class="form-control form-control-select2 select2-hidden-accessible"
-												 data-fouc="" tabindex="-1" aria-hidden="true">
+												 data-fouc="" aria-hidden="true">
 												<option></option>
 												<c:forEach items="${claimTypeList}" var="claimTypeList">
 													<c:choose>
@@ -179,7 +179,7 @@
 											<select name="projectTypeId"
 												data-placeholder="Select Claim Type" id="projectTypeId"
 												class="form-control form-control-select2 select2-hidden-accessible"
-												 data-fouc="" tabindex="-1" aria-hidden="true">
+												 data-fouc=""  aria-hidden="true">
 												<option></option>
 												<c:forEach items="${projectTypeList}" var="proTypeList">
 													<c:choose>

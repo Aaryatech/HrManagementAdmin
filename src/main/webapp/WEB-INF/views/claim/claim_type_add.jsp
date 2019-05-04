@@ -173,6 +173,7 @@
 
 										<div class="form-group row mb-0">
 											<div class="col-lg-10 ml-lg-auto">
+											<button type="reset" class="btn btn-light legitRipple">Reset</button>
 
 												<button type="submit" class="btn bg-blue ml-3 legitRipple"
 													id="submtbtn">
