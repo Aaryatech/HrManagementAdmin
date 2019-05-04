@@ -91,12 +91,12 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="compImg">Company
-											Image: *</label>
+											Image: </label>
 										<div class="col-lg-10">
 											<input type="file" class="form-control" id="compImg" name="compImg" accept=".jpg,.png,.gif">
  											<!-- * Only jpg,gif,png * Best image size is 369px × 64px -->
-											<span class="validation-invalid-label" id="error_compImg"
-												style="display: none;">This field is required.</span>
+										<!-- 	<span class="validation-invalid-label" id="error_compImg"
+												style="display: none;">This field is required.</span> -->
 												<input type="hidden"  id="imageName" name="imageName"   value="${editCompany.companyLogo}">
 										</div>
 									</div>

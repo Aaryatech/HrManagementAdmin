@@ -118,7 +118,7 @@
 
 								<form
 									action="${pageContext.request.contextPath}/submitInsertHoliday"
-									id="submitInsertHoliday" method="post">
+									id="submitInsertHoli" method="post">
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="holidayTitle">Holiday
@@ -141,13 +141,13 @@
 										<div class="col-lg-10">
 											<select name="locId" data-placeholder="Select Location"
 												id="locId" multiple="multiple"
-												class="form-control form-control-select2 select2-hidden-accessible"
-												tabindex="-1" aria-hidden="true">
-												<option value="">Select Location</option>
+												class="form-control form-control-sm select"
+												data-container-css-class="select-sm" data-fouc>
+											
 												<c:forEach items="${locationList}" var="location">
 													<option value="${location.locId}">${location.locName}</option>
 												</c:forEach>
-											</select> <span class="validation-invalid-label" id="error_locId"
+											</select> <span class="validation-invalid-label" id="error_locationId"
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
@@ -261,7 +261,7 @@
 		}
 		$(document).ready(function($) {
 
-			$("#submitInsertHoliday").submit(function(e) {
+			$("#submitInsertHoli").submit(function(e) {
 				var isError = false;
 				var errMsg = "";
 
@@ -279,22 +279,13 @@
 
 					isError = true;
 
-					$("#error_locId").show()
+					$("#error_locationId").show()
 
 				} else {
-					$("#error_locId").hide()
+					$("#error_locationId").hide()
 				}
 
-				/* if (!$("#calYrId").val()) {
-
-					isError = true;
-
-					$("#error_calYrId").show()
-
-				} else {
-					$("#error_calYrId").hide()
-				} */
-
+			
 				if (!$("#dateRange").val()) {
 
 					isError = true;

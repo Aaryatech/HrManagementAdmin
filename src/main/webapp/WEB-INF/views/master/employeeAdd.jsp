@@ -193,7 +193,7 @@
 											<select name="locId" data-placeholder="Select Location"
 												id="locId"
 												class="form-control form-control-select2 select2-hidden-accessible"
-												data-fouc="" tabindex="-1" aria-hidden="true">
+												data-fouc=""  aria-hidden="true">
 
 												<option value="">Select Location</option>
 
@@ -212,7 +212,7 @@
 											<select name="catId" data-placeholder="Select Category"
 												id="catId"
 												class="form-control form-control-select2 select2-hidden-accessible"
-												data-fouc="" tabindex="-1" aria-hidden="true">
+												data-fouc="" aria-hidden="true">
 
 												<option value="">Select Category</option>
 
@@ -231,7 +231,7 @@
 											<select name="typeId" data-placeholder="Select Type"
 												id="typeId"
 												class="form-control form-control-select2 select2-hidden-accessible"
-												data-fouc="" tabindex="-1" aria-hidden="true">
+												data-fouc="" aria-hidden="true">
 
 												<option value="">Select Type</option>
 
@@ -250,7 +250,7 @@
 											<select name="deptId" data-placeholder="Select Department"
 												id="deptId"
 												class="form-control form-control-select2 select2-hidden-accessible"
-												data-fouc="" tabindex="-1" aria-hidden="true">
+												data-fouc=""  aria-hidden="true">
 
 												<option value="">Select Department</option>
 

@@ -214,7 +214,7 @@
 											<select name="locId" data-placeholder="Select Location"
 												id="locId"
 												class="form-control form-control-select2 select2-hidden-accessible"
-												data-fouc="" tabindex="-1" aria-hidden="true">
+												data-fouc="" aria-hidden="true">
 
 												<option value="">Select Location</option>
 
@@ -246,7 +246,7 @@
 											<select name="catId" data-placeholder="Select Category"
 												id="catId"
 												class="form-control form-control-select2 select2-hidden-accessible"
-												data-fouc="" tabindex="-1" aria-hidden="true">
+												data-fouc="" t aria-hidden="true">
 
 												<option value="">Select Category</option>
 
@@ -273,7 +273,7 @@
 											<select name="typeId" data-placeholder="Select Type"
 												id="typeId"
 												class="form-control form-control-select2 select2-hidden-accessible"
-												data-fouc="" tabindex="-1" aria-hidden="true">
+												data-fouc=""  aria-hidden="true">
 
 												<option value="">Select Type</option>
 
@@ -301,7 +301,7 @@
 											<select name="deptId" data-placeholder="Select Department"
 												id="deptId"
 												class="form-control form-control-select2 select2-hidden-accessible"
-												data-fouc="" tabindex="-1" aria-hidden="true">
+												data-fouc="" aria-hidden="true">
 
 												<option value="">Select Department</option>
 
@@ -377,10 +377,10 @@
 											No : *</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
-												placeholder="Contact No." id="mobile1" name="mobile1"
-												value="${editEmp.empMobile1}" autocomplete="off"
+												placeholder="Contact No." id="mobile1" name="mobile1" 
+												value="${editEmp.empMobile1}" pattern="[7-9]{1}[0-9]{9}" autocomplete="off"
 												onchange="trim(this)" maxlength="10"> <span
-												class="validation-invalid-label" id="error_mobile1"
+												class="validation-invalid-label" id="error_mobile1" 
 												style="display: none;">This field is required.</span>
 										</div>
 
@@ -390,7 +390,7 @@
 											<input type="text" class="form-control"
 												placeholder="Alternate Contact No." id="mobile2"
 												value="${editEmp.empMobile2}" name="mobile2"
-												autocomplete="off" onchange="trim(this)" maxlength="10">
+												autocomplete="off" onchange="trim(this)"  pattern="[7-9]{1}[0-9]{9}" maxlength="10">
 										</div>
 									</div>
 
@@ -425,7 +425,7 @@
 											<input type="text" class="form-control"
 												placeholder="Emergency Contact No." id="emgContNo1"
 												value="${editEmp.empEmergencyNo1}" name="emgContNo1"
-												autocomplete="off" onchange="trim(this)" maxlength="10">
+												autocomplete="off" onchange="trim(this)" pattern="[7-9]{1}[0-9]{9}" maxlength="10">
 											<span class="validation-invalid-label" id="error_emgContNo1"
 												style="display: none;">This field is required.</span>
 										</div>
@@ -451,7 +451,7 @@
 												placeholder="Emergency Alternate Contact No."
 												id="emgContNo2" name="emgContNo2"
 												value="${editEmp.empEmergencyNo2}" autocomplete="off"
-												onchange="trim(this)" maxlength="10"> <span
+												onchange="trim(this)" pattern="[7-9]{1}[0-9]{9}" maxlength="10"> <span
 												class="validation-invalid-label" id="error_emgContNo2"
 												style="display: none;">This field is required.</span>
 										</div>
