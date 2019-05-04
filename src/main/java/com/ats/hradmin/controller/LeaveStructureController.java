@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ats.hradmin.common.AcessController;
 import com.ats.hradmin.common.Constants;
 import com.ats.hradmin.common.DateConvertor;
 import com.ats.hradmin.common.FormValidation;
@@ -33,6 +34,7 @@ import com.ats.hradmin.leave.model.LeaveBalanceCal;
 import com.ats.hradmin.leave.model.LeaveStructureDetails;
 import com.ats.hradmin.leave.model.LeaveStructureHeader;
 import com.ats.hradmin.leave.model.LeavesAllotment;
+import com.ats.hradmin.model.AccessRightModule;
 import com.ats.hradmin.model.Company;
 import com.ats.hradmin.model.EmployeeInfo;
 import com.ats.hradmin.model.GetEmployeeInfo;
@@ -60,10 +62,22 @@ public class LeaveStructureController {
 		HttpSession session = request.getSession();
 		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 		ModelAndView model = null;
-		try {
+		
+try {
+			
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("addLeaveStructure", "showLeaveStructureList",0, 1,0, 0,
+					newModuleList);
+
+			if (view.isError() == true) {
+
+				model = new ModelAndView("accessDenied");
+
+			} else {
+				model = new ModelAndView("leave/add_leave_structure");
 			tempDetailList = new ArrayList<LeaveStructureDetails>();
 
-			model = new ModelAndView("leave/add_leave_structure");
+			
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("companyId", userObj.getCompanyId());
 			LeaveType[] leaveArray = Constants.getRestTemplate()
@@ -74,6 +88,7 @@ public class LeaveStructureController {
 			model.addObject("leaveTypeList", leaveTypeList);
 
 			model.addObject("title", "Add Leave Structure");
+			}
 
 		} catch (Exception e) {
 
@@ -171,12 +186,23 @@ public class LeaveStructureController {
 	@RequestMapping(value = "/showLeaveStructureList", method = RequestMethod.GET)
 	public ModelAndView showLeaveStructureList(HttpServletRequest request, HttpServletResponse response) {
 
-		ModelAndView model = new ModelAndView("leave/leave_structure_list");
 
+		ModelAndView model = null;
 		try {
 			HttpSession session = request.getSession();
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("showLeaveStructureList", "showLeaveStructureList", 1, 0, 0, 0,
+					newModuleList);
 
+			if (view.isError() == true) {
+
+				model = new ModelAndView("accessDenied");
+
+			} else {
+				model = new ModelAndView("leave/leave_structure_list");
+			
+			
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("companyId", userObj.getCompanyId());
 			LeaveStructureHeader[] summary = Constants.getRestTemplate()
@@ -191,7 +217,28 @@ public class LeaveStructureController {
 			}
 
 			model.addObject("lvStructureList", leaveSummarylist);
+			Info add = AcessController.checkAccess("showLeaveStructureList", "showLeaveStructureList", 0, 1, 0,
+					0, newModuleList);
+			Info edit = AcessController.checkAccess("showLeaveStructureList", "showLeaveStructureList", 0, 0, 1,
+					0, newModuleList);
+			Info delete = AcessController.checkAccess("showLeaveStructureList", "showLeaveStructureList", 0, 0, 0,
+					1, newModuleList);
 
+			if (add.isError() == false) {
+				System.out.println(" add   Accessable ");
+				model.addObject("addAccess", 0);
+
+			}
+			if (edit.isError() == false) {
+				System.out.println(" edit   Accessable ");
+				model.addObject("editAccess", 0);
+			}
+			if (delete.isError() == false) {
+				System.out.println(" delete   Accessable ");
+				model.addObject("deleteAccess", 0);
+
+			}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -203,10 +250,22 @@ public class LeaveStructureController {
 	@RequestMapping(value = "/editLeaveStructure", method = RequestMethod.GET)
 	public ModelAndView editLeaveStructure(HttpServletRequest request, HttpServletResponse response) {
 
-		ModelAndView model = new ModelAndView("leave/edit_leave_structure");
+	
 		HttpSession session = request.getSession();
 		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+	
+		ModelAndView model = null;
 		try {
+
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("editLeaveStructure", "showLeaveStructureList", 0, 0, 1, 0, newModuleList);
+
+			if (view.isError() == true) {
+
+				model = new ModelAndView("accessDenied");
+
+			} else {
+				model = new ModelAndView("leave/edit_leave_structure");
 			String base64encodedString = request.getParameter("lvsId");
 			String lvsId = FormValidation.DecodeKey(base64encodedString);
 
@@ -227,7 +286,7 @@ public class LeaveStructureController {
 
 			System.out.println("editStructure" + editStructure.toString());
 			System.out.println("editStructureDetail" + editStructure.getDetailList().toString());
-
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -238,7 +297,20 @@ public class LeaveStructureController {
 	public String deleteLeaveStructure(HttpServletRequest request, HttpServletResponse response) {
 
 		HttpSession session = request.getSession();
+		String a = null;
+	
+		List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+
+		Info view = AcessController.checkAccess("deleteLeaveStructure", "showLeaveStructureList", 0, 0, 0, 1, newModuleList);
+
 		try {
+			if (view.isError() == true) {
+
+				a = "redirect:/accessDenied";
+
+			}
+			else {
+				a="redirect:/showLeaveStructureList";
 			String base64encodedString = request.getParameter("lvsId");
 			String lvsId = FormValidation.DecodeKey(base64encodedString);
 
@@ -252,11 +324,12 @@ public class LeaveStructureController {
 			} else {
 				session.setAttribute("errorMsg", "Failed to Delete");
 			}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			session.setAttribute("errorMsg", "Failed to Delete");
 		}
-		return "redirect:/showLeaveStructureList";
+		return a;
 	}
 
 	@RequestMapping(value = "/editInsertLeaveStructure", method = RequestMethod.POST)
