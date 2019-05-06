@@ -281,7 +281,21 @@
 
 	</div>
 	<!-- /page content -->
+<script type="text/javascript">
 
+function checkSame(){
+	x=document.getElementById("empTypeName").value;
+	y=document.getElementById("empShortName").value;
+	//alert(x);
+	
+	if(x!== '' && y!== ''){
+	if(x==y){
+		alert("Employee Type Short Name Can Not be same as Employee Type Name ");
+		document.getElementById("empShortName").value="";
+	}
+}
+	
+}</script>
 	<script>
 			function checkSubmodule(moduleId) {
 				
@@ -380,6 +394,7 @@
 			el.value = el.value.replace(/(^\s*)|(\s*$)/gi, ""). // removes leading and trailing spaces
 			replace(/[ ]{2,}/gi, " "). // replaces multiple spaces with one space 
 			replace(/\n +/, "\n"); // Removes spaces after newlines
+			checkSame();
 			return;
 		}
 

@@ -187,12 +187,27 @@
 
 	</div>
 	<!-- /page content -->
+<script type="text/javascript">
 
+function checkSame(){
+	x=document.getElementById("deptName").value;
+	y=document.getElementById("deptShortName").value;
+	//alert(x);
+	
+	if(x!== '' && y!== ''){
+	if(x==y){
+		alert(" Department Short Name Can Not be same as Department Name ");
+		document.getElementById("deptShortName").value="";
+	}
+}
+	
+}</script>
 	<script>
 		function trim(el) {
 			el.value = el.value.replace(/(^\s*)|(\s*$)/gi, ""). // removes leading and trailing spaces
 			replace(/[ ]{2,}/gi, " "). // replaces multiple spaces with one space 
 			replace(/\n +/, "\n"); // Removes spaces after newlines
+			checkSame();
 			return;
 		}
 

@@ -185,12 +185,27 @@
 
 	</div>
 	<!-- /page content -->
+<script type="text/javascript">
 
+function checkSame(){
+	x=document.getElementById("catName").value;
+	y=document.getElementById("catShortName").value;
+	//alert(x);
+	
+	if(x!== '' && y!== ''){
+	if(x==y){
+		alert(" Category Short Name Can Not be same as Category Name ");
+		document.getElementById("catShortName").value="";
+	}
+}
+	
+}</script>
 	<script>
 		function trim(el) {
 			el.value = el.value.replace(/(^\s*)|(\s*$)/gi, ""). // removes leading and trailing spaces
 			replace(/[ ]{2,}/gi, " "). // replaces multiple spaces with one space 
 			replace(/\n +/, "\n"); // Removes spaces after newlines
+			checkSame()
 			return;
 		}
 
