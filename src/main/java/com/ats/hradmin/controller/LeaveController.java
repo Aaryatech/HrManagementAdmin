@@ -644,7 +644,7 @@ try {
 			// String compName = request.getParameter("1");
 			String leaveDateRange = request.getParameter("leaveDateRange");
 			String dayTypeName = request.getParameter("dayTypeName");
-			int noOfDays = Integer.parseInt(request.getParameter("noOfDays"));
+			float noOfDays = Float.parseFloat(request.getParameter("noOfDays"));
 			int leaveTypeId = Integer.parseInt(request.getParameter("leaveTypeId"));
 
 			System.out.println("leaveTypeId" + leaveTypeId);

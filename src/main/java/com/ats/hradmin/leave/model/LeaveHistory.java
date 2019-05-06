@@ -12,13 +12,13 @@ public class LeaveHistory {
 		
 		private String lvTitle;
 		
-		private int lvsAllotedLeaves;
+		private float lvsAllotedLeaves;
 		
-		private int balLeave;
+		private float balLeave;
 		
-		private int aplliedLeaeve;
+		private float aplliedLeaeve;
 		
-		private int sactionLeave;
+		private float sactionLeave;
 		
 		
 
@@ -54,35 +54,35 @@ public class LeaveHistory {
 			this.lvTitleShort = lvTitleShort;
 		}
 
-		public int getLvsAllotedLeaves() {
+		public float getLvsAllotedLeaves() {
 			return lvsAllotedLeaves;
 		}
 
-		public void setLvsAllotedLeaves(int lvsAllotedLeaves) {
+		public void setLvsAllotedLeaves(float lvsAllotedLeaves) {
 			this.lvsAllotedLeaves = lvsAllotedLeaves;
 		}
 
-		public int getBalLeave() {
+		public float getBalLeave() {
 			return balLeave;
 		}
 
-		public void setBalLeave(int balLeave) {
+		public void setBalLeave(float balLeave) {
 			this.balLeave = balLeave;
 		}
 
-		public int getAplliedLeaeve() {
+		public float getAplliedLeaeve() {
 			return aplliedLeaeve;
 		}
 
-		public void setAplliedLeaeve(int aplliedLeaeve) {
+		public void setAplliedLeaeve(float aplliedLeaeve) {
 			this.aplliedLeaeve = aplliedLeaeve;
 		}
 
-		public int getSactionLeave() {
+		public float getSactionLeave() {
 			return sactionLeave;
 		}
 
-		public void setSactionLeave(int sactionLeave) {
+		public void setSactionLeave(float sactionLeave) {
 			this.sactionLeave = sactionLeave;
 		}
 

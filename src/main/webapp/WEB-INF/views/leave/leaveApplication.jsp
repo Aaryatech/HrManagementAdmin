@@ -156,9 +156,9 @@
 
 
 									<thead>
-										<tr class="bg-blue">
+										<tr class="bg-blue" style="text-align: center;">
 
-											<th>Leave Type</th>
+											<th >Leave Type</th>
 											<th>OB</th>
 											<th>Earned</th>
 											<th>Sanction</th>
@@ -172,11 +172,11 @@
 										<c:forEach items="${leaveHistoryList}" var="leaveHistoryList">
 											<tr>
 												<td>${leaveHistoryList.lvTitleShort}</td>
-												<td>${leaveHistoryList.balLeave}</td>
-												<td>${leaveHistoryList.lvsAllotedLeaves}</td>
-												<td>${leaveHistoryList.sactionLeave}</td>
-												<td>${leaveHistoryList.aplliedLeaeve}</td>
-												<td>${leaveHistoryList.balLeave+leaveHistoryList.lvsAllotedLeaves-leaveHistoryList.sactionLeave-leaveHistoryList.aplliedLeaeve}</td>
+												<td style="text-align: right;">${leaveHistoryList.balLeave}</td>
+												<td style="text-align: right;">${leaveHistoryList.lvsAllotedLeaves}</td>
+												<td style="text-align: right;">${leaveHistoryList.sactionLeave}</td>
+												<td style="text-align: right;">${leaveHistoryList.aplliedLeaeve}</td>
+												<td style="text-align: right;">${leaveHistoryList.balLeave+leaveHistoryList.lvsAllotedLeaves-leaveHistoryList.sactionLeave-leaveHistoryList.aplliedLeaeve}</td>
 
 
 
