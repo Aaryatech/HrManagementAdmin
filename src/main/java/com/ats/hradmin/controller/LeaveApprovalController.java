@@ -24,6 +24,7 @@ import com.ats.hradmin.common.Constants;
 import com.ats.hradmin.common.DateConvertor;
 import com.ats.hradmin.common.FormValidation;
 import com.ats.hradmin.leave.model.GetLeaveApplyAuthwise;
+import com.ats.hradmin.leave.model.GetLeaveStatus;
 import com.ats.hradmin.model.Info;
 import com.ats.hradmin.model.LeaveTrail;
 import com.ats.hradmin.model.LoginResponse;
@@ -110,6 +111,15 @@ public class LeaveApprovalController {
 			model.addObject("empId",empId);
 			model.addObject("leaveId", leaveId);
 			model.addObject("stat", stat);
+			
+			
+			 MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			  map.add("leaveId",leaveId);
+			  GetLeaveStatus[] employeeDoc = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpInfoListByTrailEmpId", map,GetLeaveStatus[].class);
+			  
+			  List<GetLeaveStatus> employeeList = new
+			  ArrayList<GetLeaveStatus>(Arrays.asList(employeeDoc));
+		      model.addObject("employeeList",employeeList);
 			
 			
 	} catch (Exception e) {

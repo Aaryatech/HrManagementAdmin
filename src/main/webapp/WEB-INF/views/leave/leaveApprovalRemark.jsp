@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib
+	uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -109,7 +111,123 @@
 									session.removeAttribute("successMsg");
 									}
 								%>
+									<h6 class="card-title">Leave Details</h6>
+								
+						
+							<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="compName">Employee Code
+											: </label>
+										<div class="col-lg-6">
+											<input type="text" class="form-control"
+												placeholder="Enter Company Name" id="compName" Value="${iniFname}${space1}${iniSname}"
+												name="compName" autocomplete="off" readonly>
+											
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="compName">Employee Name
+											: </label>
+										<div class="col-lg-6">
+											<input type="text" class="form-control"
+												placeholder="Enter Company Name" id="compName" Value="${finFname}${space1}${finSname}"
+												name="compName" autocomplete="off" readonly>
+											
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="compName">From date
+											: </label>
+										<div class="col-lg-6">
+											<input type="text" class="form-control"
+												placeholder="Enter Company Name" id="compName" Value="${finFname}${space1}${finSname}"
+												name="compName" autocomplete="off" readonly>
+											
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="compName">To Date
+											: </label>
+										<div class="col-lg-6">
+											<input type="text" class="form-control"
+												placeholder="Enter Company Name" id="compName" Value="${finFname}${space1}${finSname}"
+												name="compName" autocomplete="off" readonly>
+											
+										</div>
+									</div>
+						
+						<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="compName">No. of Days
+											: </label>
+										<div class="col-lg-6">
+											<input type="text" class="form-control"
+												placeholder="Enter Company Name" id="compName" Value="${finFname}${space1}${finSname}"
+												name="compName" autocomplete="off" readonly>
+											
+										</div>
+									</div>
+						
+					<h6 class="card-title">Leave Trail History</h6>
+								
+<table
+							class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic  datatable-button-print-columns1"
+							id="printtable1">
+							<thead>
+								<tr class="bg-blue">
+									<th width="10%">Sr.no</th>
+									<th>Name</th>								
+									<th>Remark</th>
+									<th>Date</th>
+									<th>Action By</th>
+									<th>Leave Status</th>
+									
 
+								</tr>
+							</thead>
+							<tbody>
+
+
+								<c:forEach items="${employeeList}" var="empTrailList" varStatus="count">
+									<tr>
+										<td>${count.index+1}</td>
+										<td>${empTrailList.empSname} ${empTrailList.empFname}</td>
+									
+										
+										<c:choose>
+										<c:when test="${empTrailList.empRemarks=='null' || empty empTrailList.empRemarks}">
+											<td>-</td>
+										</c:when>
+										<c:otherwise>
+										<td>${empTrailList.empRemarks}</td>
+										</c:otherwise>
+										</c:choose>									
+										<td>${empTrailList.makerEnterDatetime}</td>
+										<td>${empTrailList.userName}</td>
+										<c:if test="${empTrailList.leaveStatus==1}">
+										<td><span class="badge badge-info">Initial Applied</span></td>
+										</c:if>
+										<c:if test="${empTrailList.leaveStatus==2}">
+										<td><span class="badge badge-secondary">Approve By Initial Authority</span></td>
+										</c:if>
+											<c:if test="${empTrailList.leaveStatus==3}">
+										<td><span class="badge badge-success">Approve By Final Authority</span></td>
+										</c:if>
+											<c:if test="${empTrailList.leaveStatus==7}">
+										<td><span class="badge badge-danger">Cancel By Employee</span></td>
+										</c:if>
+											<c:if test="${empTrailList.leaveStatus==8}">
+										<td><span class="badge badge-danger">Reject By Initial Authority</span></td>
+										</c:if>
+											<c:if test="${empTrailList.leaveStatus==9}">
+										<td><span class="badge badge-danger">Reject By Final Authority</span></td>
+										</c:if>
+	
+									
+									</tr>
+								</c:forEach>
+
+							</tbody>
+						</table>
+						
 								<form
 									action="${pageContext.request.contextPath}/approveLeaveByInitialAuth1"
 									id="submitInsertCompany" method="post"
