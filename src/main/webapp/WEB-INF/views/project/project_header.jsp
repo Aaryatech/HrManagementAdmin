@@ -302,11 +302,13 @@
 
 									<div class="form-group row mb-0">
 										<div class="col-lg-10 ml-lg-auto">
-											<button type="reset" class="btn btn-light legitRipple">Reset</button>
+										
 											<button type="submit" class="btn bg-blue ml-3 legitRipple"
 												id="submtbtn">
 												Submit <i class="icon-paperplane ml-2"></i>
 											</button>
+											<a href="${pageContext.request.contextPath}/showProjectHeaderList"><button
+										type="button" class="btn btn-primary"><i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp; Cancel</button></a>
 										</div>
 									</div>
 								</form>
