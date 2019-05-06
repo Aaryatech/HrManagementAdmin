@@ -144,23 +144,21 @@
 										 
 										
 										<td class="text-center">
-											<div class="list-icons">
+										<!-- 	<div class="list-icons">
 												<div class="dropdown">
 													<a href="#" class="list-icons-item" data-toggle="dropdown">
 														<i class="icon-menu9"></i>
 													</a>
 
-													<div class="dropdown-menu dropdown-menu-right">
+													<div class="dropdown-menu dropdown-menu-right"> -->
+					
 														<a
 															href="${pageContext.request.contextPath}/showClaimApply?empId=${lvTypeList.exVar1}"
-															class="dropdown-item"><i class="icon-diff-added "></i>Add Claim</a>
+																title="Add Claim"><i class="icon-diff-added" style="color: black;"></i></a>
 															<a
 															href="${pageContext.request.contextPath}/showClaimList?empId=${lvTypeList.exVar1}"
-															class="dropdown-item"><i class="icon-history"></i>Employee Claim History</a>
-														
-													</div>
-												</div>
-											</div>
+															title="Claim History"><i class="icon-history" style="color: black;"></i></a>
+												
 										</td>
 									</tr>
 								</c:forEach>

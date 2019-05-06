@@ -150,10 +150,9 @@
 													<a href="#" class="list-icons-item" data-toggle="dropdown">
 														<i class="icon-menu9"></i>
 													</a>
-
-													<div class="dropdown-menu dropdown-menu-right"> --> <a
-											href="${pageContext.request.contextPath}/editClaimAuthority?empId=${leaveAuth.exVar1}"
-											class="dropdown-item"><i class="icon-pencil7"></i></a> <!-- </div>
+ --> 
+                                 <a href="${pageContext.request.contextPath}/editClaimAuthority?empId=${leaveAuth.exVar1}"
+										 title="Edit Claim Authority"><i class="icon-pencil7"></i></a> <!-- </div>
 												</div>
 											</div> -->
 										</td>
