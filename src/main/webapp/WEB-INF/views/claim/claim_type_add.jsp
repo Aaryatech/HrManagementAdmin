@@ -204,12 +204,27 @@
 
 		</div>
 		<!-- /page content -->
+<script type="text/javascript">
 
+function checkSame(){
+	x=document.getElementById("claimShortTypeTitle").value;
+	y=document.getElementById("claimTypeTitle").value;
+	//alert(x);
+	
+	if(x!== '' && y!== ''){
+	if(x==y){
+		alert(" Claim Type Short Name Can Not be same as  Claim Type Name ");
+		document.getElementById("claimShortTypeTitle").value="";
+	}
+}
+	
+}</script>
 		<script>
 			function trim(el) {
 				el.value = el.value.replace(/(^\s*)|(\s*$)/gi, ""). // removes leading and trailing spaces
 				replace(/[ ]{2,}/gi, " "). // replaces multiple spaces with one space 
 				replace(/\n +/, "\n"); // Removes spaces after newlines
+				checkSame();
 				return;
 			}
 

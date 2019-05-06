@@ -201,12 +201,27 @@
 
 		</div>
 		<!-- /page content -->
+<script type="text/javascript">
 
+function checkSame(){
+	x=document.getElementById("proShortTypeTitle").value;
+	y=document.getElementById("proTypetitle").value;
+	//alert(x);
+	
+	if(x!== '' && y!== ''){
+	if(x==y){
+		alert(" Project Type Short Name Can Not be same as  Project Type Name ");
+		document.getElementById("proShortTypeTitle").value="";
+	}
+}
+	
+}</script>
 		<script>
 			function trim(el) {
 				el.value = el.value.replace(/(^\s*)|(\s*$)/gi, ""). // removes leading and trailing spaces
 				replace(/[ ]{2,}/gi, " "). // replaces multiple spaces with one space 
 				replace(/\n +/, "\n"); // Removes spaces after newlines
+				checkSame();
 				return;
 			}
 
