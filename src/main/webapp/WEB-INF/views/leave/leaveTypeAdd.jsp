@@ -11,7 +11,7 @@
 </head>
 
 <body>
-
+	<c:url value="/checkUniqueLeaveType" var="checkUniqueLeaveType"></c:url>
 	<!-- Main navbar -->
 	<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 	<!-- /main navbar -->
@@ -126,8 +126,8 @@
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Enter Leave Type" id="leaveTypeTitle"
-												name="leaveTypeTitle" autocomplete="off" onchange="trim(this)">
-											<span class="validation-invalid-label" id="error_leaveType"
+												name="leaveTypeTitle" autocomplete="off"onchange="trim(this)">
+											<span class="validation-invalid-label" id="error_leaveType" 
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
@@ -244,6 +244,59 @@
 
 
 	<!-- /page content -->
+	
+	<script type="text/javascript">
+		function checkUniqueLeave(inputValue, valueType) {
+			//alert("hi");
+
+			document.getElementById("submtbtn").disabled = false;
+			var isEdit=0;
+
+			var valid = false;
+			if (valueType == 1) {
+				//alert("Its Mob no");
+				if (inputValue!== '') {
+					valid = true;
+					//alert("Len 10")
+				} else {
+					//alert("Not 10");
+				}
+			} else if (valueType == 2) {
+				//alert("Its Email " );
+
+				if (inputValue!== '') {
+					valid = true;
+					//alert("Valid Email Id");
+				} else {
+					valid = false;
+					//alert("InValid Email Id");
+				}
+			}
+			if (valid == true)
+
+				$
+						.getJSON(
+								'${checkUniqueLeaveType}',
+								{
+									inputValue : inputValue,
+									valueType : valueType,
+									isEdit:    isEdit,
+									ajax : 'true',
+
+								},
+								function(data) {
+									//alert("data" + data);
+
+									//alert("Data  " +JSON.stringify(data));
+
+									
+
+								});
+			checkSame();
+		}
+
+	
+	</script>
 <script type="text/javascript">
 
 function checkSame(){

@@ -345,7 +345,58 @@ function checkSame(){
 		});
 		//
 	</script>
+<script type="text/javascript">
+		function checkUniqueLeave(inputValue, valueType) {
+			//alert("hi");
 
+			document.getElementById("submtbtn").disabled = false;
+			var isEdit=1;
+
+			var valid = false;
+			if (valueType == 1) {
+				//alert("Its Mob no");
+				if (inputValue!== '') {
+					valid = true;
+					//alert("Len 10")
+				} else {
+					//alert("Not 10");
+				}
+			} else if (valueType == 2) {
+				//alert("Its Email " );
+
+				if (inputValue!== '') {
+					valid = true;
+					//alert("Valid Email Id");
+				} else {
+					valid = false;
+					//alert("InValid Email Id");
+				}
+			}
+			if (valid == true)
+
+				$
+						.getJSON(
+								'${checkUniqueLeaveType}',
+								{
+									inputValue : inputValue,
+									valueType : valueType,
+									isEdit:    isEdit,
+									ajax : 'true',
+
+								},
+								function(data) {
+									//alert("data" + data);
+
+									//alert("Data  " +JSON.stringify(data));
+
+									
+
+								});
+			checkSame();
+		}
+
+	
+	</script>
 </body>
 </html>
 s

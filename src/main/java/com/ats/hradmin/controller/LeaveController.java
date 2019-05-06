@@ -49,6 +49,38 @@ public class LeaveController {
 	LeaveType editLeaveType = new LeaveType();
 
 	List<AccessRightModule> moduleList = new ArrayList<>();
+	
+
+	@RequestMapping(value = "/checkUniqueLeave", method = RequestMethod.GET)
+	public @ResponseBody Info checkUniqueLeave(HttpServletRequest request, HttpServletResponse response) {
+
+		Info info = new Info();
+
+		try {
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			String inputValue = request.getParameter("inputValue");
+			int valueType = Integer.parseInt(request.getParameter("valueType"));
+ 			int isEdit = Integer.parseInt(request.getParameter("isEdit"));
+			
+
+			map.add("inputValue", inputValue);
+			map.add("valueType", valueType);
+ 			map.add("isEditCall", isEdit);
+ 
+			info = Constants.getRestTemplate().postForObject(Constants.url + "checkUniqueLeave", map, Info.class);
+			System.err.println("Info Response  " + info.toString());
+
+		} catch (Exception e) {
+			System.err.println("Exce in checkUniqueField  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return info;
+
+	}
+
 
 	// ***************************************LeaveType*********************************************
 
