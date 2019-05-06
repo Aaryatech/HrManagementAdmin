@@ -152,7 +152,8 @@
 													</a>
  --> 
                                  <a href="${pageContext.request.contextPath}/editClaimAuthority?empId=${leaveAuth.exVar1}"
-										 title="Edit Claim Authority"><i class="icon-pencil7"></i></a> <!-- </div>
+										 title="Edit"><i class="icon-pencil7" style="color: black;"></i></a> 
+										 <!-- </div>
 												</div>
 											</div> -->
 										</td>

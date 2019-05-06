@@ -136,27 +136,25 @@
 										<td>${claim.claimTypeTitle}</td>
 										<td>${claim.claimTypeTitleShort}</td>
 										<td class="text-center">
-											<div class="list-icons">
+										<!-- 	<div class="list-icons">
 												<div class="dropdown">
 													<a href="#" class="list-icons-item" data-toggle="dropdown">
 														<i class="icon-menu9"></i>
 													</a>
 
-													<div class="dropdown-menu dropdown-menu-right">
+													<div class="dropdown-menu dropdown-menu-right"> -->
 														<c:if test="${editAccess == 0}">
 														<a
-															href="${pageContext.request.contextPath}/editClaimType?claimTypeId=${claim.exVar1}"
-															class="dropdown-item"><i class="icon-pencil7"></i>Edit</a></c:if>
+															href="${pageContext.request.contextPath}/editClaimType?claimTypeId=${claim.exVar1}" title="Edit"
+															><i class="icon-pencil7" style="color: black;"></i></a></c:if>
 															<c:if
 																test="${deleteAccess == 0}">
 														<a
 															href="${pageContext.request.contextPath}/deleteClaimType?claimTypeId=${claim.exVar1}"
-															onClick="return confirm('Are you sure want to delete this record');"
-															class="dropdown-item"><i class="icon-trash"></i>
-															Delete</a></c:if>
-													</div>
-												</div>
-											</div>
+															onClick="return confirm('Are you sure want to delete this record');" title="Delete"
+															><i class="icon-trash" style="color: black;"></i>
+															</a></c:if>
+												
 										</td>
 									</tr>
 								</c:forEach>

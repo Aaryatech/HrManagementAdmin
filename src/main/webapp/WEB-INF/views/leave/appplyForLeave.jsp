@@ -144,20 +144,13 @@
 										 
 										
 										<td class="text-center">
-											<div class="list-icons">
-												<div class="dropdown">
-													<a href="#" class="list-icons-item" data-toggle="dropdown">
-														<i class="icon-menu9"></i>
-													</a>
+										
 
-													<div class="dropdown-menu dropdown-menu-right">
 														<a
-															href="${pageContext.request.contextPath}/leaveApply?empId=${lvTypeList.exVar1}"
-															class="dropdown-item"><i class="icon-pencil7"></i>Add Leave</a>
+															href="${pageContext.request.contextPath}/leaveApply?empId=${lvTypeList.exVar1}" title="Add Leave"
+															class="dropdown-item"><i class="icon-pencil7" style="color: black;"></i></a>
 														
-													</div>
-												</div>
-											</div>
+													
 										</td>
 									</tr>
 								</c:forEach>

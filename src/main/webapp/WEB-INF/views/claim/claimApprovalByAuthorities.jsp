@@ -159,25 +159,18 @@
 										</c:choose>
 										
 										<td class="text-center">
-											<div class="list-icons">
-												<div class="dropdown">
-													<a href="#" class="list-icons-item" data-toggle="dropdown">
-														<i class="icon-menu9"></i>
-													</a>
-
-													<div class="dropdown-menu dropdown-menu-right">
-														<c:choose>
+															<c:choose>
 															<c:when test="${claimList.caFinAuthEmpId==empIdOrig}">
 															
 													<a
 															href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList.claimRemarks}&claimId=${claimList.circulatedTo}&stat=3"
-															onClick="return confirm('Are you sure want to Approve this Claim');"
-															class="dropdown-item"><i class="icon-checkmark4 "></i>Approve</a>
+															onClick="return confirm('Are you sure want to Approve this Claim');" title="Approve"
+															><i class="icon-checkmark4 " style="color: black;"></i></a>
 															
 													<a
 															href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList.claimRemarks}&claimId=${claimList.claimRemarks}&stat=9"
-															onClick="return confirm('Are you sure want to Reject this Claim');"
-															class="dropdown-item"><i class="icon-x"></i>Reject</a>
+															onClick="return confirm('Are you sure want to Reject this Claim');"  title="Reject"
+															><i class="icon-x" style="color: black;"></i></a>
 																
 														
 															
@@ -187,13 +180,13 @@
 															
 												<a
 															href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList.claimRemarks}&claimId=${claimList.claimRemarks}&stat=2"
-															onClick="return confirm('Are you sure want to Approve this Claim');"
-															class="dropdown-item"><i class="icon-checkmark4 "></i>Approve</a>
+															onClick="return confirm('Are you sure want to Approve this Claim');"  title="Approve"
+															><i class="icon-checkmark4 "style="color: black;"></i>Approve</a>
 															
 													<a
 															href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList.claimRemarks}&claimId=${claimList.claimRemarks}&stat=8"
-															onClick="return confirm('Are you sure want to Reject this Claim');"
-															class="dropdown-item"><i class="icon-x"></i>Reject</a>
+															onClick="return confirm('Are you sure want to Reject this Claim');"  title="Reject"
+															><i class="icon-x" style="color: black;"></i></a>
 															
 															</c:when>
 															
@@ -201,10 +194,8 @@
 															
 												<a
 															href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList.claimRemarks}&claimId=${claimList.claimRemarks}&stat=7"
-															onClick="return confirm('Are you sure want to Cancel this Claim');"
-															class="dropdown-item"><i class="icon-cancel-square
-ed65"></i>Cancel</a>
-														
+															onClick="return confirm('Are you sure want to Cancel this Claim');"  title="Cancel"
+															><i class="icon-cancel-squareed65" style="color: black;"></i></a>														
 															
 															</c:when>
 															
@@ -217,10 +208,9 @@ ed65"></i>Cancel</a>
 															</c:otherwise>
 															</c:choose>
 																											
-													</div>
-												</div>
+												
 												<a href="${pageContext.request.contextPath}/claimDetailHistory?&claimId=${claimList.circulatedTo}" class="nav-link legitRipple"  style="color:black"><i class="icon-list-unordered"></i></a>
-											</div>
+											
 											
 										</td>
 									</tr>
