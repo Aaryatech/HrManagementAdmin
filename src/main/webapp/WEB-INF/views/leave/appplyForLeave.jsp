@@ -146,8 +146,7 @@
 										<td class="text-center">
 										
 
-														<a
-															href="${pageContext.request.contextPath}/leaveApply?empId=${lvTypeList.exVar1}" title="Add Leave"
+														<a href="${pageContext.request.contextPath}/leaveApply?empId=${lvTypeList.exVar1}" title="Add Leave"
 															class="dropdown-item"><i class="icon-pencil7" style="color: black;"></i></a>
 														
 													

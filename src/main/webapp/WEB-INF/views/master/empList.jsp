@@ -150,18 +150,18 @@
 													<c:if test="${editAccess == 0}">
 														<a
 															href="${pageContext.request.contextPath}/editEmp?typeId=${lvTypeList.exVar1}"
-															class="dropdown-item" title="Edit Employee"><i class="icon-pencil7"></i></a>
+															 title="Edit Employee"><i class="icon-pencil7" style="color: black;"></i></a>
 															</c:if>
 															<c:if
 																test="${deleteAccess == 0}">
 														<a
 															href="${pageContext.request.contextPath}/deleteEmployee?typeId=${lvTypeList.exVar1}"
 																onClick="return confirm('Are you sure want to Delete this Record');"
-															class="dropdown-item" title="Delete Employee"><i class="icon-trash"></i>
+															 title="Delete Employee"><i class="icon-trash" style="color: black;"></i>
 															</a>
 															</c:if> <a
 															href="${pageContext.request.contextPath}/uploadDocument?empId=${lvTypeList.exVar1}"
-															class="dropdown-item" title="Document Upload"><i class="icon-file-upload"></i> 
+															 title="Document Upload"><i class="icon-file-upload" style="color: black;"></i> 
 															</a>
 
 													

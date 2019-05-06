@@ -134,23 +134,15 @@
 
 
 										<td class="text-center">
-											<div class="list-icons">
-												<div class="dropdown">
-													<a href="#" class="list-icons-item" data-toggle="dropdown">
-														<i class="icon-menu9"></i>
-													</a>
-
-													<div class="dropdown-menu dropdown-menu-right">
+									
 														<a
 															href="${pageContext.request.contextPath}/editLeaveSummary?lvSumupId=${lvsummaryList.lvSumupId}"
-															class="dropdown-item"><i class="icon-pencil7"></i>Edit</a>
+															title="Edit"><i class="icon-pencil7" style="color: black;"></i></a>
 														<a
 															href="${pageContext.request.contextPath}/deleteLeaveSummary?lvSumupId=${lvsummaryList.lvSumupId}"
-															class="dropdown-item"><i class="icon-trash"></i>
-															Delete</a>
-													</div>
-												</div>
-											</div>
+															title="Delete"><i class="icon-trash" style="color: black; "></i>
+															</a>
+												
 										</td>
 									</tr>
 								</c:forEach>

@@ -135,10 +135,10 @@
 											
 														<a
 															href="${pageContext.request.contextPath}/editLeaveStructure?lvsId=${structure.exVar1}"
-															class="dropdown-item" title="Edit leave Structure"><i class="icon-pencil7"></i></a>	<a
+															 title="Edit leave Structure"><i class="icon-pencil7" style="color: black;"></i></a>	<a
 															href="${pageContext.request.contextPath}/deleteLeaveStructure?lvsId=${structure.exVar1}"
 															onClick="return confirm('Are you sure want to delete this record');"
-															class="dropdown-item" title="Delete leave Structure"><i class="icon-trash"></i>
+															title="Delete leave Structure"><i class="icon-trash" style="color: black;"></i>
 															</a>
 												
 										</td>

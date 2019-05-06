@@ -152,7 +152,7 @@
 
 													<div class="dropdown-menu dropdown-menu-right"> --> <a
 											href="${pageContext.request.contextPath}/editLeaveAuthority?empId=${leaveAuth.exVar1}"
-											class="dropdown-item"><i class="icon-pencil7"></i></a> <!-- </div>
+											title="Edit"><i class="icon-pencil7" style="color: black;"></i></a> <!-- </div>
 												</div>
 											</div> -->
 										</td>

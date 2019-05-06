@@ -72,8 +72,8 @@
 						<!-- <div class="header-elements">
 							<div class="list-icons">
 								<a class="list-icons-item" data-action="collapse"></a>
-							</div> -->
-						</div>
+							</div> 
+						</div>-->
 					</div>
 
 					<div class="card-body">
@@ -183,15 +183,15 @@
 				</div>
 				<!-- /highlighting rows and columns -->
 
-			</div>
+		
 			<!-- /content area -->
-
+	</div>
 
 			<!-- Footer -->
 			<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 			<!-- /footer -->
 
-		</div>
+	</div>
 		<!-- /main content -->
 
 	</div>

@@ -154,14 +154,14 @@
 														<c:if test="${editAccess == 0}">
 															<a
 																href="${pageContext.request.contextPath}/editCompany?compId=${compList.exVar1}"
-																class="dropdown-item"><i class="icon-pencil7"></i>Edit</a>
+																title="Edit"><i class="icon-pencil7" style="color: black;"></i></a>
 														</c:if>
 														<c:if test="${deleteAccess == 0}">
 															<a
 																href="${pageContext.request.contextPath}/deleteCompany?compId=${compList.exVar1}"
 																onClick="return confirm('Are you sure want to delete this record');"
-																class="dropdown-item"><i class="icon-trash"></i>
-																Delete</a>
+																title="Delete"><i class="icon-trash" style="color: black;"></i>
+																</a>
 														</c:if>
 													</div>
 												</div>
