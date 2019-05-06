@@ -148,12 +148,12 @@
 												test="${editAccess == 0}">
 												<a
 													href="${pageContext.request.contextPath}/editEmpCategory?catId=${empCatList.exVar1}"
-													title="Edit"><i class="icon-pencil7"></i></a>&nbsp;
+													title="Edit"><i class="icon-pencil7" style="color: black;"></i></a>&nbsp;
 											</c:if> <c:if test="${deleteAccess == 0}">
 												<a
 													href="${pageContext.request.contextPath}/deleteEmpCategory?catId=${empCatList.exVar1}"
 													onClick="return confirm('Are you sure want to delete this record');"
-													title="Delete"><i class="icon-trash"></i> </a>
+													title="Delete"><i class="icon-trash" style="color: black;"></i> </a>
 											</c:if> <!-- </div>
 												</div>
 											</div> -->
