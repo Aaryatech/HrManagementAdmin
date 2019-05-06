@@ -61,7 +61,7 @@ public class ClaimController {
 		HttpSession session = request.getSession();
 		ModelAndView model = null;
 
-     try {
+try {
 			
 			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
 			Info view = AcessController.checkAccess("addCustomer", "showCustomerList",0, 1,0, 0,
@@ -142,13 +142,14 @@ public class ClaimController {
 	@RequestMapping(value = "/showCustomerList", method = RequestMethod.GET)
 	public ModelAndView showCustomerList(HttpServletRequest request, HttpServletResponse response) {
 
-		ModelAndView model =null;
 		HttpSession session = request.getSession();
+		ModelAndView model = null;
 		try {
-			
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
-			Info view = AcessController.checkAccess("showCustomerList", "showCustomerList", 1, 0, 0, 0, newModuleList);
-System.out.println("View is "+view.toString());
+			Info view = AcessController.checkAccess("showCustomerList", "showCustomerList", 1, 0, 0, 0,
+					newModuleList);
+
 			if (view.isError() == true) {
 
 				model = new ModelAndView("accessDenied");
@@ -157,7 +158,6 @@ System.out.println("View is "+view.toString());
 
 				model = new ModelAndView("master/cust_list");
 				
-				LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("companyId", userObj.getCompanyId());
 
@@ -173,9 +173,12 @@ System.out.println("View is "+view.toString());
 
 			model.addObject("custlist", custlist);
 			
-			Info add = AcessController.checkAccess("showCustomerList", "showCustomerList", 0, 1, 0, 0, newModuleList);
-			Info edit = AcessController.checkAccess("showCustomerList", "showCustomerList", 0, 0, 1, 0, newModuleList);
-			Info delete = AcessController.checkAccess("showCustomerList", "showCustomerList", 0, 0, 0, 1, newModuleList);
+			Info add = AcessController.checkAccess("showCustomerList", "showCustomerList", 0, 1, 0,
+					0, newModuleList);
+			Info edit = AcessController.checkAccess("showCustomerList", "showCustomerList", 0, 0, 1,
+					0, newModuleList);
+			Info delete = AcessController.checkAccess("showCustomerList", "showCustomerList", 0, 0, 0,
+					1, newModuleList);
 
 			if (add.isError() == false) {
 				System.out.println(" add   Accessable ");

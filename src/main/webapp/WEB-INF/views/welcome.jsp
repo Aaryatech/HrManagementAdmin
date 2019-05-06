@@ -63,13 +63,58 @@
 				<div class="card">
 					<div class="card-header header-elements-inline">
 						<h3 class="card-title">WELCOME</h3>
-						<div class="header-elements">
-							<div class="list-icons">
-								<a class="list-icons-item" data-action="collapse"></a>
 							</div>
-						</div>
-					</div>
-
+						
+								<h6 class="card-title">Leave Authority</h6>
+								
+						
+							<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="compName">Initial Authority
+											: </label>
+										<div class="col-lg-6">
+											<input type="text" class="form-control"
+												placeholder="Enter Company Name" id="compName" Value="${iniFname}${space1}${iniSname}"
+												name="compName" autocomplete="off" readonly>
+											
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="compName">Final Authority
+											: </label>
+										<div class="col-lg-6">
+											<input type="text" class="form-control"
+												placeholder="Enter Company Name" id="compName" Value="${finFname}${space1}${finSname}"
+												name="compName" autocomplete="off" readonly>
+											
+										</div>
+									</div>
+						
+					<h6 class="card-title">Claim Authority</h6>
+								
+						<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="compName">Initial Authority
+											: </label>
+										<div class="col-lg-6">
+											<input type="text" class="form-control"
+												placeholder="Enter Company Name" id="compName" Value="${iniClFname}${space1}${iniClSname}"
+												name="compName" autocomplete="off" readonly>
+											
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="compName">Final Authority
+											: </label>
+										<div class="col-lg-6">
+											<input type="text" class="form-control"
+												placeholder="Enter Company Name" id="compName" Value="${finClFname}${space1}${finClSname}"
+												name="compName" autocomplete="off" readonly>
+											
+										</div>
+									</div>
+						
+						
+						
+				
 					<div class="card-body">
 
 						<%

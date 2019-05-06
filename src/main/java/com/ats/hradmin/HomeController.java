@@ -32,6 +32,7 @@ import com.ats.hradmin.common.Constants;
 import com.ats.hradmin.leave.model.CalenderYear;
 import com.ats.hradmin.leave.model.GetAuthorityIds;
 import com.ats.hradmin.model.AccessRightModule;
+import com.ats.hradmin.model.EmployeeInfo;
 import com.ats.hradmin.model.LoginResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -102,7 +103,7 @@ public class HomeController {
 
 		return mav;
 	}
-	
+
 	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
 	public ModelAndView dashboard(HttpServletRequest request, HttpServletResponse res) {
 
@@ -133,9 +134,6 @@ public class HomeController {
 				mav = new ModelAndView("login");
 			} else {
 
-				
-				
-				
 				RestTemplate restTemplate = new RestTemplate();
 
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
@@ -158,17 +156,6 @@ public class HomeController {
 					session.setAttribute("currYearId", currYr.getCalYrId());
 					session.setAttribute("logoUrl", Constants.getImageSaveUrl);
 					
-					
-				 map = new LinkedMultiValueMap<>();
-					map.add("empId", userObj.getEmpId());
-
-					GetAuthorityIds editEmp = Constants.getRestTemplate().postForObject(Constants.url + "/getAuthIdByEmpId",
-							map, GetAuthorityIds.class);
-					
-					
-					
-					
-
 					List<AccessRightModule> moduleJsonList = new ArrayList<AccessRightModule>();
 
 					try {
@@ -193,6 +180,63 @@ public class HomeController {
 					// int userId = userObj.getUser().getUserId();
 					// map.add("userId", userId);
 					/// System.out.println("user data" + userResponse.toString());
+					
+					//final and initial of employeee leave
+					System.out.println("emp id in session is " +  userObj.getEmpId());
+					map = new LinkedMultiValueMap<>();
+					map.add("empId", userObj.getEmpId());
+
+					GetAuthorityIds editEmp = Constants.getRestTemplate()
+							.postForObject(Constants.url + "/getAuthIdByEmpId", map, GetAuthorityIds.class);
+					System.out.println("emp leave auth Ids"+editEmp.toString());
+
+					map = new LinkedMultiValueMap<>();
+					map.add("empId", editEmp.getFinAuthEmpId());
+
+					EmployeeInfo editEmpfin = Constants.getRestTemplate()
+							.postForObject(Constants.url + "/getEmpInfoById", map, EmployeeInfo.class);
+					mav.addObject("finFname", editEmpfin.getEmpFname());
+					mav.addObject("finSname", editEmpfin.getEmpSname());
+					mav.addObject("space1", " ");
+
+					map = new LinkedMultiValueMap<>();
+					map.add("empId", editEmp.getIniAuthEmpId());
+
+					EmployeeInfo editEmpIni = Constants.getRestTemplate()
+							.postForObject(Constants.url + "/getEmpInfoById", map, EmployeeInfo.class);
+					mav.addObject("iniFname", editEmpIni.getEmpFname());
+					mav.addObject("iniSname", editEmpIni.getEmpSname());
+					
+					map = new LinkedMultiValueMap<>();
+					map.add("empId", userObj.getEmpId());
+					map.add("companyId", userObj.getCompanyId());
+					
+					//final and initial of employeee Claim
+					
+					GetAuthorityIds editEmp1 = Constants.getRestTemplate()
+							.postForObject(Constants.url + "/getClaimAuthIds", map, GetAuthorityIds.class);
+					System.out.println("emp Claim auth Ids"+editEmp1.toString());
+					
+					
+					
+					map = new LinkedMultiValueMap<>();
+					map.add("empId", editEmp1.getFinAuthEmpId());
+
+					EmployeeInfo empClaimFin = Constants.getRestTemplate()
+							.postForObject(Constants.url + "/getEmpInfoById", map, EmployeeInfo.class);
+					mav.addObject("finClFname", empClaimFin.getEmpFname());
+					mav.addObject("finClSname", empClaimFin.getEmpSname());
+					System.out.println("emp Claim auth Final data "+empClaimFin.toString());
+
+					map = new LinkedMultiValueMap<>();
+					map.add("empId", editEmp1.getIniAuthEmpId());
+
+					EmployeeInfo empClaimIni = Constants.getRestTemplate()
+							.postForObject(Constants.url + "/getEmpInfoById", map, EmployeeInfo.class);
+					mav.addObject("iniClFname", empClaimIni.getEmpFname());
+					mav.addObject("iniClSname", empClaimIni.getEmpSname());
+					System.out.println("emp Claim auth Initial data "+empClaimIni.toString());
+					
 
 					return mav;
 
@@ -241,7 +285,7 @@ public class HomeController {
 		session.invalidate();
 		return "redirect:/";
 	}
-	
+
 	@RequestMapping(value = "/uploadOtherMediaProccess", method = RequestMethod.POST)
 	public void uploadOtherMediaProccess(@RequestParam("file") List<MultipartFile> file, HttpServletRequest request,
 			HttpServletResponse response) {
