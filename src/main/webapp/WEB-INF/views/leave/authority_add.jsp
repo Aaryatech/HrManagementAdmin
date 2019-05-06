@@ -234,16 +234,17 @@
 									</div>
 								</div>
 							</div> <br>
-							<div class="form-group" style="text-align: center;">
-								 
+						<div class="form-group row mb-0">
+										<div class="col-lg-10 ml-lg-auto">	 
 
 									<input type="submit" class="btn btn-primary" value="Add"
 										id="deleteId"
 										onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to Submit record');}"
 										style="align-content: center; width: 113px; margin-left: 40px;">
+										<a href="${pageContext.request.contextPath}/leaveAuthorityList"><button
+										type="button" class="btn btn-primary"><i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp; Cancel</button></a>
 
-
-								 
+								 </div>
 							</div>
 						</form>
 
