@@ -196,7 +196,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="leaveTypeId">Select
-											Leave Type :</label>
+											Leave Type <span style="color:red">* </span>:</label>
 										<div class="col-lg-4">
 											<select name="leaveTypeId"
 												data-placeholder="Select Leave Type" id="leaveTypeId"
@@ -240,7 +240,7 @@
 										</div>
 									</div>
 									<div class="form-group row">
-										<label class="col-form-label col-lg-2">Date Range:</label>
+										<label class="col-form-label col-lg-2">Date Range<span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control daterange-basic_new "
 												name="leaveDateRange" data-placeholder="Select Date"
@@ -256,7 +256,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="noOfDays">
-											No. of Days : *</label>
+											No. of Days <span style="color:red">* </span>:</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control numbersOnly"
 												placeholder="No. of Days " id="noOfDays" name="noOfDays"
@@ -267,7 +267,7 @@
 									</div>
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="noOfDaysExclude">
-											Excluding Weekly Off *</label>
+											Excluding Weekly Off <span style="color:red">* </span>:</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control numbersOnly"
 												placeholder="Excluding Weekly Off: " id="noOfDaysExclude"

@@ -48,7 +48,7 @@
 
 					<div class="breadcrumb justify-content-center">
 						<a href="${pageContext.request.contextPath}/showEmpList"
-							class="breadcrumb-elements-item"> Employee List</a>
+							class="breadcrumb-elements-item">Employee List</a>
 
 					</div>
 
@@ -289,7 +289,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="permntAdd">Permanent
-											Address<span style="color:red">* </span>: </label>
+											Address <span style="color:red">* </span>: </label>
 										<div class="col-lg-10">
 											<textarea rows="3" cols="3" class="form-control"
 												placeholder="Permanent Address" onchange="trim(this)"
@@ -424,7 +424,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="ratePerHr">
-											Employee Rate Per Hour<span style="color:red">* </span>: </label>
+											Employee Rate Per Hour <span style="color:red">* </span>: </label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control numbersOnly"
 												placeholder="Employee Rate Per Hour" id="ratePerHr"
@@ -514,7 +514,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="upass">
-											User Password<span style="color:red">* </span>: </label>
+											User Password <span style="color:red">* </span>: </label>
 										<div class="col-lg-10">
 											<input type="password" class="form-control  "
 												placeholder="User Password " id="upass" name="upass"
@@ -526,7 +526,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="locId2">
-											Location<span style="color:red">* </span>:</label>
+											Location <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 
 											<select multiple="multiple"
@@ -551,6 +551,9 @@
 												id="submtbtn">
 												Submit <i class="icon-paperplane ml-2"></i>
 											</button>
+												<a href="${pageContext.request.contextPath}/showEmpList"><button
+										type="button" class="btn btn-primary"><i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp; Cancel</button></a>
+										
 										</div>
 									</div>
 								</form>
