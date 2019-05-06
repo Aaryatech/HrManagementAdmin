@@ -7,7 +7,42 @@
 
 <jsp:include page="/WEB-INF/views/include/metacssjs.jsp"></jsp:include>
 </head>
+<style>
+* {
+	box-sizing: border-box;
+}
 
+.myInput {
+	background-image: url('https://www.w3schools.com/css/searchicon.png');
+	background-position: 8px 7px;
+	background-repeat: no-repeat;
+	width: 20%;
+	font-size: 16px;
+	padding: 5px 5px 5px 40px;
+	border: 1px solid #ddd;
+	margin-bottom: 12px;
+}
+
+#myTable {
+	border-collapse: collapse;
+	width: 100%;
+	border: 1px solid #ddd;
+	font-size: 18px;
+}
+
+#myTable th, #myTable td {
+	text-align: left;
+	padding: 12px;
+}
+
+#myTable tr {
+	border-bottom: 1px solid #ddd;
+}
+
+#myTable tr.header, #myTable tr:hover {
+	background-color: #f1f1f1;
+}
+</style>
 <body>
 
 	<!-- Main navbar -->
@@ -60,12 +95,10 @@
 			<!-- Content area -->
 			<div class="content">
 
-
-				<!-- Highlighting rows and columns -->
 				<div class="card">
 					<div class="card-header header-elements-inline">
 						<h5 class="card-title">Leave Structure Allotment List</h5>
-					<!-- 	<div class="header-elements">
+						<!-- <div class="header-elements">
 							<div class="list-icons">
 								<a class="list-icons-item" data-action="collapse"></a>
 							</div>
@@ -109,135 +142,183 @@
 							session.removeAttribute("successMsg");
 							}
 						%>
+						<ul class="nav nav-tabs nav-tabs-highlight nav-justified1">
+							<li class="nav-item"><a href="#highlighted-justified-tab1"
+								class="nav-link active" data-toggle="tab">Allocation Pending</a></li>
+							<li class="nav-item"><a href="#highlighted-justified-tab2"
+								class="nav-link" data-toggle="tab">Allocated</a></li>
+
+						</ul>
+
+						<div class="tab-content">
+							<div class="tab-pane fade show active"
+								id="highlighted-justified-tab1">
+								<form
+									action="${pageContext.request.contextPath}/submitStructureList"
+									method="post" id="assignstuct">
+
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="lvsId">Select
+											Structure :</label>
+										<div class="col-lg-10">
+											<select name="lvsId" data-placeholder="Select Structure"
+												id="lvsId"
+												class="form-control form-control-select2 select2-hidden-accessible"
+												data-fouc="" aria-hidden="true">
+												<option></option>
+												<c:forEach items="${lStrList}" var="str">
+
+													<option value="${str.lvsId}">${str.lvsName}</option>
+
+
+												</c:forEach>
+											</select> <span class="validation-invalid-label" id="error_lvsId"
+												style="display: none;">This field is required.</span>
+										</div>
+									</div>
+
+									  <table class="table datatable-scroll-y" width="100%" id="printtable1">
+										<thead>
+											<tr class="bg-blue">
+												<th class="check" style="text-align: center; width: 5%;"><input
+													type="checkbox" name="selAll" id="selAll" /></th>
+
+												<th width="5%">Sr. No.</th>
+												<th width="10%">Employee Code</th>
+												<th>Employee Name</th>
+												<th width="10%">Department</th>
+
+											</tr>
+										</thead>
+										<tbody>
+											<c:set var="index" value="0"></c:set>
+											<c:forEach items="${lvStructureList}" var="structure"
+												varStatus="count">
+
+												<c:set var="countOf" value="0"></c:set>
+												<c:forEach items="${calAllotList}" var="calender"
+													varStatus="count1">
+													<c:if test="${calender.empId == structure.empId}">
+														<c:set var="countOf" value="1"></c:set>
+													</c:if>
+
+
+												</c:forEach>
+												<c:choose>
+													<c:when test="${countOf==1}">
+
+													</c:when>
+													<c:otherwise>
+														<tr>
+
+
+															<td><input type="checkbox" class="chk" name="empIds"
+																id="empIds${count.index+1}" value="${structure.empId}" /></td>
+															<td>${index+1}</td>
+															<c:set var="index" value="${index+1}"></c:set>
+															<td>${structure.empCode}</td>
+															<td>${structure.empSname}${structure.empFname}</td>
+															<td>${structure.empDeptName}</td>
+
+
+
+														</tr>
+													</c:otherwise>
+												</c:choose>
+											</c:forEach>
+
+										</tbody>
+									</table>  
+ 
+									<br>
+
+									<div class="form-group " style="text-align: center;">
+										<input type="submit" class="btn btn-primary" value="Add"
+											id="deleteId"
+											onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}"
+											style="align-content: center; width: 113px; margin-left: 40px;">
+
+									</div>
+
+
+
+								</form>
+							</div>
+
+							<div class="tab-pane fade" id="highlighted-justified-tab2">
+							
+							
+								<input type="text" id="myInput1" class="myInput"
+									onkeyup="myFunction1()" placeholder="Search for employee.."
+									title="Type in a name">
+									<div class="table-responsive">
+								 <table class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic1  datatable-button-print-columns1" id="printtable2">
+									<thead>
+										<tr class="bg-blue">
+
+											<th width="5%">Sr. No.</th>
+											<th width="10%">Employee Code</th>
+											<th>Employee Name</th>
+											<th width="10%">Department</th>
+											 
+											<th width="10%">Structure</th>
+
+
+											 
+										</tr>
+									</thead>
+									<tbody>
+
+										<c:set var="index" value="0"></c:set>
+										<c:forEach items="${lvStructureList}" var="structure"
+											varStatus="count">
+											
+
+
+
+												<c:set var="countOf" value="0"></c:set>
+												<c:forEach items="${calAllotList}" var="calender"
+													varStatus="count1">
+													<c:if test="${calender.empId == structure.empId}">
+														<c:set var="countOf" value="1"></c:set>
+													</c:if>
+
+
+												</c:forEach>
+
+
+
+												<c:choose>
+													<c:when test="${countOf==1}">
+													<tr>
+														<td>${index+1}</td>
+														<c:set var="index" value="${index+1}"></c:set>
+														<td>${structure.empCode}</td>
+														<td>${structure.empSname}${structure.empFname}</td>
+														<td>${structure.empDeptName}</td>
+													 
+														<td>${structure.lvsName}</td>
+														</tr>
+													</c:when>
+												</c:choose>
 
 
 
 
-
-
-						<form
-							action="${pageContext.request.contextPath}/submitStructureList"
-							method="post">
-
-							<div class="form-group row">
-								<label class="col-form-label col-lg-2" for="select2">Select
-									Structure :</label>
-								<div class="col-lg-10">
-									<select name="lvsId" data-placeholder="Select Structure"
-										id="lvsId"
-										class="form-control form-control-select2 select2-hidden-accessible"
-										required="" data-fouc="" tabindex="-1" aria-hidden="true">
-										<option></option>
-										<c:forEach items="${lStrList}" var="str">
-
-											<option value="${str.lvsId}">${str.lvsName}</option>
-
-
+											
 										</c:forEach>
-									</select> <span class="validation-invalid-label" id="error_locName"
-										style="display: none;">This field is required.</span>
+
+									</tbody>
+								</table>
 								</div>
 							</div>
 
-							<table
-								class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic  datatable-button-print-columns1"
-								id="printtable1">
-								<thead>
-									<tr class="bg-blue">
-										<th class="check" style="text-align: center; width: 5%;"><input
-											type="checkbox" name="selAll" id="selAll" /></th>
 
-										<th width="10%">Sr. No.</th>
-										<th>Employee Code</th>
-										<th>Employee Name</th>
-										<th>Department</th>
-										<th>Designation</th>
-										<th>Structure</th>
-
-
-										<!-- <th width="10%" class="text-center">Actions</th> -->
-									</tr>
-								</thead>
-								<tbody>
-
-
-									<c:forEach items="${lvStructureList}" var="structure"
-										varStatus="count">
-										<tr>
-
-
-
-											<c:set var="countOf" value="0"></c:set>
-											<c:forEach items="${calAllotList}" var="calender"
-												varStatus="count1">
-												<c:if test="${calender.empId == structure.empId}">
-													<c:set var="countOf" value="1"></c:set>
-												</c:if>
-
-
-											</c:forEach>
-
-
-
-											<c:choose>
-												<c:when test="${countOf==1}">
-													<td></td>
-												</c:when>
-												<c:otherwise>
-													<td><input type="checkbox" class="chk" name="empIds"
-														id="empIds${count.index+1}" value="${structure.empId}" /></td>
-												</c:otherwise>
-											</c:choose>
-
-
-											<td>${count.index+1}</td>
-											<td>${structure.empCode}</td>
-											<td>${structure.empSname} ${structure.empFname}</td>
-											<td>${structure.empDeptName}</td>
-											<td>${structure.empCatName}</td>
-											<td>${structure.lvsName}</td>
-
-											<%-- <td class="text-center">
-											<div class="list-icons">
-												<div class="dropdown">
-													<a href="#" class="list-icons-item" data-toggle="dropdown">
-														<i class="icon-menu9"></i>
-													</a>
-
-													<div class="dropdown-menu dropdown-menu-right">
-														<a
-															href="${pageContext.request.contextPath}/editHoliday?holidayId=${holiday.exVar1}"
-															class="dropdown-item"><i class="icon-pencil7"></i>Edit</a>
-														<a
-															href="${pageContext.request.contextPath}/deleteHoliday?holidayId=${holiday.exVar1}"
-															class="dropdown-item"><i class="icon-trash"></i>
-															Delete</a>
-													</div>
-												</div>
-											</div>
-										</td> --%>
-										</tr>
-									</c:forEach>
-
-								</tbody>
-							</table>
-						<div class="form-group row mb-0">
-										<div class="col-lg-10 ml-lg-auto">
-
-								<input type="submit" class="btn btn-primary" value="Add"
-									id="deleteId"
-									onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to Submit record');}"
-									style="align-content: center; width: 113px; margin-left: 40px;">
-										<%-- <a href="${pageContext.request.contextPath}/showLeaveTypeList"><button
-										type="button" class="btn btn-primary"><i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp; Cancel</button></a> --%>
-</div>
-							</div>
-						</form>
+						</div>
 
 					</div>
 
 				</div>
-				<!-- /highlighting rows and columns -->
 
 			</div>
 			<!-- /content area -->
@@ -256,16 +337,84 @@
 	<script type="text/javascript">
 		$(document).ready(
 				function() {
-					$('#bootstrap-data-table-export').DataTable();
-
+					//$('#bootstrap-data-table-export').DataTable();
+					 
 					$("#selAll").click(
 							function() {
 								$('#printtable1 tbody input[type="checkbox"]')
 										.prop('checked', this.checked);
 							});
 				});
+
+		$(document).ready(function($) {
+
+			$("#assignstuct").submit(function(e) {
+				var isError = false;
+				var errMsg = "";
+
+				if ($("#lvsId").val() == "") {
+
+					isError = true;
+
+					$("#error_lvsId").show()
+					//return false;
+				} else {
+					$("#error_lvsId").hide()
+				}
+
+				if (!isError) {
+
+					var x = confirm("Do you really want to submit the form?");
+					if (x == true) {
+
+						document.getElementById("deleteId").disabled = true;
+						return true;
+					}
+					//end ajax send this to php page
+				}
+				return false;
+			});
+		});
 	</script>
-
-
+	<script>
+		function myFunction() {
+			var input, filter, table, tr, td, i, txtValue;
+			input = document.getElementById("myInput");
+			filter = input.value.toUpperCase();
+			table = document.getElementById("printtable2222");
+			tr = table.getElementsByTagName("tr");
+			for (i = 0; i < tr.length; i++) {
+				td = tr[i].getElementsByTagName("td")[3];
+				if (td) {
+					txtValue = td.textContent || td.innerText;
+					if (txtValue.toUpperCase().indexOf(filter) > -1) {
+						tr[i].style.display = "";
+					} else {
+						tr[i].style.display = "none";
+					}
+				}
+			}
+		}
+	</script>
+	<script>
+		function myFunction1() {
+			var input, filter, table, tr, td, i, txtValue;
+			input = document.getElementById("myInput1");
+			filter = input.value.toUpperCase();
+			table = document.getElementById("printtable2");
+			tr = table.getElementsByTagName("tr");
+			for (i = 0; i < tr.length; i++) {
+				td = tr[i].getElementsByTagName("td")[2];
+				if (td) {
+					txtValue = td.textContent || td.innerText;
+					if (txtValue.toUpperCase().indexOf(filter) > -1) {
+						tr[i].style.display = "";
+					} else {
+						tr[i].style.display = "none";
+					}
+				}
+			}
+		}
+	</script>
 </body>
 </html>

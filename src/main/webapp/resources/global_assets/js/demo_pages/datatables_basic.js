@@ -60,7 +60,11 @@ var DatatableBasic = function() {
         // Scrollable datatable
         var table = $('.datatable-scroll-y').DataTable({
             autoWidth: true,
-            scrollY: 500
+            scrollY: 500,
+            "order": [],
+            "bInfo": false,
+            "lengthChange": false,
+            "bPaginate": false
         });
 
         // Resize scrollable table when sidebar width changes
