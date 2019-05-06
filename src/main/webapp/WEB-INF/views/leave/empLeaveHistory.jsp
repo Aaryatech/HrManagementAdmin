@@ -37,22 +37,20 @@
 							<a href="index.html" class="breadcrumb-item"><i
 								class="icon-home2 mr-2"></i> Home</a> <span
 								class="breadcrumb-item active">Dashboard</span>
+
 						</div>
+
 
 						<a href="#" class="header-elements-toggle text-default d-md-none"><i
 							class="icon-more"></i></a>
-							
-							
-							
 					</div>
 
-
-				<%-- 	<div class="breadcrumb justify-content-center">
-						<a href="${pageContext.request.contextPath}/employeeAdd"
-							class="breadcrumb-elements-item"> Add Employee </a>
+					<div class="breadcrumb justify-content-center">
+						<a href="${pageContext.request.contextPath}/holidayAdd"
+							class="breadcrumb-elements-item"> Add Holiday </a>
 
 					</div>
- --%>
+
 
 				</div>
 			</div>
@@ -66,7 +64,7 @@
 				<!-- Highlighting rows and columns -->
 				<div class="card">
 					<div class="card-header header-elements-inline">
-						<h5 class="card-title">Employee List</h5>
+						<h5 class="card-title">Employee Leave List</h5>
 						<!-- <div class="header-elements">
 							<div class="list-icons">
 								<a class="list-icons-item" data-action="collapse"></a>
@@ -86,7 +84,7 @@
 							</button>
 							<span class="font-weight-semibold">Oh snap!</span>
 							<%
-								session.removeAttribute("errorMsg");
+								out.println(session.getAttribute("errorMsg"));
 							%>
 						</div>
 
@@ -104,7 +102,7 @@
 							</button>
 							<span class="font-weight-semibold">Well done!</span>
 							<%
-								session.removeAttribute("successMsg");
+								out.println(session.getAttribute("successMsg"));
 							%>
 						</div>
 						<%
@@ -116,40 +114,33 @@
 							id="printtable1">
 							<thead>
 								<tr class="bg-blue">
-									<th width="5%">Sr.no</th>
-									<th>Name</th>
-									<th>Category</th>
-									<th>Type</th>
-									<th>Email</th>
-									<th>Mobile</th>
-									<th>Department</th>
-									<th>Rate Per Hour</th>
-									 
-									<th class="text-center" width="10%">Actions</th>
+
+									<th width="10%">Sr. No.</th>
+									<th>Leave Title</th>
+									<th>No. of Days</th>
+									<th>Reason</th>
+									<th>Status</th>
+								
+									<th width="10%" class="text-center">Actions</th>
 								</tr>
 							</thead>
 							<tbody>
 
 
-								<c:forEach items="${empList}" var="lvTypeList" varStatus="count">
+								<c:forEach items="${leaveHistoryList}" var="holiday" varStatus="count">
 									<tr>
 										<td>${count.index+1}</td>
-										<td>${lvTypeList.empSname} ${lvTypeList.empFname}</td>
-										<td>${lvTypeList.empCategory}</td>
-										<td>${lvTypeList.empType}</td>
-										<td>${lvTypeList.empEmail}</td>
-										<td>${lvTypeList.empMobile1}</td>
-										<td>${lvTypeList.empDept}</td>
-										<td>${lvTypeList.empRatePerhr}</td>
-										 
-										
+										<td>${holiday.lvTitle}</td>
+										<td>${holiday.leaveNumDays}</td>
+										<td>${holiday.leaveEmpReason}</td>
+										<td>${holiday.exInt1}</td>
+
 										<td class="text-center">
-										 
-														<a href="${pageContext.request.contextPath}/leaveApply?empId=${lvTypeList.exVar1}" title="Add Leave"
-															class=" "><i class="fas fa-walking" style="color: black;"></i></a>
-															<a
-															href="${pageContext.request.contextPath}/showLeaveHistList?empId=${lvTypeList.exVar1}"
-															title="Leave History"><i class="icon-history" style="color: black;"></i></a>	
+											
+														<a
+															href="${pageContext.request.contextPath}/showLeaveHistDetailList?leaveId=${holiday.exVar1}"
+															><i class="icon-history" style="color: black;"></i></a>
+													
 												
 										</td>
 									</tr>
@@ -157,6 +148,7 @@
 
 							</tbody>
 						</table>
+
 					</div>
 
 				</div>

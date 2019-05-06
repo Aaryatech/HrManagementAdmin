@@ -41,18 +41,18 @@
 
 						<a href="#" class="header-elements-toggle text-default d-md-none"><i
 							class="icon-more"></i></a>
-							
-							
-							
-					</div>
 
 
-				<%-- 	<div class="breadcrumb justify-content-center">
-						<a href="${pageContext.request.contextPath}/employeeAdd"
-							class="breadcrumb-elements-item"> Add Employee </a>
 
 					</div>
- --%>
+
+
+					<div class="breadcrumb justify-content-center">
+						<a href="${pageContext.request.contextPath}/empInfoHistory"
+							class="breadcrumb-elements-item">Employee Leave History </a>
+
+					</div>
+
 
 				</div>
 			</div>
@@ -66,7 +66,7 @@
 				<!-- Highlighting rows and columns -->
 				<div class="card">
 					<div class="card-header header-elements-inline">
-						<h5 class="card-title">Employee List</h5>
+						<h5 class="card-title">Leave Trail List</h5>
 						<!-- <div class="header-elements">
 							<div class="list-icons">
 								<a class="list-icons-item" data-action="collapse"></a>
@@ -116,42 +116,77 @@
 							id="printtable1">
 							<thead>
 								<tr class="bg-blue">
-									<th width="5%">Sr.no</th>
-									<th>Name</th>
-									<th>Category</th>
-									<th>Type</th>
-									<th>Email</th>
-									<th>Mobile</th>
-									<th>Department</th>
-									<th>Rate Per Hour</th>
-									 
-									<th class="text-center" width="10%">Actions</th>
+									<th width="10%">Sr.no</th>
+									<th>Name</th>								
+									<th>Remark</th>
+									<th>Date</th>
+									<th>Action By</th>
+									<th>Leave Status</th>
+									
+
 								</tr>
 							</thead>
 							<tbody>
 
 
-								<c:forEach items="${empList}" var="lvTypeList" varStatus="count">
+								<c:forEach items="${employeeList}" var="empTrailList" varStatus="count">
 									<tr>
 										<td>${count.index+1}</td>
-										<td>${lvTypeList.empSname} ${lvTypeList.empFname}</td>
-										<td>${lvTypeList.empCategory}</td>
-										<td>${lvTypeList.empType}</td>
-										<td>${lvTypeList.empEmail}</td>
-										<td>${lvTypeList.empMobile1}</td>
-										<td>${lvTypeList.empDept}</td>
-										<td>${lvTypeList.empRatePerhr}</td>
-										 
+										<td>${empTrailList.empSname} ${empTrailList.empFname}</td>
+									
 										
-										<td class="text-center">
-										 
-														<a href="${pageContext.request.contextPath}/leaveApply?empId=${lvTypeList.exVar1}" title="Add Leave"
-															class=" "><i class="fas fa-walking" style="color: black;"></i></a>
-															<a
-															href="${pageContext.request.contextPath}/showLeaveHistList?empId=${lvTypeList.exVar1}"
-															title="Leave History"><i class="icon-history" style="color: black;"></i></a>	
-												
-										</td>
+										<c:choose>
+										<c:when test="${empTrailList.empRemarks=='null' || empty empTrailList.empRemarks}">
+											<td>-</td>
+										</c:when>
+										<c:otherwise>
+										<td>${empTrailList.empRemarks}</td>
+										</c:otherwise>
+										</c:choose>									
+										<td>${empTrailList.makerEnterDatetime}</td>
+										<td>${empTrailList.userName}</td>
+										<c:if test="${empTrailList.leaveStatus==1}">
+										<td><span class="badge badge-info">Initial Applied</span></td>
+										</c:if>
+										<c:if test="${empTrailList.leaveStatus==2}">
+										<td><span class="badge badge-secondary">Approve By Initial Authority</span></td>
+										</c:if>
+											<c:if test="${empTrailList.leaveStatus==3}">
+										<td><span class="badge badge-success">Approve By Final Authority</span></td>
+										</c:if>
+											<c:if test="${empTrailList.leaveStatus==7}">
+										<td><span class="badge badge-danger">Cancel By Employee</span></td>
+										</c:if>
+											<c:if test="${empTrailList.leaveStatus==8}">
+										<td><span class="badge badge-danger">Reject By Initial Authority</span></td>
+										</c:if>
+											<c:if test="${empTrailList.leaveStatus==9}">
+										<td><span class="badge badge-danger">Reject By Final Authority</span></td>
+										</c:if>
+	
+									<%-- 	<td class="text-center">
+											<div class="list-icons">
+												<div class="dropdown">
+													<a href="#" class="list-icons-item" data-toggle="dropdown">
+														<i class="icon-menu9"></i>
+													</a>
+
+													<div class="dropdown-menu dropdown-menu-right">
+														<a
+															href="${pageContext.request.contextPath}/editEmp?typeId=${lvTypeList.exVar1}"
+															class="dropdown-item"><i class="icon-pencil7"></i>Edit</a>
+														<a
+															href="${pageContext.request.contextPath}/deleteEmployee?typeId=${lvTypeList.exVar1}"
+															class="dropdown-item"><i class="icon-trash"></i>
+															Delete</a> <a
+															href="${pageContext.request.contextPath}/uploadDocument?empId=${lvTypeList.exVar1}"
+															class="dropdown-item"><i class="icon-file-upload"></i> 
+															Document upload</a>
+
+													</div>
+												</div>
+											</div>
+										</td> --%>
 									</tr>
 								</c:forEach>
 
