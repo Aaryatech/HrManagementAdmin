@@ -120,7 +120,7 @@
 									id="submitInsertEmpDept" method="post">
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="deptName">Department
-											Name : *</label>
+											Name <span style="color:red">* </span>: </label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Employee Department Name" id="deptName"
@@ -132,7 +132,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="deptShortName">Department
-											Short Name : *</label>
+											Short Name <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Employee Department Short Name" id="deptShortName"

@@ -121,7 +121,7 @@
 
 										<div class="form-group row">
 											<label class="col-form-label col-lg-2" for="custName">
-												Project Type Title: *</label>
+												Project Type Title <span style="color:red">* </span>: </label>
 											<div class="col-lg-10">
 												<input type="text" class="form-control"
 													placeholder="Enter Customer Name" id="custName"
@@ -135,7 +135,7 @@
 
 										<div class="form-group row">
 											<label class="col-form-label col-lg-2" for="remark">Any
-												Remark:</label>
+												Remark :</label>
 											<div class="col-lg-10">
 												<textarea rows="3" cols="3" class="form-control"
 													placeholder="Any Remark" onchange="trim(this)" id="remark"

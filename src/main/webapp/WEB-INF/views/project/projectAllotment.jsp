@@ -138,7 +138,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="catId">
-											Employee Category : *</label>
+											Employee Category <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<select name="catId" data-placeholder="Select Category"
 												id="catId"
@@ -169,7 +169,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="fullHalfwork">Select
-											: *</label>
+											<span style="color:red">* </span>:</label>
 										<div class="form-check form-check-inline">
 											<label class="form-check-label"> <input type="radio"
 												class="form-check-input" name="fullHalfwork"

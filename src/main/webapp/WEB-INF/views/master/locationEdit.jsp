@@ -84,7 +84,7 @@
 									id="submitInsertLocaion" method="post">
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="locName">Location
-											Name : *</label>
+											Name <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Enter Location Name" id="locName"
@@ -97,7 +97,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="locShortName">Location
-											Short Name : *</label>
+											Short Name <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Enter Location Short Name" id="locShortName"
@@ -111,7 +111,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="add">Location
-											Short Address : *</label>
+											Short Address <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<textarea rows="3" cols="3" class="form-control"
 												placeholder="Location Short Address" onchange="trim(this)"
@@ -123,7 +123,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="prsnName">Person
-											Name : *</label>
+											Name <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Location HR Person Name" id="prsnName"
@@ -136,7 +136,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="contactNo">Contact
-											No : *</label>
+											No <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Location HR Contact No." id="contactNo"
@@ -149,7 +149,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="email">Email
-											: *</label>
+											<span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Location HR Person Name" id="email"

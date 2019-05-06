@@ -122,7 +122,7 @@
 									id="submitInsertEmpType" method="post">
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="empTypeName">Employee
-											Type Name : *</label>
+											Type Name <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Employee Type Name" id="empTypeName"
@@ -134,7 +134,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="empShortName">Employee
-											Type Short Name : *</label>
+											Type Short Name <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Employee Type Short Name" id="empShortName"
@@ -147,7 +147,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="comoffallowed">Comp
-											Off Request Allowed : *</label>
+											Off Request Allowed <span style="color:red">* </span>:</label>
 										<div class="form-check form-check-inline">
 											<label class="form-check-label"> <input type="radio"
 												class="form-check-input" name="comoffallowed"

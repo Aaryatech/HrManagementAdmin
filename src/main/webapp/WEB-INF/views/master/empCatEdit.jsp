@@ -119,7 +119,7 @@
 									action="${pageContext.request.contextPath}/submitEditEmpCat"
 									id="submitInsertEmpCat" method="post">
 									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="catName">Category Name : *</label>
+										<label class="col-form-label col-lg-2" for="catName">Category Name <span style="color:red">* </span>: </label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Employee Category Name" id="catName"
@@ -130,7 +130,7 @@
 									</div>
 
 									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="catShortName"> Category Short Name : *</label>
+										<label class="col-form-label col-lg-2" for="catShortName"> Category Short Name <span style="color:red">* </span>: </label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Category Short Name" id="catShortName"
@@ -143,8 +143,7 @@
 
 									  
 									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="remark">Remark
-											: </label>
+										<label class="col-form-label col-lg-2" for="remark">Remark : </label>
 										<div class="col-lg-10">
 											<textarea rows="3" cols="3" class="form-control"
 												placeholder="Any Remark" onchange="trim(this)" id="remark"
@@ -155,7 +154,7 @@
  
 									<div class="form-group row mb-0">
 										<div class="col-lg-10 ml-lg-auto">
-											<button type="reset" class="btn btn-light legitRipple">Reset</button>
+											
 											<button type="submit" class="btn bg-blue ml-3 legitRipple"
 												id="submtbtn">
 												Submit <i class="icon-paperplane ml-2"></i>

@@ -121,7 +121,7 @@
 									id="SubmitEditEmp" method="post" enctype="multipart/form-data">
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="empCode">
-											Employee Code* : </label>
+											Employee Code <span style="color:red">* </span> : </label>
 										<div class="col-lg-2">
 											<input type="text" class="form-control"
 												placeholder="Employee Code" id="empCode" name="empCode"
@@ -173,7 +173,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="fname">
-											Employee Name *: </label>
+											Employee Name <span style="color:red">* </span>: </label>
 										<div class="col-lg-3">
 											<input type="text" class="form-control  "
 												placeholder="First Name" id="fname" name="fname"
@@ -209,7 +209,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="locId">
-											Location *: </label>
+											Location <span style="color:red">* </span>: </label>
 										<div class="col-lg-10">
 											<select name="locId" data-placeholder="Select Location"
 												id="locId"
@@ -241,7 +241,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="catId">
-											Category *: </label>
+											Category <span style="color:red">* </span>: </label>
 										<div class="col-lg-10">
 											<select name="catId" data-placeholder="Select Category"
 												id="catId"
@@ -268,7 +268,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="typeId">
-											Type *: </label>
+											Type <span style="color:red">* </span>: </label>
 										<div class="col-lg-10">
 											<select name="typeId" data-placeholder="Select Type"
 												id="typeId"
@@ -296,7 +296,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="deptId">
-											Department *: </label>
+											Department <span style="color:red">* </span>: </label>
 										<div class="col-lg-10">
 											<select name="deptId" data-placeholder="Select Department"
 												id="deptId"
@@ -324,7 +324,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="tempAdd">Temporary
-											Address *: </label>
+											Address <span style="color:red">* </span>: </label>
 										<div class="col-lg-10">
 											<textarea rows="3" cols="3" class="form-control"
 												placeholder="Temporary Address" onchange="trim(this)"
@@ -349,7 +349,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="permntAdd">Permanent
-											Address : *</label>
+											Address <span style="color:red">* </span>: </label>
 										<div class="col-lg-10">
 											<textarea rows="3" cols="3" class="form-control"
 												placeholder="Permanent Address" onchange="trim(this)"
@@ -375,7 +375,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="select2">Select
-											Blood Group*:</label>
+											Blood Group <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<select name="bloodGrp" data-placeholder="Please Select"
 												id="bloodGrp"
@@ -409,7 +409,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="mobile1">Contact
-											No *: </label>
+											No <span style="color:red">* </span>: </label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
 												placeholder="Contact No." id="mobile1" name="mobile1"
@@ -420,7 +420,7 @@
 										</div>
 
 										<label class="col-form-label col-lg-2" for="mobile2">Alternate
-											Contact No : </label>
+											Contact No <span style="color:red">* </span>: </label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
 												placeholder="Alternate Contact No." id="mobile2"
@@ -431,8 +431,8 @@
 									</div>
 
 									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="email">Email
-											: *</label>
+										<label class="col-form-label col-lg-2" for="email">Email <span style="color:red">* </span>
+											: </label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control" placeholder="Email"
 												id="email" name="email" value="${editEmp.empEmail}"
@@ -444,7 +444,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="emgContPrsn1">Emergency
-											Contact Person 1: *</label>
+											Contact Person 1 <span style="color:red">* </span>: </label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
 												placeholder="Emergency Contact Person" id="emgContPrsn1"
@@ -456,7 +456,7 @@
 
 
 										<label class="col-form-label col-lg-2" for="emgContNo1">Emergency
-											Contact No 1: *</label>
+											Contact No 1 <span style="color:red">* </span>:</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
 												placeholder="Emergency Contact No." id="emgContNo1"
@@ -470,7 +470,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="emgContPrsn2">Emergency
-											Contact Person 2 * :</label>
+											Contact Person 2 <span style="color:red">* </span>:</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
 												placeholder="Emergency Alternate Contact Person"
@@ -482,7 +482,7 @@
 										</div>
 
 										<label class="col-form-label col-lg-2" for="emgContNo2">Emergency
-											Contact No 2 *: </label>
+											Contact No 2 <span style="color:red">* </span>: </label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
 												placeholder="Emergency Alternate Contact No."
@@ -497,7 +497,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="ratePerHr">
-											Employee Rate Per Hour* : </label>
+											Employee Rate Per Hour <span style="color:red">* </span>: </label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control numbersOnly"
 												placeholder="Employee Rate Per Hour" id="ratePerHr"
@@ -510,7 +510,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="joiningDate">Joining
-											Date *: </label>
+											Date <span style="color:red">* </span>: </label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control datepickerclass "
 												name="joiningDate" id="joiningDate"
@@ -522,7 +522,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="prevsExpYr">
-											Previous Experience in Year *: </label>
+											Previous Experience in Year <span style="color:red">* </span>: </label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control numbersOnly"
 												value="${editEmp.empPrevExpYrs}"
@@ -533,7 +533,7 @@
 										</div>
 
 										<label class="col-form-label col-lg-2" for="prevsExpMn">
-											Previous Experience in Month* : </label>
+											Previous Experience in Month <span style="color:red">* </span> : </label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control numbersOnly"
 												placeholder="Previous Experience in Month" id="prevsExpMn"
@@ -591,7 +591,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="upass">
-											User Password* : </label>
+											User Password <span style="color:red">* </span> : </label>
 										<div class="col-lg-10">
 											<input type="password" class="form-control  "
 												placeholder="User Password " id="upass" name="upass"
@@ -604,7 +604,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="locId2">
-											Location * :</label>
+											Location <span style="color:red">* </span> :</label>
 										<div class="col-lg-10">
 
 											<select data-placeholder="Select Location" name="locId2"

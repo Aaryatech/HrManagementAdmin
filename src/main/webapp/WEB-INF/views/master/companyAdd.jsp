@@ -116,7 +116,7 @@
 									enctype="multipart/form-data">
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="compName">Company
-											name: *</label>
+											Name <span style="color:red">* </span>:  </label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Enter Company Name" id="compName"
@@ -128,7 +128,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="compImg">Company
-											Image: </label>
+											Image : </label>
 										<div class="col-lg-10">
 											<input type="file" class="form-control" id="compImg"
 												name="compImg" accept=".jpg,.png,.gif">
@@ -140,7 +140,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="remark">Any
-											Remark:</label>
+											Remark :</label>
 										<div class="col-lg-10">
 											<textarea rows="3" cols="3" class="form-control"
 												placeholder="Any Remark" onchange="trim(this)" id="remark"

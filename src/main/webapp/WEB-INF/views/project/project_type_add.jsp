@@ -122,7 +122,7 @@
 
 										<div class="form-group row">
 											<label class="col-form-label col-lg-2" for="proTypetitle">
-												Project Type Title: *</label>
+												Project Type Title <span style="color:red">* </span>:</label>
 											<div class="col-lg-10">
 												<input type="text" class="form-control"
 													placeholder="Enter Project Type Title" id="proTypetitle"
@@ -135,7 +135,7 @@
 
 										<div class="form-group row">
 											<label class="col-form-label col-lg-2"
-												for="proShortTypeTitle"> Project Type Short Title: *</label>
+												for="proShortTypeTitle"> Project Type Short Title <span style="color:red">* </span>:</label>
 											<div class="col-lg-10">
 												<input type="text" class="form-control"
 													placeholder="Enter Project Short Title "

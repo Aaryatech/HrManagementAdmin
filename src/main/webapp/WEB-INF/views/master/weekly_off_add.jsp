@@ -122,7 +122,7 @@
 									id="submitInsertWeeklyOff" method="post">
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="select2">Select
-											Location :*</label>
+											Location <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<select name="locId" data-placeholder="Select Location"
 												id="locId"
@@ -140,7 +140,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="select2">Select
-											Weekly Off Type :*</label>
+											Weekly Off Type <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<select name="woType" data-placeholder="Please Select"
 												id="woType"
@@ -165,7 +165,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="select2">Select
-											Weekly Off Presently :*</label>
+											Weekly Off Presently <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<select name="woPresently" data-placeholder="Please Select"
 												id="woPresently"
@@ -183,7 +183,7 @@
 									</div>
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="select2">Select
-											Weekly Off Day :*</label>
+											Weekly Off Day <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<select name="woDay" data-placeholder="Please Select"
 												id="woDay"

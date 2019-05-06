@@ -119,7 +119,7 @@
 									action="${pageContext.request.contextPath}/submitInsertEmpCat"
 									id="submitInsertEmpCat" method="post">
 									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="catName">Category Name : *</label>
+										<label class="col-form-label col-lg-2" for="catName">Category Name <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Employee Category Name" id="catName"
@@ -130,7 +130,7 @@
 									</div>
 
 									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="catShortName"> Category Short Name : *</label>
+										<label class="col-form-label col-lg-2" for="catShortName"> Category Short Name <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Category Short Name" id="catShortName"
