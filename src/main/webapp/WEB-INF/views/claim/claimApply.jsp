@@ -150,7 +150,7 @@
 									
 										<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="claimTypeId">Select
-											Claim Type :</label>
+											Claim Type <span style="color:red">* </span>:</label>
 										<div class="col-lg-4">
 											<select name="claimTypeId"
 												data-placeholder="Select Claim Type" id="claimTypeId"
@@ -174,10 +174,10 @@
 										
 										<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="projectTypeId">Select
-											Project  :</label>
+											Project <span style="color:red">* </span>:</label>
 										<div class="col-lg-4">
 											<select name="projectTypeId"
-												data-placeholder="Select Claim Type" id="projectTypeId"
+												data-placeholder="Select Project" id="projectTypeId"
 												class="form-control form-control-select2 select2-hidden-accessible"
 												 data-fouc=""  aria-hidden="true">
 												<option></option>
@@ -202,7 +202,7 @@
 											
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="joiningDate">Claim
-											Date : *</label>
+											Date <span style="color:red">* </span>: </label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control datepickerclass "
 												name="claimDate" id="claimDate"
@@ -216,7 +216,7 @@
 									
 	<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="claimAmt">
-										Claim Amount: *</label>
+										Claim Amount <span style="color:red">* </span>: </label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control numbersOnly" 
 												placeholder="Amount of Claim in Rs. " id="claimAmt"
