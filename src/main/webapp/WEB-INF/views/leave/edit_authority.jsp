@@ -192,13 +192,8 @@
 									</div>
 
 									<div class="col-md-6">
-										 <div class="table-responsive">
-											<input type="text" id="myInput1" class="myInput"
-												onkeyup="myFunction1()" placeholder="Search for employee.."
-												title="Type in a name">
-											<table
-												class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic1  datatable-button-print-columns1"
-												id="printtable2">
+										 
+											 <table class="table datatable-scroll-y" width="100%" id="printtable2">
 												<thead>
 													<tr class="bg-blue">
 														<th class="check" style="text-align: center;">Select
@@ -266,12 +261,11 @@
 
 												</tbody>
 											</table>
-										 </div>
+										 
 									 
 								</div>
 							</div>
-							<div class="form-group row mb-0">
-										<div class="col-lg-10 ml-lg-auto">	
+							<div class="col-md-12" style="text-align: center;">
 									<input type="submit" class="btn btn-primary" value="Add"
 										id="deleteId"
 										onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to Submit record');}"
@@ -279,7 +273,7 @@
 
 	<a href="${pageContext.request.contextPath}/leaveAuthorityList"><button
 										type="button" class="btn btn-primary"><i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp; Cancel</button></a>
-								</div>
+							 
 							</div>
 						</form>
 
