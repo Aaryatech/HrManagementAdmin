@@ -523,6 +523,8 @@ try {
 		return model;
 	}
 
+	List<LeaveHistory> leaveHistoryList = new ArrayList<LeaveHistory>();
+	
 	@RequestMapping(value = "/leaveApply", method = RequestMethod.GET)
 	public ModelAndView showApplyLeave(HttpServletRequest request, HttpServletResponse response) {
 
@@ -558,7 +560,7 @@ try {
 			LeaveHistory[] leaveHistory = Constants.getRestTemplate()
 					.postForObject(Constants.url + "/getLeaveHistoryList", map, LeaveHistory[].class);
 
-			List<LeaveHistory> leaveHistoryList = new ArrayList<LeaveHistory>(Arrays.asList(leaveHistory));
+			 leaveHistoryList = new ArrayList<LeaveHistory>(Arrays.asList(leaveHistory));
 			model.addObject("leaveHistoryList", leaveHistoryList);
 			System.err.println("emp leaveHistoryList is  " + leaveHistoryList.toString());
 
@@ -781,31 +783,42 @@ try {
 	}
 
 	@RequestMapping(value = "/chkNumber", method = RequestMethod.GET)
-	public @ResponseBody LeaveHistory chkNumber(HttpServletRequest request, HttpServletResponse response) {
-		LeaveHistory editEmp = new LeaveHistory();
+	public @ResponseBody String chkNumber(HttpServletRequest request, HttpServletResponse response) {
+		//LeaveHistory editEmp = new LeaveHistory();
+		
+		String balance = new String();
+		
 		try {
-			System.out.println("In ChkNumber");
+			//System.out.println("In ChkNumber");
 
 			int leaveTypeId = Integer.parseInt(request.getParameter("inputValue"));
-			int lvsId = Integer.parseInt(request.getParameter("lvsId"));
+			//int lvsId = Integer.parseInt(request.getParameter("lvsId"));
 
 			System.out.println("In ChkNumber" + leaveTypeId);
 
-			System.out.println("In ChkNumber" + lvsId);
+			//System.out.println("In ChkNumber" + lvsId);
 
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			/*MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("leaveTypeId", leaveTypeId);
 			map.add("lvsId", lvsId);
 
 			editEmp = Constants.getRestTemplate().postForObject(Constants.url + "/getLeaveHistoryByLeaveTypeId", map,
-					LeaveHistory.class);
+					LeaveHistory.class);*/
 
-			System.err.println("data is" + editEmp.toString());
+			for(int i = 0; i<leaveHistoryList.size() ; i++) {
+				if(leaveTypeId==leaveHistoryList.get(i).getLvTypeId()) {
+					balance=String.valueOf(leaveHistoryList.get(i).getBalLeave()+leaveHistoryList.get(i).getLvsAllotedLeaves()-leaveHistoryList.get(i).getSactionLeave()-leaveHistoryList.get(i).getAplliedLeaeve());
+				}
+			}
+				
+				
+			//System.err.println("data is" + editEmp.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
+			balance="0";
 		}
 
-		return editEmp;
+		return balance;
 	}
 
 	

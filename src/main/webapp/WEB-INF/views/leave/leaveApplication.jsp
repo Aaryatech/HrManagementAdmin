@@ -54,8 +54,7 @@
 					</div>
 
 					<div class="breadcrumb justify-content-center">
-						<a
-							href="${pageContext.request.contextPath}/showApplyForLeave"
+						<a href="${pageContext.request.contextPath}/showApplyForLeave"
 							class="breadcrumb-elements-item">Employee List</a>
 
 					</div>
@@ -152,7 +151,7 @@
 								<hr>
 
 								<table
-									class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic  datatable-button-print-columns1"
+									class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic1  datatable-button-print-columns1"
 									id="printtable1">
 
 
@@ -178,7 +177,7 @@
 												<td>${leaveHistoryList.sactionLeave}</td>
 												<td>${leaveHistoryList.aplliedLeaeve}</td>
 												<td>${leaveHistoryList.balLeave+leaveHistoryList.lvsAllotedLeaves-leaveHistoryList.sactionLeave-leaveHistoryList.aplliedLeaeve}</td>
-												
+
 
 
 											</tr>
@@ -189,6 +188,7 @@
 
 									</tbody>
 								</table>
+								<br>
 								<form action="${pageContext.request.contextPath}/insertLeave"
 									id="submitInsertLeave" method="post">
 
@@ -196,13 +196,12 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="leaveTypeId">Select
-											Leave Type <span style="color:red">* </span>:</label>
+											Leave Type :</label>
 										<div class="col-lg-4">
 											<select name="leaveTypeId"
 												data-placeholder="Select Leave Type" id="leaveTypeId"
 												class="form-control form-control-select2 select2-hidden-accessible"
-												data-fouc=""  aria-hidden="true"
-												onchange="checkUnique()">
+												data-fouc="" aria-hidden="true" onchange="checkUnique()">
 												<option></option>
 												<c:forEach items="${leaveHistoryList}"
 													var="leaveHistoryList">
@@ -228,7 +227,7 @@
 											<select data-placeholder="Select a Day Type" id="dayTypeName"
 												name="dayTypeName"
 												class="form-control form-control-select2 select2-hidden-accessible"
-												data-fouc=""  aria-hidden="true"
+												data-fouc="" aria-hidden="true"
 												onchange="calholidayWebservice()">
 												<option></option>
 												<option value="1">Full Day</option>
@@ -240,13 +239,15 @@
 										</div>
 									</div>
 									<div class="form-group row">
-										<label class="col-form-label col-lg-2">Date Range<span style="color:red">* </span>:</label>
+										<label class="col-form-label col-lg-2">Date Range:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control daterange-basic_new "
 												name="leaveDateRange" data-placeholder="Select Date"
 												id="leaveDateRange" onchange="calholidayWebservice()">
 											<span class="validation-invalid-label" id="error_Range"
 												style="display: none;">This field is required.</span>
+												<span class="validation-invalid-label" id="error_insuf"
+											style="display: none;">Insufficient Leaves.</span>
 
 										</div>
 									</div>
@@ -256,7 +257,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="noOfDays">
-											No. of Days <span style="color:red">* </span>:</label>
+											No. of Days : *</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control numbersOnly"
 												placeholder="No. of Days " id="noOfDays" name="noOfDays"
@@ -267,7 +268,7 @@
 									</div>
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="noOfDaysExclude">
-											Excluding Weekly Off <span style="color:red">* </span>:</label>
+											Excluding Weekly Off *</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control numbersOnly"
 												placeholder="Excluding Weekly Off: " id="noOfDaysExclude"
@@ -294,16 +295,20 @@
 										class="form-control numbersOnly" id="lvsId" value="${lvsId}"
 										name="lvsId">
 
-									<div class="form-group row mb-0">
-										<div class="col-lg-10 ml-lg-auto">
+									 
 
-											<button type="submit" class="btn bg-blue ml-3 legitRipple"
-												id="submtbtn">
-												Submit <i class="icon-paperplane ml-2"></i>
-											</button>
-											<a href="${pageContext.request.contextPath}/showApplyForLeave"><button
-										type="button" class="btn btn-primary"><i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp; Cancel</button></a>
-										</div>
+									<div class="col-md-12" style="text-align: center;">
+
+										<button type="submit" class="btn bg-blue ml-3 legitRipple"
+											id="submtbtn">
+											Submit <i class="icon-paperplane ml-2"></i>
+										</button>
+										<a href="${pageContext.request.contextPath}/showApplyForLeave"><button
+												type="button" class="btn btn-primary">
+												<i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp;
+												Cancel
+											</button></a>
+
 									</div>
 								</form>
 							</div>
@@ -347,29 +352,29 @@
 
 			}, function(data) {
 				//alert(data.balLeave);
-				document.getElementById("tempNoDays").value = data.balLeave;
+				document.getElementById("tempNoDays").value = parseFloat(data);
 
 			});
 		}
 	</script>
 	<script type="text/javascript">
-	function checkDays(x2) {
-		//alert("hii..");
-		var x1=	document.getElementById("tempNoDays").value;
-		//var x2=	document.getElementById("noOfDaysExclude").value;
-		//alert("x1 is "+x1);
-		//alert("x2 is "+x2);
-		
-		if(parseInt(x2,10)>parseInt(x1,10)){
-			alert("Insufficient Leaves");
-			 document.getElementById("noOfDaysExclude").value="";
-			 document.getElementById("noOfDays").value="";
+		function checkDays(x2) {
+			//alert(x2);
+			var x1 = parseFloat(document.getElementById("tempNoDays").value);
+			//var x2=	document.getElementById("noOfDaysExclude").value;
+			//alert("x1 is "+x1);
+			//alert("x2 is "+x2);
+
+			if (parseInt(x2, 10) > parseInt(x1, 10)) {
+				/* alert("Insufficient Leaves");
+				document.getElementById("noOfDaysExclude").value = "";
+				document.getElementById("noOfDays").value = ""; */
+				return true;
+			} else {
+				return false;
+			}
+
 		}
-		
-		
-	
-	}
-	
 	</script>
 
 	<script type="text/javascript">
@@ -848,13 +853,11 @@
 									totalSundays = totalSundays + tempdiff;
 								}
 
-								
-
 								document.getElementById("noOfDays").value = diff
 										- totalSundays;
 								document.getElementById("noOfDaysExclude").value = totalSundays;
 								alert(totalSundays);
-								
+
 							});
 			/* }else{
 				
@@ -971,7 +974,7 @@
 			var dayTypeName = document.getElementById("dayTypeName").value;
 			var res = daterange.split(" to ");
 			var empId = document.getElementById("empId").value;
-
+			document.getElementById("submtbtn").disabled = true;
 			$
 					.getJSON(
 							'${calholidayWebservice}',
@@ -985,11 +988,15 @@
 							},
 							function(data) {
 
-								document.getElementById("noOfDays").value = data.leavecount;
 								document.getElementById("noOfDaysExclude").value = data.holidaycount;
-								
+
+								if (dayTypeName == "" || dayTypeName == 1) {
+									document.getElementById("noOfDays").value = data.leavecount;
+								} else {
+									document.getElementById("noOfDays").value = data.leavecount / 2;
+								}
+								document.getElementById("submtbtn").disabled = false;
 								//checkDays(data.leavecount);
-								
 
 							});
 
@@ -1057,6 +1064,16 @@
 				} else {
 					$("#error_noOfDaysExclude").hide()
 				}
+				 
+				if (checkDays(parseFloat($("#noOfDays").val())) == true) {
+
+					isError = true;
+
+					$("#error_insuf").show()
+
+				} else {
+					$("#error_insuf").hide()
+				}
 
 				if (!isError) {
 
@@ -1073,13 +1090,6 @@
 		});
 		//
 	</script>
-
-
-
-
-
-
-
-
+ 
 </body>
 </html>
