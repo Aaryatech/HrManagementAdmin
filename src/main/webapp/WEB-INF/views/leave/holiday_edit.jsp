@@ -123,7 +123,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="locShortName">Holiday
-											Title : *</label>
+											Title <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Enter Holiday Title" id="holidayTitle"
@@ -137,7 +137,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="select2">Select
-											Location :</label>
+											Location <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<select name="locId" data-placeholder="Select Location"
 												id="locId"

@@ -122,7 +122,7 @@
 									
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="leaveTypeTitle">
-											 Title:</label>
+											 Title <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Enter Leave Type" id="leaveTypeTitle"
@@ -134,7 +134,7 @@
 
 												<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="leaveShortTypeTitle">
-											Short Title:</label>
+											Short Title <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Enter Leave Short Name " id="leaveShortTypeTitle"
@@ -146,7 +146,7 @@
 
 
 								<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="leaveWorlHrs">Working Hours
+										<label class="col-form-label col-lg-2" for="leaveWorlHrs">Working Hours <span style="color:red">* </span>:
 										</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
@@ -167,7 +167,7 @@
 									</div>
 											<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="comoffallowed">Is Structured
-											: *</label>
+											<span style="color:red">* </span>:</label>
 										<div class="form-check form-check-inline">
 											<label class="form-check-label"> <input type="radio"
 												class="form-check-input" name="isStructured"

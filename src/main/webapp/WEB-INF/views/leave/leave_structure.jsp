@@ -125,7 +125,7 @@
 									id="submitInsertLeaveStructure" method="post">
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="lvsName">Leave
-											Structure Name : *</label>
+											Structure Name <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Enter Leave Structure Name" id="lvsName"
@@ -137,7 +137,7 @@
 									<hr>
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="companyId">Select
-											Leave Type :</label>
+											Leave Type <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<select name="leaveTypeId"
 												data-placeholder="Select Leave Type" id="leaveTypeId"
@@ -164,7 +164,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="prsnName">No.of
-											Leaves : *</label>
+											Leaves <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="No.of Leaves" id="noOfLeaves" name="noOfLeaves"

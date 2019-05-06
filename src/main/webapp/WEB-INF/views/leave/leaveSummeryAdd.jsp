@@ -120,7 +120,7 @@
 									id="submitInsertEmpDept" method="post">
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="deptName">Department
-											Name : *</label>
+											Name <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Employee Department Name" id="deptName"
@@ -131,7 +131,7 @@
 									</div>
 
 									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="leaveSumName">Leave Summary Title : *</label>
+										<label class="col-form-label col-lg-2" for="leaveSumName">Leave Summary Title <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Leave Summary Title" id="leaveSumName"
@@ -142,7 +142,7 @@
 										</div>
 									</div>
 									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="leaveSumShortName">Leave Summary Short Title : *</label>
+										<label class="col-form-label col-lg-2" for="leaveSumShortName">Leave Summary Short Title <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Leave Summary Short Title" id="leaveSumShortName"

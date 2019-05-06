@@ -119,7 +119,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="leaveTypeTitle">
-											Title:</label>
+											Title <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Enter Leave Type" id="leaveTypeTitle"
@@ -132,7 +132,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2"
-											for="leaveShortTypeTitle"> Short Title:</label>
+											for="leaveShortTypeTitle"> Short Title <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Enter Leave Short Name "
@@ -147,7 +147,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="leaveWorlHrs">Working
-											Hours </label>
+											Hours <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Enter Leave Working Hours " id="leaveWorlHrs"
@@ -170,7 +170,7 @@
 									</div>
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="comoffallowed">Is
-											Structured : *</label>
+											Structured <span style="color:red">* </span>:</label>
 										<div class="form-check form-check-inline">
 											<label class="form-check-label"> <input type="radio"
 												${editCompany.isStructured==1 ? 'checked' : ''}

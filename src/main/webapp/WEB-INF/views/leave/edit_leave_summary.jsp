@@ -126,7 +126,7 @@
 									id="insertLeaveSummary" method="post">
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="lvsName">Leave
-											Structure Name : *</label>
+											Structure Name <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Enter Leave Structure Name" id="lvsName"
@@ -138,7 +138,7 @@
 									</div>
 									<hr>
 									<div class="form-group row">
-										<strong> Leaves Type :</strong>
+										<strong> Leaves Type <span style="color:red">* </span>:</strong>
 									</div>
 
 									<c:forEach items="${leaveTypeList}" var="leaveType">

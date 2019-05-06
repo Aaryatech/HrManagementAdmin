@@ -159,7 +159,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="lvsId">Select
-											Structure :</label>
+											Structure <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<select name="lvsId" data-placeholder="Select Structure"
 												id="lvsId"
