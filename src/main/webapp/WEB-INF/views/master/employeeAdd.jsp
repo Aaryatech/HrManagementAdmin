@@ -126,7 +126,7 @@
 									enctype="multipart/form-data">
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="empCode">
-											Employee Code : *</label>
+											Employee Code *: </label>
 										<div class="col-lg-2">
 											<input type="text" class="form-control"
 												placeholder="Employee Code" id="empCode" name="empCode"
@@ -179,7 +179,7 @@
 
 										<div class="col-lg-3">
 											<input type="text" class="form-control  "
-												placeholder="Surname Name" id="sname" name="sname"
+												placeholder="Last Name" id="sname" name="sname"
 												autocomplete="off" onchange="trim(this)"> <span
 												class="validation-invalid-label" id="error_sname"
 												style="display: none;">This field is required.</span>
@@ -207,7 +207,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="catId">
-											Category : *</label>
+											Category* : </label>
 										<div class="col-lg-10">
 											<select name="catId" data-placeholder="Select Category"
 												id="catId"
@@ -226,7 +226,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="typeId">
-											Type : *</label>
+											Type* : </label>
 										<div class="col-lg-10">
 											<select name="typeId" data-placeholder="Select Type"
 												id="typeId"
@@ -245,7 +245,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="deptId">
-											Department : *</label>
+											Department * :</label>
 										<div class="col-lg-10">
 											<select name="deptId" data-placeholder="Select Department"
 												id="deptId"
@@ -265,7 +265,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="tempAdd">Temporary
-											Address : *</label>
+											Address* : </label>
 										<div class="col-lg-10">
 											<textarea rows="3" cols="3" class="form-control"
 												placeholder="Temporary Address" onchange="trim(this)"
@@ -289,7 +289,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="permntAdd">Permanent
-											Address : *</label>
+											Address* : </label>
 										<div class="col-lg-10">
 											<textarea rows="3" cols="3" class="form-control"
 												placeholder="Permanent Address" onchange="trim(this)"
@@ -299,10 +299,10 @@
 
 										</div>
 									</div>
-
+<!-- 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="bloodGrp">Blood
-											Group : *</label>
+											Group* : </label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Blood Group" id="bloodGrp" name="bloodGrp"
@@ -310,10 +310,33 @@
 												class="validation-invalid-label" id="error_bloodGrp"
 												style="display: none;">This field is required.</span>
 										</div>
+									</div> -->
+									
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="select2">Select
+											Blood Group*:</label>
+										<div class="col-lg-10">
+											<select name="bloodGrp" data-placeholder="Please Select"
+												id="bloodGrp"
+												class="form-control form-control-select2 select2-hidden-accessible"
+												tabindex="-1" aria-hidden="true">
+												<option value="">Please Select</option>
+												<option value="0">A+</option>
+												<option value="1">O+</option>
+												<option value="2">B+</option>
+												<option value="3">AB+</option>
+												<option value="4">A-</option>
+												<option value="5">O-</option>
+												<option value="6">B-</option>
+												<option value="7">AB-</option>
+
+											</select> <span class="validation-invalid-label" id="error_bloodGrp"
+												style="display: none;">This field is required.</span>
+										</div>
 									</div>
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="mobile1">Contact
-											No : *</label>
+											No *: </label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
 												placeholder="Contact No." id="mobile1" name="mobile1"
@@ -338,11 +361,11 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="email">Email
-											: *</label>
+											*: </label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control" placeholder="Email"
 												id="email" name="email" onchange="checkUnique(this.value,2)"
-												autocomplete="off" onchange="trim(this)"> <span
+												autocomplete="off"> <span
 												class="validation-invalid-label" id="error_email"
 												style="display: none;">This field is required.</span> <span
 												class="validation-invalid-label" id="error_email_unique"
@@ -352,7 +375,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="emgContPrsn1">Emergency
-											Contact Person 1: *</label>
+											Contact Person 1*: </label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
 												placeholder="Emergency Contact Person" id="emgContPrsn1"
@@ -364,7 +387,7 @@
 
 
 										<label class="col-form-label col-lg-2" for="emgContNo1">Emergency
-											Contact No 1: *</label>
+											Contact No 1*: </label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
 												placeholder="Emergency Contact No." id="emgContNo1"
@@ -377,7 +400,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="emgContPrsn2">Emergency
-											Contact Person 2 : *</label>
+											Contact Person 2 *: </label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
 												placeholder="Emergency Alternate Contact Person"
@@ -388,7 +411,7 @@
 										</div>
 
 										<label class="col-form-label col-lg-2" for="emgContNo2">Emergency
-											Contact No 2 : *</label>
+											Contact No 2* : </label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
 												placeholder="Emergency Alternate Contact No."
@@ -401,7 +424,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="ratePerHr">
-											Employee Rate Per Hour : *</label>
+											Employee Rate Per Hour* : </label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control numbersOnly"
 												placeholder="Employee Rate Per Hour" id="ratePerHr"
@@ -479,11 +502,11 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="uname">
-											User Name : *</label>
+											User Name *: </label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control  "
 												placeholder="User Name" id="uname" name="uname"
-												autocomplete="off" onchange="trim(this)"> <span
+												autocomplete="off" onchange="trim(this)" readonly> <span
 												class="validation-invalid-label" id="error_uname"
 												style="display: none;">This field is required.</span>
 										</div>
@@ -491,7 +514,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="upass">
-											User Password : *</label>
+											User Password* : </label>
 										<div class="col-lg-10">
 											<input type="password" class="form-control  "
 												placeholder="User Password " id="upass" name="upass"
@@ -503,7 +526,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="locId2">
-											Location : *</label>
+											Location* : </label>
 										<div class="col-lg-10">
 
 											<select multiple="multiple"
@@ -528,8 +551,6 @@
 												id="submtbtn">
 												Submit <i class="icon-paperplane ml-2"></i>
 											</button>
-											<a href="${pageContext.request.contextPath}/showEmpList"><button
-										type="button" class="btn btn-primary"><i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp; Cancel</button></a>
 										</div>
 									</div>
 								</form>
@@ -555,6 +576,9 @@
 	<!-- /page content -->
 
 	<script>
+	
+
+	
 		function checkAdd() {
 
 			if (document.getElementById("checkSameAdd").checked == true) {
@@ -1010,8 +1034,14 @@
 						//document.getElementById("submtbtn").disabled = true;
 
 					}
+					
+					
+					
+					
 
 				});
+			document.getElementById("uname").value = document
+			.getElementById("email").value;
 		}
 	</script>
 

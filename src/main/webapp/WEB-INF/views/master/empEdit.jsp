@@ -121,7 +121,7 @@
 									id="SubmitEditEmp" method="post" enctype="multipart/form-data">
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="empCode">
-											Employee Code : *</label>
+											Employee Code* : </label>
 										<div class="col-lg-2">
 											<input type="text" class="form-control"
 												placeholder="Employee Code" id="empCode" name="empCode"
@@ -173,7 +173,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="fname">
-											Employee Name : *</label>
+											Employee Name *: </label>
 										<div class="col-lg-3">
 											<input type="text" class="form-control  "
 												placeholder="First Name" id="fname" name="fname"
@@ -199,7 +199,7 @@
 
 										<div class="col-lg-3">
 											<input type="text" class="form-control  "
-												placeholder="Surname Name" id="sname" name="sname"
+												placeholder="Last Name" id="sname" name="sname"
 												value="${editEmp.empSname}" autocomplete="off"
 												onchange="trim(this)"> <span
 												class="validation-invalid-label" id="error_sname"
@@ -209,7 +209,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="locId">
-											Location : *</label>
+											Location *: </label>
 										<div class="col-lg-10">
 											<select name="locId" data-placeholder="Select Location"
 												id="locId"
@@ -241,7 +241,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="catId">
-											Category : *</label>
+											Category *: </label>
 										<div class="col-lg-10">
 											<select name="catId" data-placeholder="Select Category"
 												id="catId"
@@ -268,12 +268,12 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="typeId">
-											Type : *</label>
+											Type *: </label>
 										<div class="col-lg-10">
 											<select name="typeId" data-placeholder="Select Type"
 												id="typeId"
 												class="form-control form-control-select2 select2-hidden-accessible"
-												data-fouc=""  aria-hidden="true">
+												data-fouc="" aria-hidden="true">
 
 												<option value="">Select Type</option>
 
@@ -296,7 +296,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="deptId">
-											Department : *</label>
+											Department *: </label>
 										<div class="col-lg-10">
 											<select name="deptId" data-placeholder="Select Department"
 												id="deptId"
@@ -324,7 +324,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="tempAdd">Temporary
-											Address : *</label>
+											Address *: </label>
 										<div class="col-lg-10">
 											<textarea rows="3" cols="3" class="form-control"
 												placeholder="Temporary Address" onchange="trim(this)"
@@ -360,9 +360,9 @@
 										</div>
 									</div>
 
-									<div class="form-group row">
+									<%-- <div class="form-group row">
 										<label class="col-form-label col-lg-2" for="bloodGrp">Blood
-											Group : *</label>
+											Group *: </label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Blood Group" id="bloodGrp" name="bloodGrp"
@@ -371,16 +371,51 @@
 												class="validation-invalid-label" id="error_bloodGrp"
 												style="display: none;">This field is required.</span>
 										</div>
+									</div> --%>
+
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="select2">Select
+											Blood Group*:</label>
+										<div class="col-lg-10">
+											<select name="bloodGrp" data-placeholder="Please Select"
+												id="bloodGrp"
+												class="form-control form-control-select2 select2-hidden-accessible"
+												tabindex="-1" aria-hidden="true">
+												<option value="">Please Select</option>
+
+												<option ${editEmp.empBloodgrp == '0'  ? 'Selected': '' }
+													value="0">A+</option>
+												<option ${editEmp.empBloodgrp == '1' ? 'Selected': '' }
+													value="1">O+</option>
+												<option ${editEmp.empBloodgrp == '2'  ? 'Selected': '' }
+													value="2">B+</option>
+												<option ${editEmp.empBloodgrp == '3' ? 'Selected': '' }
+													value="3">AB+</option>
+												<option ${editEmp.empBloodgrp == '4'  ? 'Selected': '' }
+													value="4">A-</option>
+												<option ${editEmp.empBloodgrp == '5'  ? 'Selected': '' }
+													value="5">O-</option>
+												<option ${editEmp.empBloodgrp == '6'  ? 'Selected': '' }
+													value="6">B-</option>
+												<option ${editEmp.empBloodgrp == '7'  ? 'Selected': '' }
+													value="7">AB-</option>
+
+
+											</select> <span class="validation-invalid-label" id="error_bloodGrp"
+												style="display: none;">This field is required.</span>
+										</div>
 									</div>
+
+
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="mobile1">Contact
-											No : *</label>
+											No *: </label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
-												placeholder="Contact No." id="mobile1" name="mobile1" 
-												value="${editEmp.empMobile1}" pattern="[7-9]{1}[0-9]{9}" autocomplete="off"
-												onchange="trim(this)" maxlength="10"> <span
-												class="validation-invalid-label" id="error_mobile1" 
+												placeholder="Contact No." id="mobile1" name="mobile1"
+												value="${editEmp.empMobile1}" pattern="[7-9]{1}[0-9]{9}"
+												autocomplete="off" onchange="trim(this)" maxlength="10">
+											<span class="validation-invalid-label" id="error_mobile1"
 												style="display: none;">This field is required.</span>
 										</div>
 
@@ -390,7 +425,8 @@
 											<input type="text" class="form-control"
 												placeholder="Alternate Contact No." id="mobile2"
 												value="${editEmp.empMobile2}" name="mobile2"
-												autocomplete="off" onchange="trim(this)"  pattern="[7-9]{1}[0-9]{9}" maxlength="10">
+												autocomplete="off" onchange="trim(this)"
+												pattern="[7-9]{1}[0-9]{9}" maxlength="10">
 										</div>
 									</div>
 
@@ -400,7 +436,7 @@
 										<div class="col-lg-10">
 											<input type="text" class="form-control" placeholder="Email"
 												id="email" name="email" value="${editEmp.empEmail}"
-												autocomplete="off" onchange="trim(this)"> <span
+												autocomplete="off" readonly onchange="trim(this)"> <span
 												class="validation-invalid-label" id="error_email"
 												style="display: none;">This field is required.</span>
 										</div>
@@ -425,15 +461,16 @@
 											<input type="text" class="form-control"
 												placeholder="Emergency Contact No." id="emgContNo1"
 												value="${editEmp.empEmergencyNo1}" name="emgContNo1"
-												autocomplete="off" onchange="trim(this)" pattern="[7-9]{1}[0-9]{9}" maxlength="10">
-											<span class="validation-invalid-label" id="error_emgContNo1"
+												autocomplete="off" onchange="trim(this)"
+												pattern="[7-9]{1}[0-9]{9}" maxlength="10"> <span
+												class="validation-invalid-label" id="error_emgContNo1"
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="emgContPrsn2">Emergency
-											Contact Person 2 : *</label>
+											Contact Person 2 * :</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
 												placeholder="Emergency Alternate Contact Person"
@@ -445,13 +482,14 @@
 										</div>
 
 										<label class="col-form-label col-lg-2" for="emgContNo2">Emergency
-											Contact No 2 : *</label>
+											Contact No 2 *: </label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
 												placeholder="Emergency Alternate Contact No."
 												id="emgContNo2" name="emgContNo2"
 												value="${editEmp.empEmergencyNo2}" autocomplete="off"
-												onchange="trim(this)" pattern="[7-9]{1}[0-9]{9}" maxlength="10"> <span
+												onchange="trim(this)" pattern="[7-9]{1}[0-9]{9}"
+												maxlength="10"> <span
 												class="validation-invalid-label" id="error_emgContNo2"
 												style="display: none;">This field is required.</span>
 										</div>
@@ -459,7 +497,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="ratePerHr">
-											Employee Rate Per Hour : *</label>
+											Employee Rate Per Hour* : </label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control numbersOnly"
 												placeholder="Employee Rate Per Hour" id="ratePerHr"
@@ -472,7 +510,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="joiningDate">Joining
-											Date : *</label>
+											Date *: </label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control datepickerclass "
 												name="joiningDate" id="joiningDate"
@@ -484,7 +522,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="prevsExpYr">
-											Previous Experience in Year : *</label>
+											Previous Experience in Year *: </label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control numbersOnly"
 												value="${editEmp.empPrevExpYrs}"
@@ -495,7 +533,7 @@
 										</div>
 
 										<label class="col-form-label col-lg-2" for="prevsExpMn">
-											Previous Experience in Month : *</label>
+											Previous Experience in Month* : </label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control numbersOnly"
 												placeholder="Previous Experience in Month" id="prevsExpMn"
@@ -540,7 +578,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="uname">
-											User Name : *</label>
+											User Name *:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control  "
 												placeholder="User Name" id="uname" name="uname"
@@ -553,7 +591,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="upass">
-											User Password : *</label>
+											User Password* : </label>
 										<div class="col-lg-10">
 											<input type="password" class="form-control  "
 												placeholder="User Password " id="upass" name="upass"
@@ -566,7 +604,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="locId2">
-											Location : *</label>
+											Location * :</label>
 										<div class="col-lg-10">
 
 											<select data-placeholder="Select Location" name="locId2"
@@ -610,8 +648,6 @@
 												id="submtbtn">
 												Submit <i class="icon-paperplane ml-2"></i>
 											</button>
-											<a href="${pageContext.request.contextPath}/showEmpList"><button
-										type="button" class="btn btn-primary"><i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp; Cancel</button></a>
 										</div>
 									</div>
 								</form>

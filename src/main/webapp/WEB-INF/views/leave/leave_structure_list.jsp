@@ -132,24 +132,15 @@
 										<td>${structure.lvsName}</td>
 
 										<td class="text-center">
-											<div class="list-icons">
-												<div class="dropdown">
-													<a href="#" class="list-icons-item" data-toggle="dropdown">
-														<i class="icon-menu9"></i>
-													</a>
-
-													<div class="dropdown-menu dropdown-menu-right">
+											
 														<a
 															href="${pageContext.request.contextPath}/editLeaveStructure?lvsId=${structure.exVar1}"
-															class="dropdown-item"><i class="icon-pencil7"></i>Edit</a>
-														<a
+															class="dropdown-item" title="Edit leave Structure"><i class="icon-pencil7"></i></a>	<a
 															href="${pageContext.request.contextPath}/deleteLeaveStructure?lvsId=${structure.exVar1}"
 															onClick="return confirm('Are you sure want to delete this record');"
-															class="dropdown-item"><i class="icon-trash"></i>
-															Delete</a>
-													</div>
-												</div>
-											</div>
+															class="dropdown-item" title="Delete leave Structure"><i class="icon-trash"></i>
+															</a>
+												
 										</td>
 									</tr>
 								</c:forEach>

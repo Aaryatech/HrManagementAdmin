@@ -126,7 +126,7 @@
 									id="insertLeaveStructure" method="post">
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="lvsName">Leave
-											Structure Name : *</label>
+											Structure Name  *:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Enter Leave Structure Name" id="lvsName"
@@ -138,7 +138,7 @@
 									</div>
 									<hr>
 									<div class="form-group row">
-										<strong> Leaves Type :</strong>
+										<strong> Leaves Types :</strong>
 									</div>
 
 									<c:forEach items="${leaveTypeList}" var="leaveType">
@@ -154,10 +154,10 @@
 
 										<div class="form-group row">
 											<label class="col-md-2" for="prsnName">${leaveType.lvTitle}:
-												: *</label>
+												*: </label>
 											<div class="col-md-6">
 												<input type="text" class="form-control"
-													placeholder="No.of Leaves"
+													placeholder="No.of Leaves Peryear"
 													id="noOfLeaves${leaveType.lvTypeId}" value="${NoOfLeaves}"
 													name="noOfLeaves${leaveType.lvTypeId}" autocomplete="off"
 													onchange="trim(this)"> <span
