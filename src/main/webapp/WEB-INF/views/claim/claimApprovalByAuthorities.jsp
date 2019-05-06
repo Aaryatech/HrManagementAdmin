@@ -99,11 +99,11 @@
 								%>
 					<div class="card-header header-elements-inline">
 						<h5 class="card-title">Claim List</h5>
-						<div class="header-elements">
+						<!-- <div class="header-elements">
 							<div class="list-icons">
 								<a class="list-icons-item" data-action="collapse"></a>
 							</div>
-						</div>
+						</div> -->
 					</div>
 
 					<div class="card-body">

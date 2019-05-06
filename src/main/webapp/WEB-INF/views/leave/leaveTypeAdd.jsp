@@ -70,10 +70,10 @@
 						<div class="card">
 							<div class="card-header header-elements-inline">
 								<h6 class="card-title">Add Leave Type</h6>
-								<div class="header-elements">
+								<!-- <div class="header-elements">
 									<div class="list-icons">
 										<a class="list-icons-item" data-action="collapse"></a>
-									</div>
+									</div> -->
 								</div>
 							</div>
 
