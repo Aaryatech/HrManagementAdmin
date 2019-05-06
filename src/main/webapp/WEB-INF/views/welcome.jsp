@@ -61,6 +61,7 @@
 
 				<!-- Highlighting rows and columns -->
 				<div class="card">
+					<div class="card-body">
 					<div class="card-header header-elements-inline">
 						<h3 class="card-title">WELCOME</h3>
 							</div>
@@ -115,7 +116,7 @@
 						
 						
 				
-					<div class="card-body">
+				
 
 						<%
 							if (session.getAttribute("errorMsg") != null) {

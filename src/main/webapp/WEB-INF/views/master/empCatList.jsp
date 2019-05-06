@@ -46,10 +46,10 @@
 					</div>
 
 					<div class="breadcrumb justify-content-center">
-					<c:if test="${addAccess == 0}">
-						<a href="${pageContext.request.contextPath}/employeeCatAdd"
-							class="breadcrumb-elements-item"> Add Employee Category </a>
-							</c:if>
+						<c:if test="${addAccess == 0}">
+							<a href="${pageContext.request.contextPath}/employeeCatAdd"
+								class="breadcrumb-elements-item"> Add Employee Category </a>
+						</c:if>
 
 					</div>
 
@@ -67,7 +67,7 @@
 				<div class="card">
 					<div class="card-header header-elements-inline">
 						<h5 class="card-title">Employee Category List</h5>
-					<!-- 	<div class="header-elements">
+						<!-- 	<div class="header-elements">
 							<div class="list-icons">
 								<a class="list-icons-item" data-action="collapse"></a>
 							</div>
@@ -144,19 +144,17 @@
 														<i class="icon-menu9"></i>
 													</a>
 
-													<div class="dropdown-menu dropdown-menu-right"> -->
-														<c:if test="${editAccess == 0}">
-														<a
-															href="${pageContext.request.contextPath}/editEmpCategory?catId=${empCatList.exVar1}"
-															class="dropdown-item"><i class="icon-pencil7"></i>Edit</a></c:if>
-														<c:if
-																test="${deleteAccess == 0}">
-														<a
-															href="${pageContext.request.contextPath}/deleteEmpCategory?catId=${empCatList.exVar1}"
-															onClick="return confirm('Are you sure want to delete this record');"
-															class="dropdown-item"><i class="icon-trash"></i>
-															Delete</a></c:if>
-													<!-- </div>
+													<div class="dropdown-menu dropdown-menu-right"> --> <c:if
+												test="${editAccess == 0}">
+												<a
+													href="${pageContext.request.contextPath}/editEmpCategory?catId=${empCatList.exVar1}"
+													title="Edit"><i class="icon-pencil7"></i></a>&nbsp;
+											</c:if> <c:if test="${deleteAccess == 0}">
+												<a
+													href="${pageContext.request.contextPath}/deleteEmpCategory?catId=${empCatList.exVar1}"
+													onClick="return confirm('Are you sure want to delete this record');"
+													title="Delete"><i class="icon-trash"></i> </a>
+											</c:if> <!-- </div>
 												</div>
 											</div> -->
 										</td>
