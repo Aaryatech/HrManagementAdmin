@@ -7,7 +7,42 @@
 
 <jsp:include page="/WEB-INF/views/include/metacssjs.jsp"></jsp:include>
 </head>
+<style>
+* {
+  box-sizing: border-box;
+}
 
+.myInput {
+  background-image: url('https://www.w3schools.com/css/searchicon.png');
+  background-position: 8px 7px;
+  background-repeat: no-repeat;
+  width: 50%;
+  font-size: 16px;
+  padding: 5px 5px 5px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+#myTable {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #ddd;
+  font-size: 18px;
+}
+
+#myTable th, #myTable td {
+  text-align: left;
+  padding: 12px;
+}
+
+#myTable tr {
+  border-bottom: 1px solid #ddd;
+}
+
+#myTable tr.header, #myTable tr:hover {
+  background-color: #f1f1f1;
+}
+</style>
 <body>
 
 	<!-- Main navbar -->
@@ -116,10 +151,12 @@
 							method="post">
 
 							<div class="row">
-								<div class="col-md-6">
-
+								<div class="col-md-6" >
+													<div class="table-responsive">
+								
+							<input type="text" id="myInput" class="myInput" onkeyup="myFunction()" placeholder="Search for employee.." title="Type in a name">
 									<table
-										class="table table-bordered table-hover datatable-highlight datatable-button-html5-basic1  datatable-button-print-columns1"
+										class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic1  datatable-button-print-columns1"
 										id="printtable1">
 										<thead>
 											<tr class="bg-blue">
@@ -130,7 +167,7 @@
 												<th>Employee Code</th>
 												<th>Employee Name</th>
 												<th>Department</th>
-												<th>Designation</th>
+												<!-- <th>Designation</th> -->
 
 											</tr>
 										</thead>
@@ -143,20 +180,24 @@
 														class="chk" name="empIds" id="empIds${count.index+1}"
 														value="${emp.empId}" /></td>
 
-													<td width="10%">${emp.empCode}</td>
+													<td>${emp.empCode}</td>
 													<td>${emp.empSname} ${emp.empFname}</td>
-													<td width="10%">${emp.empDept}</td>
-													<td width="10%">${emp.empCategory}</td>
+													<td>${emp.empDept}</td>
+													<%-- <td>${emp.empCategory}</td> --%>
 												</tr>
 											</c:forEach>
 
 										</tbody>
 									</table>
+									</div>
 								</div>
 
 								<div class="col-md-6">
+													<div class="table-responsive">
+								
+								<input type="text" id="myInput1" class="myInput" onkeyup="myFunction1()" placeholder="Search for employee.." title="Type in a name">
 									<table
-										class="table table-bordered table-hover datatable-highlight datatable-button-html5-basic1  datatable-button-print-columns1"
+										class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic1  datatable-button-print-columns1"
 										id="printtable2">
 										<thead>
 											<tr class="bg-blue">
@@ -164,16 +205,16 @@
 													Authority</th>
 
 												<!-- <th width="10%">Sr. No.</th> -->
-												<th width="10%">Emp Code</th>
-												<th width="10%">Emp Name</th>
-												<th width="10%">Dept</th>
-												<th width="10%">Desgn</th>
+												<th>Employee Code</th>
+												<th>Employee Name</th>
+												<th>Department</th>
+												<!-- <th>Desgn</th> -->
 											</tr>
 										</thead>
 										<tbody>
 											<c:forEach items="${empList}" var="emp" varStatus="count">
 												<tr>
-													<td width="60%"><input type="radio" class="chk"
+													<td><input type="radio" class="chk"
 														name="iniAuthEmpId" id="iniAuthEmpId${count.index+1}"
 														value="${emp.empId}" />Initial <input type="radio"
 														class="chk" name="finAuthEmpId"
@@ -181,19 +222,20 @@
 														<input type="checkbox" class="chk" name="repToEmpIds"
 														id="repToEmpIds${count.index+1}" value="${emp.empId}" />Reporting</td>
 													<%-- <td>${count.index+1}</td> --%>
-													<td width="10%">${emp.empCode}</td>
+													<td>${emp.empCode}</td>
 													<td>${emp.empSname} ${emp.empFname}</td>
-													<td width="10%">${emp.empDept}</td>
-													<td width="10%">${emp.empCategory}</td>
+													<td>${emp.empDept}</td>
+													<%-- <td>${emp.empCategory}</td> --%>
 												</tr>
 											</c:forEach>
 
 										</tbody>
 									</table>
+									</div>
 								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-1">
+							</div> <br>
+							<div class="form-group" style="text-align: center;">
+								 
 
 									<input type="submit" class="btn btn-primary" value="Add"
 										id="deleteId"
@@ -201,7 +243,7 @@
 										style="align-content: center; width: 113px; margin-left: 40px;">
 
 
-								</div>
+								 
 							</div>
 						</form>
 
@@ -209,7 +251,7 @@
 
 				</div>
 				<!-- /highlighting rows and columns -->
-
+ 
 			</div>
 			<!-- /content area -->
 
@@ -223,7 +265,46 @@
 
 	</div>
 	<!-- /page content -->
-
+<script>
+function myFunction() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("printtable1");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[2];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+</script>
+<script>
+function myFunction1() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput1");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("printtable2");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[2];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+</script>
 	<script type="text/javascript">
 		$(document).ready(
 				function() {

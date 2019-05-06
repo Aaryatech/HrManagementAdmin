@@ -7,7 +7,42 @@
 
 <jsp:include page="/WEB-INF/views/include/metacssjs.jsp"></jsp:include>
 </head>
+<style>
+* {
+  box-sizing: border-box;
+}
 
+.myInput {
+  background-image: url('https://www.w3schools.com/css/searchicon.png');
+  background-position: 8px 7px;
+  background-repeat: no-repeat;
+  width: 50%;
+  font-size: 16px;
+  padding: 5px 5px 5px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+#myTable {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #ddd;
+  font-size: 18px;
+}
+
+#myTable th, #myTable td {
+  text-align: left;
+  padding: 12px;
+}
+
+#myTable tr {
+  border-bottom: 1px solid #ddd;
+}
+
+#myTable tr.header, #myTable tr:hover {
+  background-color: #f1f1f1;
+}
+</style>
 <body>
 
 	<!-- Main navbar -->
@@ -115,110 +150,124 @@
 
 							<div class="row">
 								<div class="col-md-6">
-
-									<table
-										class="table table-bordered table-hover datatable-highlight datatable-button-html5-basic1  datatable-button-print-columns1"
-										id="printtable1">
-										<thead>
-											<tr class="bg-blue">
-												<th class="check" style="text-align: center; width: 5%;"><input
-													type="checkbox" name="selAll" id="selAll" /></th>
-
-
-												<th>Employee Code</th>
-												<th>Employee Name</th>
-												<th>Department</th>
-												<th>Designation</th>
-
-											</tr>
-										</thead>
-										<tbody>
+									 
+									 <div class="table-responsive">
+									 
+										<table
+											class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic1  datatable-button-print-columns1"
+											id="printtable1">
+											<thead>
+												<tr class="bg-blue">
+													<th class="check" style="text-align: center; width: 5%;"><input
+														type="checkbox" name="selAll" id="selAll" /></th>
 
 
-											<c:forEach items="${empListAuth}" var="emp" varStatus="count">
-												<tr>
-													<td style="text-align: center;"><input type="checkbox"
-														class="chk" name="empIds" id="empIds${count.index+1}"
-														checked value="${emp.empId}" /></td>
+													<th>Employee Code</th>
+													<th>Employee Name</th>
+													<th>Department</th>
+													<!-- <th>Designation</th> -->
 
-													<td width="10%">${emp.empCode}</td>
-													<td>${emp.empSname}${space}${emp.empFname}${space}${emp.empMname}</td>
-													<td width="10%">${emp.empDept}</td>
-													<td width="10%">${emp.empCategory}</td>
 												</tr>
-											</c:forEach>
+											</thead>
+											<tbody>
 
-										</tbody>
-									</table>
-								</div>
 
-								<div class="col-md-6">
-									<table
-										class="table table-bordered table-hover datatable-highlight datatable-button-html5-basic1  datatable-button-print-columns1"
-										id="printtable2">
-										<thead>
-											<tr class="bg-blue">
-												<th class="check" style="text-align: center;">Select
-													Authority</th>
+												<c:forEach items="${empListAuth}" var="emp"
+													varStatus="count">
+													<tr>
+														<td style="text-align: center;"><input
+															type="checkbox" class="chk" name="empIds"
+															id="empIds${count.index+1}" checked value="${emp.empId}" /></td>
 
-												<!-- <th width="10%">Sr. No.</th> -->
-												<th width="10%">Emp Code</th>
-												<th width="10%">Emp Name</th>
-												<th width="10%">Dept</th>
-												<th width="10%">Desgn</th>
-											</tr>
-										</thead>
-										<tbody>
-											<c:forEach items="${empList}" var="emp" varStatus="count">
-												<tr>
-													<td width="60%"><c:choose>
-															<c:when test="${leaveAuthority.iniAuthEmpId==emp.empId}">
-																<input type="radio" class="chk" name="iniAuthEmpId"
-																	id="iniAuthEmpId${count.index+1}" value="${emp.empId}"
-																	checked />Initial</c:when>
-															<c:otherwise>
-																<input type="radio" class="chk" name="iniAuthEmpId"
-																	id="iniAuthEmpId${count.index+1}" value="${emp.empId}" />Initial
+														<td>${emp.empCode}</td>
+														<td>${emp.empSname}${emp.empFname}</td>
+														<td>${emp.empDept}</td>
+														<%-- <td>${emp.empCategory}</td> --%>
+													</tr>
+												</c:forEach>
+
+											</tbody>
+										</table>
+										</div>
+									</div>
+
+									<div class="col-md-6">
+										 <div class="table-responsive">
+											<input type="text" id="myInput1" class="myInput"
+												onkeyup="myFunction1()" placeholder="Search for employee.."
+												title="Type in a name">
+											<table
+												class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic1  datatable-button-print-columns1"
+												id="printtable2">
+												<thead>
+													<tr class="bg-blue">
+														<th class="check" style="text-align: center;">Select
+															Authority</th>
+
+														<!-- <th width="10%">Sr. No.</th> -->
+														<th>Employee Code</th>
+														<th>Employee Name</th>
+														<th>Department</th>
+														<!-- <th  >Desgn</th> -->
+													</tr>
+												</thead>
+												<tbody>
+													<c:forEach items="${empList}" var="emp" varStatus="count">
+														<tr>
+															<td><c:choose>
+																	<c:when
+																		test="${leaveAuthority.iniAuthEmpId==emp.empId}">
+																		<input type="radio" class="chk" name="iniAuthEmpId"
+																			id="iniAuthEmpId${count.index+1}"
+																			value="${emp.empId}" checked />Initial</c:when>
+																	<c:otherwise>
+																		<input type="radio" class="chk" name="iniAuthEmpId"
+																			id="iniAuthEmpId${count.index+1}"
+																			value="${emp.empId}" />Initial
 																</c:otherwise>
-														</c:choose> <c:choose>
-															<c:when test="${leaveAuthority.finAuthEmpId==emp.empId}">
-																<input type="radio" class="chk" name="finAuthEmpId"
-																	id="finAuthEmpId${count.index+1}" value="${emp.empId}"
-																	checked />Final
+																</c:choose> <c:choose>
+																	<c:when
+																		test="${leaveAuthority.finAuthEmpId==emp.empId}">
+																		<input type="radio" class="chk" name="finAuthEmpId"
+																			id="finAuthEmpId${count.index+1}"
+																			value="${emp.empId}" checked />Final
 														</c:when>
-															<c:otherwise>
-																<input type="radio" class="chk" name="finAuthEmpId"
-																	id="finAuthEmpId${count.index+1}" value="${emp.empId}" />Final
+																	<c:otherwise>
+																		<input type="radio" class="chk" name="finAuthEmpId"
+																			id="finAuthEmpId${count.index+1}"
+																			value="${emp.empId}" />Final
 																</c:otherwise>
-														</c:choose> <c:set var="countOf" value="0"></c:set> <c:forEach
-															items="${reportingIdList}" var="reportId"
-															varStatus="count">
-															<c:if test="${emp.empId==reportId}">
-																<c:set var="countOf" value="1"></c:set>
-															</c:if>
+																</c:choose> <c:set var="countOf" value="0"></c:set> <c:forEach
+																	items="${reportingIdList}" var="reportId"
+																	varStatus="count">
+																	<c:if test="${emp.empId==reportId}">
+																		<c:set var="countOf" value="1"></c:set>
+																	</c:if>
 
 
-														</c:forEach> <c:choose>
-															<c:when test="${countOf==1}">
+																</c:forEach> <c:choose>
+																	<c:when test="${countOf==1}">
 
-																<input type="checkbox" class="chk" name="repToEmpIds"
-																	id="repToEmpIds${count.index+1}" value="${emp.empId}"
-																	checked />Reporting 
+																		<input type="checkbox" class="chk" name="repToEmpIds"
+																			id="repToEmpIds${count.index+1}" value="${emp.empId}"
+																			checked />Reporting 
 															 
 																</c:when>
-															<c:otherwise>
-																<input type="checkbox" class="chk" name="repToEmpIds"
-																	id="repToEmpIds${count.index+1}" value="${emp.empId}" />Reporting </c:otherwise>
-														</c:choose></td>
-													<td width="10%">${emp.empCode}</td>
-													<td>${emp.empSname}${space}${emp.empFname}${space}${emp.empMname}</td>
-													<td width="10%">${emp.empDept}</td>
-													<td width="10%">${emp.empCategory}</td>
-												</tr>
-											</c:forEach>
+																	<c:otherwise>
+																		<input type="checkbox" class="chk" name="repToEmpIds"
+																			id="repToEmpIds${count.index+1}" value="${emp.empId}" />Reporting </c:otherwise>
+																</c:choose></td>
+															<td>${emp.empCode}</td>
+															<td>${emp.empSname}${space}${emp.empFname}</td>
+															<td>${emp.empDept}</td>
+															<%-- <td  >${emp.empCategory}</td> --%>
+														</tr>
+													</c:forEach>
 
-										</tbody>
-									</table>
+												</tbody>
+											</table>
+										 </div>
+									 
 								</div>
 							</div>
 							<div class="row">
@@ -252,7 +301,46 @@
 
 	</div>
 	<!-- /page content -->
-
+	<script>
+		function myFunction() {
+			var input, filter, table, tr, td, i, txtValue;
+			input = document.getElementById("myInput");
+			filter = input.value.toUpperCase();
+			table = document.getElementById("printtable1");
+			tr = table.getElementsByTagName("tr");
+			for (i = 0; i < tr.length; i++) {
+				td = tr[i].getElementsByTagName("td")[2];
+				if (td) {
+					txtValue = td.textContent || td.innerText;
+					if (txtValue.toUpperCase().indexOf(filter) > -1) {
+						tr[i].style.display = "";
+					} else {
+						tr[i].style.display = "none";
+					}
+				}
+			}
+		}
+	</script>
+	<script>
+		function myFunction1() {
+			var input, filter, table, tr, td, i, txtValue;
+			input = document.getElementById("myInput1");
+			filter = input.value.toUpperCase();
+			table = document.getElementById("printtable2");
+			tr = table.getElementsByTagName("tr");
+			for (i = 0; i < tr.length; i++) {
+				td = tr[i].getElementsByTagName("td")[2];
+				if (td) {
+					txtValue = td.textContent || td.innerText;
+					if (txtValue.toUpperCase().indexOf(filter) > -1) {
+						tr[i].style.display = "";
+					} else {
+						tr[i].style.display = "none";
+					}
+				}
+			}
+		}
+	</script>
 	<script type="text/javascript">
 		$(document).ready(
 				function() {

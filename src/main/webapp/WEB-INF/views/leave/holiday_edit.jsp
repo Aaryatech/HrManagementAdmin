@@ -126,7 +126,7 @@
 											Title : *</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
-												placeholder="Enter Hliday Title" id="holidayTitle"
+												placeholder="Enter Holiday Title" id="holidayTitle"
 												value="${editHoliday.exVar2}" name="holidayTitle"
 												autocomplete="off" onchange="trim(this)" maxlength="100">
 											<span class="validation-invalid-label"
@@ -314,7 +314,7 @@
 					$("#error_holidayTitle").hide()
 				}
 
-				if (!$("#locId").val()) {
+				if ($("#locId").val()=="") {
 
 					isError = true;
 

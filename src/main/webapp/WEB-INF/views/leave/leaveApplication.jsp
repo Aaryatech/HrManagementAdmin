@@ -986,7 +986,7 @@
 								document.getElementById("noOfDays").value = data.leavecount;
 								document.getElementById("noOfDaysExclude").value = data.holidaycount;
 								
-								checkDays(data.holidaycount);
+								//checkDays(data.leavecount);
 								
 
 							});

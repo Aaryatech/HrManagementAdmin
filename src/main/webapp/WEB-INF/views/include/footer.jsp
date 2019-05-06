@@ -10,12 +10,12 @@
 		</button>
 	</div>
 
-	<div class="navbar-collapse collapse" id="navbar-footer">
+	<div class="navbar-collapse collapse" id="navbar-footer"> 
 		<span class="navbar-text"> &copy; 2019 - 2022. <a href="#">Powered
-		</a> by <a href="http://aaryatechindia.in/atsuc/" target="_blank">AARYATECH
-				SOLUTIOIN</a></span> &nbsp; <img
+		</a> by <a href="http://aaryatechindia.in/atsuc/" target="_blank">AARYA TECH
+				SOLUTIONS</a></span> &nbsp; <img
 			src="${pageContext.request.contextPath}/resources/global_assets/images/powerdBy.png"
-			width="80" height="50" alt="">
+			width="60" height="50" alt="">
 
 		<!-- <ul class="navbar-nav ml-lg-auto">
 			<li class="nav-item"><a href="https://kopyov.ticksy.com/"
