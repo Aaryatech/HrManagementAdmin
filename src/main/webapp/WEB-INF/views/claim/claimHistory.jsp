@@ -137,7 +137,7 @@
 										<td>${lvTypeList.projectTypeTitle}</td>
 										<td>${lvTypeList.claimDate}</td>
 										<td>${lvTypeList.claimAmount}</td>
-										<c:if test="${holiday.exInt1==1}">
+										<c:if test="${lvTypeList.exInt1==1}">
 										<td><span class="badge badge-info">Initial Applied</span></td>
 										</c:if>
 										<c:if test="${lvTypeList.exInt1==2}">
