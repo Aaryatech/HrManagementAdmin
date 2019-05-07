@@ -119,7 +119,7 @@
 											: </label>
 										<div class="col-lg-6">
 											<input type="text" class="form-control"
-												placeholder="Enter Company Name" id="compName" Value="${iniFname}${space1}${iniSname}"
+												 Value="${lvEmp.empCode}"
 												name="compName" autocomplete="off" readonly>
 											
 										</div>
@@ -129,7 +129,7 @@
 											: </label>
 										<div class="col-lg-6">
 											<input type="text" class="form-control"
-												placeholder="Enter Company Name" id="compName" Value="${finFname}${space1}${finSname}"
+												 Value="${lvEmp.empName}"
 												name="compName" autocomplete="off" readonly>
 											
 										</div>
@@ -139,7 +139,7 @@
 											: </label>
 										<div class="col-lg-6">
 											<input type="text" class="form-control"
-												placeholder="Enter Company Name" id="compName" Value="${finFname}${space1}${finSname}"
+												  Value="${lvEmp.leaveFromdt}"
 												name="compName" autocomplete="off" readonly>
 											
 										</div>
@@ -149,7 +149,7 @@
 											: </label>
 										<div class="col-lg-6">
 											<input type="text" class="form-control"
-												placeholder="Enter Company Name" id="compName" Value="${finFname}${space1}${finSname}"
+											  Value="${lvEmp.leaveTodt}"
 												name="compName" autocomplete="off" readonly>
 											
 										</div>
@@ -160,7 +160,7 @@
 											: </label>
 										<div class="col-lg-6">
 											<input type="text" class="form-control"
-												placeholder="Enter Company Name" id="compName" Value="${finFname}${space1}${finSname}"
+												 Value="${lvEmp.leaveNumDays}"
 												name="compName" autocomplete="off" readonly>
 											
 										</div>

@@ -122,6 +122,16 @@ public class LeaveApprovalController {
 			  List<GetLeaveStatus> employeeList = new
 			  ArrayList<GetLeaveStatus>(Arrays.asList(employeeDoc));
 		      model.addObject("employeeList",employeeList);
+		      
+		      
+		      MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<>();
+		      map1.add("leaveId",leaveId);
+
+			 GetLeaveApplyAuthwise lvEmp = Constants.getRestTemplate().postForObject(Constants.url + "/getLeaveApplyDetailsByLeaveId", map1,
+					 GetLeaveApplyAuthwise.class);
+				model.addObject("lvEmp", lvEmp);
+				System.out.println("emp leave details"+lvEmp.toString());
+		      
 			
 			
 	} catch (Exception e) {
@@ -235,7 +245,7 @@ public class LeaveApprovalController {
 			MultiValueMap<String, Object>  map = new LinkedMultiValueMap<>();
 				map.add("empId",empId);
 			 
-		 LeaveDetail[] employeeInfo = Constants.getRestTemplate().postForObject(Constants.url + "/getLeaveListByEmp",map,
+		LeaveDetail[] employeeInfo = Constants.getRestTemplate().postForObject(Constants.url + "/getLeaveListByEmp",map,
 						  LeaveDetail[].class);
 				   
 				  employeeInfoList = new ArrayList<LeaveDetail>(Arrays.asList(employeeInfo));
@@ -270,12 +280,7 @@ public class LeaveApprovalController {
 			  ArrayList<GetLeaveStatus>(Arrays.asList(employeeDoc));
 		      model.addObject("employeeList",employeeList);
 		      
-		     map = new LinkedMultiValueMap<>();
-			 map.add("leaveId",leaveId);
-
-			 GetLeaveApplyAuthwise editEmp = Constants.getRestTemplate().postForObject(Constants.url + "/getLeaveApplyDetailsByLeaveId", map,
-					 GetLeaveApplyAuthwise.class);
-				model.addObject("editEmp", editEmp);
+		   
 
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -133,8 +133,24 @@
 										<td>${holiday.lvTitle}</td>
 										<td>${holiday.leaveNumDays}</td>
 										<td>${holiday.leaveEmpReason}</td>
-										<td>${holiday.exInt1}</td>
-
+										<c:if test="${holiday.exInt1==1}">
+										<td><span class="badge badge-info">Initial Applied</span></td>
+										</c:if>
+										<c:if test="${holiday.exInt1==2}">
+										<td><span class="badge badge-secondary">Approve By Initial Authority</span></td>
+										</c:if>
+											<c:if test="${holiday.exInt1==3}">
+										<td><span class="badge badge-success">Approve By Final Authority</span></td>
+										</c:if>
+											<c:if test="${holiday.exInt1==7}">
+										<td><span class="badge badge-danger">Cancel By Employee</span></td>
+										</c:if>
+											<c:if test="${holiday.exInt1==8}">
+										<td><span class="badge badge-danger">Reject By Initial Authority</span></td>
+										</c:if>
+											<c:if test="${holiday.exInt1==9}">
+										<td><span class="badge badge-danger">Reject By Final Authority</span></td>
+										</c:if>
 										<td class="text-center">
 											
 														<a
