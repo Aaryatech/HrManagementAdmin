@@ -494,6 +494,9 @@ try {
 				temp.setEmpCatId(editEmp.getEmpCatId());
 				temp.setEmpCode(editEmp.getEmpCode());
 				temp.setEmpDept(editEmp.getEmpDept());
+				temp.setEmpDeptShortName(editEmp.getEmpDeptShortName());
+				temp.setEmpCatShortName(editEmp.getEmpCatShortName());
+				temp.setEmpTypeShortName(editEmp.getEmpTypeShortName());
 				temp.setEmpDeptId(editEmp.getEmpDeptId());
 				temp.setEmpEmail(editEmp.getEmpEmail());
 				temp.setEmpFname(editEmp.getEmpFname());

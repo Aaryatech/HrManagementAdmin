@@ -6,7 +6,7 @@ public class GetEmployeeInfo {
 	
 	
 	private int empId;
-	
+
 	private String empCode;
 	
 	private String companyName;
@@ -24,6 +24,12 @@ public class GetEmployeeInfo {
 	private int empDeptId;
 	
 	private String empDept;
+	
+	private String empDeptShortName;
+	
+	private String empTypeShortName;
+	
+	private String empCatShortName;
 	
 	private String empFname;
 	
@@ -125,6 +131,32 @@ public class GetEmployeeInfo {
 	public String getEmpFname() {
 		return empFname;
 	}
+	
+	
+
+	public String getEmpTypeShortName() {
+		return empTypeShortName;
+	}
+
+	public void setEmpTypeShortName(String empTypeShortName) {
+		this.empTypeShortName = empTypeShortName;
+	}
+
+	public String getEmpCatShortName() {
+		return empCatShortName;
+	}
+
+	public void setEmpCatShortName(String empCatShortName) {
+		this.empCatShortName = empCatShortName;
+	}
+
+	public String getEmpDeptShortName() {
+		return empDeptShortName;
+	}
+
+	public void setEmpDeptShortName(String empDeptShortName) {
+		this.empDeptShortName = empDeptShortName;
+	}
 
 	public void setEmpFname(String empFname) {
 		this.empFname = empFname;
@@ -193,11 +225,12 @@ public class GetEmployeeInfo {
 		return "GetEmployeeInfo [empId=" + empId + ", empCode=" + empCode + ", companyName=" + companyName
 				+ ", companyId=" + companyId + ", empCatId=" + empCatId + ", empCategory=" + empCategory
 				+ ", empTypeId=" + empTypeId + ", empType=" + empType + ", empDeptId=" + empDeptId + ", empDept="
-				+ empDept + ", empFname=" + empFname + ", empMname=" + empMname + ", empSname=" + empSname
-				+ ", empMobile1=" + empMobile1 + ", empEmail=" + empEmail + ", empPrevExpYrs=" + empPrevExpYrs
-				+ ", empRatePerhr=" + empRatePerhr + ", exVar1=" + exVar1 + "]";
+				+ empDept + ", empDeptShortName=" + empDeptShortName + ", empTypeShortName=" + empTypeShortName
+				+ ", empCatShortName=" + empCatShortName + ", empFname=" + empFname + ", empMname=" + empMname
+				+ ", empSname=" + empSname + ", empMobile1=" + empMobile1 + ", empEmail=" + empEmail
+				+ ", empPrevExpYrs=" + empPrevExpYrs + ", empRatePerhr=" + empRatePerhr + ", exVar1=" + exVar1 + "]";
 	}
- 
+	
 	
 }
 

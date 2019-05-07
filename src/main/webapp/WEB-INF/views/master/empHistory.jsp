@@ -125,7 +125,7 @@
 									tabindex="-1" aria-hidden="true">
 									<option value="">Select Employee</option>
 									<c:forEach items="${employeeInfoList}" var="empInfo">
-										<option value="${empInfo.empId}">${empInfo.empFname}
+										<option value="${empInfo.empId}">${empInfo.empSname} ${empInfo.empFname} ${empInfo.empMname}
 										</option>
 									</c:forEach>
 								</select> <span class="validation-invalid-label" id="error_empId"
@@ -240,7 +240,7 @@
 
 					$.each(data, function(i, v) {
 					
-						var str = '<a href="${pageContext.request.contextPath}/empDetailHistory?leaveId='+v.exVar1+'" class="nav-link legitRipple"  style="color:black"><i class="icon-list-unordered"></i></a>'
+						var str = '<a href="${pageContext.request.contextPath}/empDetailHistory?leaveId='+v.exVar1+'" ><i class="icon-list-unordered"   style="color:black"></i></a>'
 							
  	
 							var current_status;

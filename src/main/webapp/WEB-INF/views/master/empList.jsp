@@ -120,11 +120,9 @@
 								<tr class="bg-blue">
 									<th width="10%">Sr.no</th>
 									<th>Name</th>
-									<th>Category</th>
-									<th>Type</th>
+									<th>Short Name's</th>									
 									<th>Email</th>
-									<th>Mobile</th>
-									<th>Department</th>
+									<th>Mobile</th>									
 									<th>Rate Per Hour</th>
 
 									<th class="text-center" width="10%">Actions</th>
@@ -137,11 +135,10 @@
 									<tr>
 										<td>${count.index+1}</td>
 										<td>${lvTypeList.empSname}  ${lvTypeList.empFname}</td>
-										<td>${lvTypeList.empCategory}</td>
-										<td>${lvTypeList.empType}</td>
+									<td>${lvTypeList.empCatShortName} - ${lvTypeList.empTypeShortName} - ${lvTypeList.empDeptShortName}</td>
 										<td>${lvTypeList.empEmail}</td>
 										<td>${lvTypeList.empMobile1}</td>
-										<td>${lvTypeList.empDept}</td>
+									
 										<td>${lvTypeList.empRatePerhr}</td>
 
 
