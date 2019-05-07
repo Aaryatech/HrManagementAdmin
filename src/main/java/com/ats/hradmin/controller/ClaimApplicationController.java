@@ -31,6 +31,8 @@ import com.ats.hradmin.common.DateConvertor;
 import com.ats.hradmin.common.FormValidation;
 import com.ats.hradmin.common.VpsImageUpload;
 import com.ats.hradmin.leave.model.GetAuthorityIds;
+import com.ats.hradmin.leave.model.GetLeaveApplyAuthwise;
+import com.ats.hradmin.leave.model.GetLeaveStatus;
 import com.ats.hradmin.model.EmployeeInfo;
 import com.ats.hradmin.model.GetEmployeeInfo;
 import com.ats.hradmin.model.Info;
@@ -405,6 +407,25 @@ public class ClaimApplicationController {
 			model.addObject("empId",empId);
 			model.addObject("claimId", claimId);
 			model.addObject("stat", stat);
+			System.out.println("alim id is "+claimId);
+			
+			 MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			  map.add("claimId",claimId);
+			  GetClaimTrailStatus[] employeeDoc = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpClaimInfoListByTrailEmpId", map,GetClaimTrailStatus[].class);
+			  
+			  List<GetClaimTrailStatus> employeeList = new
+			  ArrayList<GetClaimTrailStatus>(Arrays.asList(employeeDoc));
+		      model.addObject("employeeList",employeeList);
+		      
+		      
+		      MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<>();
+		      map1.add("claimId",claimId);
+
+			 GetClaimApplyAuthwise lvEmp = Constants.getRestTemplate().postForObject(Constants.url + "/getClaimApplyDetailsByClaimId", map1,
+					 GetClaimApplyAuthwise.class);
+				model.addObject("lvEmp", lvEmp);
+				System.out.println("emp leave details"+lvEmp.toString());
+		      
 			
 			
 	} catch (Exception e) {
