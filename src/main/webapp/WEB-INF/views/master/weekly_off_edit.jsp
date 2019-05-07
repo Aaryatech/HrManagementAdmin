@@ -122,24 +122,27 @@
 									id="submitInsertWeeklyOff" method="post">
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="select2">Select
-											Location <span style="color:red">* </span>:</label>
+											Location <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<select name="locId" data-placeholder="Select Location"
 												id="locId"
 												class="form-control form-control-select2 select2-hidden-accessible"
-												tabindex="-1" aria-hidden="true">
+												aria-hidden="true">
 												<option value="">Please Select</option>
 												<c:forEach items="${locationList}" var="location">
-
-													<c:choose>
-														<c:when test="${location.locId == editWeeklyOff.locId}">
-															<option value="${location.locId}" selected="selected">${location.locName}</option>
-														</c:when>
-														<c:otherwise>
-															<option value="${location.locId}">${location.locName}</option>
-														</c:otherwise>
-													</c:choose>
-
+													<c:forEach items="${locationAccess}" var="locationAccess">
+														<c:if test="${location.locId==locationAccess}">
+															<c:choose>
+																<c:when test="${location.locId == editWeeklyOff.locId}">
+																	<option value="${location.locId}" selected="selected">${location.locName}</option>
+																</c:when>
+																<c:otherwise>
+																	<option value="${location.locId}">${location.locName}</option>
+																</c:otherwise>
+															</c:choose>
+														</c:if>
+													</c:forEach>
 												</c:forEach>
 											</select> <span class="validation-invalid-label" id="error_locId"
 												style="display: none;">This field is required.</span>
@@ -149,7 +152,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="select2">Select
-											Weekly Off Type <span style="color:red">* </span>:</label>
+											Weekly Off Type <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<select name="woType" data-placeholder="Please Select"
 												id="woType"
@@ -157,13 +161,20 @@
 												tabindex="-1" aria-hidden="true">
 												<option value="">Please Select</option>
 
-												<option ${editWeeklyOff.woType == '0'  ? 'Selected': '' } value="0">All</option>
-												<option ${editWeeklyOff.woType == '1' ? 'Selected': '' } value="1">Even</option>
-												<option ${editWeeklyOff.woType == '2'  ? 'Selected': '' } value="2">Odd</option>
-												<option ${editWeeklyOff.woType == '3' ? 'Selected': '' } value="3">1st</option>
-												<option ${editWeeklyOff.woType == '4'  ? 'Selected': '' } value="4">2nd</option>
-												<option ${editWeeklyOff.woType == '5'  ? 'Selected': '' } value="5">3rd</option>
-												<option ${editWeeklyOff.woType == '6'  ? 'Selected': '' } value="6">4th</option>
+												<option ${editWeeklyOff.woType == '0'  ? 'Selected': '' }
+													value="0">All</option>
+												<option ${editWeeklyOff.woType == '1' ? 'Selected': '' }
+													value="1">Even</option>
+												<option ${editWeeklyOff.woType == '2'  ? 'Selected': '' }
+													value="2">Odd</option>
+												<option ${editWeeklyOff.woType == '3' ? 'Selected': '' }
+													value="3">1st</option>
+												<option ${editWeeklyOff.woType == '4'  ? 'Selected': '' }
+													value="4">2nd</option>
+												<option ${editWeeklyOff.woType == '5'  ? 'Selected': '' }
+													value="5">3rd</option>
+												<option ${editWeeklyOff.woType == '6'  ? 'Selected': '' }
+													value="6">4th</option>
 												<!-- <option value="All">All</option>
 												<option value="Even">Even</option>
 												<option value="Odd">Odd</option>
@@ -182,7 +193,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="select2">Select
-											Weekly Off Presently <span style="color:red">* </span>:</label>
+											Weekly Off Presently <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<select name="woPresently" data-placeholder="Please Select"
 												id="woPresently"
@@ -208,7 +220,8 @@
 									</div>
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="select2">Select
-											Weekly Off Day <span style="color:red">* </span>:</label>
+											Weekly Off Day <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<select name="woDay" data-placeholder="Please Select"
 												id="woDay"
@@ -216,19 +229,20 @@
 												tabindex="-1" aria-hidden="true">
 												<option value="">Please Select</option>
 
-												<option
-													${editWeeklyOff.woDay == '0'  ? 'Selected': '' } value="0">SUNDAY</option>
-												<option ${editWeeklyOff.woDay == '1' ? 'Selected': '' } value="1">MONDAY</option>
-												<option
-													${editWeeklyOff.woDay == '2'  ? 'Selected': '' } value="2">TUESDAY</option>
-												<option
-													${editWeeklyOff.woDay == '3' ? 'Selected': '' } value="3">WEDNESDAY</option>
-												<option
-													${editWeeklyOff.woDay == '4'  ? 'Selected': '' } value="4">THURSDAY</option>
-												<option
-													${editWeeklyOff.woDay == '5'  ? 'Selected': '' } value="5">FRIDAY</option>
-												<option
-													${editWeeklyOff.woDay == '6'  ? 'Selected': '' } value="6">SATURDAY</option>
+												<option ${editWeeklyOff.woDay == '0'  ? 'Selected': '' }
+													value="0">SUNDAY</option>
+												<option ${editWeeklyOff.woDay == '1' ? 'Selected': '' }
+													value="1">MONDAY</option>
+												<option ${editWeeklyOff.woDay == '2'  ? 'Selected': '' }
+													value="2">TUESDAY</option>
+												<option ${editWeeklyOff.woDay == '3' ? 'Selected': '' }
+													value="3">WEDNESDAY</option>
+												<option ${editWeeklyOff.woDay == '4'  ? 'Selected': '' }
+													value="4">THURSDAY</option>
+												<option ${editWeeklyOff.woDay == '5'  ? 'Selected': '' }
+													value="5">FRIDAY</option>
+												<option ${editWeeklyOff.woDay == '6'  ? 'Selected': '' }
+													value="6">SATURDAY</option>
 												<!-- <option value="SUNDAY">SUNDAY</option>
 												<option value="MONDAY">MONDAY</option>
 												<option value="TUESDAY">TUESDAY</option>
@@ -254,13 +268,17 @@
 
 									<div class="form-group row mb-0">
 										<div class="col-lg-10 ml-lg-auto">
-										
+
 											<button type="submit" class="btn bg-blue ml-3 legitRipple"
 												id="submtbtn">
 												Submit <i class="icon-paperplane ml-2"></i>
 											</button>
-											<a href="${pageContext.request.contextPath}/showWeeklyOffList"><button
-										type="button" class="btn btn-primary"><i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp; Cancel</button></a>
+											<a
+												href="${pageContext.request.contextPath}/showWeeklyOffList"><button
+													type="button" class="btn btn-primary">
+													<i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp;
+													Cancel
+												</button></a>
 										</div>
 									</div>
 								</form>

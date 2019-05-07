@@ -78,6 +78,9 @@ public class WeeklyOffController {
 			}
 
 			model.addObject("locationList", locationList);
+			model.addObject("locationAccess", userObj.getLocationIds().split(",")); 
+			 
+			
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -305,6 +308,7 @@ public class WeeklyOffController {
 					.collect(Collectors.toList());
 
 			model.addObject("locIdList", locIdList);
+			model.addObject("locationAccess", userObj.getLocationIds().split(",")); 
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

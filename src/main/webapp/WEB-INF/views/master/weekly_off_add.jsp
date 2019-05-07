@@ -122,15 +122,20 @@
 									id="submitInsertWeeklyOff" method="post">
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="select2">Select
-											Location <span style="color:red">* </span>:</label>
+											Location <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<select name="locId" data-placeholder="Select Location"
 												id="locId"
 												class="form-control form-control-select2 select2-hidden-accessible"
-												tabindex="-1" aria-hidden="true">
+												aria-hidden="true">
 												<option value="">Please Select</option>
 												<c:forEach items="${locationList}" var="location">
-													<option value="${location.locId}">${location.locName}</option>
+													<c:forEach items="${locationAccess}" var="locationAccess">
+														<c:if test="${location.locId==locationAccess}">
+															<option value="${location.locId}">${location.locName}</option>
+														</c:if>
+													</c:forEach>
 												</c:forEach>
 											</select> <span class="validation-invalid-label" id="error_locId"
 												style="display: none;">This field is required.</span>
@@ -140,7 +145,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="select2">Select
-											Weekly Off Type <span style="color:red">* </span>:</label>
+											Weekly Off Type <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<select name="woType" data-placeholder="Please Select"
 												id="woType"
@@ -165,7 +171,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="select2">Select
-											Weekly Off Presently <span style="color:red">* </span>:</label>
+											Weekly Off Presently <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<select name="woPresently" data-placeholder="Please Select"
 												id="woPresently"
@@ -183,7 +190,8 @@
 									</div>
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="select2">Select
-											Weekly Off Day <span style="color:red">* </span>:</label>
+											Weekly Off Day <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<select name="woDay" data-placeholder="Please Select"
 												id="woDay"
@@ -215,13 +223,17 @@
 
 									<div class="form-group row mb-0">
 										<div class="col-lg-10 ml-lg-auto">
-											
+
 											<button type="submit" class="btn bg-blue ml-3 legitRipple"
 												id="submtbtn">
 												Submit <i class="icon-paperplane ml-2"></i>
 											</button>
-											<a href="${pageContext.request.contextPath}/showWeeklyOffList"><button
-										type="button" class="btn btn-primary"><i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp; Cancel</button></a>
+											<a
+												href="${pageContext.request.contextPath}/showWeeklyOffList"><button
+													type="button" class="btn btn-primary">
+													<i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp;
+													Cancel
+												</button></a>
 										</div>
 									</div>
 								</form>
