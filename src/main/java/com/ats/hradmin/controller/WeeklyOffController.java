@@ -46,6 +46,7 @@ public class WeeklyOffController {
 	String dateTime = dateFormat.format(now);
 
 	WeeklyOff editWeeklyOff = new WeeklyOff();
+	
 
 	@RequestMapping(value = "/addWeeklyOff", method = RequestMethod.GET)
 	public ModelAndView addWeeklyOff(HttpServletRequest request, HttpServletResponse response) {
