@@ -72,7 +72,7 @@ public class DocUploadController {
 			VpsImageUpload upload = new VpsImageUpload();
 			
 			Date date = new Date();
-			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 
 			LoginResponse obj = (LoginResponse) session.getAttribute("UserDetail");

@@ -180,7 +180,7 @@ public class ClaimApplicationController {
 		try {
 			HttpSession session = request.getSession();
 			Date date = new Date();
-			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 			
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
@@ -443,7 +443,7 @@ public class ClaimApplicationController {
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
 			Date date = new Date();
-			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 			  System.err.println("emp data :::"+request.getParameter("empId"));
 			int  empId = Integer.parseInt((request.getParameter("empId")));
@@ -613,7 +613,7 @@ public class ClaimApplicationController {
 			 
 		   Date date = new Date();
 		   SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
-		   SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		   SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		   VpsImageUpload upload = new VpsImageUpload();
 		   System.out.println("sdfsdfsdf" + file.get(0).getOriginalFilename());
 			

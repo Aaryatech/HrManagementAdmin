@@ -90,7 +90,7 @@ try {
 			HttpSession session = request.getSession();
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 			Date date = new Date();
-			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 			VpsImageUpload upload = new VpsImageUpload();
 
@@ -266,7 +266,7 @@ try {
 			HttpSession session = request.getSession();
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 			Date date = new Date();
-			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 			VpsImageUpload upload = new VpsImageUpload();
 
@@ -353,7 +353,7 @@ try {
 		try {
 
 			Date date = new Date();
-			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 			String locName = request.getParameter("locName");
 			String locShortName = request.getParameter("locShortName");
@@ -570,7 +570,7 @@ try {
 		try {
 
 			Date date = new Date();
-			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 			String locName = request.getParameter("locName");
 			String locShortName = request.getParameter("locShortName");
@@ -718,7 +718,7 @@ try {
 			List<AccessRightModule> moduleJsonList = new ArrayList<>();
 
 			Date date = new Date();
-			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 			String empTypeName = request.getParameter("empTypeName");
 			String empShortName = request.getParameter("empShortName");
@@ -1071,7 +1071,7 @@ try {
 			List<AccessRightModule> moduleJsonList = new ArrayList<>();
 
 			Date date = new Date();
-			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 			String empTypeName = request.getParameter("empTypeName");
 			String empShortName = request.getParameter("empShortName");
@@ -1257,7 +1257,7 @@ try {
 		try {
 
 			Date date = new Date();
-			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 			String catName = request.getParameter("catName");
 			String catShortName = request.getParameter("catShortName");
@@ -1447,7 +1447,7 @@ try {
 		try {
 
 			Date date = new Date();
-			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 			String catName = request.getParameter("catName");
 			String catShortName = request.getParameter("catShortName");
@@ -1532,7 +1532,7 @@ try {
 		try {
 
 			Date date = new Date();
-			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 			String deptName = request.getParameter("deptName");
 			String deptShortName = request.getParameter("deptShortName");
@@ -1721,7 +1721,7 @@ try {
 		try {
 
 			Date date = new Date();
-			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 			String deptName = request.getParameter("deptName");
 			String deptShortName = request.getParameter("deptShortName");
@@ -1905,7 +1905,7 @@ try {
 		try {
 			HttpSession session = request.getSession();
 			Date date = new Date();
-			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 			VpsImageUpload upload = new VpsImageUpload();
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
@@ -2044,7 +2044,7 @@ try {
 		try {
 			HttpSession session = request.getSession();
 			Date date = new Date();
-			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 			VpsImageUpload upload = new VpsImageUpload();
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
