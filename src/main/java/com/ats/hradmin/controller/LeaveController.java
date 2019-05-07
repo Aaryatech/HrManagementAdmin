@@ -637,7 +637,6 @@ try {
 			HttpSession session = request.getSession();
 			Date date = new Date();
 			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-			SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
@@ -751,7 +750,6 @@ try {
 
 					lt.setMakerUserId(userObj.getUserId());
 					lt.setMakerEnterDatetime(sf.format(date));
-
 					LeaveTrail res1 = Constants.getRestTemplate().postForObject(Constants.url + "/saveLeaveTrail", lt,
 							LeaveTrail.class);
 					if (res1 != null) {
