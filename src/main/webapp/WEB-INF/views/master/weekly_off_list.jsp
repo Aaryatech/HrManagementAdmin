@@ -119,7 +119,7 @@
 									<th width="10%">Sr. No.</th>
 									<th>Location Name</th>
 									<th>Weekly Off Type</th>
-									<th>Weekly Off Presently</th>
+								<!-- 	<th>Weekly Off Presently</th> -->
 									<th>Day</th>
 									<th width="10%" class="text-center">Actions</th>
 								</tr>
@@ -166,7 +166,7 @@
 												All
 												</c:otherwise>
 											</c:choose></td>
-										<td>${week.woPresently}</td>
+									<%-- 	<td>${week.woPresently}</td> --%>
 										<td><c:choose>
 												<c:when test="${week.woDay==1}">
 												

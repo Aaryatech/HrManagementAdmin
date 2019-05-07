@@ -413,7 +413,7 @@
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
 												placeholder="Contact No." id="mobile1" name="mobile1"
-												value="${editEmp.empMobile1}" pattern="[7-9]{1}[0-9]{9}"
+												value="${editEmp.empMobile1}"  
 												autocomplete="off" onchange="trim(this)" maxlength="10">
 											<span class="validation-invalid-label" id="error_mobile1"
 												style="display: none;">This field is required.</span>
@@ -426,7 +426,7 @@
 												placeholder="Alternate Contact No." id="mobile2"
 												value="${editEmp.empMobile2}" name="mobile2"
 												autocomplete="off" onchange="trim(this)"
-												pattern="[7-9]{1}[0-9]{9}" maxlength="10">
+												 f maxlength="10">
 										</div>
 									</div>
 
@@ -462,7 +462,7 @@
 												placeholder="Emergency Contact No." id="emgContNo1"
 												value="${editEmp.empEmergencyNo1}" name="emgContNo1"
 												autocomplete="off" onchange="trim(this)"
-												pattern="[7-9]{1}[0-9]{9}" maxlength="10"> <span
+												  maxlength="10"> <span
 												class="validation-invalid-label" id="error_emgContNo1"
 												style="display: none;">This field is required.</span>
 										</div>
@@ -488,7 +488,7 @@
 												placeholder="Emergency Alternate Contact No."
 												id="emgContNo2" name="emgContNo2"
 												value="${editEmp.empEmergencyNo2}" autocomplete="off"
-												onchange="trim(this)" pattern="[7-9]{1}[0-9]{9}"
+												onchange="trim(this)"  
 												maxlength="10"> <span
 												class="validation-invalid-label" id="error_emgContNo2"
 												style="display: none;">This field is required.</span>

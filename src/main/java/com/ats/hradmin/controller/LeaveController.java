@@ -661,11 +661,16 @@ try {
 			GetAuthorityIds editEmp = Constants.getRestTemplate().postForObject(Constants.url + "/getAuthIdByEmpId",
 					map, GetAuthorityIds.class);
 			int stat = 0;
+ 			if(editEmp!=null) {
 			if (editEmp.getFinAuthEmpId() == userObj.getEmpId()) {
 				stat = 3;
 			} else if (editEmp.getIniAuthEmpId() == userObj.getEmpId()) {
 				stat = 2;
 			} else {
+				stat = 1;
+			}
+			}
+			else {
 				stat = 1;
 			}
 			System.out.println("stat is " + stat);

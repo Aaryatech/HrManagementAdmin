@@ -489,7 +489,25 @@
 										</div>
 									</div>
 
-									<div class="form-group row">
+<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="comoffallowed">Is Working Today
+											<span style="color:red">* </span>:</label>
+										<div class="form-check form-check-inline">
+											<label class="form-check-label"> <input type="radio"
+												class="form-check-input" name="isWorking"
+												id="isStructured" onclick="setDate(this.value)" checked value="1"> Yes
+											</label>
+										</div>
+										<div class="form-check form-check-inline">
+											<label class="form-check-label"> <input type="radio"
+												class="form-check-input" onclick="setDate(this.value)" name="isWorking"
+												id="isStructured" value="0"> No
+											</label>
+										</div>
+									</div>
+									
+<div id="abc" style="display:none;">
+									<div class="form-group row"  >
 										<label class="col-form-label col-lg-2" for="leavingDate">Leaving
 											Date : </label>
 										<div class="col-lg-10">
@@ -498,7 +516,7 @@
 												placeholder="Leaving Date">
 										</div>
 									</div>
-
+</div>
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="lvngReson">
 											Leaving Reason : </label>
@@ -579,7 +597,7 @@
 													type="button" class="btn btn-primary">
 													<i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp;
 													Cancel
-												</button></a> <input type="text" id="mobile1Exist" name="mobile1Exist"><input type="text" id="emailExist" name="emailExist">
+												</button></a> <input type="hidden" id="mobile1Exist" name="mobile1Exist"><input type="hidden" id="emailExist" name="emailExist">
 										</div>
 									</div>
 								</form>
@@ -603,7 +621,26 @@
 
 	</div>
 	<!-- /page content -->
+<script type="text/javascript">
+		function setDate(value) {
+			///alert("Value " +value)
+			if (value == 1) {
+				//alert(value)
+				//document.getElementById("relDate").removeAttribute("required");
+				document.getElementById("abc").style.display = "none";
 
+				//alert(value)
+			} else {
+				//alert(value)
+				//document.getElementById("relDate").setAttribute("required","true");
+				document.getElementById("abc").style.display = "block";
+
+				//alert(value)
+
+			}
+
+		}
+	</script>
 	<script>
 		function checkAdd() {
 

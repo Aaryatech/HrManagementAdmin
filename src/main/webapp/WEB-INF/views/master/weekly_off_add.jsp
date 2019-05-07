@@ -169,7 +169,7 @@
 
 
 
-									<div class="form-group row">
+									<!-- <div class="form-group row">
 										<label class="col-form-label col-lg-2" for="select2">Select
 											Weekly Off Presently <span style="color: red">* </span>:
 										</label>
@@ -187,7 +187,10 @@
 												id="error_woPresently" style="display: none;">This
 												field is required.</span>
 										</div>
-									</div>
+									</div> -->
+									
+									
+									<input type="hidden" value="1" name="woPresently">
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="select2">Select
 											Weekly Off Day <span style="color: red">* </span>:
@@ -317,15 +320,7 @@
 					$("#error_woType").hide()
 				}
 
-				if (!$("#woPresently").val()) {
-
-					isError = true;
-
-					$("#error_woPresently").show()
-
-				} else {
-					$("#error_woPresently").hide()
-				}
+				
 
 				if (!$("#woDay").val()) {
 
