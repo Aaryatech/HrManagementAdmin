@@ -102,7 +102,7 @@
 						<h5 class="card-title">Edit Authority</h5>
 						<div class="header-elements">
 							<div class="list-icons">
-								<a class="list-icons-item" data-action="collapse"></a>
+								<!-- <a class="list-icons-item" data-action="collapse"></a> -->
 							</div>
 						</div>
 					</div>

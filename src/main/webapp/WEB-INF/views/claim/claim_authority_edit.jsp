@@ -116,8 +116,7 @@
 							<div class="row">
 								<div class="col-md-6">
 
-									<table
-										class="table table-bordered table-hover datatable-highlight datatable-button-html5-basic1  datatable-button-print-columns1"
+									<table class="table datatable-scroll-y" width="100%"
 										id="printtable1">
 										<thead>
 											<tr class="bg-blue">
@@ -142,7 +141,7 @@
 														checked value="${emp.empId}" /></td>
 
 													<td width="10%">${emp.empCode}</td>
-													<td>${emp.empFname}${emp.empMname}${emp.empSname}</td>
+													<td>${emp.empSname}${emp.empFname}</td>
 													<td width="10%">${emp.empDept}</td>
 													<td width="10%">${emp.empCategory}</td>
 												</tr>
@@ -153,8 +152,7 @@
 								</div>
 
 								<div class="col-md-6">
-									<table
-										class="table table-bordered table-hover datatable-highlight datatable-button-html5-basic1  datatable-button-print-columns1"
+									<table class="table datatable-scroll-y" width="100%"
 										id="printtable2">
 										<thead>
 											<tr class="bg-blue">
@@ -171,7 +169,7 @@
 										<tbody>
 											<c:forEach items="${empList}" var="emp" varStatus="count">
 												<tr>
-													<td width="60%"><c:choose>
+													<td><c:choose>
 															<c:when
 																test="${claimAuthority.caIniAuthEmpId==emp.empId}">
 																<input type="radio" class="chk" name="iniAuthEmpId"
@@ -213,7 +211,7 @@
 																	id="repToEmpIds${count.index+1}" value="${emp.empId}" />Reporting </c:otherwise>
 														</c:choose></td>
 													<td width="10%">${emp.empCode}</td>
-													<td>${emp.empFname}${emp.empMname}${emp.empSname}</td>
+													<td>${emp.empSname}${emp.empFname}</td>
 													<td width="10%">${emp.empDept}</td>
 													<td width="10%">${emp.empCategory}</td>
 												</tr>
@@ -223,17 +221,19 @@
 									</table>
 								</div>
 							</div>
-								<div class="form-group row mb-0">
-										<div class="col-lg-10 ml-lg-auto">
+							<div class="col-md-12" style="text-align: center;">
 
-									<input type="submit" class="btn btn-primary" value="Add"
-										id="deleteId"
-										onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to Submit record');}"
-										style="align-content: center; width: 113px; margin-left: 40px;">
+								<input type="submit" class="btn btn-primary" value="Add"
+									id="deleteId"
+									onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to Submit record');}"
+									style="align-content: center; width: 113px; margin-left: 40px;">
 
-										<a href="${pageContext.request.contextPath}/claimAuthorityList"><button
-										type="button" class="btn btn-primary"><i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp; Cancel</button></a>
-								</div>
+								<a href="${pageContext.request.contextPath}/claimAuthorityList"><button
+										type="button" class="btn btn-primary">
+										<i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp;
+										Cancel
+									</button></a>
+
 							</div>
 						</form>
 
