@@ -162,25 +162,19 @@
 												</c:choose>
 
 												<td class="text-center">
-													<div class="list-icons">
-														<div class="dropdown">
-															<a href="#" class="list-icons-item"
-																data-toggle="dropdown"> <i class="icon-menu9"></i>
-															</a>
-
-															<div class="dropdown-menu dropdown-menu-right">
+												
 																<c:choose>
 																	<c:when test="${leaveList.finAuthEmpId==empIdOrig}">
 
 																		<a
 																			href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList.leaveTypeName}&leaveId=${leaveList.circulatedTo}&stat=3"
 																			onClick="return confirm('Are you sure want to Approve this Leave');"
-																			class="dropdown-item"><i class="icon-checkmark4 "></i>Approve</a>
+																			title="Approve"><i class="icon-checkmark4 " style="color: black;"></i></a>
 
 																		<a
 																			href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList.leaveTypeName}&leaveId=${leaveList.circulatedTo}&stat=9"
 																			onClick="return confirm('Are you sure want to Reject this Leave');"
-																			class="dropdown-item"><i class="icon-x"></i>Reject</a>
+																			title="Reject"><i class="icon-x" style="color: black;"></i></a>
 
 
 
@@ -191,12 +185,12 @@
 																		<a
 																			href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList.leaveTypeName}&leaveId=${leaveList.circulatedTo}&stat=2"
 																			onClick="return confirm('Are you sure want to Approve this Leave');"
-																			class="dropdown-item"><i class="icon-checkmark4 "></i>Approve</a>
+																			title="Approve"><i class="icon-checkmark4 " style="color: black;"></i></a>
 
 																		<a
 																			href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList.leaveTypeName}&leaveId=${leaveList.circulatedTo}&stat=8"
 																			onClick="return confirm('Are you sure want to Reject this Leave');"
-																			class="dropdown-item"><i class="icon-x"></i>Reject</a>
+																			title="Reject"><i class="icon-x" style="color: black;"></i></a>
 
 																	</c:when>
 
@@ -205,8 +199,8 @@
 																		<a
 																			href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList.leaveTypeName}&leaveId=${leaveList.circulatedTo}&stat=7"
 																			onClick="return confirm('Are you sure want to Cancel this Leave');"
-																			class="dropdown-item"><i
-																			class="icon-cancel-squareed65"></i>Cancel</a>
+																			title="Cancel"><i
+																			class="icon-cancel-squareed65" style="color: black;"></i></a>
 
 
 																	</c:when>
@@ -220,25 +214,13 @@
 																	</c:otherwise>
 																</c:choose>
 
-															</div>
-														</div>
-													</div>
 
-													<div class="list-icons">
-														<div class="dropdown">
-															<a href="#" class="list-icons-item"
-																data-toggle="dropdown"> <i class="icon-menu9"></i>
-															</a>
-
-															<div class="dropdown-menu dropdown-menu-right">
 																<a
 																	href="${pageContext.request.contextPath}/empDetailHistory?leaveId=${leaveList.circulatedTo}"
-																	class="dropdown-item"><i class="icon-pencil7"></i>Detail</a>
+																	title="Detail"><i class="icon-list-unordered" style="color: black;"></i></a>
 
 
-															</div>
-														</div>
-													</div>
+															
 												</td>
 											</tr>
 										</c:forEach>
@@ -295,25 +277,19 @@
 
 
 												<td class="text-center">
-													<div class="list-icons">
-														<div class="dropdown">
-															<a href="#" class="list-icons-item"
-																data-toggle="dropdown"> <i class="icon-menu9"></i>
-															</a>
-
-															<div class="dropdown-menu dropdown-menu-right">
+												
 																<c:choose>
 																	<c:when test="${leaveList1.finAuthEmpId==empIdOrig}">
 
 																		<a
 																			href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList1.leaveTypeName}&leaveId=${leaveList1.circulatedTo}&stat=3"
 																			onClick="return confirm('Are you sure want to Approve this Leave');"
-																			class="dropdown-item"><i class="icon-checkmark4 "></i>Approve</a>
+																			title="Approve"><i class="icon-checkmark4 " style="color: black;"></i></a>
 
 																		<a
 																			href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList1.leaveTypeName}&leaveId=${leaveList1.circulatedTo}&stat=9"
 																			onClick="return confirm('Are you sure want to Reject this Leave');"
-																			class="dropdown-item"><i class="icon-x"></i>Reject</a>
+																			title="Reject"><i class="icon-x" style="color: black;"></i></a>
 																	</c:when>
 
 																	<c:when test="${leaveList1.iniAuthEmpId==empIdOrig}">
@@ -341,32 +317,20 @@
 																	<a
 																		href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList1.leaveTypeName}&leaveId=${leaveList1.circulatedTo}&stat=7"
 																		onClick="return confirm('Are you sure want to Cancel this Leave');"
-																		class="dropdown-item"><i
-																		class="icon-cancel-square "></i>Cancel</a>
+																		title="Cancel"><i
+																		class="icon-cancel-square "style="color: black;"></i></a>
 
 
 																</c:if>
 
-															</div>
-														</div>
-													</div>
+															
 
-
-													<div class="list-icons">
-														<div class="dropdown">
-															<a href="#" class="list-icons-item"
-																data-toggle="dropdown"> <i class="icon-menu9"></i>
-															</a>
-
-															<div class="dropdown-menu dropdown-menu-right">
 																<a
 																	href="${pageContext.request.contextPath}/empDetailHistory?leaveId=${leaveList1.circulatedTo}"
-																	class="dropdown-item"><i class="icon-pencil7"></i>Detail</a>
+																	title="Detail"><i class="icon-list-unordered" style="color: black;"></i></a>
 
 
-															</div>
-														</div>
-													</div>
+														
 												</td>
 											</tr>
 										</c:forEach>
