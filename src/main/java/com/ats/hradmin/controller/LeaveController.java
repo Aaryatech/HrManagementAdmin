@@ -824,58 +824,6 @@ try {
 	
 	
 
-	@RequestMapping(value = "/showLeaveHistList", method = RequestMethod.GET)
-	public ModelAndView showClaimList(HttpServletRequest request, HttpServletResponse response) {
-		
-		ModelAndView model = new ModelAndView("leave/empLeaveHistory");
-		try {
-
-			  List<LeaveDetail> employeeInfoList=new ArrayList<LeaveDetail>();
-			int empId = Integer.parseInt(FormValidation.DecodeKey(request.getParameter("empId")));
-			System.err.println("emp idis "+empId);
-			MultiValueMap<String, Object>  map = new LinkedMultiValueMap<>();
-				map.add("empId",empId);
-			 
-		 LeaveDetail[] employeeInfo = Constants.getRestTemplate().postForObject(Constants.url + "/getLeaveListByEmp",map,
-						  LeaveDetail[].class);
-				   
-				  employeeInfoList = new ArrayList<LeaveDetail>(Arrays.asList(employeeInfo));
-				  for (int i = 0; i < employeeInfoList.size(); i++) {
-
-					  employeeInfoList.get(i).setExVar1(FormValidation.Encrypt(String.valueOf(employeeInfoList.get(i).getLeaveId())));
-					}
-				  model.addObject("leaveHistoryList",employeeInfoList);
-			
-			
-	} catch (Exception e) {
-		e.printStackTrace();
-	}
-	return model;
-		  
-	}
-	
-	@RequestMapping(value = "/showLeaveHistDetailList", method = RequestMethod.GET)
-	public ModelAndView showLeaveHistDetailList(HttpServletRequest request, HttpServletResponse response) {
-
-		ModelAndView model = new ModelAndView("leave/empLeaveHistoryDetail");
-
-		try {
-		
-			String base64encodedString = request.getParameter("leaveId");			
-			String leaveId = FormValidation.DecodeKey(base64encodedString);			
-			  MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			  map.add("leaveId",leaveId);
-			  GetLeaveStatus[] employeeDoc = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpInfoListByTrailEmpId", map,GetLeaveStatus[].class);
-			  
-			  List<GetLeaveStatus> employeeList = new
-			  ArrayList<GetLeaveStatus>(Arrays.asList(employeeDoc));
-		      model.addObject("employeeList",employeeList);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return model;
-	}
-	
 	
 	
 }
