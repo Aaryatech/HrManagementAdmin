@@ -877,6 +877,10 @@ try {
  
 			employeeInfo = Constants.getRestTemplate().postForObject(Constants.url + "getUserInfoByContcAndEmail", map,
 					EmployeeInfo.class);
+			
+			 if(employeeInfo==null) {
+				 employeeInfo = new EmployeeInfo();
+			 }
 
 		} catch (Exception e) {
 			System.err.println("Exce in checkUniqueField  " + e.getMessage());

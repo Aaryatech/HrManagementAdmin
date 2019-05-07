@@ -126,7 +126,8 @@
 									enctype="multipart/form-data">
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="empCode">
-											Employee Code <span style="color:red">* </span>: </label>
+											Employee Code <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-2">
 											<input type="text" class="form-control"
 												placeholder="Employee Code" id="empCode" name="empCode"
@@ -136,7 +137,7 @@
 										</div>
 									</div>
 
-									
+
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="profilePic">
 											Profile Pic :</label>
@@ -155,7 +156,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="fname">
-											Employee Name <span style="color:red">* </span>: </label>
+											Employee Name <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-3">
 											<input type="text" class="form-control  "
 												placeholder="First Name" id="fname" name="fname"
@@ -188,12 +190,13 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="locId">
-											Location <span style="color:red">* </span>:</label>
+											Location <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<select name="locId" data-placeholder="Select Location"
 												id="locId"
 												class="form-control form-control-select2 select2-hidden-accessible"
-												data-fouc=""  aria-hidden="true">
+												data-fouc="" aria-hidden="true">
 
 												<option value="">Select Location</option>
 
@@ -207,7 +210,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="catId">
-											Category <span style="color:red">* </span>: </label>
+											Category <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<select name="catId" data-placeholder="Select Category"
 												id="catId"
@@ -226,7 +230,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="typeId">
-											Type <span style="color:red">* </span>: </label>
+											Type <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<select name="typeId" data-placeholder="Select Type"
 												id="typeId"
@@ -245,12 +250,13 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="deptId">
-											Department <span style="color:red">* </span>:</label>
+											Department <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<select name="deptId" data-placeholder="Select Department"
 												id="deptId"
 												class="form-control form-control-select2 select2-hidden-accessible"
-												data-fouc=""  aria-hidden="true">
+												data-fouc="" aria-hidden="true">
 
 												<option value="">Select Department</option>
 
@@ -265,7 +271,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="tempAdd">Temporary
-											Address <span style="color:red">* </span>:</label>
+											Address <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<textarea rows="3" cols="3" class="form-control"
 												placeholder="Temporary Address" onchange="trim(this)"
@@ -289,7 +296,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="permntAdd">Permanent
-											Address <span style="color:red">* </span>: </label>
+											Address <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<textarea rows="3" cols="3" class="form-control"
 												placeholder="Permanent Address" onchange="trim(this)"
@@ -299,7 +307,7 @@
 
 										</div>
 									</div>
-<!-- 
+									<!-- 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="bloodGrp">Blood
 											Group* : </label>
@@ -311,10 +319,11 @@
 												style="display: none;">This field is required.</span>
 										</div>
 									</div> -->
-									
+
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="select2">Select
-											Blood Group <span style="color:red">* </span>:</label>
+											Blood Group <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<select name="bloodGrp" data-placeholder="Please Select"
 												id="bloodGrp"
@@ -336,7 +345,8 @@
 									</div>
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="mobile1">Contact
-											No <span style="color:red">* </span>:</label>
+											No <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
 												placeholder="Contact No." id="mobile1" name="mobile1"
@@ -361,7 +371,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="email">Email
-											<span style="color:red">* </span>: </label>
+											<span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control" placeholder="Email"
 												id="email" name="email" onchange="checkUnique(this.value,2)"
@@ -375,7 +386,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="emgContPrsn1">Emergency
-											Contact Person 1 <span style="color:red">* </span>: </label>
+											Contact Person 1 <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
 												placeholder="Emergency Contact Person" id="emgContPrsn1"
@@ -387,7 +399,8 @@
 
 
 										<label class="col-form-label col-lg-2" for="emgContNo1">Emergency
-											Contact No 1 <span style="color:red">* </span>: </label>
+											Contact No 1 <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
 												placeholder="Emergency Contact No." id="emgContNo1"
@@ -400,7 +413,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="emgContPrsn2">Emergency
-											Contact Person 2 <span style="color:red">* </span>: </label>
+											Contact Person 2 <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
 												placeholder="Emergency Alternate Contact Person"
@@ -411,7 +425,8 @@
 										</div>
 
 										<label class="col-form-label col-lg-2" for="emgContNo2">Emergency
-											Contact No 2 <span style="color:red">* </span>:</label>
+											Contact No 2 <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
 												placeholder="Emergency Alternate Contact No."
@@ -424,7 +439,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="ratePerHr">
-											Employee Rate Per Hour <span style="color:red">* </span>: </label>
+											Employee Rate Per Hour <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control numbersOnly"
 												placeholder="Employee Rate Per Hour" id="ratePerHr"
@@ -436,7 +452,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="joiningDate">Joining
-											Date <span style="color:red">* </span>:</label>
+											Date <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control datepickerclass "
 												name="joiningDate" id="joiningDate"
@@ -448,7 +465,9 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="prevsExpYr">
-											Previous Experience in Year <span style="color:red">* </span>:</label>
+											Previous Experience in Year <span style="color: red">*
+										</span>:
+										</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control numbersOnly"
 												placeholder="Previous Experience in Year" id="prevsExpYr"
@@ -458,7 +477,9 @@
 										</div>
 
 										<label class="col-form-label col-lg-2" for="prevsExpMn">
-											Previous Experience in Month <span style="color:red">* </span>:</label>
+											Previous Experience in Month <span style="color: red">*
+										</span>:
+										</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control numbersOnly"
 												placeholder="Previous Experience in Month" id="prevsExpMn"
@@ -502,7 +523,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="uname">
-											User Name <span style="color:red">* </span>: </label>
+											User Name <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control  "
 												placeholder="User Name" id="uname" name="uname"
@@ -514,7 +536,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="upass">
-											User Password <span style="color:red">* </span>: </label>
+											User Password <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<input type="password" class="form-control  "
 												placeholder="User Password " id="upass" name="upass"
@@ -526,7 +549,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="locId2">
-											Location <span style="color:red">* </span>:</label>
+											Location <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 
 											<select multiple="multiple"
@@ -551,9 +575,11 @@
 												id="submtbtn">
 												Submit <i class="icon-paperplane ml-2"></i>
 											</button>
-												<a href="${pageContext.request.contextPath}/showEmpList"><button
-										type="button" class="btn btn-primary"><i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp; Cancel</button></a>
-										
+											<a href="${pageContext.request.contextPath}/showEmpList"><button
+													type="button" class="btn btn-primary">
+													<i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp;
+													Cancel
+												</button></a> <input type="text" id="mobile1Exist" name="mobile1Exist"><input type="text" id="emailExist" name="emailExist">
 										</div>
 									</div>
 								</form>
@@ -579,9 +605,6 @@
 	<!-- /page content -->
 
 	<script>
-	
-
-	
 		function checkAdd() {
 
 			if (document.getElementById("checkSameAdd").checked == true) {
@@ -681,7 +704,7 @@
 													$("#error_sname").hide()
 												}
 
-												if (!$("#locId2").val()) {
+												if ($("#locId2").val() == "") {
 
 													isError = true;
 
@@ -838,7 +861,14 @@
 													$("#error_mobile1").show()
 
 												} else {
-													$("#error_mobile1").hide()
+													
+													if($("#mobile1Exist").val()==1){
+														
+														$("#error_mobile1").show()
+													}else{
+														$("#error_mobile1").hide()
+													}
+													
 												}
 
 												if (!$("#emgContNo1").val()
@@ -904,7 +934,14 @@
 													$("#error_email").show()
 
 												} else {
-													$("#error_email").hide()
+													
+													if($("#emailExist").val()==1){
+														
+														$("#error_email").show()
+													}else{
+														$("#error_email").hide()
+													}
+													 
 												}
 
 												if (!$("#uname").val()) {
@@ -1012,39 +1049,58 @@
 					//alert("InValid Email Id");
 				}
 			}
-			if (valid == true)
+			if (valid == true) {
+				$
+						.getJSON(
+								'${getUserInfo}',
+								{
+									inputValue : inputValue,
+									valueType : valueType,
+									ajax : 'true',
 
-				$.getJSON('${getUserInfo}', {
-					inputValue : inputValue,
-					valueType : valueType,
-					ajax : 'true',
+								},
+								function(data) {
 
-				}, function(data) {
-					//alert("Data  " + JSON.stringify(data));
-					if (valueType == 2) {
-						$("#error_email").show()
-						document.getElementById("email").value = "";
-						document .getElementById("error_email").innerHTML = "This Email is already exist.";
-						/* alert("This email id already exist "); */
+									if (valueType == 2) {
 
-						//document.getElementById("submtbtn").disabled = true;
+										if (data.empId == 0) {
 
-					} else {
-						$("#error_mobile1").show()
-						document.getElementById("mobile1").value = "";
-						document .getElementById("error_mobile1").innerHTML = "This Mobile No. is already exist.";
-						/* alert("This contact no  already exist"); */
-						//document.getElementById("submtbtn").disabled = true;
+											$("#error_email").hide();
+											document
+											.getElementById("emailExist").value = 0;
 
-					}
-					
-					
-					
-					
+										} else {
+											$("#error_email").show();
+											/* document.getElementById("email").value = ""; */
+											document
+													.getElementById("emailExist").value = 1;
+											document
+													.getElementById("error_email").innerHTML = "This Email is already exist.";
+										}
 
-				});
-			document.getElementById("uname").value = document
-			.getElementById("email").value;
+									} else {
+
+										if (data.empId == 0) {
+
+											$("#error_mobile1").hide();
+											document
+											.getElementById("mobile1Exist").value = 0;
+
+										} else {
+											$("#error_mobile1").show()
+											/* document.getElementById("mobile1").value = ""; */
+											document
+													.getElementById("mobile1Exist").value = 1;
+											document
+													.getElementById("error_mobile1").innerHTML = "This Mobile No. is already exist.";
+										}
+
+									}
+
+								});
+				document.getElementById("uname").value = document
+						.getElementById("email").value;
+			}
 		}
 	</script>
 
