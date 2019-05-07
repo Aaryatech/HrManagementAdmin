@@ -149,45 +149,46 @@
 									</div>
 								</div>
 								<hr>
-
-								<table
-									class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic1  datatable-button-print-columns1"
-									id="printtable1">
-
-
-									<thead>
-										<tr class="bg-blue" style="text-align: center;">
-
-											<th >Leave Type</th>
-											<th>OB</th>
-											<th>Earned</th>
-											<th>Sanction</th>
-											<th>Applied</th>
-											<th>Balanced</th>
+								<div class="table-responsive">
+									<table
+										class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic1  datatable-button-print-columns1"
+										id="printtable1">
 
 
-										</tr>
-									</thead>
-									<tbody>
-										<c:forEach items="${leaveHistoryList}" var="leaveHistoryList">
-											<tr>
-												<td>${leaveHistoryList.lvTitleShort}</td>
-												<td style="text-align: right;">${leaveHistoryList.balLeave}</td>
-												<td style="text-align: right;">${leaveHistoryList.lvsAllotedLeaves}</td>
-												<td style="text-align: right;">${leaveHistoryList.sactionLeave}</td>
-												<td style="text-align: right;">${leaveHistoryList.aplliedLeaeve}</td>
-												<td style="text-align: right;">${leaveHistoryList.balLeave+leaveHistoryList.lvsAllotedLeaves-leaveHistoryList.sactionLeave-leaveHistoryList.aplliedLeaeve}</td>
+										<thead>
+											<tr class="bg-blue" style="text-align: center;">
 
+												<th>Leave Type</th>
+												<th>OB</th>
+												<th>Earned</th>
+												<th>Sanction</th>
+												<th>Applied</th>
+												<th>Balanced</th>
 
 
 											</tr>
-										</c:forEach>
+										</thead>
+										<tbody>
+											<c:forEach items="${leaveHistoryList}" var="leaveHistoryList">
+												<tr>
+													<td>${leaveHistoryList.lvTitleShort}</td>
+													<td style="text-align: right;">${leaveHistoryList.balLeave}</td>
+													<td style="text-align: right;">${leaveHistoryList.lvsAllotedLeaves}</td>
+													<td style="text-align: right;">${leaveHistoryList.sactionLeave}</td>
+													<td style="text-align: right;">${leaveHistoryList.aplliedLeaeve}</td>
+													<td style="text-align: right;">${leaveHistoryList.balLeave+leaveHistoryList.lvsAllotedLeaves-leaveHistoryList.sactionLeave-leaveHistoryList.aplliedLeaeve}</td>
+
+
+
+												</tr>
+											</c:forEach>
 
 
 
 
-									</tbody>
-								</table>
+										</tbody>
+									</table>
+								</div>
 								<br>
 								<form action="${pageContext.request.contextPath}/insertLeave"
 									id="submitInsertLeave" method="post">
@@ -245,9 +246,9 @@
 												name="leaveDateRange" data-placeholder="Select Date"
 												id="leaveDateRange" onchange="calholidayWebservice()">
 											<span class="validation-invalid-label" id="error_Range"
-												style="display: none;">This field is required.</span>
-												<span class="validation-invalid-label" id="error_insuf"
-											style="display: none;">Insufficient Leaves.</span>
+												style="display: none;">This field is required.</span> <span
+												class="validation-invalid-label" id="error_insuf"
+												style="display: none;">Insufficient Leaves.</span>
 
 										</div>
 									</div>
@@ -295,7 +296,7 @@
 										class="form-control numbersOnly" id="lvsId" value="${lvsId}"
 										name="lvsId">
 
-									 
+
 
 									<div class="col-md-12" style="text-align: center;">
 
@@ -1064,7 +1065,7 @@
 				} else {
 					$("#error_noOfDaysExclude").hide()
 				}
-				 
+
 				if (checkDays(parseFloat($("#noOfDays").val())) == true) {
 
 					isError = true;
@@ -1090,6 +1091,6 @@
 		});
 		//
 	</script>
- 
+
 </body>
 </html>
