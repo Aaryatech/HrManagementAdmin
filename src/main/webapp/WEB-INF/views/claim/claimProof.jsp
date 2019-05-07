@@ -156,7 +156,7 @@
 											<td class="text-center"><a
 												href="${pageContext.request.contextPath}/deleteClaimProof?claimProofId=${lvTypeList.exVar1}&claimId=${lvTypeList.exVar2}"
 												onClick="return confirm('Are you sure want to Delete this Record');"
-												class="dropdown-item" title="Delete Image"><i class="icon-trash "></i></a></td>
+												 title="Delete Image"><i class="icon-trash "style="color: black;"></i></a></td>
 										</tr>
 									</c:forEach>
 

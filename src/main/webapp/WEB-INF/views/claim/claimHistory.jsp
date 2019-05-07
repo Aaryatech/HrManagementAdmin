@@ -158,20 +158,11 @@
 										 
 										
 										<td class="text-center">
-											<div class="list-icons">
-												<div class="dropdown">
-													<a href="#" class="list-icons-item" data-toggle="dropdown">
-														<i class="icon-menu9"></i>
-													</a>
-
-													<div class="dropdown-menu dropdown-menu-right">
+										
 														<a
 															href="${pageContext.request.contextPath}/showClaimProof?claimId=${lvTypeList.circulatedTo}"
-															class="dropdown-item"><i class="icon-file-upload  "></i>Upload Document</a>
-														
-													</div>
-												</div>
-											</div>
+															title="Upload Document"><i class="icon-file-upload" style="color: black;"></i></a>
+											
 										</td>
 									</tr>
 								</c:forEach>

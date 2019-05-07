@@ -150,10 +150,10 @@
 										
 										<c:choose>
 										<c:when test="${claimList.exInt1==1}">
-										<td><span class="badge badge-info">Initial Pending</span></td>
+										<td><span class="badge badge-info">Initial Applied</span></td>
 										</c:when>
 										<c:when test="${claimList.exInt1==2}">
-										<td><span class="badge badge-secondary">Final Pending</span></td>
+										<td><span class="badge badge-secondary">Initial Approved</span></td>
 										</c:when>
 									
 										</c:choose>
@@ -257,7 +257,7 @@
 										<td><span class="badge badge-success">Initial Approved</span></td>
 										</c:when>
 										<c:when test="${claimList1.exInt1==1}">
-										<td><span class="badge badge-danger">Final & Initial Pending</span></td>
+										<td><span class="badge badge-danger">Initial Applied</span></td>
 										</c:when>
 									
 										</c:choose>
@@ -267,25 +267,19 @@
 										
 										
 									<td class="text-center">
-											<div class="list-icons">
-												<div class="dropdown">
-													<a href="#" class="list-icons-item" data-toggle="dropdown">
-														<i class="icon-menu9"></i>
-													</a>
-
-													<div class="dropdown-menu dropdown-menu-right">
+										
 														<c:choose>
 														<c:when test="${claimList1.caFinAuthEmpId==empIdOrig}">
 															
 													<a
 															href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList1.claimRemarks}&claimId=${claimList1.circulatedTo}&stat=3"
 															onClick="return confirm('Are you sure want to Approve this Claim');"
-															class="dropdown-item"><i class="icon-checkmark4 "></i>Approve</a>
+															title="Approve"><i class="icon-checkmark4 " style="color: black;"></i></a>
 															
 													<a
 															href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList1.claimRemarks}&claimId=${claimList1.circulatedTo}&stat=9"
 															onClick="return confirm('Are you sure want to Reject this Claim');"
-															class="dropdown-item"><i class="icon-x"></i>Reject</a>
+															title="Reject"><i class="icon-x"></i></a>
 															</c:when>
 															
 														<c:when test="${claimList1.caIniAuthEmpId==empIdOrig}">
@@ -314,14 +308,11 @@
 															href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList1.claimRemarks}&claimId=${claimList1.circulatedTo}&stat=7"
 													onClick="return confirm('Are you sure want to Cancel this Claim');"
 															
-															class="dropdown-item"><i class="icon-cancel-square "></i>Cancel</a>
+															><i class="icon-cancel-square" ></i>Cancel</a>
 														
 															
 															</c:if>
-																											
-													</div>
-												</div>
-											</div>
+												
 										</td>
 									</tr>
 								</c:forEach>
