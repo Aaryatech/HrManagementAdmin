@@ -133,8 +133,15 @@
 										<td>${count.index+1}</td>
 										<td>${deptList.empDeptName}</td>
 										<td>${deptList.empDeptShortName}</td>
+										
+										<c:choose>
+										<c:when test="${deptList.empDeptRemarks=='null' || empty deptList.empDeptRemarks}">
+											<td>-</td>
+										</c:when>
+										<c:otherwise>
 										<td>${deptList.empDeptRemarks}</td>
-
+										</c:otherwise>
+										</c:choose>	
 
 										<td class="text-center">
 										

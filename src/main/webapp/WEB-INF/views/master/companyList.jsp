@@ -46,7 +46,7 @@
 					<div class="breadcrumb justify-content-center">
 						<c:if test="${addAccess == 0}">
 							<a href="${pageContext.request.contextPath}/companyAdd"
-								class="breadcrumb-elements-item"> Add Comapny </a>
+								class="breadcrumb-elements-item"> Add Company </a>
 						</c:if>
 
 					</div>
@@ -144,13 +144,7 @@
 
 										</c:choose></td> --%>
 										<td class="text-center">
-											<div class="list-icons">
-												<div class="dropdown">
-													<a href="#" class="list-icons-item" data-toggle="dropdown">
-														<i class="icon-menu9"></i>
-													</a>
-
-													<div class="dropdown-menu dropdown-menu-right">
+										
 														<c:if test="${editAccess == 0}">
 															<a
 																href="${pageContext.request.contextPath}/editCompany?compId=${compList.exVar1}"
@@ -163,9 +157,7 @@
 																title="Delete"><i class="icon-trash" style="color: black;"></i>
 																</a>
 														</c:if>
-													</div>
-												</div>
-											</div>
+												
 										</td>
 									</tr>
 								</c:forEach>

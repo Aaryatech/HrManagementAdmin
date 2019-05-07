@@ -131,7 +131,15 @@
 									<tr>
 										<td>${count.index+1}</td>
 										<td>${cust.custName}</td>
+									
+										<c:choose>
+										<c:when test="${cust.custRemarks=='null' || empty cust.custRemarks}">
+											<td>-</td>
+										</c:when>
+										<c:otherwise>
 										<td>${cust.custRemarks}</td>
+										</c:otherwise>
+										</c:choose>	
 										<td class="text-center">
 										
 														<c:if test="${editAccess == 0}">

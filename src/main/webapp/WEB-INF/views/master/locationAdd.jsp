@@ -180,8 +180,7 @@
 									</div>
 
 									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="email">Email
-											<span style="color:red">* </span>:</label>
+										<label class="col-form-label col-lg-2" for="email">Email <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Email" id="email"

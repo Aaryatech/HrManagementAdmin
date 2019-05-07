@@ -133,9 +133,15 @@
 										<td>${count.index+1}</td>
 										<td>${empTypelist.empTypeName}</td>
 										<td>${empTypelist.empTypeShortName}</td>
+										
+										<c:choose>
+										<c:when test="${empTypelist.empTypeRemarks=='null' || empty empTypelist.empTypeRemarks}">
+											<td>-</td>
+										</c:when>
+										<c:otherwise>
 										<td>${empTypelist.empTypeRemarks}</td>
-
-
+										</c:otherwise>
+										</c:choose>	
 										<td class="text-center">
 											
 														<c:if test="${editAccess == 0}">

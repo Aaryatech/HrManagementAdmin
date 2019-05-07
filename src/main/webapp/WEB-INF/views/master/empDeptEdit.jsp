@@ -154,7 +154,7 @@
 										</div>
 									</div>
 
-									Remaining assign role
+							
 
 									<div class="form-group row mb-0">
 										<div class="col-lg-10 ml-lg-auto">

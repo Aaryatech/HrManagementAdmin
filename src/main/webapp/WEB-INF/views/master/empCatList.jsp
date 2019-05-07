@@ -134,8 +134,15 @@
 										<td>${count.index+1}</td>
 										<td>${empCatList.empCatName}</td>
 										<td>${empCatList.empCatShortName}</td>
+									
+										<c:choose>
+										<c:when test="${empCatList.empCatRemarks=='null' || empty empCatList.empCatRemarks}">
+											<td>-</td>
+										</c:when>
+										<c:otherwise>
 										<td>${empCatList.empCatRemarks}</td>
-
+										</c:otherwise>
+										</c:choose>	
 
 										<td class="text-center">
 											<!-- <div class="list-icons">
