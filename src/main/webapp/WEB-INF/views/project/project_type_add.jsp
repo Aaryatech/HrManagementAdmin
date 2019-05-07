@@ -154,7 +154,7 @@
 
 										<div class="form-group row">
 											<label class="col-form-label col-lg-2">Project Type
-												Color:</label>
+												Color :</label>
 											<div class="col-lg-10">
 												<input type="text" id="projectColor" name="projectColor"
 													class="form-control colorpicker-show-input"
@@ -166,7 +166,7 @@
 
 										<div class="form-group row">
 											<label class="col-form-label col-lg-2" for="remark">Any
-												Remark:</label>
+												Remark :</label>
 											<div class="col-lg-10">
 												<textarea rows="3" cols="3" class="form-control"
 													placeholder="Any Remark" onchange="trim(this)" id="remark"

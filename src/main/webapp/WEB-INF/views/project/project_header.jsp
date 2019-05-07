@@ -123,7 +123,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="select2">Select
-											Location :*</label>
+											Location <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<select name="locId" data-placeholder="Select Location"
 												id="locId"
@@ -140,7 +140,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="select2">Select
-											Project Type :*</label>
+											Project Type <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<select name="projectTypeId"
 												data-placeholder="Select Project Type" id="projectTypeId"
@@ -159,7 +159,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="select2">Select
-											Customer :*</label>
+											Customer <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<select name="custId" data-placeholder="Select Customer"
 												id="custId"
@@ -178,7 +178,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="select2">Select
-											Project Manager :*</label>
+											Project Manager <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<select name="empId"
 												data-placeholder="Select Project Manager " id="empId"
@@ -196,7 +196,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="projectTitle">
-											Project Title: *</label>
+											Project Title <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Enter Project Title" id="projectTitle"
@@ -209,7 +209,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="projectDesc">
-											Project Description: *</label>
+											Project Description <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Enter Project Description" id="projectDesc"
@@ -224,7 +224,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="add">Project
-											City : *</label>
+											City <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Enter Project City" id="projectCity"
@@ -253,7 +253,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2">Project
-											Establishment Start Date:</label>
+											Establishment Start Date :</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control datepickerclass "
 												value="21-04-2019" name="fromDate" id="fromDate">
@@ -263,7 +263,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2">Project
-											Establishment End Date:</label>
+											Establishment End Date :</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control datepickerclass "
 												value="21-04-2019" name="toDate" id="toDate">
@@ -272,8 +272,7 @@
 
 
 									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="add">Project
-											Establishment Man Hours : *</label>
+										<label class="col-form-label col-lg-2" for="add">Project Establishment Man Hrs <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Project Establishment Man Hours"
@@ -287,8 +286,7 @@
 
 
 									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="add">Project
-											Establishment Budget: *</label>
+										<label class="col-form-label col-lg-2" for="add">Project Establishment Budget <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Project Establishment Budget"

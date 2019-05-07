@@ -220,7 +220,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="select2">Select
-											Project Manager<span style="color:red">* </span>:</label>
+											Project Manager <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<select name="empId"
 												data-placeholder="Select Project Manager " id="empId"
@@ -265,7 +265,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="projectDesc">
-											Project Description<span style="color:red">* </span>:</label>
+											Project Description <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Enter Project Description" id="projectDesc"
@@ -311,7 +311,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2">Project
-											Establishment Start Date:</label>
+											Establishment Start Date :</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control datepickerclass "
 												value="${editProjectHeader.projectEstStartdt}"
@@ -333,7 +333,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="add">Project
-											Establishment Man Hours<span style="color:red">* </span>:</label>
+											Establishment Man Hours <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Project Establishment Man Hours"
@@ -349,7 +349,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="add">Project
-											Establishment Budget<span style="color:red">* </span>:</label>
+											Establishment Budget <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Project Establishment Budget"
