@@ -117,6 +117,9 @@
 
 									<th width="10%">Sr. No.</th>
 									<th>Leave Title</th>
+									<th>From Date</th>
+									<th>To Date</th>
+									<th>Duration</th>
 									<th>No. of Days</th>
 									<th>Reason</th>
 									<th>Status</th>
@@ -131,7 +134,15 @@
 									<tr>
 										<td>${count.index+1}</td>
 										<td>${holiday.lvTitle}</td>
+										<td>${holiday.leaveFromdt}</td>
+										<td>${holiday.leaveTodt}</td>
+										<c:if test="${holiday.leaveDuration==1}">
+										<td>Full Day</td></c:if>
+										<c:if test="${holiday.leaveDuration==2}">
+										<td>Half Day</td></c:if>
+										
 										<td>${holiday.leaveNumDays}</td>
+										
 										<td>${holiday.leaveEmpReason}</td>
 										<c:if test="${holiday.exInt1==1}">
 										<td><span class="badge badge-info">Initial Applied</span></td>

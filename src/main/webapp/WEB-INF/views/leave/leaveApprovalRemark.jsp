@@ -135,6 +135,17 @@
 										</div>
 									</div>
 									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="compName">Leave Type
+											: </label>
+										<div class="col-lg-6">
+											<input type="text" class="form-control"
+												 Value="${lvEmp.leaveTitle}"
+												name="compName" autocomplete="off" readonly>
+											
+										</div>
+									</div>
+									
+									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="compName">From date
 											: </label>
 										<div class="col-lg-6">
@@ -169,7 +180,7 @@
 					<h6 class="card-title">Leave Trail History</h6>
 								
 <table
-							class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic  datatable-button-print-columns1"
+							class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic1  datatable-button-print-columns1"
 							id="printtable1">
 							<thead>
 								<tr class="bg-blue">
@@ -317,30 +328,11 @@
 		}
 		$(document).ready(function($) {
 
-			$("#submitInsertCompany45").submit(function(e) {
+			$("#submitInsertCompany").submit(function(e) {
 				var isError = false;
 				var errMsg = "";
 
-				if (!$("#compName").val()) {
-
-					isError = true;
-
-					$("#error_compName").show()
-					//return false;
-				} else {
-					$("#error_compName").hide()
-				}
-
-				if (!$("#compImg").val()) {
-
-					isError = true;
-
-					$("#error_compImg").show()
-
-				} else {
-					$("#error_compImg").hide()
-				}
-
+				
 				if (!isError) {
 
 					var x = confirm("Do you really want to submit the form?");

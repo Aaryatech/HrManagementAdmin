@@ -74,7 +74,7 @@
 											: </label>
 										<div class="col-lg-6">
 											<input type="text" class="form-control"
-												placeholder="Enter Company Name" id="compName" Value="${iniFname}${space1}${iniSname}"
+												  id="compName" Value="${iniFname}${space1}${iniSname}"
 												name="compName" autocomplete="off" readonly>
 											
 										</div>
@@ -84,7 +84,7 @@
 											: </label>
 										<div class="col-lg-6">
 											<input type="text" class="form-control"
-												placeholder="Enter Company Name" id="compName" Value="${finFname}${space1}${finSname}"
+												  id="compName" Value="${finFname}${space1}${finSname}"
 												name="compName" autocomplete="off" readonly>
 											
 										</div>
@@ -97,7 +97,7 @@
 											: </label>
 										<div class="col-lg-6">
 											<input type="text" class="form-control"
-												placeholder="Enter Company Name" id="compName" Value="${iniClFname}${space1}${iniClSname}"
+												  id="compName" Value="${iniClFname}${space1}${iniClSname}"
 												name="compName" autocomplete="off" readonly>
 											
 										</div>
@@ -107,7 +107,7 @@
 											: </label>
 										<div class="col-lg-6">
 											<input type="text" class="form-control"
-												placeholder="Enter Company Name" id="compName" Value="${finClFname}${space1}${finClSname}"
+												  id="compName" Value="${finClFname}${space1}${finClSname}"
 												name="compName" autocomplete="off" readonly>
 											
 										</div>

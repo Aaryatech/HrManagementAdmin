@@ -177,13 +177,11 @@
 
 																		<a
 																			href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList.leaveTypeName}&leaveId=${leaveList.circulatedTo}&stat=3"
-																			onClick="return confirm('Are you sure want to Approve this Leave');"
-																			title="Approve"><i class="icon-checkmark4 " style="color: black;"></i></a>
+ 																			title="Approve"><i class="icon-checkmark4 " style="color: black;"></i></a>
 
 																		<a
 																			href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList.leaveTypeName}&leaveId=${leaveList.circulatedTo}&stat=9"
-																			onClick="return confirm('Are you sure want to Reject this Leave');"
-																			title="Reject"><i class="icon-x" style="color: black;"></i></a>
+ 																			title="Reject"><i class="icon-x" style="color: black;"></i></a>
 
 
 
@@ -193,13 +191,11 @@
 
 																		<a
 																			href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList.leaveTypeName}&leaveId=${leaveList.circulatedTo}&stat=2"
-																			onClick="return confirm('Are you sure want to Approve this Leave');"
-																			title="Approve"><i class="icon-checkmark4 " style="color: black;"></i></a>
+ 																			title="Approve"><i class="icon-checkmark4 " style="color: black;"></i></a>
 
 																		<a
 																			href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList.leaveTypeName}&leaveId=${leaveList.circulatedTo}&stat=8"
-																			onClick="return confirm('Are you sure want to Reject this Leave');"
-																			title="Reject"><i class="icon-x" style="color: black;"></i></a>
+ 																			title="Reject"><i class="icon-x" style="color: black;"></i></a>
 
 																	</c:when>
 
@@ -207,8 +203,7 @@
 
 																		<a
 																			href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${leaveList.leaveTypeName}&leaveId=${leaveList.circulatedTo}&stat=7"
-																			onClick="return confirm('Are you sure want to Cancel this Leave');"
-																			title="Cancel"><i
+ 																			title="Cancel"><i
 																			class="icon-cancel-squareed65" style="color: black;"></i></a>
 
 

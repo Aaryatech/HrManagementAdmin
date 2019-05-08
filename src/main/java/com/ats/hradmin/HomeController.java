@@ -33,6 +33,7 @@ import com.ats.hradmin.leave.model.CalenderYear;
 import com.ats.hradmin.leave.model.GetAuthorityIds;
 import com.ats.hradmin.model.AccessRightModule;
 import com.ats.hradmin.model.EmployeeInfo;
+import com.ats.hradmin.model.Info;
 import com.ats.hradmin.model.LoginResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -381,4 +382,77 @@ try {
 		// return "{}";
 
 	}
+	
+	
+	//*************************Forgot Pass***********************************************
+	
+	@RequestMapping(value = "/showforgotPassForm", method = RequestMethod.GET)
+	public ModelAndView showforgotPassForm(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		try {
+
+			model = new ModelAndView("forgetPassword");
+
+		} catch (Exception e) {
+
+			System.err.println("exception In showCMSForm at home Contr" + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+
+	}
+	
+	@RequestMapping(value = "/sendForgotPass", method = RequestMethod.POST)
+	public ModelAndView checkUniqueField(HttpServletRequest request, HttpServletResponse response) {
+		String c=null;
+		System.err.println("Hiii  checkValue  " );
+		Info info = new Info();
+		ModelAndView model = null;
+		
+
+
+		try {
+			//model = new ModelAndView("forgotPassword");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			String inputValue = request.getParameter("username");
+			System.err.println("Info inputValue  " + inputValue);
+			
+			map.add("inputValue", inputValue);
+		
+			info = Constants.getRestTemplate().postForObject(Constants.url + "checkUserName", map, Info.class);
+			System.err.println("Info Response  " + info.toString());
+			
+			
+			if(info.isError()==true){
+				model = new ModelAndView("forgotPassword");
+				 //c="redirect:/showforgotPassForm";
+				model.addObject("msg","Invalid User Name");
+				
+			}
+			else {
+				model = new ModelAndView("verifyOTP");
+				//  c= "redirect:/showVerifyOTP";
+				model.addObject("username",info.getMsg());
+			}
+			
+			
+
+		} catch (Exception e) {
+			System.err.println("Exce in checkUniqueField  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return model;
+
+	}
+	
+
+	
+	
 }

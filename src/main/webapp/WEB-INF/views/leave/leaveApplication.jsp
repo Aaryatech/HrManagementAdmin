@@ -231,7 +231,7 @@
 												data-fouc="" aria-hidden="true"
 												onchange="calholidayWebservice()">
 												<option></option>
-												<option value="1">Full Day</option>
+												<option selected value="1">Full Day</option>
 												<option value="2">Half Day</option>
 
 

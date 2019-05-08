@@ -171,21 +171,19 @@
 
 															<a
 																href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList.claimRemarks}&claimId=${claimList.circulatedTo}&stat=3"
-																onClick="return confirm('Are you sure want to Approve this Claim');"
+																 
 																title="Approve"><i
 																class="icon-checkmark4 " style="color: black;"></i></a>
 
 															<a
 																href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList.claimRemarks}&claimId=${claimList.circulatedTo}&stat=9"
-																onClick="return confirm('Are you sure want to Reject this Claim');"
-																title="Reject"><i class="icon-x"
+ 																title="Reject"><i class="icon-x"
 																style="color: black;"></i></a>
 																
 															<c:if test="${leaveList.empId==empIdOrig}">
 																<a
 																href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList.claimRemarks}&claimId=${claimList.circulatedTo}&stat=7"
-																onClick="return confirm('Are you sure want to Cancel this Claim');"
-																title="Cancel"><i
+ 																title="Cancel"><i
 																class="icon-cancel-squareed65" style="color: black;"></i></a></c:if>
 
 																</c:when>
@@ -194,21 +192,18 @@
 
 															<a
 																href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList.claimRemarks}&claimId=${claimList.circulatedTo}&stat=2"
-																onClick="return confirm('Are you sure want to Approve this Claim');"
-																title="Approve"><i
+ 																title="Approve"><i
 																class="icon-checkmark4 " style="color: black;"></i></a>
 
 															<a
 																href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList.claimRemarks}&claimId=${claimList.circulatedTo}&stat=8"
-																onClick="return confirm('Are you sure want to Reject this Claim');"
-																title="Reject"><i class="icon-x"
+ 																title="Reject"><i class="icon-x"
 																style="color: black;"></i></a>
 														<c:if test="${leaveList.empId==empIdOrig}">
 
 															<a
 																href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList.claimRemarks}&claimId=${claimList.circulatedTo}&stat=7"
-																onClick="return confirm('Are you sure want to Cancel this Claim');"
-																title="Cancel"><i
+ 																title="Cancel"><i
 																class="icon-cancel-squareed65" style="color: black;"></i></a>
 														</c:if>
 														</c:when>
@@ -279,14 +274,12 @@
 
 															<a
 																href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList1.claimRemarks}&claimId=${claimList1.circulatedTo}&stat=3"
-																onClick="return confirm('Are you sure want to Approve this Claim');"
-																title="Approve"><i class="icon-checkmark4 "
+ 																title="Approve"><i class="icon-checkmark4 "
 																style="color: black;"></i></a>
 
 															<a
 																href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList1.claimRemarks}&claimId=${claimList1.circulatedTo}&stat=9"
-																onClick="return confirm('Are you sure want to Reject this Claim');"
-																title="Reject"><i class="icon-x"
+ 																title="Reject"><i class="icon-x"
 																style="color: black;"></i></a>
 														</c:when>
 
@@ -311,8 +304,7 @@
 
 														<a
 															href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList1.claimRemarks}&claimId=${claimList1.circulatedTo}&stat=7"
-															onClick="return confirm('Are you sure want to Cancel this Claim');"
-															title="Cancel"><i
+ 															title="Cancel"><i
 															class="icon-cancel-square" style="color: black;"></i></a>
 
 
