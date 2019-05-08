@@ -435,7 +435,7 @@ public class ClaimApplicationController {
 
 			 GetClaimApplyAuthwise lvEmp = Constants.getRestTemplate().postForObject(Constants.url + "/getClaimApplyDetailsByClaimId", map1,
 					 GetClaimApplyAuthwise.class);
-			 lvEmp.setClaimDate(DateConvertor.convertToDMY(lvEmp.getClaimDate()));
+			// lvEmp.setClaimDate(DateConvertor.convertToDMY(lvEmp.getClaimDate()));
 				model.addObject("lvEmp", lvEmp);
 				System.out.println("emp leave details"+lvEmp.toString());
 		      
@@ -734,7 +734,7 @@ public class ClaimApplicationController {
 
 			 GetClaimApplyAuthwise lvEmp = Constants.getRestTemplate().postForObject(Constants.url + "/getClaimApplyDetailsByClaimId", map1,
 					 GetClaimApplyAuthwise.class);
-			lvEmp.setClaimDate(DateConvertor.convertToDMY(lvEmp.getClaimDate()));
+			//lvEmp.setClaimDate(DateConvertor.convertToDMY(lvEmp.getClaimDate()));
 
 				model.addObject("lvEmp", lvEmp);
 		} catch (Exception e) {
@@ -742,7 +742,7 @@ public class ClaimApplicationController {
 		}
 		return model;
 	}
-	
+	//1st list
 	@RequestMapping(value = "/showClaimHistDetailList", method = RequestMethod.GET)
 	public ModelAndView showClaimHistDetailList(HttpServletRequest request, HttpServletResponse response) {
 
@@ -768,7 +768,7 @@ public class ClaimApplicationController {
 
 			 GetClaimApplyAuthwise lvEmp = Constants.getRestTemplate().postForObject(Constants.url + "/getClaimApplyDetailsByClaimId", map1,
 					 GetClaimApplyAuthwise.class);
-			lvEmp.setClaimDate(DateConvertor.convertToDMY(lvEmp.getClaimDate()));
+			//lvEmp.setClaimDate(DateConvertor.convertToDMY(lvEmp.getClaimDate()));
 				model.addObject("lvEmp", lvEmp);
 				System.out.println("emp leave details"+lvEmp.toString());
 				
