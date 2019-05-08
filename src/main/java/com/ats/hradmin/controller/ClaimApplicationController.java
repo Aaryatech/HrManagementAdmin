@@ -366,7 +366,8 @@ public class ClaimApplicationController {
 
 					claimList.get(i).setCirculatedTo(FormValidation.Encrypt(String.valueOf(claimList.get(i).getClaimId())));
 					claimList.get(i).setClaimRemarks(FormValidation.Encrypt(String.valueOf(claimList.get(i).getEmpId())));
-					claimList.get(i).setClaimDate(DateConvertor.convertToDMY(claimList.get(i).getClaimDate()));
+					//claimList.get(i).setClaimDate(DateConvertor.convertToDMY(claimList.get(i).getClaimDate()));
+					
 				}
 				 model.addObject("claimListForApproval",claimList);
 				 model.addObject("list1Count",claimList.size());
@@ -388,7 +389,7 @@ public class ClaimApplicationController {
 
 				claimList1.get(i).setCirculatedTo(FormValidation.Encrypt(String.valueOf(claimList1.get(i).getClaimId())));
 				claimList1.get(i).setClaimRemarks(FormValidation.Encrypt(String.valueOf(claimList1.get(i).getEmpId())));
-				claimList1.get(i).setClaimDate(DateConvertor.convertToDMY(claimList.get(i).getClaimDate()));
+				//claimList1.get(i).setClaimDate(DateConvertor.convertToDMY(claimList.get(i).getClaimDate()));
 			}
 			
 			model.addObject("list2Count",claimList1.size());
