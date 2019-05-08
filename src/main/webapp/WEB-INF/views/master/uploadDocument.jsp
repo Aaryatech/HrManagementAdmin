@@ -120,13 +120,26 @@
 									action="${pageContext.request.contextPath}/submitInsertEmpDoc"
 									id="submitInsertEmpTypee" method="post"
 									enctype="multipart/form-data">
+									
+									<div class="form-group row">
+										<%-- <label class="col-form-label col-lg-1" for="empShortName">Employee Code :</label>
+										<div class="col-lg-2">
+											<div class="form-check form-check-inline">
+												 ${empInfo.empCode}</div>
+										</div> --%>
+										<label class="col-form-label col-lg-1" for="empShortName">Employee Name :</label>
+										<div class="col-lg-5">
+											<div class="form-check form-check-inline">
+												${empInfo.empSname} ${empInfo.empFname}</div>
+										</div>
+									</div>
 
 
 									<c:forEach items="${docList}" var="docList" varStatus="count">
 										<div class="form-group row">
 											<label class="col-form-label col-lg-2"
-												for="doc${count.index}">
-												${docList.doctypeName} <c:if test="${docList.isRequired==1}">
+												for="doc${count.index}"> ${docList.doctypeName} <c:if
+													test="${docList.isRequired==1}">
 													<span class="text-danger">*</span>
 												</c:if>
 											</label>
@@ -160,33 +173,31 @@
 											</div>
 											<c:if test="${docList.imageName != '0'}">
 												<div class="col-lg-5">
-													<a
-														href="${docUrl}${docList.imageName}" target="_blank">Uploaded
-														File</a>
+													<a href="${docUrl}${docList.imageName}" target="_blank" title="Open File"> <i class="far fa-file-alt mr-3 fa-2x" style="color: black;"></i>
+													</a>
 												</div>
 											</c:if>
 											<input type="hidden" name="prevName${count.index}"
-												id="prevName${count.index}"
-												value="${docList.imageName}"> <span
-												class="validation-invalid-label"
-												id="error_fileName${count.index}"
-												style="display: none;">This field is required.</span>
+												id="prevName${count.index}" value="${docList.imageName}">
+											<span class="validation-invalid-label"
+												id="error_fileName${count.index}" style="display: none;">This
+												field is required.</span>
 										</div>
 									</c:forEach>
 
 
 									<div class="form-group row mb-0">
 										<div class="col-lg-10 ml-lg-auto">
-											
+
 											<button type="submit" class="btn bg-blue ml-3 legitRipple"
 												id="submtbtn">
 												Submit <i class="icon-paperplane ml-2"></i>
 											</button>
-												<a href="${pageContext.request.contextPath}/showEmpList"><button
-										type="button" class="btn btn-primary"><i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp; Cancel</button></a>
-										
-											<input type="hidden" name="empId"
-												id="empId"
+											<a href="${pageContext.request.contextPath}/showEmpList"><button
+													type="button" class="btn btn-primary">
+													<i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp;
+													Cancel
+												</button></a> <input type="hidden" name="empId" id="empId"
 												value="${empId}">
 										</div>
 									</div>

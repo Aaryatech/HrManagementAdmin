@@ -26,6 +26,7 @@ import com.ats.hradmin.common.VpsImageUpload;
 import com.ats.hradmin.model.Company;
 import com.ats.hradmin.model.DocList;
 import com.ats.hradmin.model.EmployeDoc;
+import com.ats.hradmin.model.EmployeeInfo;
 import com.ats.hradmin.model.LoginResponse;
 
 @Controller
@@ -54,6 +55,12 @@ public class DocUploadController {
 			model.addObject("docList", docList);
 			model.addObject("empId", base64encodedString);
 			model.addObject("docUrl", Constants.getImageSaveUrl);
+			
+			 
+			EmployeeInfo empInfo = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpInfoById", map,
+					EmployeeInfo.class);
+			model.addObject("empInfo", empInfo);
+			
 			
 		} catch (Exception e) {
 			e.printStackTrace();

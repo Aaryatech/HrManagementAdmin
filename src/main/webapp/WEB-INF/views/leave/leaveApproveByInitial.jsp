@@ -270,7 +270,7 @@
 												<td>${leaveList1.leaveTodt}</td>
 												<td>${leaveList1.leaveNumDays}</td>
 
-												<c:choose>
+												<%-- <c:choose>
 													<c:when test="${leaveList1.exInt1==1}">
 														<td><span class="badge badge-info">Initial Applied</span></td>
 													</c:when>
@@ -278,7 +278,7 @@
 														<td><span class="badge badge-secondary">Approve By Initial Authority</span></td>
 													</c:when>
 
-												</c:choose>
+												</c:choose> --%>
 
 										<c:if test="${leaveList1.exInt1==1}">
 										<td><span class="badge badge-info">Initial Applied</span></td>
