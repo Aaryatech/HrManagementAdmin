@@ -114,10 +114,8 @@
 									session.removeAttribute("successMsg");
 									}
 								%>
-								<form
-									action="${pageContext.request.contextPath}/submitInsertLeaveType"
-									id="submitInsertCompany" method="post"
-								>
+								<form action="${pageContext.request.contextPath}/submitInsertLeaveType"
+									id="submitInsertCompany" method="post" >
 									
 									
 									<div class="form-group row">
@@ -137,8 +135,8 @@
 											Short Title <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
-												placeholder="Enter Leave Short Name " id="leaveShortTypeTitle"
-												name="leaveShortTypeTitle" autocomplete="off" onchange="trim(this)">
+												placeholder="Enter Leave Short Name " id="leaveShortTypeTitle" 
+												name="leaveShortTypeTitle" autocomplete="off" onchange="trim(this)" oninput="checkUniqueShortName(this.value)">
 											<span class="validation-invalid-label" id="error_leaveScType"
 												style="display: none;">This field is required.</span>
 										</div>
@@ -246,53 +244,39 @@
 	<!-- /page content -->
 	
 	<script type="text/javascript">
-		function checkUniqueLeave(inputValue, valueType) {
+	function checkUniqueShortName(valueType) {
 			//alert("hi");
 
 			document.getElementById("submtbtn").disabled = false;
-			var isEdit=0;
-
+			
 			var valid = false;
-			if (valueType == 1) {
-				//alert("Its Mob no");
-				if (inputValue!== '') {
+			
+		
+			if (valueType!= '') {
 					valid = true;
-					//alert("Len 10")
-				} else {
-					//alert("Not 10");
-				}
-			} else if (valueType == 2) {
-				//alert("Its Email " );
-
-				if (inputValue!== '') {
-					valid = true;
-					//alert("Valid Email Id");
-				} else {
+					
+			} else{ 
 					valid = false;
-					//alert("InValid Email Id");
-				}
 			}
 			if (valid == true)
-
+			
 				$
 						.getJSON(
 								'${checkUniqueLeaveType}',
-								{
-									inputValue : inputValue,
+								{								
 									valueType : valueType,
-									isEdit:    isEdit,
 									ajax : 'true',
 
 								},
 								function(data) {
-									//alert("data" + data);
-
-									//alert("Data  " +JSON.stringify(data));
-
+									//alert("data" + +JSON.stringify(data));
+									if (data.error == false) {
+										alert("Already exist")
+										document.getElementById("leaveShortTypeTitle").value = "";
+									}
 									
-
 								});
-			checkSame();
+			
 		}
 
 	

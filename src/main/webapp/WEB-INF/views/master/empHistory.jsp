@@ -161,8 +161,7 @@
 						<div id='loader' style='display: none;'>
 							<img
 								src='${pageContext.request.contextPath}/resources/assets/images/giphy.gif'
-								width="200px" height="200px"
-								style="display: block; margin- left: auto; margin-right: auto">
+								width="150px" height="150px" style="display: block; margin-left: auto; margin-right: auto">
 						</div>
 						<table
 							class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic  datatable-button-print-columns1"

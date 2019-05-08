@@ -10,7 +10,7 @@
 </head>
 
 <body>
-
+<c:url value="/checkUniqueLeaveType" var="checkUniqueLeaveType"></c:url>
 	<!-- Main navbar -->
 	<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 	<!-- /main navbar -->
@@ -138,7 +138,7 @@
 												placeholder="Enter Leave Short Name "
 												id="leaveShortTypeTitle" value="${editCompany.lvTitleShort}"
 												name="leaveShortTypeTitle" autocomplete="off"
-												onchange="trim(this)"> <span
+												onchange="trim(this)" oninput="checkUniqueShortName(this.value)"> <span
 												class="validation-invalid-label" id="error_leaveScType"
 												style="display: none;">This field is required.</span>
 										</div>
@@ -257,6 +257,44 @@
 
 	</div>
 	<!-- /page content -->
+	<script type="text/javascript">
+	function checkUniqueShortName(valueType) {
+			//alert("hi");
+
+			document.getElementById("submtbtn").disabled = false;
+			
+			var valid = false;
+			
+		
+			if (valueType!= '') {
+					valid = true;
+					
+			} else{ 
+					valid = false;
+			}
+			if (valid == true)
+			
+				$
+						.getJSON(
+								'${checkUniqueLeaveType}',
+								{								
+									valueType : valueType,
+									ajax : 'true',
+
+								},
+								function(data) {
+									//alert("data" + +JSON.stringify(data));
+									if (data.error == false) {
+										alert("Already exist")
+										document.getElementById("leaveShortTypeTitle").value = "";
+									}
+									
+								});
+			
+		}
+
+	
+	</script>
 <script type="text/javascript">
 
 function checkSame(){
