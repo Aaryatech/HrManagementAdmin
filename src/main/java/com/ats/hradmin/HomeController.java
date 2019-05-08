@@ -32,6 +32,7 @@ import com.ats.hradmin.common.Constants;
 import com.ats.hradmin.leave.model.CalenderYear;
 import com.ats.hradmin.leave.model.GetAuthorityIds;
 import com.ats.hradmin.model.AccessRightModule;
+import com.ats.hradmin.model.AuthorityInformation;
 import com.ats.hradmin.model.EmployeeInfo;
 import com.ats.hradmin.model.Info;
 import com.ats.hradmin.model.LoginResponse;
@@ -112,66 +113,17 @@ public class HomeController {
 		HttpSession session = request.getSession();
 		session.setAttribute("sessionModuleId", 0);
 		session.setAttribute("sessionSubModuleId", 0);
-		
+
 		try {
-		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
-		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-		System.out.println("emp id in session is " +  userObj.getEmpId());
-		map = new LinkedMultiValueMap<>();
-		map.add("empId", userObj.getEmpId());
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>(); 
+			map.add("empId", userObj.getEmpId());
 
-		GetAuthorityIds editEmp = Constants.getRestTemplate()
-				.postForObject(Constants.url + "/getAuthIdByEmpId", map, GetAuthorityIds.class);
-		System.out.println("emp leave auth Ids"+editEmp.toString());
+			AuthorityInformation authorityInformation = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getAuthorityInfoByEmpId", map, AuthorityInformation.class);
+			mav.addObject("authorityInformation", authorityInformation);
 
-		map = new LinkedMultiValueMap<>();
-		map.add("empId", editEmp.getFinAuthEmpId());
-
-		EmployeeInfo editEmpfin = Constants.getRestTemplate()
-				.postForObject(Constants.url + "/getEmpInfoById", map, EmployeeInfo.class);
-		mav.addObject("finFname", editEmpfin.getEmpFname());
-		mav.addObject("finSname", editEmpfin.getEmpSname());
-		mav.addObject("space1", " ");
-
-		map = new LinkedMultiValueMap<>();
-		map.add("empId", editEmp.getIniAuthEmpId());
-
-		EmployeeInfo editEmpIni = Constants.getRestTemplate()
-				.postForObject(Constants.url + "/getEmpInfoById", map, EmployeeInfo.class);
-		mav.addObject("iniFname", editEmpIni.getEmpFname());
-		mav.addObject("iniSname", editEmpIni.getEmpSname());
-		
-		map = new LinkedMultiValueMap<>();
-		map.add("empId", userObj.getEmpId());
-		map.add("companyId", userObj.getCompanyId());
-
-		//final and initial of employeee Claim
-		
-		GetAuthorityIds editEmp1 = Constants.getRestTemplate()
-				.postForObject(Constants.url + "/getClaimAuthIds", map, GetAuthorityIds.class);
-		System.out.println("emp Claim auth Ids"+editEmp1.toString());
-		
-		
-		map = new LinkedMultiValueMap<>();
-		map.add("empId", editEmp1.getFinAuthEmpId());
-
-		EmployeeInfo empClaimFin = Constants.getRestTemplate()
-				.postForObject(Constants.url + "/getEmpInfoById", map, EmployeeInfo.class);
-		mav.addObject("finClFname", empClaimFin.getEmpFname());
-		mav.addObject("finClSname", empClaimFin.getEmpSname());
-		System.out.println("emp Claim auth Final data "+empClaimFin.toString());
-
-		map = new LinkedMultiValueMap<>();
-		map.add("empId", editEmp1.getIniAuthEmpId());
-
-		EmployeeInfo empClaimIni = Constants.getRestTemplate()
-				.postForObject(Constants.url + "/getEmpInfoById", map, EmployeeInfo.class);
-		mav.addObject("iniClFname", empClaimIni.getEmpFname());
-		mav.addObject("iniClSname", empClaimIni.getEmpSname());
-		System.out.println("emp Claim auth Initial data "+empClaimIni.toString());
-		
-		}
-		catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return mav;
@@ -217,7 +169,7 @@ public class HomeController {
 					System.out.println("currYr.getCalYrId():" + currYr.getCalYrId());
 					session.setAttribute("currYearId", currYr.getCalYrId());
 					session.setAttribute("logoUrl", Constants.getImageSaveUrl);
-					
+
 					List<AccessRightModule> moduleJsonList = new ArrayList<AccessRightModule>();
 
 					try {
@@ -237,73 +189,13 @@ public class HomeController {
 
 					loginResponseMessage = "Login Successful";
 					mav.addObject("loginResponseMessage", loginResponseMessage);
-try {
-					map = new LinkedMultiValueMap<String, Object>();
-					// int userId = userObj.getUser().getUserId();
-					// map.add("userId", userId);
-					/// System.out.println("user data" + userResponse.toString());
-					
-					//final and initial of employeee leave
-						/*
-						 * System.out.println("emp id in session is " + userObj.getEmpId()); map = new
-						 * LinkedMultiValueMap<>(); map.add("empId", userObj.getEmpId());
-						 * 
-						 * GetAuthorityIds editEmp = Constants.getRestTemplate()
-						 * .postForObject(Constants.url + "/getAuthIdByEmpId", map,
-						 * GetAuthorityIds.class);
-						 * System.out.println("emp leave auth Ids"+editEmp.toString());
-						 * 
-						 * map = new LinkedMultiValueMap<>(); map.add("empId",
-						 * editEmp.getFinAuthEmpId());
-						 * 
-						 * EmployeeInfo editEmpfin = Constants.getRestTemplate()
-						 * .postForObject(Constants.url + "/getEmpInfoById", map, EmployeeInfo.class);
-						 * mav.addObject("finFname", editEmpfin.getEmpFname());
-						 * mav.addObject("finSname", editEmpfin.getEmpSname()); mav.addObject("space1",
-						 * " ");
-						 * 
-						 * map = new LinkedMultiValueMap<>(); map.add("empId",
-						 * editEmp.getIniAuthEmpId());
-						 * 
-						 * EmployeeInfo editEmpIni = Constants.getRestTemplate()
-						 * .postForObject(Constants.url + "/getEmpInfoById", map, EmployeeInfo.class);
-						 * mav.addObject("iniFname", editEmpIni.getEmpFname());
-						 * mav.addObject("iniSname", editEmpIni.getEmpSname());
-						 * 
-						 * map = new LinkedMultiValueMap<>(); map.add("empId", userObj.getEmpId());
-						 * map.add("companyId", userObj.getCompanyId());
-						 * 
-						 * //final and initial of employeee Claim
-						 * 
-						 * GetAuthorityIds editEmp1 = Constants.getRestTemplate()
-						 * .postForObject(Constants.url + "/getClaimAuthIds", map,
-						 * GetAuthorityIds.class);
-						 * System.out.println("emp Claim auth Ids"+editEmp1.toString());
-						 * 
-						 * 
-						 * 
-						 * map = new LinkedMultiValueMap<>(); map.add("empId",
-						 * editEmp1.getFinAuthEmpId());
-						 * 
-						 * EmployeeInfo empClaimFin = Constants.getRestTemplate()
-						 * .postForObject(Constants.url + "/getEmpInfoById", map, EmployeeInfo.class);
-						 * mav.addObject("finClFname", empClaimFin.getEmpFname());
-						 * mav.addObject("finClSname", empClaimFin.getEmpSname());
-						 * System.out.println("emp Claim auth Final data "+empClaimFin.toString());
-						 * 
-						 * map = new LinkedMultiValueMap<>(); map.add("empId",
-						 * editEmp1.getIniAuthEmpId());
-						 * 
-						 * EmployeeInfo empClaimIni = Constants.getRestTemplate()
-						 * .postForObject(Constants.url + "/getEmpInfoById", map, EmployeeInfo.class);
-						 * mav.addObject("iniClFname", empClaimIni.getEmpFname());
-						 * mav.addObject("iniClSname", empClaimIni.getEmpSname());
-						 * System.out.println("emp Claim auth Initial data "+empClaimIni.toString());
-						 */
-}catch (Exception e) {
-	e.printStackTrace();
-}
 
+					map = new LinkedMultiValueMap<>();
+					map.add("empId", userObj.getEmpId());
+
+					AuthorityInformation authorityInformation = Constants.getRestTemplate()
+							.postForObject(Constants.url + "/getAuthorityInfoByEmpId", map, AuthorityInformation.class);
+					mav.addObject("authorityInformation", authorityInformation);
 
 					return mav;
 
@@ -384,10 +276,10 @@ try {
 		// return "{}";
 
 	}
-	
-	
-	//*************************Forgot Pass***********************************************
-	
+
+	// *************************Forgot
+	// Pass***********************************************
+
 	@RequestMapping(value = "/showForgotPassForm", method = RequestMethod.GET)
 	public ModelAndView showForgotPassForm(HttpServletRequest request, HttpServletResponse response) {
 
@@ -407,43 +299,37 @@ try {
 		return model;
 
 	}
-	
+
 	@RequestMapping(value = "/sendForgotPass", method = RequestMethod.POST)
 	public ModelAndView checkUniqueField(HttpServletRequest request, HttpServletResponse response) {
-		String c=null;
-		System.err.println("Hiii  checkValue  " );
+		String c = null;
+		System.err.println("Hiii  checkValue  ");
 		Info info = new Info();
 		ModelAndView model = null;
-		
-
 
 		try {
-			//model = new ModelAndView("forgotPassword");
+			// model = new ModelAndView("forgotPassword");
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 			String inputValue = request.getParameter("username");
 			System.err.println("Info inputValue  " + inputValue);
-			
+
 			map.add("inputValue", inputValue);
-		
+
 			info = Constants.getRestTemplate().postForObject(Constants.url + "checkUserName", map, Info.class);
 			System.err.println("Info Response  " + info.toString());
-			
-			
-			if(info.isError()==true){
+
+			if (info.isError() == true) {
 				model = new ModelAndView("forgotPassword");
-				 //c="redirect:/showforgotPassForm";
-				model.addObject("msg","Invalid User Name");
-				
-			}
-			else {
+				// c="redirect:/showforgotPassForm";
+				model.addObject("msg", "Invalid User Name");
+
+			} else {
 				model = new ModelAndView("verifyOTP");
-				//  c= "redirect:/showVerifyOTP";
-				model.addObject("username",info.getMsg());
+				// c= "redirect:/showVerifyOTP";
+				model.addObject("username", info.getMsg());
 			}
-			
-			
 
 		} catch (Exception e) {
 			System.err.println("Exce in checkUniqueField  " + e.getMessage());
@@ -453,8 +339,5 @@ try {
 		return model;
 
 	}
-	
 
-	
-	
 }

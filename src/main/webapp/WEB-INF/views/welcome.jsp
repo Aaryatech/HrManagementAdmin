@@ -62,82 +62,63 @@
 				<!-- Highlighting rows and columns -->
 				<div class="card">
 					<div class="card-body">
-					<div class="card-header header-elements-inline">
-						<h3 class="card-title">WELCOME</h3>
-							</div>
-						
-								<h6 class="card-title">Leave Authority</h6>
-								
-						<c:choose>
-										<c:when test="${empty editEmp}">
-											
-											<span class="validation-invalid-label" id="error_leaveWHours"
-											>Leave Authority is not Assigned.</span>
-										</c:when>
-										<c:otherwise>
-										<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="compName">Initial Authority
-											: </label>
-										<div class="col-lg-6">
-											<input type="text" class="form-control"
-												  id="compName" Value="${iniFname}${space1}${iniSname}"
-												name="compName" autocomplete="off" readonly>
-											
-										</div>
-									</div>
-									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="compName">Final Authority
-											: </label>
-										<div class="col-lg-6">
-											<input type="text" class="form-control"
-												  id="compName" Value="${finFname}${space1}${finSname}"
-												name="compName" autocomplete="off" readonly>
-											
-										</div>
-									</div>
-										</c:otherwise>
-										</c:choose>		
-							
-						
-					<h6 class="card-title">Claim Authority</h6>
-								<c:choose>
-										<c:when test="${empty editEmp1}">
-											<span class="validation-invalid-label" id="error_leaveWHours"
-												>Claim Authority is not Assigned.</span>
-										</c:when>
-										<c:otherwise>
-						<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="compName">Initial Authority
-											: </label>
-										<div class="col-lg-6">
-											<input type="text" class="form-control"
-												  id="compName" Value="${iniClFname}${space1}${iniClSname}"
-												name="compName" autocomplete="off" readonly>
-											
-										</div>
-									</div>
-									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="compName">Final Authority
-											: </label>
-										<div class="col-lg-6">
-											<input type="text" class="form-control"
-												  id="compName" Value="${finClFname}${space1}${finClSname}"
-												name="compName" autocomplete="off" readonly>
-											
-										</div>
-									</div>
-						
-						</c:otherwise>
-										</c:choose>		
-							
-						
-				
-				
+						<div class="card-header header-elements-inline">
+							<h3 class="card-title">WELCOME</h3>
+						</div>
+						 
+						<c:if test="${authorityInformation.leaveInitialAuth != '0'}">
+							<h6 class="card-title">Leave Authority</h6>
 
+							<div class="form-group row">
+								<label class="col-form-label col-lg-2" for=leaveInitialAuth>Initial
+									Authority : </label>
+								<div class="col-lg-6">
+									<input type="text" class="form-control" id="leaveInitialAuth"
+										Value="${authorityInformation.leaveInitialAuth}"
+										name="leaveInitialAuth" autocomplete="off" readonly>
+
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-form-label col-lg-2" for="leaveFinalAuth">Final
+									Authority : </label>
+								<div class="col-lg-6">
+									<input type="text" class="form-control" id="leaveFinalAuth"
+										Value="${authorityInformation.leaveFinalAuth}" name="leaveFinalAuth"
+										autocomplete="off" readonly>
+
+								</div>
+							</div>
+
+						</c:if>
+						<c:if test="${authorityInformation.claimInitialAuth != '0'}">
+							<h6 class="card-title">Claim Authority</h6>
+
+							<div class="form-group row">
+								<label class="col-form-label col-lg-2" for="claimInitialAuth">Initial
+									Authority : </label>
+								<div class="col-lg-6">
+									<input type="text" class="form-control" id="claimInitialAuth"
+										Value="${authorityInformation.claimInitialAuth}" name="claimInitialAuth"
+										autocomplete="off" readonly>
+
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-form-label col-lg-2" for="claimFinalAuth">Final
+									Authority : </label>
+								<div class="col-lg-6">
+									<input type="text" class="form-control" id="claimFinalAuth"
+										Value="${authorityInformation.claimFinalAuth}" name="claimFinalAuth"
+										autocomplete="off" readonly>
+
+								</div>
+							</div>
+						</c:if>
 						<%
 							if (session.getAttribute("errorMsg") != null) {
 						%>
-						 
+
 
 						<%
 							session.removeAttribute("errorMsg");
@@ -146,7 +127,7 @@
 						<%
 							if (session.getAttribute("successMsg") != null) {
 						%>
-						 
+
 						<%
 							session.removeAttribute("successMsg");
 							}
