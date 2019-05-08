@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%><%@ taglib
+	pageEncoding="UTF-8"%>
+		<%@ taglib
 	uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,16 +42,6 @@
 
 						<a href="#" class="header-elements-toggle text-default d-md-none"><i
 							class="icon-more"></i></a>
-
-
-
-					</div>
-
-
-					<div class="breadcrumb justify-content-center">
-						<a href="${pageContext.request.contextPath}/showClaimApprovalByAuthority"
-							class="breadcrumb-elements-item">Employee Claim History </a>
-
 					</div>
 
 
@@ -62,56 +53,65 @@
 			<!-- Content area -->
 			<div class="content">
 
-
-				<!-- Highlighting rows and columns -->
-				<div class="card">
-					<div class="card-header header-elements-inline">
-						<h5 class="card-title">Claim Trail History</h5>
-						<!-- <div class="header-elements">
-							<div class="list-icons">
-								<a class="list-icons-item" data-action="collapse"></a>
-							</div>
+				<!-- Form validation -->
+				<div class="row">
+					<div class="col-md-12">
+						<!-- Title -->
+						<!-- <div class="mb-3">
+							<h6 class="mb-0 font-weight-semibold">Hidden labels</h6>
+							<span class="text-muted d-block">Inputs with empty values</span>
 						</div> -->
-					</div>
+						<!-- /title -->
 
-					<div class="card-body">
 
-						<%
-							if (session.getAttribute("errorMsg") != null) {
-						%>
-						<div
-							class="alert bg-danger text-white alert-styled-left alert-dismissible">
-							<button type="button" class="close" data-dismiss="alert">
-								<span>×</span>
-							</button>
-							<span class="font-weight-semibold">Oh snap!</span>
-							<%
-								session.removeAttribute("errorMsg");
-							%>
-						</div>
+						<div class="card">
+							<div class="card-header header-elements-inline">
+								<h6 class="card-title"></h6>
+							<!-- 	<div class="header-elements">
+									<div class="list-icons">
+										<a class="list-icons-item" data-action="collapse"></a>
+									</div>
+								</div> -->
+							</div>
 
-						<%
-							session.removeAttribute("errorMsg");
-							}
-						%>
-						<%
-							if (session.getAttribute("successMsg") != null) {
-						%>
-						<div
-							class="alert bg-success text-white alert-styled-left alert-dismissible">
-							<button type="button" class="close" data-dismiss="alert">
-								<span>×</span>
-							</button>
-							<span class="font-weight-semibold">Well done!</span>
-							<%
-								session.removeAttribute("successMsg");
-							%>
-						</div>
-						<%
-							session.removeAttribute("successMsg");
-							}
-						%>
-						<div class="form-group row">
+							<div class="card-body">
+
+								<%
+									if (session.getAttribute("errorMsg") != null) {
+								%>
+								<div
+									class="alert bg-danger text-white alert-styled-left alert-dismissible">
+									<button type="button" class="close" data-dismiss="alert">
+										<span>×</span>
+									</button>
+									<span class="font-weight-semibold">Oh snap!</span>
+									<%
+										session.removeAttribute("errorMsg");
+									%>
+								</div>
+
+								<%
+									session.removeAttribute("errorMsg");
+									}
+								%>
+								<%
+									if (session.getAttribute("successMsg") != null) {
+								%>
+								<div
+									class="alert bg-success text-white alert-styled-left alert-dismissible">
+									<button type="button" class="close" data-dismiss="alert">
+										<span>×</span>
+									</button>
+									<span class="font-weight-semibold">Well done!</span>
+									<%
+										session.removeAttribute("successMsg");
+									%>
+								</div>
+								<%
+									session.removeAttribute("successMsg");
+									}
+								%>
+<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="compName">Employee Code
 											: </label>
 										<div class="col-lg-6">
@@ -164,8 +164,11 @@
 											
 										</div>
 									</div>
-						<table
-							class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic  datatable-button-print-columns1"
+						
+					<h6 class="card-title">Claim Trail History</h6>
+								
+<table
+							class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic1  datatable-button-print-columns1"
 							id="printtable1">
 							<thead>
 								<tr class="bg-blue">
@@ -175,6 +178,8 @@
 									<th>Date</th>
 									<th>Action By</th>
 									<th>Claim Status</th>
+									
+
 								</tr>
 							</thead>
 							<tbody>
@@ -183,7 +188,7 @@
 								<c:forEach items="${employeeList}" var="empTrailList" varStatus="count">
 									<tr>
 										<td>${count.index+1}</td>
-										<td>${empTrailList.empSname} ${empTrailList.empFname} </td>
+										<td>${empTrailList.empSname} ${empTrailList.empFname}</td>
 									
 										
 										<c:choose>
@@ -215,38 +220,20 @@
 										<td><span class="badge badge-danger">Reject By Final Authority</span></td>
 										</c:if>
 	
-									<%-- 	<td class="text-center">
-											<div class="list-icons">
-												<div class="dropdown">
-													<a href="#" class="list-icons-item" data-toggle="dropdown">
-														<i class="icon-menu9"></i>
-													</a>
-
-													<div class="dropdown-menu dropdown-menu-right">
-														<a
-															href="${pageContext.request.contextPath}/editEmp?typeId=${lvTypeList.exVar1}"
-															class="dropdown-item"><i class="icon-pencil7"></i>Edit</a>
-														<a
-															href="${pageContext.request.contextPath}/deleteEmployee?typeId=${lvTypeList.exVar1}"
-															class="dropdown-item"><i class="icon-trash"></i>
-															Delete</a> <a
-															href="${pageContext.request.contextPath}/uploadDocument?empId=${lvTypeList.exVar1}"
-															class="dropdown-item"><i class="icon-file-upload"></i> 
-															Document upload</a>
-
-													</div>
-												</div>
-											</div>
-										</td> --%>
+									
 									</tr>
 								</c:forEach>
 
 							</tbody>
 						</table>
-					</div>
+						
+								
+							</div>
+						</div>
 
+
+					</div>
 				</div>
-				<!-- /highlighting rows and columns -->
 
 			</div>
 			<!-- /content area -->
@@ -261,6 +248,62 @@
 
 	</div>
 	<!-- /page content -->
+
+	<script>
+		function trim(el) {
+			el.value = el.value.replace(/(^\s*)|(\s*$)/gi, ""). // removes leading and trailing spaces
+			replace(/[ ]{2,}/gi, " "). // replaces multiple spaces with one space 
+			replace(/\n +/, "\n"); // Removes spaces after newlines
+			return;
+		}
+
+		function validateEmail(email) {
+
+			var eml = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+
+			if (eml.test($.trim(email)) == false) {
+
+				return false;
+
+			}
+
+			return true;
+
+		}
+		function validateMobile(mobile) {
+			var mob = /^[1-9]{1}[0-9]{9}$/;
+
+			if (mob.test($.trim(mobile)) == false) {
+
+				//alert("Please enter a valid email address .");
+				return false;
+
+			}
+			return true;
+
+		}
+		$(document).ready(function($) {
+
+			$("#submitInsertCompany").submit(function(e) {
+				var isError = false;
+				var errMsg = "";
+
+				
+				if (!isError) {
+
+					var x = confirm("Do you really want to submit the form?");
+					if (x == true) {
+
+						document.getElementById("submtbtn").disabled = true;
+						return true;
+					}
+					//end ajax send this to php page
+				}
+				return false;
+			});
+		});
+		//
+	</script>
 
 </body>
 </html>

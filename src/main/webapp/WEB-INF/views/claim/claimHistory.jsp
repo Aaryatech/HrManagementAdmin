@@ -162,6 +162,9 @@
 														<a
 															href="${pageContext.request.contextPath}/showClaimProof?claimId=${lvTypeList.circulatedTo}"
 															title="Upload Document"><i class="icon-file-upload" style="color: black;"></i></a>
+															<a
+															href="${pageContext.request.contextPath}/showClaimHistDetailList?claimId=${lvTypeList.circulatedTo}"
+															><i class="icon-history" style="color: black;"></i></a>
 											
 										</td>
 									</tr>

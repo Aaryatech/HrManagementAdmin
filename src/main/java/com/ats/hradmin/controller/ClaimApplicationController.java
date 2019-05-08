@@ -76,6 +76,11 @@ public class ClaimApplicationController {
 			GetEmployeeInfo  editEmp = Constants.getRestTemplate().postForObject(Constants.url + "/GetEmployeeInfo", map,
 					GetEmployeeInfo.class);
 			model.addObject("editEmp", editEmp);
+			
+			
+			
+			
+			
 			for (int i = 0; i < employeeDepartmentlist.size(); i++) {
 				if(employeeDepartmentlist.get(i).getEmpId()==userObj.getEmpId()) {
 					flag=0;
@@ -361,7 +366,7 @@ public class ClaimApplicationController {
 
 					claimList.get(i).setCirculatedTo(FormValidation.Encrypt(String.valueOf(claimList.get(i).getClaimId())));
 					claimList.get(i).setClaimRemarks(FormValidation.Encrypt(String.valueOf(claimList.get(i).getEmpId())));
-
+					claimList.get(i).setClaimDate(DateConvertor.convertToDMY(claimList.get(i).getClaimDate()));
 				}
 				 model.addObject("claimListForApproval",claimList);
 				 model.addObject("list1Count",claimList.size());
@@ -383,7 +388,7 @@ public class ClaimApplicationController {
 
 				claimList1.get(i).setCirculatedTo(FormValidation.Encrypt(String.valueOf(claimList1.get(i).getClaimId())));
 				claimList1.get(i).setClaimRemarks(FormValidation.Encrypt(String.valueOf(claimList1.get(i).getEmpId())));
-
+				claimList1.get(i).setClaimDate(DateConvertor.convertToDMY(claimList.get(i).getClaimDate()));
 			}
 			
 			model.addObject("list2Count",claimList1.size());
@@ -428,6 +433,7 @@ public class ClaimApplicationController {
 
 			 GetClaimApplyAuthwise lvEmp = Constants.getRestTemplate().postForObject(Constants.url + "/getClaimApplyDetailsByClaimId", map1,
 					 GetClaimApplyAuthwise.class);
+			 lvEmp.setClaimDate(DateConvertor.convertToDMY(lvEmp.getClaimDate()));
 				model.addObject("lvEmp", lvEmp);
 				System.out.println("emp leave details"+lvEmp.toString());
 		      
@@ -560,8 +566,13 @@ public class ClaimApplicationController {
 			for (int i = 0; i < claimList1.size(); i++) {
 
 				claimList1.get(i).setCirculatedTo(FormValidation.Encrypt(String.valueOf(claimList1.get(i).getClaimId())));
+				claimList1.get(i).setClaimDate(DateConvertor.convertToDMY(claimList1.get(i).getClaimDate()));
+				
 
 			}
+			
+			
+			
 			 model.addObject("claimList1",claimList1);
 			
 			
@@ -715,10 +726,60 @@ public class ClaimApplicationController {
 			  ArrayList<GetClaimTrailStatus>(Arrays.asList(employeeDoc));
 			  System.out.println(employeeList);
 			  model.addObject("employeeList",employeeList);
+			  
+			  MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<>();
+		      map1.add("claimId",claimId);
+
+			 GetClaimApplyAuthwise lvEmp = Constants.getRestTemplate().postForObject(Constants.url + "/getClaimApplyDetailsByClaimId", map1,
+					 GetClaimApplyAuthwise.class);
+			 lvEmp.setClaimDate(DateConvertor.convertToDMY(lvEmp.getClaimDate()));
+
+				model.addObject("lvEmp", lvEmp);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return model;
 	}
+	
+	@RequestMapping(value = "/showClaimHistDetailList", method = RequestMethod.GET)
+	public ModelAndView showClaimHistDetailList(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("claim/claimDetailHistoryList");
+		int claimId = Integer.parseInt(FormValidation.DecodeKey(request.getParameter("claimId")));
+		model.addObject("claimId",claimId);
+
+		try {
+
+			 MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			  map.add("claimId",claimId);
+			  GetClaimTrailStatus[] employeeDoc = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpClaimInfoListByTrailEmpId", map,GetClaimTrailStatus[].class);
+			  
+			  List<GetClaimTrailStatus> employeeList = new
+			  ArrayList<GetClaimTrailStatus>(Arrays.asList(employeeDoc));
+			  
+			 
+		      model.addObject("employeeList",employeeList);
+		      
+		      
+		      MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<>();
+		      map1.add("claimId",claimId);
+
+			 GetClaimApplyAuthwise lvEmp = Constants.getRestTemplate().postForObject(Constants.url + "/getClaimApplyDetailsByClaimId", map1,
+					 GetClaimApplyAuthwise.class);
+			 lvEmp.setClaimDate(DateConvertor.convertToDMY(lvEmp.getClaimDate()));
+				model.addObject("lvEmp", lvEmp);
+				System.out.println("emp leave details"+lvEmp.toString());
+				
+				
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+	}
+	
+	
+	
+	
+	
 
 }

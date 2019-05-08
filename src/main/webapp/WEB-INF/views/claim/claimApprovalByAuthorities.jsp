@@ -308,7 +308,13 @@
 															class="icon-cancel-square" style="color: black;"></i></a>
 
 
-													</c:if></td>
+													</c:if>
+													
+													<a
+													href="${pageContext.request.contextPath}/claimDetailHistory?&claimId=${claimList.circulatedTo}"
+													class="nav-link legitRipple" style="color: black"><i
+														class="icon-list-unordered"></i></a>
+													</td>
 											</tr>
 										</c:forEach>
 
