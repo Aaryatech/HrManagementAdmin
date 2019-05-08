@@ -41,7 +41,12 @@
 						</div>
 
 						<a href="#" class="header-elements-toggle text-default d-md-none"><i
-							class="icon-more"></i></a>
+							class="icon-more"></i></a>	</div>
+								<div class="breadcrumb justify-content-center">
+						<a href="${pageContext.request.contextPath}/showLeaveTypeList"
+							class="breadcrumb-elements-item">  Leave Type List </a>
+
+			
 					</div>
 
 
@@ -143,7 +148,10 @@
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
-
+								<input type="hidden" class="form-control"
+												
+												id="shortname" value="${editCompany.lvTitleShort}"
+												name="shortname"> 
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="leaveWorlHrs">Working
@@ -259,13 +267,13 @@
 	<!-- /page content -->
 	<script type="text/javascript">
 	function checkUniqueShortName(valueType) {
-			//alert("hi");
+			//alert("leaveShortTypeTitle");
 
 			document.getElementById("submtbtn").disabled = false;
+			var shortname = document.getElementById("shortname").value;
 			
 			var valid = false;
 			
-		
 			if (valueType!= '') {
 					valid = true;
 					
@@ -285,8 +293,11 @@
 								function(data) {
 									//alert("data" + +JSON.stringify(data));
 									if (data.error == false) {
-										alert("Already exist")
+										
+										if(shortname!=valueType){
+											alert("Already exist") 
 										document.getElementById("leaveShortTypeTitle").value = "";
+										}
 									}
 									
 								});

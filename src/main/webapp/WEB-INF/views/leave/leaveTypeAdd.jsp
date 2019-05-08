@@ -136,7 +136,7 @@
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Enter Leave Short Name " id="leaveShortTypeTitle" 
-												name="leaveShortTypeTitle" autocomplete="off" onchange="trim(this)" oninput="checkUniqueShortName(this.value)">
+												name="leaveShortTypeTitle" autocomplete="off" onchange="trim(this)" oninput="checkUniqueShortName(this.value)" >
 											<span class="validation-invalid-label" id="error_leaveScType"
 												style="display: none;">This field is required.</span>
 										</div>
