@@ -54,28 +54,37 @@ public class LeaveController {
 	List<AccessRightModule> moduleList = new ArrayList<>();
 	
 
-	@RequestMapping(value = "/checkUniqueLeave", method = RequestMethod.GET)
-	public @ResponseBody Info checkUniqueLeave(HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = "/checkUniqueLeaveType", method = RequestMethod.GET)
+	public @ResponseBody Info checkUniqueLeaveType(HttpServletRequest request, HttpServletResponse response) {
 
-		Info info = new Info();
-
+		LeaveType leaveType = new LeaveType();
+		Info info=new Info();
+		HttpSession session = request.getSession();
+		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 		try {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-
-			String inputValue = request.getParameter("inputValue");
-			int valueType = Integer.parseInt(request.getParameter("valueType"));
- 			int isEdit = Integer.parseInt(request.getParameter("isEdit"));
+			String valueType = request.getParameter("valueType");
+			System.err.println("compId:  " + userObj.getCompanyId());
+			System.err.println("valueType:  " +valueType);
 			
-
-			map.add("inputValue", inputValue);
 			map.add("valueType", valueType);
- 			map.add("isEditCall", isEdit);
+			map.add("compId", userObj.getCompanyId());
  
-			info = Constants.getRestTemplate().postForObject(Constants.url + "checkUniqueLeave", map, Info.class);
-			System.err.println("Info Response  " + info.toString());
-
+			leaveType = Constants.getRestTemplate().postForObject(Constants.url + "checkUniqueShortName", map, LeaveType.class);
+			if(leaveType !=null) {
+				info.setError(false);
+				System.out.println	("false");	
+			}
+			else
+			{
+				 info.setError(true);
+			}
+			
 		} catch (Exception e) {
+			 info.setError(true); 
+			 info.setMsg("failed");
+			 System.out.println	("true");	
 			System.err.println("Exce in checkUniqueField  " + e.getMessage());
 			e.printStackTrace();
 		}
