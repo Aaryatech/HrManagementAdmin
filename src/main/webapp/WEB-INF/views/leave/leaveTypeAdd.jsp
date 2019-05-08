@@ -139,6 +139,8 @@
 												name="leaveShortTypeTitle" autocomplete="off" onchange="trim(this)" oninput="checkUniqueShortName(this.value)" >
 											<span class="validation-invalid-label" id="error_leaveScType"
 												style="display: none;">This field is required.</span>
+												<span class="validation-invalid-label" id="error_leaveShortname"
+												style="display: none;">Already exist.</span>
 										</div>
 									</div>
 
@@ -269,9 +271,11 @@
 
 								},
 								function(data) {
+									$("#error_leaveShortname").hide()
 									//alert("data" + +JSON.stringify(data));
 									if (data.error == false) {
-										alert("Already exist")
+										//alert("Already exist")
+											$("#error_leaveShortname").show()
 										document.getElementById("leaveShortTypeTitle").value = "";
 									}
 									
