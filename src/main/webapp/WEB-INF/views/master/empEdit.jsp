@@ -695,7 +695,7 @@
 	<!-- /page content -->
 <script type="text/javascript">
 		function setDate(value) {
-			alert("Value " +value)
+			//alert("Value " +value)
 			if (value == 1) {
 				//alert(value)
 				//document.getElementById("relDate").removeAttribute("required");
@@ -719,7 +719,7 @@
 	<script type="text/javascript">
 	
 	function showIsReg() {
-		alert("Hi");
+		//alert("Hi");
 		var x = ${editEmp.exInt1};
 
 		if (x == 1) {
