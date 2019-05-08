@@ -125,8 +125,8 @@
 									tabindex="-1" aria-hidden="true">
 									<option value="">Select Employee</option>
 									<c:forEach items="${employeeInfoList}" var="empInfo">
-										<option value="${empInfo.empId}">${empInfo.empSname} ${empInfo.empFname} ${empInfo.empMname}
-										</option>
+										<option value="${empInfo.empId}">${empInfo.empSname}
+											${empInfo.empFname} ${empInfo.empMname}</option>
 									</c:forEach>
 								</select> <span class="validation-invalid-label" id="error_empId"
 									style="display: none;">This field is required.</span>
@@ -158,6 +158,12 @@
 							</button>
 
 						</div>
+						<div id='loader' style='display: none;'>
+							<img
+								src='${pageContext.request.contextPath}/resources/assets/images/giphy.gif'
+								width="200px" height="200px"
+								style="display: block; margin- left: auto; margin-right: auto">
+						</div>
 						<table
 							class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic  datatable-button-print-columns1"
 							id="bootstrap-data-table">
@@ -183,21 +189,21 @@
 				</div>
 				<!-- /highlighting rows and columns -->
 
-		
-			<!-- /content area -->
-	</div>
+
+				<!-- /content area -->
+			</div>
 
 			<!-- Footer -->
 			<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 			<!-- /footer -->
 
-	</div>
+		</div>
 		<!-- /main content -->
 
 	</div>
 	<!-- /page content -->
 	<script type="text/javascript">
-	function show(){
+		function show() {
 
 			//alert("Hi View Orders  ");
 
@@ -222,86 +228,98 @@
 				var dataTable = $('#bootstrap-data-table').DataTable();
 				dataTable.clear().draw();
 
-			} 
+			}
+			$("#loader").show();
 
 			if (valid == true) {
 
-				$.getJSON('${empInfoHistoryList}', {
-					empId : empId,
-					calYrId : calYrId,					
-					ajax : 'true',
-				},
-
-				function(data) {
-					
-							
-					var dataTable = $('#bootstrap-data-table').DataTable();
-					dataTable.clear().draw();
-
-					$.each(data, function(i, v) {
-					
-						var str = '<a href="${pageContext.request.contextPath}/empDetailHistory?leaveId='+v.exVar1+'" ><i class="icon-list-unordered"   style="color:black"></i></a>'
-							
- 	
-							var current_status;
-							if(v.exInt1==1)
+				$
+						.getJSON(
+								'${empInfoHistoryList}',
 								{
-								/* current_status="Pending"; */
+									empId : empId,
+									calYrId : calYrId,
+									ajax : 'true',
+								},
 
-								current_status='<span class="badge badge-info">Initial Applied</span>';
-								}
-							else if(v.exInt1==2)
-								{
-								
-								current_status='<span class="badge badge-secondary">Approve By Initial Authority</span>';
-								}
-							else if(v.exInt1==3)
-							{
-							current_status='<span class="badge badge-success">Approve By Final Authority</span>';
-							}
-							else if(v.exInt1==7)
-							{
-							current_status='<span class="badge badge-danger">Cancel By Employee</span>';
-							}
-							else if(v.exInt1==8)
-							{
-							current_status='<span class="badge badge-danger">Reject By Initial Authority</span>';
-							}
-							else if(v.exInt1==9)
-							{
-							current_status='<span class="badge badge-danger">Reject By Final Authority</span>';
-							}
-							
-							var duration;
-							if(v.leaveDuration==1)
-								{
-								/* current_status="Pending"; */
+								function(data) {
 
-								duration='Full Day';
-								}
-							if(v.leaveDuration==2)
-							{
-							/* current_status="Pending"; */
+									var dataTable = $('#bootstrap-data-table')
+											.DataTable();
+									dataTable.clear().draw();
 
-							duration='Half Day';
-							}
-							
-						dataTable.row.add(
-								[ i + 1, v.empSname +" " +v.empFname ,
-										v.empDeptName,	v.lvTitle,v.empCode,v.leaveNumDays,duration, v.leaveFromdt +" To " +v.leaveTodt,v.userName,current_status,		
-										str
-								]).draw();
-					});
+									$
+											.each(
+													data,
+													function(i, v) {
 
-				});
+														var str = '<a href="${pageContext.request.contextPath}/empDetailHistory?leaveId='
+																+ v.exVar1
+																+ '" ><i class="icon-list-unordered"   style="color:black"></i></a>'
+
+														var current_status;
+														if (v.exInt1 == 1) {
+															/* current_status="Pending"; */
+
+															current_status = '<span class="badge badge-info">Initial Applied</span>';
+														} else if (v.exInt1 == 2) {
+
+															current_status = '<span class="badge badge-secondary">Approve By Initial Authority</span>';
+														} else if (v.exInt1 == 3) {
+															current_status = '<span class="badge badge-success">Approve By Final Authority</span>';
+														} else if (v.exInt1 == 7) {
+															current_status = '<span class="badge badge-danger">Cancel By Employee</span>';
+														} else if (v.exInt1 == 8) {
+															current_status = '<span class="badge badge-danger">Reject By Initial Authority</span>';
+														} else if (v.exInt1 == 9) {
+															current_status = '<span class="badge badge-danger">Reject By Final Authority</span>';
+														}
+
+														var duration;
+														if (v.leaveDuration == 1) {
+															/* current_status="Pending"; */
+
+															duration = 'Full Day';
+														}
+														if (v.leaveDuration == 2) {
+															/* current_status="Pending"; */
+
+															duration = 'Half Day';
+														}
+
+														dataTable.row
+																.add(
+																		[
+																				i + 1,
+																				v.empSname
+																						+ " "
+																						+ v.empFname,
+																				v.empDeptName,
+																				v.lvTitle,
+																				v.empCode,
+																				v.leaveNumDays,
+																				duration,
+																				v.leaveFromdt
+																						+ " To "
+																						+ v.leaveTodt,
+																				v.userName,
+																				current_status,
+																				str ])
+																.draw();
+													});
+									$("#loader").hide();
+
+								});
 
 			}//end of if valid ==true
 
 		}
 
-		function callDetail(exVar1,empId) {
-alert(exVar1);
-			window.open("${pageContext.request.contextPath}/empDetailHistory?empId="+exVar1);
+		function callDetail(exVar1, empId) {
+			alert(exVar1);
+			window
+					.open("${pageContext.request.contextPath}/empDetailHistory?empId="
+							+ exVar1);
 
 		}
 
@@ -310,10 +328,8 @@ alert(exVar1);
 					+ weighId);
 
 		}
-		
 	</script>
 	<script>
-
 		function trim(el) {
 			el.value = el.value.replace(/(^\s*)|(\s*$)/gi, ""). // removes leading and trailing spaces
 			replace(/[ ]{2,}/gi, " "). // replaces multiple spaces with one space 
