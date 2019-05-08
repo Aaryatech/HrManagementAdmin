@@ -181,7 +181,7 @@ public class ClaimApplicationController {
 	
 	@RequestMapping(value = "/insertSubmitClaim", method = RequestMethod.POST)
 	public String submitInsertLeave(HttpServletRequest request,	HttpServletResponse response) {
-		
+		String empId1=request.getParameter("empId");
 		try {
 			HttpSession session = request.getSession();
 			Date date = new Date();
@@ -335,7 +335,8 @@ public class ClaimApplicationController {
 			e.printStackTrace();
 		}
 
-		return "redirect:/showApplyForClaim";
+		//return "redirect:/showApplyForClaim";
+		return "redirect:/showClaimList?empId="+FormValidation.Encrypt(empId1);
 	
 
 }
@@ -733,7 +734,7 @@ public class ClaimApplicationController {
 
 			 GetClaimApplyAuthwise lvEmp = Constants.getRestTemplate().postForObject(Constants.url + "/getClaimApplyDetailsByClaimId", map1,
 					 GetClaimApplyAuthwise.class);
-			 lvEmp.setClaimDate(DateConvertor.convertToDMY(lvEmp.getClaimDate()));
+			lvEmp.setClaimDate(DateConvertor.convertToDMY(lvEmp.getClaimDate()));
 
 				model.addObject("lvEmp", lvEmp);
 		} catch (Exception e) {
@@ -767,7 +768,7 @@ public class ClaimApplicationController {
 
 			 GetClaimApplyAuthwise lvEmp = Constants.getRestTemplate().postForObject(Constants.url + "/getClaimApplyDetailsByClaimId", map1,
 					 GetClaimApplyAuthwise.class);
-			 lvEmp.setClaimDate(DateConvertor.convertToDMY(lvEmp.getClaimDate()));
+			lvEmp.setClaimDate(DateConvertor.convertToDMY(lvEmp.getClaimDate()));
 				model.addObject("lvEmp", lvEmp);
 				System.out.println("emp leave details"+lvEmp.toString());
 				
