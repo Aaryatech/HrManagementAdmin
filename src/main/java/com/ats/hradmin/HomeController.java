@@ -144,13 +144,12 @@ public class HomeController {
 		map = new LinkedMultiValueMap<>();
 		map.add("empId", userObj.getEmpId());
 		map.add("companyId", userObj.getCompanyId());
-		
+
 		//final and initial of employeee Claim
 		
 		GetAuthorityIds editEmp1 = Constants.getRestTemplate()
 				.postForObject(Constants.url + "/getClaimAuthIds", map, GetAuthorityIds.class);
 		System.out.println("emp Claim auth Ids"+editEmp1.toString());
-		
 		
 		
 		map = new LinkedMultiValueMap<>();
@@ -170,6 +169,7 @@ public class HomeController {
 		mav.addObject("iniClFname", empClaimIni.getEmpFname());
 		mav.addObject("iniClSname", empClaimIni.getEmpSname());
 		System.out.println("emp Claim auth Initial data "+empClaimIni.toString());
+		
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -244,60 +244,62 @@ try {
 					/// System.out.println("user data" + userResponse.toString());
 					
 					//final and initial of employeee leave
-					System.out.println("emp id in session is " +  userObj.getEmpId());
-					map = new LinkedMultiValueMap<>();
-					map.add("empId", userObj.getEmpId());
-
-					GetAuthorityIds editEmp = Constants.getRestTemplate()
-							.postForObject(Constants.url + "/getAuthIdByEmpId", map, GetAuthorityIds.class);
-					System.out.println("emp leave auth Ids"+editEmp.toString());
-
-					map = new LinkedMultiValueMap<>();
-					map.add("empId", editEmp.getFinAuthEmpId());
-
-					EmployeeInfo editEmpfin = Constants.getRestTemplate()
-							.postForObject(Constants.url + "/getEmpInfoById", map, EmployeeInfo.class);
-					mav.addObject("finFname", editEmpfin.getEmpFname());
-					mav.addObject("finSname", editEmpfin.getEmpSname());
-					mav.addObject("space1", " ");
-
-					map = new LinkedMultiValueMap<>();
-					map.add("empId", editEmp.getIniAuthEmpId());
-
-					EmployeeInfo editEmpIni = Constants.getRestTemplate()
-							.postForObject(Constants.url + "/getEmpInfoById", map, EmployeeInfo.class);
-					mav.addObject("iniFname", editEmpIni.getEmpFname());
-					mav.addObject("iniSname", editEmpIni.getEmpSname());
-					
-					map = new LinkedMultiValueMap<>();
-					map.add("empId", userObj.getEmpId());
-					map.add("companyId", userObj.getCompanyId());
-					
-					//final and initial of employeee Claim
-					
-					GetAuthorityIds editEmp1 = Constants.getRestTemplate()
-							.postForObject(Constants.url + "/getClaimAuthIds", map, GetAuthorityIds.class);
-					System.out.println("emp Claim auth Ids"+editEmp1.toString());
-					
-					
-					
-					map = new LinkedMultiValueMap<>();
-					map.add("empId", editEmp1.getFinAuthEmpId());
-
-					EmployeeInfo empClaimFin = Constants.getRestTemplate()
-							.postForObject(Constants.url + "/getEmpInfoById", map, EmployeeInfo.class);
-					mav.addObject("finClFname", empClaimFin.getEmpFname());
-					mav.addObject("finClSname", empClaimFin.getEmpSname());
-					System.out.println("emp Claim auth Final data "+empClaimFin.toString());
-
-					map = new LinkedMultiValueMap<>();
-					map.add("empId", editEmp1.getIniAuthEmpId());
-
-					EmployeeInfo empClaimIni = Constants.getRestTemplate()
-							.postForObject(Constants.url + "/getEmpInfoById", map, EmployeeInfo.class);
-					mav.addObject("iniClFname", empClaimIni.getEmpFname());
-					mav.addObject("iniClSname", empClaimIni.getEmpSname());
-					System.out.println("emp Claim auth Initial data "+empClaimIni.toString());
+						/*
+						 * System.out.println("emp id in session is " + userObj.getEmpId()); map = new
+						 * LinkedMultiValueMap<>(); map.add("empId", userObj.getEmpId());
+						 * 
+						 * GetAuthorityIds editEmp = Constants.getRestTemplate()
+						 * .postForObject(Constants.url + "/getAuthIdByEmpId", map,
+						 * GetAuthorityIds.class);
+						 * System.out.println("emp leave auth Ids"+editEmp.toString());
+						 * 
+						 * map = new LinkedMultiValueMap<>(); map.add("empId",
+						 * editEmp.getFinAuthEmpId());
+						 * 
+						 * EmployeeInfo editEmpfin = Constants.getRestTemplate()
+						 * .postForObject(Constants.url + "/getEmpInfoById", map, EmployeeInfo.class);
+						 * mav.addObject("finFname", editEmpfin.getEmpFname());
+						 * mav.addObject("finSname", editEmpfin.getEmpSname()); mav.addObject("space1",
+						 * " ");
+						 * 
+						 * map = new LinkedMultiValueMap<>(); map.add("empId",
+						 * editEmp.getIniAuthEmpId());
+						 * 
+						 * EmployeeInfo editEmpIni = Constants.getRestTemplate()
+						 * .postForObject(Constants.url + "/getEmpInfoById", map, EmployeeInfo.class);
+						 * mav.addObject("iniFname", editEmpIni.getEmpFname());
+						 * mav.addObject("iniSname", editEmpIni.getEmpSname());
+						 * 
+						 * map = new LinkedMultiValueMap<>(); map.add("empId", userObj.getEmpId());
+						 * map.add("companyId", userObj.getCompanyId());
+						 * 
+						 * //final and initial of employeee Claim
+						 * 
+						 * GetAuthorityIds editEmp1 = Constants.getRestTemplate()
+						 * .postForObject(Constants.url + "/getClaimAuthIds", map,
+						 * GetAuthorityIds.class);
+						 * System.out.println("emp Claim auth Ids"+editEmp1.toString());
+						 * 
+						 * 
+						 * 
+						 * map = new LinkedMultiValueMap<>(); map.add("empId",
+						 * editEmp1.getFinAuthEmpId());
+						 * 
+						 * EmployeeInfo empClaimFin = Constants.getRestTemplate()
+						 * .postForObject(Constants.url + "/getEmpInfoById", map, EmployeeInfo.class);
+						 * mav.addObject("finClFname", empClaimFin.getEmpFname());
+						 * mav.addObject("finClSname", empClaimFin.getEmpSname());
+						 * System.out.println("emp Claim auth Final data "+empClaimFin.toString());
+						 * 
+						 * map = new LinkedMultiValueMap<>(); map.add("empId",
+						 * editEmp1.getIniAuthEmpId());
+						 * 
+						 * EmployeeInfo empClaimIni = Constants.getRestTemplate()
+						 * .postForObject(Constants.url + "/getEmpInfoById", map, EmployeeInfo.class);
+						 * mav.addObject("iniClFname", empClaimIni.getEmpFname());
+						 * mav.addObject("iniClSname", empClaimIni.getEmpSname());
+						 * System.out.println("emp Claim auth Initial data "+empClaimIni.toString());
+						 */
 }catch (Exception e) {
 	e.printStackTrace();
 }

@@ -68,8 +68,14 @@
 						
 								<h6 class="card-title">Leave Authority</h6>
 								
-						
-							<div class="form-group row">
+						<c:choose>
+										<c:when test="${empty editEmp}">
+											
+											<span class="validation-invalid-label" id="error_leaveWHours"
+											>Leave Authority is not Assigned.</span>
+										</c:when>
+										<c:otherwise>
+										<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="compName">Initial Authority
 											: </label>
 										<div class="col-lg-6">
@@ -89,9 +95,17 @@
 											
 										</div>
 									</div>
+										</c:otherwise>
+										</c:choose>		
+							
 						
 					<h6 class="card-title">Claim Authority</h6>
-								
+								<c:choose>
+										<c:when test="${empty editEmp1}">
+											<span class="validation-invalid-label" id="error_leaveWHours"
+												>Claim Authority is not Assigned.</span>
+										</c:when>
+										<c:otherwise>
 						<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="compName">Initial Authority
 											: </label>
@@ -113,7 +127,9 @@
 										</div>
 									</div>
 						
-						
+						</c:otherwise>
+										</c:choose>		
+							
 						
 				
 				
