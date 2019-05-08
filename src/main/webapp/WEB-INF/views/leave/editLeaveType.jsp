@@ -355,7 +355,7 @@ function checkSame(){
 			$("#submitInsertCompany").submit(function(e) {
 				var isError = false;
 				var errMsg = "";
-
+				$("#error_leaveShortname").hide()
 				if (!$("#leaveTypeTitle").val()) {
 
 					isError = true;
