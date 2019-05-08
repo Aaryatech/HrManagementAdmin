@@ -9,7 +9,7 @@
 <c:url var="getSubmoduleList" value="/getSubmoduleList" />
 </head>
 
-<body>
+<body onload="showIsReg()">
 
 	<!-- Main navbar -->
 	<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
@@ -543,7 +543,26 @@
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
-
+									
+<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="comoffallowed">Is Working Today
+											<span style="color:red">* </span>:</label>
+										<div class="form-check form-check-inline">
+											<label class="form-check-label"> <input type="radio"
+												${editEmp.exInt1==1 ? 'checked' : ''}
+												class="form-check-input" name="isWorking"
+												id="isStructured" onclick="setDate(this.value)" checked value="1"> Yes
+											</label>
+										</div>
+										<div class="form-check form-check-inline">
+											<label class="form-check-label"> <input type="radio"
+												${editEmp.exInt1==0 ? 'checked' : ''}
+												class="form-check-input" onclick="setDate(this.value)" name="isWorking"
+												id="isStructured" value="0"> No
+											</label>
+										</div>
+									</div>
+									<div id="abc" style="display:none;">
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="leavingDate">Leaving
 											Date : </label>
@@ -553,7 +572,7 @@
 												value="${editEmp.empLeavingDate}" placeholder="Leaving Date">
 										</div>
 									</div>
-
+</div>
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="lvngReson">
 											Leaving Reason : </label>
@@ -674,7 +693,47 @@
 
 	</div>
 	<!-- /page content -->
+<script type="text/javascript">
+		function setDate(value) {
+			alert("Value " +value)
+			if (value == 1) {
+				//alert(value)
+				//document.getElementById("relDate").removeAttribute("required");
+				document.getElementById("abc").style.display = "none";
 
+				//alert(value)
+			} else {
+				//alert(value)
+				//document.getElementById("relDate").setAttribute("required","true");
+				document.getElementById("abc").style.display = "block";
+
+				//alert(value)
+
+			}
+
+		}
+		
+		
+		
+	</script>
+	<script type="text/javascript">
+	
+	function showIsReg() {
+		alert("Hi");
+		var x = ${editEmp.exInt1};
+
+		if (x == 1) {
+			
+				document.getElementById("abc").style.display = "none";
+
+			} else {
+				//alert("Hi es")
+				document.getElementById("abc").style.display = "block";
+
+			}
+
+		}
+	</script>
 	<script type="text/javascript">
 		function readURL(input) {
 			if (input.files && input.files[0]) {

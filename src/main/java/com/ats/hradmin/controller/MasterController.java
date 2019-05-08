@@ -1849,6 +1849,11 @@ try {
 				map.add("empId", compId);
 				editEmp = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpInfoById", map,
 						EmployeeInfo.class);
+				if(editEmp.getEmpLeavingDate()!=null) {
+					editEmp.setEmpLeavingDate(DateConvertor.convertToDMY(editEmp.getEmpLeavingDate()));
+					
+				}
+			
 				model.addObject("editEmp", editEmp);
 
 				map = new LinkedMultiValueMap<>();
@@ -1933,7 +1938,7 @@ try {
 			String joiningDate = request.getParameter("joiningDate");
 			int prevsExpYr = Integer.parseInt(request.getParameter("prevsExpYr"));
 			int prevsExpMn = Integer.parseInt(request.getParameter("prevsExpMn"));
-			String leavingDate = request.getParameter("leavingDate");
+		//	String leavingDate = request.getParameter("leavingDate");
 			String lvngReson = request.getParameter("lvngReson");
 			String uname = request.getParameter("uname");
 			String upass = request.getParameter("upass");
@@ -1988,7 +1993,17 @@ try {
 				editEmp.setEmpRatePerhr(ratePerHr);
 
 				editEmp.setEmpJoiningDate(DateConvertor.convertToYMD(joiningDate));
-				editEmp.setEmpLeavingDate(DateConvertor.convertToYMD(leavingDate));
+				int isWorking = Integer.parseInt(request.getParameter("isWorking"));
+				String leavingDate=null;
+				if(isWorking==0) {
+					  leavingDate = request.getParameter("leavingDate");
+					  editEmp.setEmpLeavingDate(DateConvertor.convertToYMD(leavingDate));
+
+				}
+				else {
+					 leavingDate = null;
+					 editEmp.setEmpLeavingDate(leavingDate);
+				}
 
 				editEmp.setEmpPrevExpYrs(prevsExpYr);
 				editEmp.setEmpPrevExpMonths(prevsExpMn);
@@ -1996,6 +2011,7 @@ try {
 
 				editEmp.setMakerUserId(userObj.getUserId());
 				editEmp.setMakerEnterDatetime(sf.format(date));
+				editEmp.setExInt1(isWorking);
 
 				EmployeeInfo res = Constants.getRestTemplate().postForObject(Constants.url + "/saveEmpInfo", editEmp,
 						EmployeeInfo.class);
@@ -2072,14 +2088,7 @@ try {
 			String joiningDate = request.getParameter("joiningDate");
 			int prevsExpYr = Integer.parseInt(request.getParameter("prevsExpYr"));
 			int prevsExpMn = Integer.parseInt(request.getParameter("prevsExpMn"));
-			String leavingDate=null;
-			if(isWorking==1) {
-				  leavingDate = request.getParameter("leavingDate");
-
-			}
-			else {
-				 leavingDate = null;
-			}
+			
 			String lvngReson = request.getParameter("lvngReson");
 			String uname = request.getParameter("uname");
 			String upass = request.getParameter("upass");
@@ -2274,9 +2283,18 @@ try {
 				leaveSummary.setEmpEmergencyNo1(emgContNo1);
 				leaveSummary.setEmpRatePerhr(ratePerHr);
 
-				leaveSummary.setEmpJoiningDate(DateConvertor.convertToYMD(joiningDate));
-				leaveSummary.setEmpLeavingDate(DateConvertor.convertToYMD(leavingDate));
+				String leavingDate=null;
+				if(isWorking==0) {
+					  leavingDate = request.getParameter("leavingDate");
+					  leaveSummary.setEmpLeavingDate(DateConvertor.convertToYMD(leavingDate));
 
+				}
+				else {
+					 leavingDate = null;
+					  leaveSummary.setEmpLeavingDate(leavingDate);
+				}
+				leaveSummary.setEmpJoiningDate(DateConvertor.convertToYMD(joiningDate));
+				
 				leaveSummary.setEmpPrevExpYrs(prevsExpYr);
 				leaveSummary.setEmpPrevExpMonths(prevsExpMn);
 				leaveSummary.setEmpLeavingReason(lvngReson);

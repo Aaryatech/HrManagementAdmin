@@ -635,7 +635,7 @@ try {
 
 	@RequestMapping(value = "/insertLeave", method = RequestMethod.POST)
 	public String insertLeave(HttpServletRequest request, HttpServletResponse response) {
-
+String empId1=request.getParameter("empId");
 		try {
 			HttpSession session = request.getSession();
 			Date date = new Date();
@@ -784,7 +784,8 @@ try {
 			e.printStackTrace();
 		}
 
-		return "redirect:/showApplyForLeave";
+		//return "redirect:/showApplyForLeave";
+	return "redirect:/showLeaveHistList?empId="+FormValidation.Encrypt(empId1);
 
 	}
 
