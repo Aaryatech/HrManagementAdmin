@@ -111,8 +111,70 @@
 							session.removeAttribute("successMsg");
 							}
 						%>
+							<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="compName">Employee Code
+											: </label>
+										<div class="col-lg-6">
+											<input type="text" class="form-control"
+												 Value="${lvEmp.empCode}"
+												name="compName" autocomplete="off" readonly>
+											
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="compName">Employee Name
+											: </label>
+										<div class="col-lg-6">
+											<input type="text" class="form-control"
+												 Value="${lvEmp.empName}"
+												name="compName" autocomplete="off" readonly>
+											
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="compName">Leave Type
+											: </label>
+										<div class="col-lg-6">
+											<input type="text" class="form-control"
+												 Value="${lvEmp.leaveTitle}"
+												name="compName" autocomplete="off" readonly>
+											
+										</div>
+									</div>
+									
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="compName">From date
+											: </label>
+										<div class="col-lg-6">
+											<input type="text" class="form-control"
+												  Value="${lvEmp.leaveFromdt}"
+												name="compName" autocomplete="off" readonly>
+											
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="compName">To Date
+											: </label>
+										<div class="col-lg-6">
+											<input type="text" class="form-control"
+											  Value="${lvEmp.leaveTodt}"
+												name="compName" autocomplete="off" readonly>
+											
+										</div>
+									</div>
+						
+						<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="compName">No. of Days
+											: </label>
+										<div class="col-lg-6">
+											<input type="text" class="form-control"
+												 Value="${lvEmp.leaveNumDays}"
+												name="compName" autocomplete="off" readonly>
+											
+										</div>
+									</div>
 						<table
-							class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic  datatable-button-print-columns1"
+							class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic1  datatable-button-print-columns1"
 							id="printtable1">
 							<thead>
 								<tr class="bg-blue">

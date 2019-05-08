@@ -280,6 +280,13 @@ public class LeaveApprovalController {
 			  ArrayList<GetLeaveStatus>(Arrays.asList(employeeDoc));
 		      model.addObject("employeeList",employeeList);
 		      
+		      MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<>();
+		      map1.add("leaveId",leaveId);
+
+			 GetLeaveApplyAuthwise lvEmp = Constants.getRestTemplate().postForObject(Constants.url + "/getLeaveApplyDetailsByLeaveId", map1,
+					 GetLeaveApplyAuthwise.class);
+				model.addObject("lvEmp", lvEmp);
+				System.out.println("emp leave details"+lvEmp.toString());
 		   
 
 		} catch (Exception e) {

@@ -386,8 +386,8 @@ try {
 	
 	//*************************Forgot Pass***********************************************
 	
-	@RequestMapping(value = "/showforgotPassForm", method = RequestMethod.GET)
-	public ModelAndView showforgotPassForm(HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = "/showForgotPassForm", method = RequestMethod.GET)
+	public ModelAndView showForgotPassForm(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = null;
 		try {
