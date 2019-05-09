@@ -117,7 +117,7 @@
 										<div class="col-lg-6">
 											<input type="text" class="form-control"
 												 Value="${lvEmp.empCode}"
-												name="compName" autocomplete="off" readonly>
+												name="empCode" id="empCode" autocomplete="off" readonly>
 											
 										</div>
 									</div>
@@ -127,7 +127,17 @@
 										<div class="col-lg-6">
 											<input type="text" class="form-control"
 												 Value="${lvEmp.empName}"
-												name="compName" autocomplete="off" readonly>
+												name="empName" id="empName" autocomplete="off" readonly>
+											
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="compName">Claim Type
+											: </label>
+										<div class="col-lg-6">
+											<input type="text" class="form-control"
+												 Value="${lvEmp.claimTypeName}"
+												name="clmType" id="clmType" autocomplete="off" readonly>
 											
 										</div>
 									</div>
@@ -137,7 +147,7 @@
 										<div class="col-lg-6">
 											<input type="text" class="form-control"
 												  Value="${lvEmp.claimDate}"
-												name="compName" autocomplete="off" readonly>
+												name="claimDate" id="claimDate" autocomplete="off" readonly>
 											
 										</div>
 									</div>
@@ -149,7 +159,7 @@
 										<div class="col-lg-6">
 											<input type="text" class="form-control"
 												 Value="${lvEmp.claimAmount}"
-												name="compName" autocomplete="off" readonly>
+												name="clmAmt" id="clmAmt" autocomplete="off" readonly>
 											
 										</div>
 									</div>
@@ -160,7 +170,18 @@
 										<div class="col-lg-6">
 											<input type="text" class="form-control"
 												 Value="${lvEmp.projectTitle}"
-												name="compName" autocomplete="off" readonly>
+												name="proTitle" id="proTitle" autocomplete="off" readonly>
+											
+										</div>
+									</div>
+							
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="compName">Claim Remark 
+											: </label>
+										<div class="col-lg-6">
+											<input type="text" class="form-control"
+												 Value="${lvEmp.claimRemarks}"
+												name="proTitle" id="proTitle" autocomplete="off" readonly>
 											
 										</div>
 									</div>
@@ -320,22 +341,124 @@
 				var isError = false;
 				var errMsg = "";
 
-				
+				//alert("asdf");
 				if (!isError) {
 
-					var x = confirm("Do you really want to submit the form?");
-					if (x == true) {
-
-						document.getElementById("submtbtn").disabled = true;
-						return true;
-					}
-					//end ajax send this to php page
-				}
-				return false;
+					 $('#clType')
+					.html(
+							document
+									.getElementById("clmType").value);
+					 $('#proName')
+					.html(
+							document
+									.getElementById("proTitle").value);
+					 $('#claimAmt1')
+					.html(
+							document
+									.getElementById("clmAmt").value);
+					 $('#empCode1')
+					.html(
+							document
+									.getElementById("empCode").value);
+					 $('#empName1')
+					.html(
+							document
+									.getElementById("empName").value);
+			
+					 $('#claimDate1')
+			.html(
+					document
+							.getElementById("claimDate").value);  
+					 $('#remark1')
+						.html(
+								document
+										.getElementById("remark").value);
+	
+			$('#modal_scrollable')
+			.modal('show');
+			 
+			//end ajax send this to php page
+		}
+		return false;
 			});
 		});
 		//
 	</script>
+<script>
+		function submitForm() {
+			$('#modal_scrollable').modal('hide');
+			document.getElementById("submtbtn").disabled = true;
+			document.getElementById("submitInsertCompany").submit();
+
+		}
+	</script>
+	<!-- Scrollable modal -->
+	<div id="modal_scrollable" class="modal fade" data-backdrop="false"
+		tabindex="-1">
+		<div class="modal-dialog modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-header pb-3">
+
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<div class="modal-body py-0">
+					<h5 class="modal-title">Claim Details</h5><br>
+
+					<div class="form-group row">
+						<label class="col-form-label col-lg-3" for="empCode1">
+							Employee Code : </label> <label class="col-form-label col-lg-2"
+							id="empCode1" for="empCode1"> </label>
+
+					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-3" for="empName1">
+							Employee Name : </label> <label class="col-form-label col-lg-6"
+							id="empName1" for="empName1"> </label>
+
+					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-3" for="clType"> Claim
+							Type : </label> <label class="col-form-label col-lg-6" id="clType"
+							for="clType"> </label>
+
+					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-3" for="proName"> Project 
+							Name : </label> <label class="col-form-label col-lg-6" id="proName"
+							for="proName"> </label>
+
+					</div>
+
+				
+					<div class="form-group row">
+						<label class="col-form-label col-lg-3" for="noOfDays"> Claim Amount
+							 : </label> <label class="col-form-label col-lg-3" id="claimAmt1"
+							for="claimAmt1"> </label>
+
+					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-3" for="claimDate1"> Claim Date
+							 : </label> <label class="col-form-label col-lg-3" id="claimDate1"
+							for="claimDate1"> </label>
+
+					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-3" for="claimDate1"> Remark
+							 : </label> <label class="col-form-label col-lg-9" id="remark1"
+							for="remark1"> </label>
+
+					</div>
+				</div>
+
+				<div class="modal-footer pt-3">
+					<button type="button" class="btn btn-link" data-dismiss="modal">Cancel</button>
+					<button type="button" class="btn bg-primary" onclick="submitForm()">Submit</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /scrollable modal -->
 
 </body>
 </html>

@@ -125,18 +125,18 @@
 									session.removeAttribute("successMsg");
 									}
 								%>
-								
-								<span
-												class="validation-invalid-label" id="error_assign"
-												style="display: none;">Sorry You Can Not Apply for Leave as Leave Authorities or Leave Structure Are not Assigned !!</span>
-								
-								
+
+								<span class="validation-invalid-label" id="error_assign"
+									style="display: none;">Sorry You Can Not Apply for Leave
+									as Leave Authorities or Leave Structure Are not Assigned !!</span>
+
+
 								<div class="form-group row">
 									<label class="col-form-label col-lg-2" for="lvsName">
 										Employee Code : *</label>
 									<div class="col-lg-10">
 										<input type="text" class="form-control"
-											placeholder="Enter Leave Structure Name" id="lvsName"
+											placeholder="Enter Leave Structure Name" id="empCode"
 											value="${editEmp.empCode}" name="lvsName" autocomplete="off"
 											onchange="trim(this)" readonly>
 
@@ -147,7 +147,7 @@
 										Employee Name : *</label>
 									<div class="col-lg-10">
 										<input type="text" class="form-control"
-											placeholder="Enter Leave Structure Name" id="lvsName"
+											placeholder="Enter Leave Structure Name" id="empName"
 											value="${editEmp.empFname} ${editEmp.empMname} ${editEmp.empSname}   "
 											name="lvsName" autocomplete="off" onchange="trim(this)"
 											readonly>
@@ -216,10 +216,12 @@
 														<c:when
 															test="${leaveHistoryList.lvTypeId == editLeave.lvTypeId}">
 															<option value="${leaveHistoryList.lvTypeId}"
-																selected="selected">${leaveHistoryList.lvTitle}</option>
+																selected="selected"
+																data-leavestrname="${leaveHistoryList.lvTitle}">${leaveHistoryList.lvTitle}</option>
 														</c:when>
 														<c:otherwise>
-															<option value="${leaveHistoryList.lvTypeId}">${leaveHistoryList.lvTitle}</option>
+															<option value="${leaveHistoryList.lvTypeId}"
+																data-leavestrname="${leaveHistoryList.lvTitle}">${leaveHistoryList.lvTitle}</option>
 														</c:otherwise>
 													</c:choose>
 												</c:forEach>
@@ -237,7 +239,7 @@
 												data-fouc="" aria-hidden="true"
 												onchange="calholidayWebservice()">
 												<option></option>
-												<option selected value="1">Full Day</option>
+												<option selected value="1" >Full Day</option>
 												<option value="2">Half Day</option>
 
 
@@ -298,20 +300,20 @@
 									<input type="hidden" class="form-control numbersOnly"
 										id="empId" value="${empId}" name="empId"> <input
 										type="hidden" class="form-control numbersOnly" id="tempNoDays"
-										name="tempNoDays"> 
-									<input type="text"	class="form-control numbersOnly" id="lvsId" value="${lvsId}"
+										name="tempNoDays"> <input type="hidden"
+										class="form-control numbersOnly" id="lvsId" value="${lvsId}"
 										name="lvsId">
-										<%-- <input type="text"	class="form-control numbersOnly" id="lvsInfoId" value="${lvsInfoId}"
+									<%-- <input type="text"	class="form-control numbersOnly" id="lvsInfoId" value="${lvsInfoId}"
 										name="lvsInfoId"> --%>
-					<input type="text"class="form-control numbersOnly" id="auth" value="${authorityInformation.leaveInitialAuth}"
-										name="auth">
+									<input type="hidden" class="form-control numbersOnly" id="auth"
+										value="${authorityInformation.leaveInitialAuth}" name="auth">
 
 
-									
+
 
 									<div class="col-md-12" style="text-align: center;">
 
-										<button type="submit"  class="btn bg-blue ml-3 legitRipple"
+										<button type="submit" class="btn bg-blue ml-3 legitRipple"
 											id="submtbtn">
 											Submit <i class="icon-paperplane ml-2"></i>
 										</button>
@@ -344,8 +346,8 @@
 	</div>
 	<!-- /page content -->
 
-	
-	
+
+
 	<script type="text/javascript">
 		function checkUnique() {
 			var inputValue = document.getElementById("leaveTypeId").value;
@@ -371,7 +373,7 @@
 			});
 		}
 	</script>
-	
+
 	<script type="text/javascript">
 		function checkDays(x2) {
 			//alert(x2);
@@ -391,25 +393,24 @@
 
 		}
 	</script>
-<script type="text/javascript">
-function chkAssign(){
-		
-		var auth=document.getElementById("auth").value;
-		var lvsId=document.getElementById("lvsId").value;
-		//alert("auth"+auth);
-		//alert("lvsId"+lvsId);
+	<script type="text/javascript">
+		function chkAssign() {
 
-		if(auth==0 || lvsId==0 ){
-			//alert("in if");
-			//document.getElementById("submtbtn").disabled = true;
-			 document.getElementById('submtbtn').disabled = 'disabled';
-			$("#error_assign").show()
+			var auth = document.getElementById("auth").value;
+			var lvsId = document.getElementById("lvsId").value;
+			//alert("auth"+auth);
+			//alert("lvsId"+lvsId);
+
+			if (auth == 0 || lvsId == 0) {
+				//alert("in if");
+				//document.getElementById("submtbtn").disabled = true;
+				document.getElementById('submtbtn').disabled = 'disabled';
+				$("#error_assign").show()
+			} else {
+				//alert("in else");
+				document.getElementById("submtbtn").disabled = false;
+			}
 		}
-		else{
-			//alert("in else");
-			document.getElementById("submtbtn").disabled =false ;
-		}
-	}
 	</script>
 	<script type="text/javascript">
 		function calholiday() {
@@ -1043,88 +1044,186 @@ function chkAssign(){
 			return;
 		}
 
-		$(document).ready(function($) {
+		$(document)
+				.ready(
+						function($) {
 
-			$("#submitInsertLeave").submit(function(e) {
-				var isError = false;
-				var errMsg = "";
+							$("#submitInsertLeave")
+									.submit(
+											function(e) {
+												var isError = false;
+												var errMsg = "";
 
-				if (!$("#leaveTypeId").val()) {
+												if (!$("#leaveTypeId").val()) {
 
-					isError = true;
+													isError = true;
 
-					$("#error_leaveTypeId").show()
-					//return false;
-				} else {
-					$("#error_leaveTypeId").hide()
-				}
+													$("#error_leaveTypeId")
+															.show()
+													//return false;
+												} else {
+													$("#error_leaveTypeId")
+															.hide()
+												}
 
-				if (!$("#dayTypeName").val()) {
+												if (!$("#dayTypeName").val()) {
 
-					isError = true;
+													isError = true;
 
-					$("#error_dayType").show()
+													$("#error_dayType").show()
 
-				} else {
-					$("#error_dayType").hide()
-				}
+												} else {
+													$("#error_dayType").hide()
+												}
 
-				if (!$("#leaveDateRange").val()) {
+												if (!$("#leaveDateRange").val()) {
 
-					isError = true;
+													isError = true;
 
-					$("#error_Range").show()
+													$("#error_Range").show()
 
-				} else {
-					$("#error_Range").hide()
-				}
+												} else {
+													$("#error_Range").hide()
+												}
 
-				if (!$("#noOfDays").val()) {
+												if (!$("#noOfDays").val()) {
 
-					isError = true;
+													isError = true;
 
-					$("#error_noOfDays").show()
+													$("#error_noOfDays").show()
 
-				} else {
-					$("#error_noOfDays").hide()
-				}
+												} else {
+													$("#error_noOfDays").hide()
+												}
 
-				if (!$("#noOfDaysExclude").val()) {
+												if (!$("#noOfDaysExclude")
+														.val()) {
 
-					isError = true;
+													isError = true;
 
-					$("#error_noOfDaysExclude").show()
+													$("#error_noOfDaysExclude")
+															.show()
 
-				} else {
-					$("#error_noOfDaysExclude").hide()
-				}
+												} else {
+													$("#error_noOfDaysExclude")
+															.hide()
+												}
 
-				if (checkDays(parseFloat($("#noOfDays").val())) == true) {
+												if (checkDays(parseFloat($(
+														"#noOfDays").val())) == true) {
 
-					isError = true;
+													isError = true;
 
-					$("#error_insuf").show()
+													$("#error_insuf").show()
 
-				} else {
-					$("#error_insuf").hide()
-				}
-				
+												} else {
+													$("#error_insuf").hide()
+												}
 
-				if (!isError) {
+												if (!isError) {
+													var option = $(
+															"#leaveTypeId option:selected")
+															.attr(
+																	"data-leavestrname");
 
-					var x = confirm("Do you really want to submit the form?");
-					if (x == true) {
+													$('#lvType').html(option);
+													$('#noOfDays1')
+															.html(
+																	document
+																			.getElementById("noOfDays").value);
+													$('#empCode1')
+															.html(
+																	document
+																			.getElementById("empCode").value);
+													$('#empName1')
+															.html(
+																	document
+																			.getElementById("empName").value);
+													var daterange = document
+															.getElementById("leaveDateRange").value;
 
-						document.getElementById("submtbtn").disabled = true;
-						return true;
-					}
-					//end ajax send this to php page
-				}
-				return false;
-			});
-		});
+													var res = daterange
+															.split(" to ");
+
+													$('#fromdate1')
+															.html(res[0]);
+													$('#todate1').html(res[1]);
+
+													$('#modal_scrollable')
+															.modal('show');
+													//end ajax send this to php page
+												}
+												return false;
+											});
+						});
 		//
 	</script>
+	<script>
+		function submitForm() {
+			$('#modal_scrollable').modal('hide');
+			document.getElementById("submtbtn").disabled = true;
+			document.getElementById("submitInsertLeave").submit();
 
+		}
+	</script>
+	<!-- Scrollable modal -->
+	<div id="modal_scrollable" class="modal fade" data-backdrop="false"
+		tabindex="-1">
+		<div class="modal-dialog modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-header pb-3">
+
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<div class="modal-body py-0">
+					<h5 class="modal-title">Leave Details</h5><br>
+
+					<div class="form-group row">
+						<label class="col-form-label col-lg-3" for="lvType">
+							Employee Code : </label> <label class="col-form-label col-lg-2"
+							id="empCode1" for="empCode1"> </label>
+
+					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-3" for="lvType">
+							Employee Name : </label> <label class="col-form-label col-lg-6"
+							id="empName1" for="empName1"> </label>
+
+					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-3" for="lvType"> Leave
+							Type : </label> <label class="col-form-label col-lg-2" id="lvType"
+							for="lvType"> </label>
+
+					</div>
+
+
+					<div class="form-group row">
+						<label class="col-form-label col-lg-3" for="fromdate1">
+							From Date : </label> <label class="col-form-label col-lg-3"
+							id="fromdate1" for="noOfDays1"> </label>
+						<label class="col-form-label col-lg-3" for="todate1">
+							To Date : </label>
+						<label class="col-form-label col-lg-2" id="todate1"
+							for="noOfDays1"> </label>
+
+					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-3" for="noOfDays"> No.
+							of Days : </label> <label class="col-form-label col-lg-3" id="noOfDays1"
+							for="noOfDays1"> </label>
+
+					</div>
+				</div>
+
+				<div class="modal-footer pt-3">
+					<button type="button" class="btn btn-link" data-dismiss="modal">Cancel</button>
+					<button type="button" class="btn bg-primary" onclick="submitForm()">Submit</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /scrollable modal -->
 </body>
 </html>

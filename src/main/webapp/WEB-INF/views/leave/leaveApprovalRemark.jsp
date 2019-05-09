@@ -120,7 +120,7 @@
 										<div class="col-lg-6">
 											<input type="text" class="form-control"
 												 Value="${lvEmp.empCode}"
-												name="compName" autocomplete="off" readonly>
+												id="empCode" autocomplete="off" readonly>
 											
 										</div>
 									</div>
@@ -130,7 +130,7 @@
 										<div class="col-lg-6">
 											<input type="text" class="form-control"
 												 Value="${lvEmp.empName}"
-												name="compName" autocomplete="off" readonly>
+												 id="empName" autocomplete="off" readonly>
 											
 										</div>
 									</div>
@@ -140,7 +140,7 @@
 										<div class="col-lg-6">
 											<input type="text" class="form-control"
 												 Value="${lvEmp.leaveTitle}"
-												name="compName" autocomplete="off" readonly>
+												id="lvType" autocomplete="off" readonly>
 											
 										</div>
 									</div>
@@ -150,8 +150,8 @@
 											: </label>
 										<div class="col-lg-6">
 											<input type="text" class="form-control"
-												  Value="${lvEmp.leaveFromdt}"
-												name="compName" autocomplete="off" readonly>
+												  Value="${lvEmp.leaveFromdt}" 
+												id="frmDate" autocomplete="off" readonly>
 											
 										</div>
 									</div>
@@ -161,7 +161,7 @@
 										<div class="col-lg-6">
 											<input type="text" class="form-control"
 											  Value="${lvEmp.leaveTodt}"
-												name="compName" autocomplete="off" readonly>
+												id="toDate" autocomplete="off" readonly>
 											
 										</div>
 									</div>
@@ -172,7 +172,7 @@
 										<div class="col-lg-6">
 											<input type="text" class="form-control"
 												 Value="${lvEmp.leaveNumDays}"
-												name="compName" autocomplete="off" readonly>
+												id="noDays" autocomplete="off" readonly>
 											
 										</div>
 									</div>
@@ -335,19 +335,79 @@
 				
 				if (!isError) {
 
-					var x = confirm("Do you really want to submit the form?");
-					if (x == true) {
-
-						document.getElementById("submtbtn").disabled = true;
-						return true;
-					}
+					
 					//end ajax send this to php page
 				}
 				return false;
 			});
 		});
-		//
+		
+		
 	</script>
+	<script>
+		function submitForm() {
+			$('#modal_scrollable').modal('hide');
+			document.getElementById("submtbtn").disabled = true;
+			document.getElementById("submitInsertCompany").submit();
 
+		}
+	</script>
+<div id="modal_scrollable" class="modal fade" data-backdrop="false"
+		tabindex="-1">
+		<div class="modal-dialog modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-header pb-3">
+
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<div class="modal-body py-0">
+					<h5 class="modal-title">Leave Details</h5><br>
+
+					<div class="form-group row">
+						<label class="col-form-label col-lg-3" for="lvType">
+							Employee Code : </label> <label class="col-form-label col-lg-2"
+							id="empCode1" for="empCode1"> </label>
+
+					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-3" for="lvType">
+							Employee Name : </label> <label class="col-form-label col-lg-6"
+							id="empName1" for="empName1"> </label>
+
+					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-3" for="lvType"> Leave
+							Type : </label> <label class="col-form-label col-lg-2" id="lvType"
+							for="lvType"> </label>
+
+					</div>
+
+
+					<div class="form-group row">
+						<label class="col-form-label col-lg-3" for="fromdate1">
+							From Date : </label> <label class="col-form-label col-lg-3"
+							id="fromdate1" for="noOfDays1"> </label>
+						<label class="col-form-label col-lg-3" for="todate1">
+							To Date : </label>
+						<label class="col-form-label col-lg-2" id="todate1"
+							for="noOfDays1"> </label>
+
+					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-3" for="noOfDays"> No.
+							of Days : </label> <label class="col-form-label col-lg-3" id="noOfDays1"
+							for="noOfDays1"> </label>
+
+					</div>
+				</div>
+
+				<div class="modal-footer pt-3">
+					<button type="button" class="btn btn-link" data-dismiss="modal">Cancel</button>
+					<button type="button" class="btn bg-primary" onclick="submitForm()">Submit</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

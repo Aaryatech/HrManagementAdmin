@@ -130,7 +130,7 @@
 											Employee Code <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
-												placeholder="Enter Leave Structure Name" id="lvsName"   value="${editEmp.empCode}" 
+												placeholder="Enter Leave Structure Name" id="empCode"   value="${editEmp.empCode}" 
 												name="lvsName" autocomplete="off" onchange="trim(this)" readonly>
 											
 										</div>
@@ -140,7 +140,7 @@
 											Employee Name <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
-												placeholder="Enter Leave Structure Name" id="lvsName"  value="${editEmp.empFname} ${editEmp.empMname} ${editEmp.empSname}   "
+												placeholder="Enter Leave Structure Name" id="empName"  value="${editEmp.empFname} ${editEmp.empMname} ${editEmp.empSname}   "
 												name="lvsName" autocomplete="off" onchange="trim(this)" readonly>
 											
 										</div>
@@ -165,10 +165,10 @@
 												<c:forEach items="${claimTypeList}" var="claimTypeList">
 													<c:choose>
 														<c:when test="${claimTypeList.claimTypeId == editClaim.lvTypeId}">
-															<option value="${claimTypeList.claimTypeId}" selected="selected">${claimTypeList.claimTypeTitle}</option>
+															<option value="${claimTypeList.claimTypeId}" selected="selected" data-clstrname="${claimTypeList.claimTypeTitle}">${claimTypeList.claimTypeTitle}</option>
 														</c:when>
 														<c:otherwise>
-															<option value="${claimTypeList.claimTypeId}">${claimTypeList.claimTypeTitle}</option>
+															<option value="${claimTypeList.claimTypeId}"  data-clstrname="${claimTypeList.claimTypeTitle}">${claimTypeList.claimTypeTitle}</option>
 														</c:otherwise>
 													</c:choose>
 												</c:forEach>
@@ -189,10 +189,10 @@
 												<c:forEach items="${projectTypeList}" var="proTypeList">
 													<c:choose>
 														<c:when test="${proTypeList.projectId == editLeave.lvTypeId}">
-															<option value="${proTypeList.projectId}" selected="selected">${proTypeList.projectTitle}</option>
+															<option value="${proTypeList.projectId}" selected="selected" data-prostrname="${proTypeList.projectTitle}">${proTypeList.projectTitle}</option>
 														</c:when>
 														<c:otherwise>
-															<option value="${proTypeList.projectId}">${proTypeList.projectTitle}</option>
+															<option value="${proTypeList.projectId}" data-prostrname="${proTypeList.projectTitle}">${proTypeList.projectTitle}</option>
 														</c:otherwise>
 													</c:choose>
 												</c:forEach>
@@ -366,22 +366,47 @@
 												}
 
 												
-
 												if (!isError) {
+													var option = $(
+													"#claimTypeId option:selected")
+													.attr(
+															"data-clstrname");
+ 											$('#clType').html(option);
+											
+											var option1 = $(
+											"#projectTypeId option:selected")
+											.attr(
+													"data-prostrname");
 
-													var x = confirm("Do you really want to submit the form?");
-													if (x == true) {
-
-														document
-																.getElementById("submtbtn").disabled = true;
-														return true;
-													}
+									$('#proName').html(option1)
+											
+											$('#claimAmt1')
+													.html(
+															document
+																	.getElementById("claimAmt").value);
+											$('#empCode1')
+													.html(
+															document
+																	.getElementById("empCode").value);
+											$('#empName1')
+													.html(
+															document
+																	.getElementById("empName").value);
+											
+											$('#claimDate1')
+											.html(
+													document
+															.getElementById("claimDate").value);
+									
+											$('#modal_scrollable')
+													.modal('show');
+ 													
 													//end ajax send this to php page
 												}
 												return false;
 											});
 						});
-		//
+		
 	</script>
 
 
@@ -402,7 +427,75 @@ function chkAssign(){
 		}
 	}
 	</script>
+<script>
+		function submitForm() {
+			$('#modal_scrollable').modal('hide');
+			document.getElementById("submtbtn").disabled = true;
+			document.getElementById("submitInsertLeave").submit();
 
+		}
+	</script>
+	<!-- Scrollable modal -->
+	<div id="modal_scrollable" class="modal fade" data-backdrop="false"
+		tabindex="-1">
+		<div class="modal-dialog modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-header pb-3">
+
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<div class="modal-body py-0">
+					<h5 class="modal-title">Claim Details</h5><br>
+
+					<div class="form-group row">
+						<label class="col-form-label col-lg-3" for="empCode1">
+							Employee Code : </label> <label class="col-form-label col-lg-2"
+							id="empCode1" for="empCode1"> </label>
+
+					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-3" for="empName1">
+							Employee Name : </label> <label class="col-form-label col-lg-6"
+							id="empName1" for="empName1"> </label>
+
+					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-3" for="clType"> Claim
+							Type : </label> <label class="col-form-label col-lg-2" id="clType"
+							for="clType"> </label>
+
+					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-3" for="proName"> Project 
+							Name : </label> <label class="col-form-label col-lg-6" id="proName"
+							for="proName"> </label>
+
+					</div>
+
+				
+					<div class="form-group row">
+						<label class="col-form-label col-lg-3" for="noOfDays"> Claim Amount
+							 : </label> <label class="col-form-label col-lg-3" id="claimAmt1"
+							for="claimAmt1"> </label>
+
+					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-3" for="claimDate1"> Claim Date
+							 : </label> <label class="col-form-label col-lg-3" id="claimDate1"
+							for="claimDate1"> </label>
+
+					</div>
+				</div>
+
+				<div class="modal-footer pt-3">
+					<button type="button" class="btn btn-link" data-dismiss="modal">Cancel</button>
+					<button type="button" class="btn bg-primary" onclick="submitForm()">Submit</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /scrollable modal -->
 
 
 
