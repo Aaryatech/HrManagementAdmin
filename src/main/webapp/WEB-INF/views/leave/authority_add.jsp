@@ -116,7 +116,53 @@
 							class="alert bg-danger text-white alert-styled-left alert-dismissible">
 							<button type="button" class="close" data-dismiss="alert">
 								<span>×</span>
-							</button>
+							</button>$("#submitInsertHoli").submit(function(e) {
+				var isError = false;
+				var errMsg = "";
+
+				if (!$("#holidayTitle").val()) {
+
+					isError = true;
+
+					$("#error_holidayTitle").show()
+
+				} else {
+					$("#error_holidayTitle").hide()
+				}
+
+				if (!$("#locId").val()) {
+
+					isError = true;
+
+					$("#error_locationId").show()
+
+				} else {
+					$("#error_locationId").hide()
+				}
+
+			
+				if (!$("#dateRange").val()) {
+
+					isError = true;
+
+					$("#error_Range").show()
+
+				} else {
+					$("#error_Range").hide()
+				}
+
+				if (!isError) {
+
+					var x = confirm("Do you really want to submit the form?");
+					if (x == true) {
+
+						document.getElementById("submtbtn").disabled = true;
+						return true;
+					}
+					//end ajax send this to php page
+				}
+				return false;
+			});
 							<span class="font-weight-semibold">Oh snap!</span>
 							<%
 								out.println(session.getAttribute("errorMsg"));
@@ -146,9 +192,7 @@
 						%>
 
 
-						<form
-							action="${pageContext.request.contextPath}/submitAuthorityList"
-							method="post">
+						<form action="${pageContext.request.contextPath}/submitAuthorityList" 	method="post" id="frmAddLeaveAuthority">
 
 							<div class="row">
 								<div class="col-md-6" >
@@ -174,8 +218,8 @@
 
 											<c:forEach items="${empListAuth}" var="emp" varStatus="count">
 												<tr>
-													<td style="text-align: center;"><input type="checkbox"
-														class="chk" name="empIds" id="empIds${count.index+1}"
+													<td  class="text-center" ><input type="checkbox"
+														class="chk1" name="empIds" id="empIds${count.index+1}"
 														value="${emp.empId}" /></td>
 
 													<td>${emp.empCode}</td>
@@ -230,11 +274,9 @@
 								</div>
 							</div> <br>
 						<div class="col-md-12" style="text-align: center;">
-										 
-
 									<input type="submit" class="btn btn-primary" value="Add"
-										id="deleteId"
-										onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to Submit record');}"
+										id="btnAddLeaveAuthority"
+										 
 										style="align-content: center; width: 113px; margin-left: 40px;">
 										<a href="${pageContext.request.contextPath}/leaveAuthorityList"><button
 										type="button" class="btn btn-primary"><i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp; Cancel</button></a>
@@ -280,6 +322,7 @@ function myFunction() {
     }       
   }
 }
+ 
 </script>
 <script>
 function myFunction1() {
@@ -311,19 +354,52 @@ function myFunction1() {
 								$('#printtable1 tbody input[type="checkbox"]')
 										.prop('checked', this.checked);
 							});
+					
+					
+					
 				});
 	</script>
 
 	<script type="text/javascript">
 		$(document).ready(
 				function() {
-					$('#bootstrap-data-table-export').DataTable();
+					$("#frmAddLeaveAuthority").submit(function(e) {
+						var isError = false;
+						var errMsg = "";
 
-					$("#selAll1").click(
-							function() {
-								$('#printtable2 tbody input[type="checkbox"]')
-										.prop('checked', this.checked);
-							});
+						 //search
+						// $("#frmAddLeaveAuthority :input[type='search']").val("");
+						 var table = $('#printtable1').DataTable();
+						 table
+						 .search("").draw(); 
+						 var table = $('#printtable2').DataTable();
+						 table
+						 .search("").draw(); 
+							
+							
+							var checkedVals = $('.chk1:checkbox:checked').map(function() { 
+								return this.value;}).get();checkedVals=checkedVals.join(',');
+							
+							if(checkedVals==''){
+								alert('No employee selected');return false;	
+							}else{
+								return confirm('Are you sure want to Submit record');
+							}	
+							return false; //yaad rakhna to  remove it
+						if (!isError) {
+
+							var x = confirm("Do you really want to submit the form?");
+							if (x == true) {
+
+								document.getElementById("submtbtn").disabled = true;
+								return true;
+							}
+							//end ajax send this to php page
+						}
+						return false;
+					});
+
+					 
 				});
 	</script>
 </body>

@@ -6,6 +6,8 @@
 <head>
 
 <jsp:include page="/WEB-INF/views/include/metacssjs.jsp"></jsp:include>
+	<script src="${pageContext.request.contextPath}/resources/global_assets/js/demo_pages/components_modals.js"></script>
+
 </head>
 <style>
 * {
@@ -168,7 +170,7 @@
 												<option></option>
 												<c:forEach items="${lStrList}" var="str">
 
-													<option value="${str.lvsId}">${str.lvsName}</option>
+													<option value="${str.lvsId}" id="${str.lvsId}" data-leavestrname="${str.lvsName}" >${str.lvsName}</option>
 
 
 												</c:forEach>
@@ -213,11 +215,11 @@
 
 
 															<td><input type="checkbox" class="chk" name="empIds"
-																id="empIds${count.index+1}" value="${structure.empId}" /></td>
+																id="empIds${structure.empId}" value="${structure.empId}" data-empcode="${structure.empCode}" data-name="${structure.empSname} ${structure.empFname}"  data-depname="${structure.empDeptName}"  /></td>
 															<td>${index+1}</td>
 															<c:set var="index" value="${index+1}"></c:set>
-															<td>${structure.empCode}</td>
-															<td>${structure.empSname}${structure.empFname}</td>
+															<td >${structure.empCode}</td>
+															<td>${structure.empSname} ${structure.empFname}</td>
 															<td>${structure.empDeptName}</td>
 
 
@@ -229,14 +231,13 @@
 
 										</tbody>
 									</table>  
- 
+ 									<span class="validation-invalid-label" id="error_table1"
+												style="display: none;">Please select one employee.</span>
 									<br>
 
-									<div class="form-group " style="text-align: center;">
+									<div class="form-group text-center " >
 										<input type="submit" class="btn btn-primary" value="Add"
-											id="deleteId"
-											onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}"
-											style="align-content: center; width: 113px; margin-left: 40px;">
+											id="btnassignstuct"   >
 
 									</div>
 
@@ -259,9 +260,9 @@
 											<th width="5%">Sr. No.</th>
 											<th width="10%">Employee Code</th>
 											<th>Employee Name</th>
-											<th width="10%">Department</th>
+											<th width="20%">Department</th>
 											 
-											<th width="10%">Structure</th>
+											<th width="20%">Structure</th>
 
 
 											 
@@ -291,10 +292,10 @@
 												<c:choose>
 													<c:when test="${countOf==1}">
 													<tr>
-														<td>${index+1}</td>
+														<td >${index+1}</td>
 														<c:set var="index" value="${index+1}"></c:set>
 														<td>${structure.empCode}</td>
-														<td>${structure.empSname}${structure.empFname}</td>
+														<td>${structure.empSname} ${structure.empFname}</td>
 														<td>${structure.empDeptName}</td>
 													 
 														<td>${structure.lvsName}</td>
@@ -347,8 +348,14 @@
 				});
 
 		$(document).ready(function($) {
-
+			 
 			$("#assignstuct").submit(function(e) {
+				 
+				 var table = $('#printtable1').DataTable();
+				 table.search("").draw(); 
+				 $("#error_lvsId").hide();
+				 $("#error_table1").hide();
+				 
 				var isError = false;
 				var errMsg = "";
 
@@ -356,20 +363,47 @@
 
 					isError = true;
 
-					$("#error_lvsId").show()
+					$("#error_lvsId").show();
 					//return false;
-				} else {
-					$("#error_lvsId").hide()
-				}
-
+				}  
+				
+				
+				var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');
+				
+				if(checkedVals==''){$("#error_table1").show();return false;	}
+				
+				 
+				
 				if (!isError) {
+					//$("#table_grid1").remove();
+					//$("#table_grid1 tr").remove();
+					$("#table_grid1 tbody").empty();
 
-					var x = confirm("Do you really want to submit the form?");
+					 
+				        $(':checkbox:checked').each(function(i){
+				        	var val = $(this).val();
+				        	if(val!='on'){
+				        	 var name = $("#empIds"+val).attr('data-name');
+				        	 var empcode = $("#empIds"+val).attr('data-empcode');
+				        	 
+				          var tr_data = '<tr id="tritem' + val + '">' +
+				            '<td id="itemCount' + val + '">' + empcode + '</td>'+
+				            '<td  >' + name + '</td>'+
+				            '</tr>';
+				          $('#table_grid1' + ' tbody').append(tr_data);
+				        	}
+				        });
+				        
+				        
+			            
+					 $('#modal_scrollable').modal('show');
+					 return false;
+					/* var x = confirm("Do you really want to submit the form?");
 					if (x == true) {
 
-						document.getElementById("deleteId").disabled = true;
+						document.getElementById("btnassignstuct").disabled = true;
 						return true;
-					}
+					} */
 					//end ajax send this to php page
 				}
 				return false;
@@ -377,23 +411,10 @@
 		});
 	</script>
 	<script>
-		function myFunction() {
-			var input, filter, table, tr, td, i, txtValue;
-			input = document.getElementById("myInput");
-			filter = input.value.toUpperCase();
-			table = document.getElementById("printtable2222");
-			tr = table.getElementsByTagName("tr");
-			for (i = 0; i < tr.length; i++) {
-				td = tr[i].getElementsByTagName("td")[3];
-				if (td) {
-					txtValue = td.textContent || td.innerText;
-					if (txtValue.toUpperCase().indexOf(filter) > -1) {
-						tr[i].style.display = "";
-					} else {
-						tr[i].style.display = "none";
-					}
-				}
-			}
+		function submitForm() {
+			 $('#modal_scrollable').modal('hide');
+			document.getElementById("assignstuct").submit();
+			 
 		}
 	</script>
 	<script>
@@ -416,5 +437,39 @@
 			}
 		}
 	</script>
+	 <!-- Scrollable modal -->
+				<div id="modal_scrollable" class="modal fade" data-backdrop="false" tabindex="-1">
+					<div class="modal-dialog modal-dialog-scrollable">
+						<div class="modal-content">
+							<div class="modal-header pb-3">
+								<h5 class="modal-title">Scrollable modal</h5>
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+							</div>
+
+							<div class="modal-body py-0">
+								 <table class="table table-bordered table-hover" id="table_grid1">
+                                                    <thead>
+                                                        <tr class="bgpink">
+                                                            <th  width="5%">  Code</th>
+
+                                                            <th>Employee Name</th>
+                                                           
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                    </tbody>
+
+                                                </table>
+							</div>
+
+							<div class="modal-footer pt-3">
+								<button type="button" class="btn btn-link" data-dismiss="modal">Cancel</button>
+								<button type="button" class="btn bg-primary" onclick="submitForm()">Submit</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /scrollable modal -->
 </body>
 </html>
