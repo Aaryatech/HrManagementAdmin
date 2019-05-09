@@ -172,7 +172,18 @@
 										<div class="col-lg-6">
 											<input type="text" class="form-control"
 												 Value="${lvEmp.leaveNumDays}"
-												id="noDays" autocomplete="off" readonly>
+												id="noOfDays" autocomplete="off" readonly>
+											
+										</div>
+									</div>
+									
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="compName">Remark
+											: </label>
+										<div class="col-lg-6">
+											<input type="text" class="form-control"
+												 Value="${lvEmp.leaveEmpReason}"
+												id="remark2" autocomplete="off" readonly>
 											
 										</div>
 									</div>
@@ -334,7 +345,33 @@
 
 				
 				if (!isError) {
-
+					$('#noOfDays1')
+					.html(
+							document
+									.getElementById("noOfDays").value);
+			$('#empCode1')
+					.html(
+							document
+									.getElementById("empCode").value);
+			$('#empName1')
+					.html(
+							document
+									.getElementById("empName").value);
+			$('#lvType1')
+			.html(
+					document
+							.getElementById("lvType").value);
+			
+			$('#fromdate1')
+					.html(document
+							.getElementById("frmDate").value);
+			$('#todate1').html(document
+					.getElementById("toDate").value);
+			$('#remark1')
+			.html(document
+					.getElementById("remark").value);
+			$('#modal_scrollable')
+					.modal('show');
 					
 					//end ajax send this to php page
 				}
@@ -377,9 +414,9 @@
 
 					</div>
 					<div class="form-group row">
-						<label class="col-form-label col-lg-3" for="lvType"> Leave
-							Type : </label> <label class="col-form-label col-lg-2" id="lvType"
-							for="lvType"> </label>
+						<label class="col-form-label col-lg-3" for="lvType1"> Leave
+							Type : </label> <label class="col-form-label col-lg-2" id="lvType1"
+							for="lvType1"> </label>
 
 					</div>
 
@@ -398,6 +435,12 @@
 						<label class="col-form-label col-lg-3" for="noOfDays"> No.
 							of Days : </label> <label class="col-form-label col-lg-3" id="noOfDays1"
 							for="noOfDays1"> </label>
+
+					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-3" for="remark1"> Remark
+						  : </label> <label class="col-form-label col-lg-3" id="remark1"
+							for="remark1"> </label>
 
 					</div>
 				</div>

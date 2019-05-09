@@ -62,7 +62,16 @@
 				<!-- Highlighting rows and columns -->
 				<div class="card">
 
-					<%
+					
+					<div class="card-header header-elements-inline">
+						<h5 class="card-title">Claim List</h5>
+						<!-- <div class="header-elements">
+							<div class="list-icons">
+								<a class="list-icons-item" data-action="collapse"></a>
+							</div>
+						</div> -->
+					</div>
+<%
 						if (session.getAttribute("errorMsg") != null) {
 					%>
 					<div
@@ -97,15 +106,6 @@
 						session.removeAttribute("successMsg");
 						}
 					%>
-					<div class="card-header header-elements-inline">
-						<h5 class="card-title">Claim List</h5>
-						<!-- <div class="header-elements">
-							<div class="list-icons">
-								<a class="list-icons-item" data-action="collapse"></a>
-							</div>
-						</div> -->
-					</div>
-
 					<div class="card-body">
 						<ul class="nav nav-tabs nav-tabs-highlight nav-justified1">
 							<li class="nav-item"><a href="#highlighted-justified-tab1"
