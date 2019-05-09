@@ -33,6 +33,7 @@ import com.ats.hradmin.common.VpsImageUpload;
 import com.ats.hradmin.leave.model.GetAuthorityIds;
 import com.ats.hradmin.leave.model.GetLeaveApplyAuthwise;
 import com.ats.hradmin.leave.model.GetLeaveStatus;
+import com.ats.hradmin.model.AuthorityInformation;
 import com.ats.hradmin.model.EmployeeInfo;
 import com.ats.hradmin.model.GetEmployeeInfo;
 import com.ats.hradmin.model.Info;
@@ -168,7 +169,14 @@ public class ClaimApplicationController {
 				 List<ProjectHeader> proTypeList = new ArrayList<ProjectHeader>(Arrays.asList(employeeDoc1));
 				 System.out.println("proTypeList list "+proTypeList.toString()); 
 				 model.addObject("projectTypeList",proTypeList);
-				
+				 map = new LinkedMultiValueMap<String, Object>();
+					map.add("empId", empId);
+
+					AuthorityInformation authorityInformation = Constants.getRestTemplate()
+							.postForObject(Constants.url + "/getAuthorityInfoByEmpId", map, AuthorityInformation.class);
+					model.addObject("authorityInformation", authorityInformation);
+
+					System.err.println("authorityInformation is  " + authorityInformation.toString());
 				
 			
 			

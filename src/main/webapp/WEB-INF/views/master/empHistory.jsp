@@ -172,11 +172,11 @@
 									<th>Name</th>
 									<th>Department Name</th>
 									<th>Leave Type</th>
-									<th>Code</th>
+									 
 									<th>Leave Days</th>
 									<th>Leave Duration</th>
 									<th>Date</th>
-									<th>Action By</th>
+									 
 									<th>Leave Status</th>
 
 									<th class="text-center" width="10%">Actions</th>
@@ -295,13 +295,11 @@
 																						+ v.empFname,
 																				v.empDeptName,
 																				v.lvTitle,
-																				v.empCode,
 																				v.leaveNumDays,
 																				duration,
 																				v.leaveFromdt
 																						+ " To "
 																						+ v.leaveTodt,
-																				v.userName,
 																				current_status,
 																				str ])
 																.draw();

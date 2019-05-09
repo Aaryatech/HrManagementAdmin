@@ -649,9 +649,37 @@ try {
 
 			List<GetLeaveAuthority> empLeaveAuth = new ArrayList<>(Arrays.asList(empInfoError));
 
+			
+			
 			for (int i = 0; i < empLeaveAuth.size(); i++) {
+				System.out.println("i loop for"+i+empLeaveAuth.get(i).getEmpFname());
 
 				empLeaveAuth.get(i).setExVar1(FormValidation.Encrypt(String.valueOf(empLeaveAuth.get(i).getEmpId())));
+			
+				/*String repTo=empLeaveAuth.get(i).getRepToEmpIds();
+				
+				List<String> idsList = Arrays.asList(repTo.split(","));
+				System.err.println("idsList"+idsList.toString());
+				List<String> list = new ArrayList<String>();
+				
+				
+				for(int j=0;j<idsList.size();j++) {
+					System.err.println("j loop for::"+idsList.get(j));
+					 map = new LinkedMultiValueMap<>();
+						map.add("empId",idsList.get(j));
+						
+						
+						GetEmployeeInfo  empName = Constants.getRestTemplate().postForObject(Constants.url + "/GetEmployeeInfo", map,
+								GetEmployeeInfo.class);
+					
+						list.add(empName.getEmpFname());
+					
+						System.err.println("emp name list "+list.toString());
+				}
+				
+				model.addObject("list", list);
+				
+			*/
 			}
 
 			model.addObject("empLeaveAuth", empLeaveAuth);

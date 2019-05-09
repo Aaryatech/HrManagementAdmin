@@ -517,6 +517,7 @@
 										</div>
 									</div>
 </div>
+<div id="xyz" style="display:none;">
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="lvngReson">
 											Leaving Reason : </label>
@@ -528,7 +529,7 @@
 
 										</div>
 									</div>
-
+</div>
 
 									<div class="card-header header-elements-inline">
 										<h6 class="card-title">Add User</h6>
@@ -628,12 +629,14 @@
 				//alert(value)
 				//document.getElementById("relDate").removeAttribute("required");
 				document.getElementById("abc").style.display = "none";
+				document.getElementById("xyz").style.display = "none";
 
 				//alert(value)
 			} else {
 				//alert(value)
 				//document.getElementById("relDate").setAttribute("required","true");
 				document.getElementById("abc").style.display = "block";
+				document.getElementById("xyz").style.display = "block";
 
 				//alert(value)
 

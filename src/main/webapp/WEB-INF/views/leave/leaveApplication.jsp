@@ -17,7 +17,7 @@
 <jsp:include page="/WEB-INF/views/include/metacssjs.jsp"></jsp:include>
 </head>
 
-<body>
+<body onload="chkAssign()">
 
 
 	<!-- Main navbar -->
@@ -125,6 +125,12 @@
 									session.removeAttribute("successMsg");
 									}
 								%>
+								
+								<span
+												class="validation-invalid-label" id="error_assign"
+												style="display: none;">Sorry You Can Not Apply for Leave as Leave Authorities or Leave Structure Are not Assigned !!</span>
+								
+								
 								<div class="form-group row">
 									<label class="col-form-label col-lg-2" for="lvsName">
 										Employee Code : *</label>
@@ -292,15 +298,20 @@
 									<input type="hidden" class="form-control numbersOnly"
 										id="empId" value="${empId}" name="empId"> <input
 										type="hidden" class="form-control numbersOnly" id="tempNoDays"
-										name="tempNoDays"> <input type="hidden"
-										class="form-control numbersOnly" id="lvsId" value="${lvsId}"
+										name="tempNoDays"> 
+									<input type="text"	class="form-control numbersOnly" id="lvsId" value="${lvsId}"
 										name="lvsId">
+										<%-- <input type="text"	class="form-control numbersOnly" id="lvsInfoId" value="${lvsInfoId}"
+										name="lvsInfoId"> --%>
+					<input type="text"class="form-control numbersOnly" id="auth" value="${authorityInformation.leaveInitialAuth}"
+										name="auth">
 
 
+									
 
 									<div class="col-md-12" style="text-align: center;">
 
-										<button type="submit" class="btn bg-blue ml-3 legitRipple"
+										<button type="submit"  class="btn bg-blue ml-3 legitRipple"
 											id="submtbtn">
 											Submit <i class="icon-paperplane ml-2"></i>
 										</button>
@@ -333,6 +344,8 @@
 	</div>
 	<!-- /page content -->
 
+	
+	
 	<script type="text/javascript">
 		function checkUnique() {
 			var inputValue = document.getElementById("leaveTypeId").value;
@@ -358,6 +371,7 @@
 			});
 		}
 	</script>
+	
 	<script type="text/javascript">
 		function checkDays(x2) {
 			//alert(x2);
@@ -377,7 +391,26 @@
 
 		}
 	</script>
+<script type="text/javascript">
+function chkAssign(){
+		
+		var auth=document.getElementById("auth").value;
+		var lvsId=document.getElementById("lvsId").value;
+		//alert("auth"+auth);
+		//alert("lvsId"+lvsId);
 
+		if(auth==0 || lvsId==0 ){
+			//alert("in if");
+			//document.getElementById("submtbtn").disabled = true;
+			 document.getElementById('submtbtn').disabled = 'disabled';
+			$("#error_assign").show()
+		}
+		else{
+			//alert("in else");
+			document.getElementById("submtbtn").disabled =false ;
+		}
+	}
+	</script>
 	<script type="text/javascript">
 		function calholiday() {
 
@@ -1075,6 +1108,7 @@
 				} else {
 					$("#error_insuf").hide()
 				}
+				
 
 				if (!isError) {
 

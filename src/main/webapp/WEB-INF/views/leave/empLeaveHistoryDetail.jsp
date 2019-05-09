@@ -48,7 +48,7 @@
 
 
 					<div class="breadcrumb justify-content-center">
-						<a href="${pageContext.request.contextPath}/empInfoHistory"
+						<a href="${pageContext.request.contextPath}/showLeaveHistList?empId=${empId1}"
 							class="breadcrumb-elements-item">Employee Leave History </a>
 
 					</div>
@@ -111,6 +111,7 @@
 							session.removeAttribute("successMsg");
 							}
 						%>
+					
 							<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="compName">Employee Code
 											: </label>

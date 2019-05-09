@@ -12,7 +12,7 @@
 <jsp:include page="/WEB-INF/views/include/metacssjs.jsp"></jsp:include>
 </head>
 
-<body>
+<body onload="chkAssign()">
 
 	<!-- Main navbar -->
 	<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
@@ -120,6 +120,11 @@
 									session.removeAttribute("successMsg");
 									}
 								%>
+								<span
+												class="validation-invalid-label" id="error_assign"
+												style="display: none;">Sorry You Can Not Apply for Claim as Claim Authorities Are not Assigned !!</span>
+								
+								
 <div class="form-group row">
 										<label class="col-form-label col-lg-2" for="lvsName">
 											Employee Code <span style="color:red">* </span>:</label>
@@ -238,6 +243,8 @@
 										<input type="hidden" class="form-control numbersOnly" 
 												value="${editEmp.empId}" id="empId"
 												name="empId" autocomplete="off" readonly>
+										<input type="hidden"class="form-control numbersOnly" id="auth" value="${authorityInformation.claimInitialAuth}"
+										name="auth">
 									
 									<div class="form-group row mb-0">
 										<div class="col-lg-10 ml-lg-auto">
@@ -379,7 +386,22 @@
 
 
 
-
+<script type="text/javascript">
+function chkAssign(){
+		
+		var auth=document.getElementById("auth").value;
+		
+		//alert("hii"+auth);
+		if(auth==0){
+			document.getElementById("submtbtn").disabled = true;
+			
+			$("#error_assign").show()
+		}
+		else{
+			document.getElementById("submtbtn").disabled =false ;
+		}
+	}
+	</script>
 
 
 

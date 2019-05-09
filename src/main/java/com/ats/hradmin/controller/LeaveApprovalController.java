@@ -57,8 +57,8 @@ public class LeaveApprovalController {
 
 				leaveList.get(i).setCirculatedTo(FormValidation.Encrypt(String.valueOf(leaveList.get(i).getLeaveId())));
 				leaveList.get(i).setLeaveTypeName(FormValidation.Encrypt(String.valueOf(leaveList.get(i).getEmpId())));
-				leaveList.get(i).setLeaveFromdt(DateConvertor.convertToDMY(leaveList.get(i).getLeaveFromdt()));
-				leaveList.get(i).setLeaveTodt(DateConvertor.convertToDMY(leaveList.get(i).getLeaveTodt()));
+				//leaveList.get(i).setLeaveFromdt(DateConvertor.convertToDMY(leaveList.get(i).getLeaveFromdt()));
+				//leaveList.get(i).setLeaveTodt(DateConvertor.convertToDMY(leaveList.get(i).getLeaveTodt()));
 			}
 			model.addObject("leaveListForApproval", leaveList);
 			model.addObject("list1Count", leaveList.size());
@@ -82,8 +82,8 @@ public class LeaveApprovalController {
 						.setCirculatedTo(FormValidation.Encrypt(String.valueOf(leaveList1.get(i).getLeaveId())));
 				leaveList1.get(i)
 						.setLeaveTypeName(FormValidation.Encrypt(String.valueOf(leaveList1.get(i).getEmpId())));
-				leaveList1.get(i).setLeaveFromdt(DateConvertor.convertToDMY(leaveList1.get(i).getLeaveFromdt()));
-				leaveList1.get(i).setLeaveTodt(DateConvertor.convertToDMY(leaveList1.get(i).getLeaveTodt()));
+				//leaveList1.get(i).setLeaveFromdt(DateConvertor.convertToDMY(leaveList1.get(i).getLeaveFromdt()));
+				//leaveList1.get(i).setLeaveTodt(DateConvertor.convertToDMY(leaveList1.get(i).getLeaveTodt()));
 			}
 
 			System.out.println("lv leaveList list1 info " + leaveList1.toString());
@@ -233,6 +233,9 @@ public class LeaveApprovalController {
 	}
 	
 	
+	
+	//1 st 
+	
 	@RequestMapping(value = "/showLeaveHistList", method = RequestMethod.GET)
 	public ModelAndView showClaimList(HttpServletRequest request, HttpServletResponse response) {
 		
@@ -240,11 +243,12 @@ public class LeaveApprovalController {
 		try {
 
 			  List<LeaveDetail> employeeInfoList=new ArrayList<LeaveDetail>();
+			  //String empId1=request.getParameter("empId");
 			int empId = Integer.parseInt(FormValidation.DecodeKey(request.getParameter("empId")));
 			System.err.println("emp idis "+empId);
 			MultiValueMap<String, Object>  map = new LinkedMultiValueMap<>();
 				map.add("empId",empId);
-			 
+				
 		LeaveDetail[] employeeInfo = Constants.getRestTemplate().postForObject(Constants.url + "/getLeaveListByEmp",map,
 						  LeaveDetail[].class);
 				   
@@ -254,6 +258,7 @@ public class LeaveApprovalController {
 					  employeeInfoList.get(i).setExVar1(FormValidation.Encrypt(String.valueOf(employeeInfoList.get(i).getLeaveId())));
 					}
 				  model.addObject("leaveHistoryList",employeeInfoList);
+				//  model.addObject("empId1",empId1);
 			
 			
 	} catch (Exception e) {
@@ -263,6 +268,7 @@ public class LeaveApprovalController {
 		  
 	}
 	
+	//2
 	@RequestMapping(value = "/showLeaveHistDetailList", method = RequestMethod.GET)
 	public ModelAndView showLeaveHistDetailList(HttpServletRequest request, HttpServletResponse response) {
 
@@ -285,7 +291,9 @@ public class LeaveApprovalController {
 
 			 GetLeaveApplyAuthwise lvEmp = Constants.getRestTemplate().postForObject(Constants.url + "/getLeaveApplyDetailsByLeaveId", map1,
 					 GetLeaveApplyAuthwise.class);
+			String empId1= FormValidation.Encrypt(String.valueOf(lvEmp.getEmpId()));
 				model.addObject("lvEmp", lvEmp);
+				model.addObject("empId1", empId1);
 				System.out.println("emp leave details"+lvEmp.toString());
 		   
 
