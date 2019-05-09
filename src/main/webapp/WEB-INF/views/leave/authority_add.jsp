@@ -116,53 +116,7 @@
 							class="alert bg-danger text-white alert-styled-left alert-dismissible">
 							<button type="button" class="close" data-dismiss="alert">
 								<span>×</span>
-							</button>$("#submitInsertHoli").submit(function(e) {
-				var isError = false;
-				var errMsg = "";
-
-				if (!$("#holidayTitle").val()) {
-
-					isError = true;
-
-					$("#error_holidayTitle").show()
-
-				} else {
-					$("#error_holidayTitle").hide()
-				}
-
-				if (!$("#locId").val()) {
-
-					isError = true;
-
-					$("#error_locationId").show()
-
-				} else {
-					$("#error_locationId").hide()
-				}
-
-			
-				if (!$("#dateRange").val()) {
-
-					isError = true;
-
-					$("#error_Range").show()
-
-				} else {
-					$("#error_Range").hide()
-				}
-
-				if (!isError) {
-
-					var x = confirm("Do you really want to submit the form?");
-					if (x == true) {
-
-						document.getElementById("submtbtn").disabled = true;
-						return true;
-					}
-					//end ajax send this to php page
-				}
-				return false;
-			});
+							</button> 
 							<span class="font-weight-semibold">Oh snap!</span>
 							<%
 								out.println(session.getAttribute("errorMsg"));
@@ -231,7 +185,8 @@
 
 										</tbody>
 									</table>
-									 
+									 <span class="validation-invalid-label" id="error_table1"
+												style="display: none;">Please select one employee.</span>
 								</div>
 
 								<div class="col-md-6">
@@ -253,10 +208,10 @@
 										<tbody>
 											<c:forEach items="${empList}" var="emp" varStatus="count">
 												<tr>
-													<td><input type="radio" class="chk"
+													<td><input type="radio"  
 														name="iniAuthEmpId" id="iniAuthEmpId${count.index+1}"
 														value="${emp.empId}" />Initial <input type="radio"
-														class="chk" name="finAuthEmpId"
+														  name="finAuthEmpId"
 														id="finAuthEmpId${count.index+1}" value="${emp.empId}" />Final
 														<input type="checkbox" class="chk" name="repToEmpIds"
 														id="repToEmpIds${count.index+1}" value="${emp.empId}" />Reporting</td>
@@ -366,7 +321,7 @@ function myFunction1() {
 					$("#frmAddLeaveAuthority").submit(function(e) {
 						var isError = false;
 						var errMsg = "";
-
+						$("#error_table1").hide();
 						 //search
 						// $("#frmAddLeaveAuthority :input[type='search']").val("");
 						 var table = $('#printtable1').DataTable();
@@ -381,11 +336,47 @@ function myFunction1() {
 								return this.value;}).get();checkedVals=checkedVals.join(',');
 							
 							if(checkedVals==''){
-								alert('No employee selected');return false;	
-							}else{
-								return confirm('Are you sure want to Submit record');
-							}	
-							return false; //yaad rakhna to  remove it
+								$("#error_table1").html("Please select one employee.");
+								$("#error_table1").show();return false;	
+							} 
+							 
+							var off_payment_method = document.getElementsByName('iniAuthEmpId');
+							var ischecked_method = false;
+							for ( var i = 0; i < off_payment_method.length; i++) {
+							    if(off_payment_method[i].checked) {
+							        ischecked_method = true;
+							        break;
+							    }
+							}
+							if(!ischecked_method)   { //payment method button is not checked
+								$("#error_table1").html("Select one employee as Initial Authority.");
+								$("#error_table1").show();return false;	
+							}
+							
+							var finAuthEmpId = document.getElementsByName('finAuthEmpId');
+							var finAuthEmpId_method = false;
+							for ( var i = 0; i < finAuthEmpId.length; i++) {
+							    if(finAuthEmpId[i].checked) {
+							    	finAuthEmpId_method = true;
+							        break;
+							    }
+							}
+							if(!finAuthEmpId_method)   { //payment method button is not checked
+								$("#error_table1").html("Select one employee as Final Authority.");
+								$("#error_table1").show();return false;	
+							}
+							
+							var checkedVals1 = $('.chk:checkbox:checked').map(function() { 
+								return this.value;}).get();checkedVals1=checkedVals1.join(',');
+							
+							if(checkedVals1==''){
+								
+								 
+								$("#error_table1").html("Select one employee as reporting.");
+								$("#error_table1").show();return false;	
+							}
+							
+							//return false; //yaad rakhna to  remove it
 						if (!isError) {
 
 							var x = confirm("Do you really want to submit the form?");

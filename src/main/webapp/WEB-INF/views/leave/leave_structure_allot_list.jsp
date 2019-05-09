@@ -375,11 +375,9 @@
 				 
 				
 				if (!isError) {
-					//$("#table_grid1").remove();
-					//$("#table_grid1 tr").remove();
-					$("#table_grid1 tbody").empty();
-
 					 
+					$("#table_grid1 tbody").empty();
+ 
 				        $(':checkbox:checked').each(function(i){
 				        	var val = $(this).val();
 				        	if(val!='on'){
@@ -394,8 +392,8 @@
 				        	}
 				        });
 				        
-				        
-			            
+				        var option = $("#lvsId option:selected").attr("data-leavestrname");
+				        $("#showLeaveStruct").html(option);
 					 $('#modal_scrollable').modal('show');
 					 return false;
 					/* var x = confirm("Do you really want to submit the form?");
@@ -413,6 +411,7 @@
 	<script>
 		function submitForm() {
 			 $('#modal_scrollable').modal('hide');
+			 document.getElementById("btnassignstuct").disabled = true;
 			document.getElementById("assignstuct").submit();
 			 
 		}
@@ -442,11 +441,13 @@
 					<div class="modal-dialog modal-dialog-scrollable">
 						<div class="modal-content">
 							<div class="modal-header pb-3">
-								<h5 class="modal-title">Scrollable modal</h5>
+								
 								<button type="button" class="close" data-dismiss="modal">&times;</button>
 							</div>
 
 							<div class="modal-body py-0">
+							<h5 class="modal-title">Allocated Leave Structure: <span id="showLeaveStruct"></span> </h5>
+							<br> 
 								 <table class="table table-bordered table-hover" id="table_grid1">
                                                     <thead>
                                                         <tr class="bgpink">
