@@ -378,15 +378,18 @@
 					 
 					$("#table_grid1 tbody").empty();
  
-				        $(':checkbox:checked').each(function(i){
+				        $('.chk:checkbox:checked').each(function(i){
 				        	var val = $(this).val();
+				        	 
 				        	if(val!='on'){
 				        	 var name = $("#empIds"+val).attr('data-name');
 				        	 var empcode = $("#empIds"+val).attr('data-empcode');
+				        	 var dept = $("#empIds"+val).attr('data-depname');
 				        	 
 				          var tr_data = '<tr id="tritem' + val + '">' +
 				            '<td id="itemCount' + val + '">' + empcode + '</td>'+
 				            '<td  >' + name + '</td>'+
+				            '<td  >' + dept + '</td>'+
 				            '</tr>';
 				          $('#table_grid1' + ' tbody').append(tr_data);
 				        	}
@@ -446,7 +449,7 @@
 							</div>
 
 							<div class="modal-body py-0">
-							<h5 class="modal-title">Allocated Leave Structure: <span id="showLeaveStruct"></span> </h5>
+							<h5 class="modal-title">Allocated Leave Structure: <b><span id="showLeaveStruct"></span></b> </h5>
 							<br> 
 								 <table class="table table-bordered table-hover" id="table_grid1">
                                                     <thead>
@@ -454,6 +457,7 @@
                                                             <th  width="5%">  Code</th>
 
                                                             <th>Employee Name</th>
+                                                            <th>Department</th>
                                                            
                                                         </tr>
                                                     </thead>

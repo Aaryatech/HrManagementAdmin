@@ -1193,7 +1193,7 @@
 					</div>
 					<div class="form-group row">
 						<label class="col-form-label col-lg-3" for="lvType"> Leave
-							Type : </label> <label class="col-form-label col-lg-2" id="lvType"
+							Type : </label> <label class="col-form-label col-lg-6" id="lvType"
 							for="lvType"> </label>
 
 					</div>
