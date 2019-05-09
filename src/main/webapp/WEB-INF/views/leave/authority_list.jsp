@@ -47,7 +47,8 @@
 
 					<div class="breadcrumb justify-content-center">
 						<a href="${pageContext.request.contextPath}/addLeaveAuthority"
-							class="breadcrumb-elements-item"> Add Authority</a> <%-- <a
+							class="breadcrumb-elements-item"> Add Authority</a>
+						<%-- <a
 							href="${pageContext.request.contextPath}/editLeaveAuthority"
 							class="breadcrumb-elements-item"> Edit Authority</a> --%>
 
@@ -125,6 +126,7 @@
 									<th>Employee Name</th>
 									<th>Initial Authority</th>
 									<th>Final Authority</th>
+									<th>Reporting To</th>
 									<th width="10%" class="text-center">Actions</th>
 								</tr>
 							</thead>
@@ -138,10 +140,22 @@
 											id="empIds${count.index+1}" value="${structure.empId}" /></td> --%>
 										<td>${count.index+1}</td>
 										<td>${leaveAuth.empCode}</td>
-										<td>${leaveAuth.empSname} ${leaveAuth.empFname} </td>
+										<td>${leaveAuth.empSname} ${leaveAuth.empFname}</td>
 										<td>${leaveAuth.iniEmpSname} ${leaveAuth.iniEmpFname}</td>
 										<td>${leaveAuth.finiEmpSname} ${leaveAuth.finiEmpFname}</td>
+										<td><c:forEach items="${leaveAuth.rePortingName}"
+												var="rePortingName" varStatus="coun">
 
+												<c:choose>
+													<c:when test="${coun.last}"> 
+															${rePortingName}
+													</c:when>
+													<c:otherwise> 
+															${rePortingName},
+													</c:otherwise>
+												</c:choose>
+										
+											</c:forEach></td>
 
 										<td class="text-center">
 											<!-- <div class="list-icons">
@@ -152,7 +166,8 @@
 
 													<div class="dropdown-menu dropdown-menu-right"> --> <a
 											href="${pageContext.request.contextPath}/editLeaveAuthority?empId=${leaveAuth.exVar1}"
-											title="Edit"><i class="icon-pencil7" style="color: black;"></i></a> <!-- </div>
+											title="Edit"><i class="icon-pencil7"
+												style="color: black;"></i></a> <!-- </div>
 												</div>
 											</div> -->
 										</td>

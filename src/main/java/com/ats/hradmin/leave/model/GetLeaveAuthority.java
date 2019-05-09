@@ -1,5 +1,7 @@
 package com.ats.hradmin.leave.model;
 
+import java.util.List;
+
 public class GetLeaveAuthority {
 
 	private int laPkey;
@@ -56,6 +58,8 @@ public class GetLeaveAuthority {
 	private String iniEmpCode;
 	private String finiEmpCode;
 
+	List<String> rePortingName;
+	
 	public int getLaPkey() {
 		return laPkey;
 	}
@@ -280,6 +284,14 @@ public class GetLeaveAuthority {
 		this.finiEmpCode = finiEmpCode;
 	}
 
+	public List<String> getRePortingName() {
+		return rePortingName;
+	}
+
+	public void setRePortingName(List<String> rePortingName) {
+		this.rePortingName = rePortingName;
+	}
+
 	@Override
 	public String toString() {
 		return "GetLeaveAuthority [laPkey=" + laPkey + ", empId=" + empId + ", companyId=" + companyId
@@ -290,7 +302,8 @@ public class GetLeaveAuthority {
 				+ ", empFname=" + empFname + ", empMname=" + empMname + ", empSname=" + empSname + ", iniEmpFname="
 				+ iniEmpFname + ", iniEmpMname=" + iniEmpMname + ", iniEmpSname=" + iniEmpSname + ", finiEmpFname="
 				+ finiEmpFname + ", finiEmpMname=" + finiEmpMname + ", finiEmpSname=" + finiEmpSname + ", empCode="
-				+ empCode + ", iniEmpCode=" + iniEmpCode + ", finiEmpCode=" + finiEmpCode + "]";
+				+ empCode + ", iniEmpCode=" + iniEmpCode + ", finiEmpCode=" + finiEmpCode + ", rePortingName="
+				+ rePortingName + "]";
 	}
 
 }
