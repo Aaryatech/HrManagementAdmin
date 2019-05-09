@@ -141,7 +141,7 @@
 														checked value="${emp.empId}" /></td>
 
 													<td width="10%">${emp.empCode}</td>
-													<td>${emp.empSname}${emp.empFname}</td>
+													<td>${emp.empSname}&nbsp;${emp.empFname}</td>
 													<td width="10%">${emp.empDept}</td>
 													<%-- <td width="10%">${emp.empCategory}</td> --%>
 												</tr>
@@ -213,7 +213,7 @@
 																	id="repToEmpIds${count.index+1}" value="${emp.empId}" />Reporting </c:otherwise>
 														</c:choose></td>
 													<td width="10%">${emp.empCode}</td>
-													<td>${emp.empSname}${emp.empFname}</td>
+													<td>${emp.empSname}&nbsp;${emp.empFname}</td>
 													<td width="10%">${emp.empDept}</td>
 													<%-- <td width="10%">${emp.empCategory}</td> --%>
 												</tr>

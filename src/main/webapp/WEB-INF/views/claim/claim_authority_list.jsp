@@ -118,14 +118,12 @@
 							<thead>
 								<tr class="bg-blue">
 
-									<!-- <th class="check" style="text-align: center; width: 5%;"><input
-										type="checkbox" name="selAll" id="selAll" />Select All</th> -->
-
 									<th width="10%">Sr. No.</th>
 									<th>Employee Code</th>
 									<th>Employee Name</th>
 									<th>Initial Authority</th>
 									<th>Final Authority</th>
+									<th>Reporting To</th>
 									<th width="10%" class="text-center">Actions</th>
 								</tr>
 							</thead>
@@ -135,28 +133,30 @@
 								<c:forEach items="${empLeaveAuth}" var="leaveAuth"
 									varStatus="count">
 									<tr>
-										<%-- <td><input type="checkbox" class="chk" name="empIds"
-											id="empIds${count.index+1}" value="${structure.empId}" /></td> --%>
+
 										<td>${count.index+1}</td>
 										<td>${leaveAuth.empCode}</td>
-										<td>${leaveAuth.empSname} ${leaveAuth.empFname}</td>
-										<td>${leaveAuth.iniEmpSname} ${leaveAuth.iniEmpFname}</td>
-										<td>${leaveAuth.finiEmpSname} ${leaveAuth.finiEmpFname}</td>
+										<td>${leaveAuth.empSname}&nbsp;${leaveAuth.empFname}</td>
+										<td>${leaveAuth.iniEmpSname}&nbsp;${leaveAuth.iniEmpFname}</td>
+										<td>${leaveAuth.finiEmpSname}&nbsp;${leaveAuth.finiEmpFname}</td>
+										<td><c:forEach items="${leaveAuth.rePortingName}"
+												var="rePortingName" varStatus="coun">
 
+												<c:choose>
+													<c:when test="${coun.last}"> 
+															${rePortingName}
+													</c:when>
+													<c:otherwise> 
+															${rePortingName},
+													</c:otherwise>
+												</c:choose>
 
-										<td class="text-center">
-											<!-- <div class="list-icons">
-												<div class="dropdown">
-													<a href="#" class="list-icons-item" data-toggle="dropdown">
-														<i class="icon-menu9"></i>
-													</a>
- --> 
-                                 <a href="${pageContext.request.contextPath}/editClaimAuthority?empId=${leaveAuth.exVar1}"
-										 title="Edit"><i class="icon-pencil7" style="color: black;"></i></a> 
-										 <!-- </div>
-												</div>
-											</div> -->
-										</td>
+											</c:forEach></td>
+
+										<td class="text-center"><a
+											href="${pageContext.request.contextPath}/editClaimAuthority?empId=${leaveAuth.exVar1}"
+											title="Edit"><i class="icon-pencil7"
+												style="color: black;"></i></a></td>
 									</tr>
 								</c:forEach>
 

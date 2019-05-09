@@ -9,38 +9,38 @@
 </head>
 <style>
 * {
-  box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 .myInput {
-  background-image: url('https://www.w3schools.com/css/searchicon.png');
-  background-position: 8px 7px;
-  background-repeat: no-repeat;
-  width: 50%;
-  font-size: 16px;
-  padding: 5px 5px 5px 40px;
-  border: 1px solid #ddd;
-  margin-bottom: 12px;
+	background-image: url('https://www.w3schools.com/css/searchicon.png');
+	background-position: 8px 7px;
+	background-repeat: no-repeat;
+	width: 50%;
+	font-size: 16px;
+	padding: 5px 5px 5px 40px;
+	border: 1px solid #ddd;
+	margin-bottom: 12px;
 }
 
 #myTable {
-  border-collapse: collapse;
-  width: 100%;
-  border: 1px solid #ddd;
-  font-size: 18px;
+	border-collapse: collapse;
+	width: 100%;
+	border: 1px solid #ddd;
+	font-size: 18px;
 }
 
 #myTable th, #myTable td {
-  text-align: left;
-  padding: 12px;
+	text-align: left;
+	padding: 12px;
 }
 
 #myTable tr {
-  border-bottom: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
 }
 
 #myTable tr.header, #myTable tr:hover {
-  background-color: #f1f1f1;
+	background-color: #f1f1f1;
 }
 </style>
 <body>
@@ -150,11 +150,10 @@
 
 							<div class="row">
 								<div class="col-md-6">
-									 
-									 <div class="table-responsive">
-									 
-										<table
-											class="table datatable-scroll-y" width="100%"
+
+									<div class="table-responsive">
+
+										<table class="table datatable-scroll-y" width="100%"
 											id="printtable1">
 											<thead>
 												<tr class="bg-blue">
@@ -180,7 +179,7 @@
 															id="empIds${count.index+1}" checked value="${emp.empId}" /></td>
 
 														<td>${emp.empCode}</td>
-														<td>${emp.empSname}${emp.empFname}</td>
+														<td>${emp.empSname}&nbsp;${emp.empFname}</td>
 														<td>${emp.empDept}</td>
 														<%-- <td>${emp.empCategory}</td> --%>
 													</tr>
@@ -188,93 +187,93 @@
 
 											</tbody>
 										</table>
-										</div>
-										<span class="validation-invalid-label" id="error_table1"
-												style="display: none;">Please select one employee.</span>
 									</div>
+									<span class="validation-invalid-label" id="error_table1"
+										style="display: none;">Please select one employee.</span>
+								</div>
 
-									<div class="col-md-6">
-										 
-											 <table class="table datatable-scroll-y" width="100%" id="printtable2">
-												<thead>
-													<tr class="bg-blue">
-														<th class="check" style="text-align: center;">Select
-															Authority</th>
+								<div class="col-md-6">
 
-														<!-- <th width="10%">Sr. No.</th> -->
-														<th>Employee Code</th>
-														<th>Employee Name</th>
-														<th>Department</th>
-														<!-- <th  >Desgn</th> -->
-													</tr>
-												</thead>
-												<tbody>
-													<c:forEach items="${empList}" var="emp" varStatus="count">
-														<tr>
-															<td><c:choose>
-																	<c:when
-																		test="${leaveAuthority.iniAuthEmpId==emp.empId}">
-																		<input type="radio"  name="iniAuthEmpId"
-																			id="iniAuthEmpId${count.index+1}"
-																			value="${emp.empId}" checked />Initial</c:when>
-																	<c:otherwise>
-																		<input type="radio"   name="iniAuthEmpId"
-																			id="iniAuthEmpId${count.index+1}"
-																			value="${emp.empId}" />Initial
+									<table class="table datatable-scroll-y" width="100%"
+										id="printtable2">
+										<thead>
+											<tr class="bg-blue">
+												<th class="check" style="text-align: center;">Select
+													Authority</th>
+
+												<!-- <th width="10%">Sr. No.</th> -->
+												<th>Employee Code</th>
+												<th>Employee Name</th>
+												<th>Department</th>
+												<!-- <th  >Desgn</th> -->
+											</tr>
+										</thead>
+										<tbody>
+											<c:forEach items="${empList}" var="emp" varStatus="count">
+												<tr>
+													<td><c:choose>
+															<c:when test="${leaveAuthority.iniAuthEmpId==emp.empId}">
+																<input type="radio" name="iniAuthEmpId"
+																	id="iniAuthEmpId${count.index+1}" value="${emp.empId}"
+																	checked />Initial</c:when>
+															<c:otherwise>
+																<input type="radio" name="iniAuthEmpId"
+																	id="iniAuthEmpId${count.index+1}" value="${emp.empId}" />Initial
 																</c:otherwise>
-																</c:choose> <c:choose>
-																	<c:when
-																		test="${leaveAuthority.finAuthEmpId==emp.empId}">
-																		<input type="radio"   name="finAuthEmpId"
-																			id="finAuthEmpId${count.index+1}"
-																			value="${emp.empId}" checked />Final
+														</c:choose> <c:choose>
+															<c:when test="${leaveAuthority.finAuthEmpId==emp.empId}">
+																<input type="radio" name="finAuthEmpId"
+																	id="finAuthEmpId${count.index+1}" value="${emp.empId}"
+																	checked />Final
 														</c:when>
-																	<c:otherwise>
-																		<input type="radio"  name="finAuthEmpId"
-																			id="finAuthEmpId${count.index+1}"
-																			value="${emp.empId}" />Final
+															<c:otherwise>
+																<input type="radio" name="finAuthEmpId"
+																	id="finAuthEmpId${count.index+1}" value="${emp.empId}" />Final
 																</c:otherwise>
-																</c:choose> <c:set var="countOf" value="0"></c:set> <c:forEach
-																	items="${reportingIdList}" var="reportId"
-																	varStatus="count">
-																	<c:if test="${emp.empId==reportId}">
-																		<c:set var="countOf" value="1"></c:set>
-																	</c:if>
+														</c:choose> <c:set var="countOf" value="0"></c:set> <c:forEach
+															items="${reportingIdList}" var="reportId"
+															varStatus="count">
+															<c:if test="${emp.empId==reportId}">
+																<c:set var="countOf" value="1"></c:set>
+															</c:if>
 
 
-																</c:forEach> <c:choose>
-																	<c:when test="${countOf==1}">
+														</c:forEach> <c:choose>
+															<c:when test="${countOf==1}">
 
-																		<input type="checkbox" class="chk" name="repToEmpIds"
-																			id="repToEmpIds${count.index+1}" value="${emp.empId}"
-																			checked />Reporting 
+																<input type="checkbox" class="chk" name="repToEmpIds"
+																	id="repToEmpIds${count.index+1}" value="${emp.empId}"
+																	checked />Reporting 
 															 
 																</c:when>
-																	<c:otherwise>
-																		<input type="checkbox" class="chk" name="repToEmpIds"
-																			id="repToEmpIds${count.index+1}" value="${emp.empId}" />Reporting </c:otherwise>
-																</c:choose></td>
-															<td>${emp.empCode}</td>
-															<td>${emp.empSname}${space}${emp.empFname}</td>
-															<td>${emp.empDept}</td>
-															<%-- <td  >${emp.empCategory}</td> --%>
-														</tr>
-													</c:forEach>
+															<c:otherwise>
+																<input type="checkbox" class="chk" name="repToEmpIds"
+																	id="repToEmpIds${count.index+1}" value="${emp.empId}" />Reporting </c:otherwise>
+														</c:choose></td>
+													<td>${emp.empCode}</td>
+													<td>${emp.empSname}&nbsp;${emp.empFname}</td>
+													<td>${emp.empDept}</td>
+													<%-- <td  >${emp.empCategory}</td> --%>
+												</tr>
+											</c:forEach>
 
-												</tbody>
-											</table>
-										 
-									 
+										</tbody>
+									</table>
+
+
 								</div>
 							</div>
 							<div class="col-md-12" style="text-align: center;">
-									<input type="submit" class="btn btn-primary" value="Add"
-										id="submtbtn" 
-										style="align-content: center; width: 113px; margin-left: 40px;">
+								<input type="submit" class="btn btn-primary" value="Add"
+									id="submtbtn"
+									style="align-content: center; width: 113px; margin-left: 40px;">
 
-	<a href="${pageContext.request.contextPath}/leaveAuthorityList"><button
-										type="button" class="btn btn-primary"><i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp; Cancel</button></a>
-							 
+								<a href="${pageContext.request.contextPath}/leaveAuthorityList"><button
+										type="button" class="btn btn-primary">
+										<i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp;
+										Cancel
+									</button></a>
+
 							</div>
 						</form>
 
@@ -349,83 +348,108 @@
 				});
 	</script>
 
-<script type="text/javascript">
-		$(document).ready(
-				function() {
-					$("#frmAddLeaveAuthority").submit(function(e) {
-						var isError = false;
-						var errMsg = "";
-						$("#error_table1").hide();
-						 //search
-						// $("#frmAddLeaveAuthority :input[type='search']").val("");
-						 var table = $('#printtable1').DataTable();
-						 table
-						 .search("").draw(); 
-						 var table = $('#printtable2').DataTable();
-						 table
-						 .search("").draw(); 
-							
-							
-							var checkedVals = $('.chk1:checkbox:checked').map(function() { 
-								return this.value;}).get();checkedVals=checkedVals.join(',');
-							
-							if(checkedVals==''){
-								$("#error_table1").html("Please select one employee.");
-								$("#error_table1").show();return false;	
-							} 
-							 
-							var off_payment_method = document.getElementsByName('iniAuthEmpId');
-							var ischecked_method = false;
-							for ( var i = 0; i < off_payment_method.length; i++) {
-							    if(off_payment_method[i].checked) {
-							        ischecked_method = true;
-							        break;
-							    }
-							}
-							if(!ischecked_method)   { //payment method button is not checked
-								$("#error_table1").html("Select one employee as Initial Authority.");
-								$("#error_table1").show();return false;	
-							}
-							
-							var finAuthEmpId = document.getElementsByName('finAuthEmpId');
-							var finAuthEmpId_method = false;
-							for ( var i = 0; i < finAuthEmpId.length; i++) {
-							    if(finAuthEmpId[i].checked) {
-							    	finAuthEmpId_method = true;
-							        break;
-							    }
-							}
-							if(!finAuthEmpId_method)   { //payment method button is not checked
-								$("#error_table1").html("Select one employee as Final Authority.");
-								$("#error_table1").show();return false;	
-							}
-							
-							var checkedVals1 = $('.chk:checkbox:checked').map(function() { 
-								return this.value;}).get();checkedVals1=checkedVals1.join(',');
-							
-							if(checkedVals1==''){
-								
-								 
-								$("#error_table1").html("Select one employee as reporting.");
-								$("#error_table1").show();return false;	
-							}
-							
-							//return false; //yaad rakhna to  remove it
-						if (!isError) {
+	<script type="text/javascript">
+		$(document)
+				.ready(
+						function() {
+							$("#frmAddLeaveAuthority")
+									.submit(
+											function(e) {
+												var isError = false;
+												var errMsg = "";
+												$("#error_table1").hide();
+												//search
+												// $("#frmAddLeaveAuthority :input[type='search']").val("");
+												var table = $('#printtable1')
+														.DataTable();
+												table.search("").draw();
+												var table = $('#printtable2')
+														.DataTable();
+												table.search("").draw();
 
-							var x = confirm("Do you really want to submit the form?");
-							if (x == true) {
+												var checkedVals = $(
+														'.chk1:checkbox:checked')
+														.map(function() {
+															return this.value;
+														}).get();
+												checkedVals = checkedVals
+														.join(',');
 
-								document.getElementById("submtbtn").disabled = true;
-								return true;
-							}
-							//end ajax send this to php page
-						}
-						return false;
-					});
+												if (checkedVals == '') {
+													$("#error_table1")
+															.html(
+																	"Please select one employee.");
+													$("#error_table1").show();
+													return false;
+												}
 
-					 
-				});
+												var off_payment_method = document
+														.getElementsByName('iniAuthEmpId');
+												var ischecked_method = false;
+												for (var i = 0; i < off_payment_method.length; i++) {
+													if (off_payment_method[i].checked) {
+														ischecked_method = true;
+														break;
+													}
+												}
+												if (!ischecked_method) { //payment method button is not checked
+													$("#error_table1")
+															.html(
+																	"Select one employee as Initial Authority.");
+													$("#error_table1").show();
+													return false;
+												}
+
+												var finAuthEmpId = document
+														.getElementsByName('finAuthEmpId');
+												var finAuthEmpId_method = false;
+												for (var i = 0; i < finAuthEmpId.length; i++) {
+													if (finAuthEmpId[i].checked) {
+														finAuthEmpId_method = true;
+														break;
+													}
+												}
+												if (!finAuthEmpId_method) { //payment method button is not checked
+													$("#error_table1")
+															.html(
+																	"Select one employee as Final Authority.");
+													$("#error_table1").show();
+													return false;
+												}
+
+												var checkedVals1 = $(
+														'.chk:checkbox:checked')
+														.map(function() {
+															return this.value;
+														}).get();
+												checkedVals1 = checkedVals1
+														.join(',');
+
+												if (checkedVals1 == '') {
+
+													$("#error_table1")
+															.html(
+																	"Select one employee as reporting.");
+													$("#error_table1").show();
+													return false;
+												}
+
+												//return false; //yaad rakhna to  remove it
+												if (!isError) {
+
+													var x = confirm("Do you really want to submit the form?");
+													if (x == true) {
+
+														document
+																.getElementById("submtbtn").disabled = true;
+														return true;
+													}
+													//end ajax send this to php page
+												}
+												return false;
+											});
+
+						});
 	</script>
 
 </body>

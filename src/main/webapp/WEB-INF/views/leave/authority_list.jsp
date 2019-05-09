@@ -140,9 +140,9 @@
 											id="empIds${count.index+1}" value="${structure.empId}" /></td> --%>
 										<td>${count.index+1}</td>
 										<td>${leaveAuth.empCode}</td>
-										<td>${leaveAuth.empSname} ${leaveAuth.empFname}</td>
-										<td>${leaveAuth.iniEmpSname} ${leaveAuth.iniEmpFname}</td>
-										<td>${leaveAuth.finiEmpSname} ${leaveAuth.finiEmpFname}</td>
+										<td>${leaveAuth.empSname}&nbsp;${leaveAuth.empFname}</td>
+										<td>${leaveAuth.iniEmpSname}&nbsp;${leaveAuth.iniEmpFname}</td>
+										<td>${leaveAuth.finiEmpSname}&nbsp;${leaveAuth.finiEmpFname}</td>
 										<td><c:forEach items="${leaveAuth.rePortingName}"
 												var="rePortingName" varStatus="coun">
 
@@ -154,7 +154,7 @@
 															${rePortingName},
 													</c:otherwise>
 												</c:choose>
-										
+
 											</c:forEach></td>
 
 										<td class="text-center">

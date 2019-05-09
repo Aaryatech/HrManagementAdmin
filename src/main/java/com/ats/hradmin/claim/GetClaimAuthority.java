@@ -1,5 +1,7 @@
 package com.ats.hradmin.claim;
 
+import java.util.List;
+
 public class GetClaimAuthority {
 
 	private int caPkey;
@@ -55,7 +57,8 @@ public class GetClaimAuthority {
 	private String empCode;
 	private String iniEmpCode;
 	private String finiEmpCode;
-
+	List<String> rePortingName;
+	
 	public int getCaPkey() {
 		return caPkey;
 	}
@@ -280,17 +283,32 @@ public class GetClaimAuthority {
 		this.finiEmpCode = finiEmpCode;
 	}
 
+	public List<String> getRePortingName() {
+		return rePortingName;
+	}
+
+	public void setRePortingName(List<String> rePortingName) {
+		this.rePortingName = rePortingName;
+	}
+
 	@Override
 	public String toString() {
-		return "GetClaimAuthority [caPkey=" + caPkey + ", empId=" + empId + ", companyId=" + companyId
-				+ ", caIniAuthEmpId=" + caIniAuthEmpId + ", caFinAuthEmpId=" + caFinAuthEmpId + ", caRepToEmpIds="
-				+ caRepToEmpIds + ", delStatus=" + delStatus + ", isActive=" + isActive + ", makerUserId=" + makerUserId
-				+ ", makerEnterDatetime=" + makerEnterDatetime + ", exInt1=" + exInt1 + ", exInt2=" + exInt2
-				+ ", exInt3=" + exInt3 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3
-				+ ", empFname=" + empFname + ", empMname=" + empMname + ", empSname=" + empSname + ", iniEmpFname="
-				+ iniEmpFname + ", iniEmpMname=" + iniEmpMname + ", iniEmpSname=" + iniEmpSname + ", finiEmpFname="
-				+ finiEmpFname + ", finiEmpMname=" + finiEmpMname + ", finiEmpSname=" + finiEmpSname + ", empCode="
-				+ empCode + ", iniEmpCode=" + iniEmpCode + ", finiEmpCode=" + finiEmpCode + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("GetClaimAuthority [caPkey=").append(caPkey).append(", empId=").append(empId)
+				.append(", companyId=").append(companyId).append(", caIniAuthEmpId=").append(caIniAuthEmpId)
+				.append(", caFinAuthEmpId=").append(caFinAuthEmpId).append(", caRepToEmpIds=").append(caRepToEmpIds)
+				.append(", delStatus=").append(delStatus).append(", isActive=").append(isActive)
+				.append(", makerUserId=").append(makerUserId).append(", makerEnterDatetime=").append(makerEnterDatetime)
+				.append(", exInt1=").append(exInt1).append(", exInt2=").append(exInt2).append(", exInt3=")
+				.append(exInt3).append(", exVar1=").append(exVar1).append(", exVar2=").append(exVar2)
+				.append(", exVar3=").append(exVar3).append(", empFname=").append(empFname).append(", empMname=")
+				.append(empMname).append(", empSname=").append(empSname).append(", iniEmpFname=").append(iniEmpFname)
+				.append(", iniEmpMname=").append(iniEmpMname).append(", iniEmpSname=").append(iniEmpSname)
+				.append(", finiEmpFname=").append(finiEmpFname).append(", finiEmpMname=").append(finiEmpMname)
+				.append(", finiEmpSname=").append(finiEmpSname).append(", empCode=").append(empCode)
+				.append(", iniEmpCode=").append(iniEmpCode).append(", finiEmpCode=").append(finiEmpCode)
+				.append(", rePortingName=").append(rePortingName).append("]");
+		return builder.toString();
 	}
 
 }

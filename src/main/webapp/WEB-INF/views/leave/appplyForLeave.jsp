@@ -41,13 +41,13 @@
 
 						<a href="#" class="header-elements-toggle text-default d-md-none"><i
 							class="icon-more"></i></a>
-							
-							
-							
+
+
+
 					</div>
 
 
-				<%-- 	<div class="breadcrumb justify-content-center">
+					<%-- 	<div class="breadcrumb justify-content-center">
 						<a href="${pageContext.request.contextPath}/employeeAdd"
 							class="breadcrumb-elements-item"> Add Employee </a>
 
@@ -118,13 +118,13 @@
 								<tr class="bg-blue">
 									<th width="5%">Sr.no</th>
 									<th>Name</th>
-									<th>Short Name's</th>
-									
+									<th>Work Description</th>
+
 									<th>Email</th>
 									<th>Mobile</th>
-								
+
 									<th>Rate Per Hour</th>
-									 
+
 									<th class="text-center" width="10%">Actions</th>
 								</tr>
 							</thead>
@@ -134,26 +134,26 @@
 								<c:forEach items="${empList}" var="lvTypeList" varStatus="count">
 									<tr>
 										<td>${count.index+1}</td>
-										<td>${lvTypeList.empSname} ${lvTypeList.empFname}</td>
-										<td>${lvTypeList.empCatShortName} - ${lvTypeList.empTypeShortName} - ${lvTypeList.empDeptShortName}</td>
-										
+										<td>${lvTypeList.empSname}&nbsp;${lvTypeList.empFname}</td>
+										<td>${lvTypeList.empCatShortName}-
+											${lvTypeList.empTypeShortName} -
+											${lvTypeList.empDeptShortName}</td>
+
 										<td>${lvTypeList.empEmail}</td>
 										<td>${lvTypeList.empMobile1}</td>
-									<%-- 	<td>${lvTypeList.empDeptShortName}</td>
+										<%-- 	<td>${lvTypeList.empDeptShortName}</td>
 											<td>${lvTypeList.empTypeShortName}</td>
 												<td>${lvTypeList.empCatShortName}</td> --%>
 										<td>${lvTypeList.empRatePerhr}</td>
-										 
-										
-										<td class="text-center">
-										 
-														<a href="${pageContext.request.contextPath}/leaveApply?empId=${lvTypeList.exVar1}" title="Add Leave"
-															class=" "><i class="fas fa-walking" style="color: black;"></i></a>
-															<a
-															href="${pageContext.request.contextPath}/showLeaveHistList?empId=${lvTypeList.exVar1}"
-															title="Leave History"><i class="icon-history" style="color: black;"></i></a>	
-												
-										</td>
+
+
+										<td class="text-center"><a
+											href="${pageContext.request.contextPath}/leaveApply?empId=${lvTypeList.exVar1}"
+											title="Add Leave" class=" "><i class="fas fa-walking"
+												style="color: black;"></i></a> <a
+											href="${pageContext.request.contextPath}/showLeaveHistList?empId=${lvTypeList.exVar1}"
+											title="Leave History"><i class="icon-history"
+												style="color: black;"></i></a></td>
 									</tr>
 								</c:forEach>
 
