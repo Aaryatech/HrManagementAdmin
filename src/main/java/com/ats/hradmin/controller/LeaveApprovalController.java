@@ -57,8 +57,8 @@ public class LeaveApprovalController {
 
 				leaveList.get(i).setCirculatedTo(FormValidation.Encrypt(String.valueOf(leaveList.get(i).getLeaveId())));
 				leaveList.get(i).setLeaveTypeName(FormValidation.Encrypt(String.valueOf(leaveList.get(i).getEmpId())));
-				//leaveList.get(i).setLeaveFromdt(DateConvertor.convertToDMY(leaveList.get(i).getLeaveFromdt()));
-				//leaveList.get(i).setLeaveTodt(DateConvertor.convertToDMY(leaveList.get(i).getLeaveTodt()));
+				leaveList.get(i).setLeaveFromdt(DateConvertor.convertToDMY(leaveList.get(i).getLeaveFromdt()));
+				leaveList.get(i).setLeaveTodt(DateConvertor.convertToDMY(leaveList.get(i).getLeaveTodt()));
 			}
 			model.addObject("leaveListForApproval", leaveList);
 			model.addObject("list1Count", leaveList.size());
@@ -82,8 +82,8 @@ public class LeaveApprovalController {
 						.setCirculatedTo(FormValidation.Encrypt(String.valueOf(leaveList1.get(i).getLeaveId())));
 				leaveList1.get(i)
 						.setLeaveTypeName(FormValidation.Encrypt(String.valueOf(leaveList1.get(i).getEmpId())));
-				//leaveList1.get(i).setLeaveFromdt(DateConvertor.convertToDMY(leaveList1.get(i).getLeaveFromdt()));
-				//leaveList1.get(i).setLeaveTodt(DateConvertor.convertToDMY(leaveList1.get(i).getLeaveTodt()));
+				leaveList1.get(i).setLeaveFromdt(DateConvertor.convertToDMY(leaveList1.get(i).getLeaveFromdt()));
+				leaveList1.get(i).setLeaveTodt(DateConvertor.convertToDMY(leaveList1.get(i).getLeaveTodt()));
 			}
 
 			System.out.println("lv leaveList list1 info " + leaveList1.toString());
@@ -129,6 +129,8 @@ public class LeaveApprovalController {
 
 			 GetLeaveApplyAuthwise lvEmp = Constants.getRestTemplate().postForObject(Constants.url + "/getLeaveApplyDetailsByLeaveId", map1,
 					 GetLeaveApplyAuthwise.class);
+			 lvEmp.setLeaveFromdt(DateConvertor.convertToDMY(lvEmp.getLeaveFromdt()));
+			 lvEmp.setLeaveTodt(DateConvertor.convertToDMY(lvEmp.getLeaveTodt()));
 				model.addObject("lvEmp", lvEmp);
 				System.out.println("emp leave details"+lvEmp.toString());
 		      
@@ -291,7 +293,10 @@ public class LeaveApprovalController {
 
 			 GetLeaveApplyAuthwise lvEmp = Constants.getRestTemplate().postForObject(Constants.url + "/getLeaveApplyDetailsByLeaveId", map1,
 					 GetLeaveApplyAuthwise.class);
-			String empId1= FormValidation.Encrypt(String.valueOf(lvEmp.getEmpId()));
+			 
+			 lvEmp.setLeaveFromdt(DateConvertor.convertToDMY(lvEmp.getLeaveFromdt()));
+			 lvEmp.setLeaveTodt(DateConvertor.convertToDMY(lvEmp.getLeaveTodt()));
+			 String empId1= FormValidation.Encrypt(String.valueOf(lvEmp.getEmpId()));
 				model.addObject("lvEmp", lvEmp);
 				model.addObject("empId1", empId1);
 				System.out.println("emp leave details"+lvEmp.toString());
