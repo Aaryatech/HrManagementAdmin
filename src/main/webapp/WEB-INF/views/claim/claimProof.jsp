@@ -104,7 +104,7 @@
 									<div class="row">
 										<div class="col-md-12">
 											<form class="dropzone"
-												action="${pageContext.request.contextPath}/uploadClaimProof"
+												action="${pageContext.request.contextPath}/uploadOtherMediaProccessForClaim"
 												method="post" enctype="multipart/form-data">
 												<input name="isImage" value="1" type="hidden" />
 
@@ -162,6 +162,23 @@
 
 								</tbody>
 							</table>
+							
+							<form
+									action="${pageContext.request.contextPath}/uploadClaimProof"
+									id="submitInsertLeave" method="post">
+									<div class="form-group row mb-0">
+										<div class="col-lg-10 ml-lg-auto">
+
+											<button type="submit" class="btn bg-blue ml-3 legitRipple"
+												id="submtbtn">
+												Submit <i class="icon-paperplane ml-2"></i>
+											</button>
+											
+											<a href="${pageContext.request.contextPath}/showApplyForClaim"><button
+										type="button" class="btn btn-primary"><i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp; Cancel</button></a>
+										</div>
+									</div>
+									</form>
 						</div>
 					</div>
 				</div>

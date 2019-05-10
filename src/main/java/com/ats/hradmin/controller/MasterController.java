@@ -1939,7 +1939,7 @@ try {
 			int prevsExpYr = Integer.parseInt(request.getParameter("prevsExpYr"));
 			int prevsExpMn = Integer.parseInt(request.getParameter("prevsExpMn"));
 		//	String leavingDate = request.getParameter("leavingDate");
-			String lvngReson = request.getParameter("lvngReson");
+			
 			String uname = request.getParameter("uname");
 			String upass = request.getParameter("upass");
 			String[] locId2 = request.getParameterValues("locId2");
@@ -1995,19 +1995,22 @@ try {
 				editEmp.setEmpJoiningDate(DateConvertor.convertToYMD(joiningDate));
 				int isWorking = Integer.parseInt(request.getParameter("isWorking"));
 				String leavingDate=null;
+				String lvngReson=null;
 				if(isWorking==0) {
 					  leavingDate = request.getParameter("leavingDate");
+					    lvngReson = request.getParameter("lvngReson");
 					  editEmp.setEmpLeavingDate(DateConvertor.convertToYMD(leavingDate));
+						editEmp.setEmpLeavingReason(lvngReson);
 
 				}
 				else {
 					 leavingDate = null;
 					 editEmp.setEmpLeavingDate(leavingDate);
+					 editEmp.setEmpLeavingReason(null);
 				}
 
 				editEmp.setEmpPrevExpYrs(prevsExpYr);
 				editEmp.setEmpPrevExpMonths(prevsExpMn);
-				editEmp.setEmpLeavingReason(lvngReson);
 
 				editEmp.setMakerUserId(userObj.getUserId());
 				editEmp.setMakerEnterDatetime(sf.format(date));
@@ -2089,7 +2092,7 @@ try {
 			int prevsExpYr = Integer.parseInt(request.getParameter("prevsExpYr"));
 			int prevsExpMn = Integer.parseInt(request.getParameter("prevsExpMn"));
 			
-			String lvngReson = request.getParameter("lvngReson");
+			//String lvngReson = request.getParameter("lvngReson");
 			String uname = request.getParameter("uname");
 			String upass = request.getParameter("upass");
 			String[] locId2 = request.getParameterValues("locId2");
@@ -2284,20 +2287,24 @@ try {
 				leaveSummary.setEmpRatePerhr(ratePerHr);
 
 				String leavingDate=null;
+				String lvngReson=null;
 				if(isWorking==0) {
 					  leavingDate = request.getParameter("leavingDate");
-					  leaveSummary.setEmpLeavingDate(DateConvertor.convertToYMD(leavingDate));
+					    lvngReson = request.getParameter("lvngReson");
+					    leaveSummary.setEmpLeavingDate(DateConvertor.convertToYMD(leavingDate));
+					    leaveSummary.setEmpLeavingReason(lvngReson);
 
 				}
 				else {
 					 leavingDate = null;
-					  leaveSummary.setEmpLeavingDate(leavingDate);
+					 leaveSummary.setEmpLeavingDate(leavingDate);
+					 leaveSummary.setEmpLeavingReason(null);
 				}
 				leaveSummary.setEmpJoiningDate(DateConvertor.convertToYMD(joiningDate));
 				
 				leaveSummary.setEmpPrevExpYrs(prevsExpYr);
 				leaveSummary.setEmpPrevExpMonths(prevsExpMn);
-				leaveSummary.setEmpLeavingReason(lvngReson);
+				//leaveSummary.setEmpLeavingReason(lvngReson);
 
 				leaveSummary.setExInt1(isWorking);
 				leaveSummary.setExInt2(0);

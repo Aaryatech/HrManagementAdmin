@@ -148,11 +148,12 @@
 									<hr>
 									
 								<form
-									action="${pageContext.request.contextPath}/insertSubmitClaim"
+									action="${pageContext.request.contextPath}/showClaimProof"
 									id="submitInsertLeave" method="post">
 									
 									
 									
+										
 										<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="claimTypeId">Select
 											Claim Type <span style="color:red">* </span>:</label>
@@ -163,14 +164,10 @@
 												 data-fouc="" aria-hidden="true">
 												<option></option>
 												<c:forEach items="${claimTypeList}" var="claimTypeList">
-													<c:choose>
-														<c:when test="${claimTypeList.claimTypeId == editClaim.lvTypeId}">
-															<option value="${claimTypeList.claimTypeId}" selected="selected" data-clstrname="${claimTypeList.claimTypeTitle}">${claimTypeList.claimTypeTitle}</option>
-														</c:when>
-														<c:otherwise>
+													
 															<option value="${claimTypeList.claimTypeId}"  data-clstrname="${claimTypeList.claimTypeTitle}">${claimTypeList.claimTypeTitle}</option>
-														</c:otherwise>
-													</c:choose>
+														
+													
 												</c:forEach>
 											</select> <span class="validation-invalid-label" id="error_claimTypeId"
 												style="display: none;">This field is required.</span>
@@ -187,14 +184,7 @@
 												 data-fouc=""  aria-hidden="true">
 												<option></option>
 												<c:forEach items="${projectTypeList}" var="proTypeList">
-													<c:choose>
-														<c:when test="${proTypeList.projectId == editLeave.lvTypeId}">
-															<option value="${proTypeList.projectId}" selected="selected" data-prostrname="${proTypeList.projectTitle}">${proTypeList.projectTitle}</option>
-														</c:when>
-														<c:otherwise>
 															<option value="${proTypeList.projectId}" data-prostrname="${proTypeList.projectTitle}">${proTypeList.projectTitle}</option>
-														</c:otherwise>
-													</c:choose>
 												</c:forEach>
 											</select> <span class="validation-invalid-label" id="error_projectTypeId"
 												style="display: none;">This field is required.</span>

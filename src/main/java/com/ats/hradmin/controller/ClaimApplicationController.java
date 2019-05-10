@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ats.hradmin.claim.ClaimApply;
 import com.ats.hradmin.claim.ClaimDetail;
 import com.ats.hradmin.claim.ClaimProof;
+import com.ats.hradmin.claim.ClaimTemp;
 import com.ats.hradmin.claim.ClaimTrail;
 import com.ats.hradmin.claim.ClaimType;
 import com.ats.hradmin.claim.GetClaimApplyAuthwise;
@@ -44,7 +45,9 @@ import com.ats.hradmin.model.ProjectHeader;
 @Scope("session")
 public class ClaimApplicationController {
 	
-	
+	ClaimTemp ct=new ClaimTemp();
+	ArrayList<String> a =new ArrayList<String>();
+	List<MultipartFile> imgList=new ArrayList<MultipartFile>();
 	
 	@RequestMapping(value = "/showApplyForClaim", method = RequestMethod.GET)
 	public ModelAndView showEmpList(HttpServletRequest request, HttpServletResponse response) {
@@ -217,7 +220,7 @@ public class ClaimApplicationController {
 			
 			
 			int stat=0;
-			if(editEmp!=null) {
+			
 			if(editEmp.getFinAuthEmpId()==userObj.getEmpId()) {
 				stat=3;
 			}
@@ -227,10 +230,8 @@ public class ClaimApplicationController {
 			else {
 				stat=1;
 			}
-			}
-			else {
-				stat=1;
-			}
+			
+			
 			System.out.println("stat is "+stat);
 			String remark=null;
 			
@@ -593,44 +594,70 @@ public class ClaimApplicationController {
 	return model;
 		  
 	}
+	//************************************claim new process************************************
 	
-	@RequestMapping(value = "/showClaimProof", method = RequestMethod.GET)
+	
+	@RequestMapping(value = "/showClaimProof", method = RequestMethod.POST)
 	public ModelAndView addCustomer(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("claim/claimProof");
-		int claimId = Integer.parseInt(FormValidation.DecodeKey(request.getParameter("claimId")));
-		model.addObject("claimId",claimId);
-
+		
 		try {
 
-			MultiValueMap<String, Object>  map = new LinkedMultiValueMap<>();
-			map.add("claimId",claimId);
-		
-			ClaimProof[] employeeDoc1 = Constants.getRestTemplate().postForObject(Constants.url +
-						 "/getClaimProofByClaimId",map, ClaimProof[].class);
-						
-		List<ClaimProof> claimProofList1 = new ArrayList<ClaimProof>(Arrays.asList(employeeDoc1));			
-		System.err.println("claimProofList1 list"+claimProofList1.toString());
-		for (int i = 0; i < claimProofList1.size(); i++) {
-
-			claimProofList1.get(i).setExVar1(FormValidation.Encrypt(String.valueOf(claimProofList1.get(i).getCpId())));
-			claimProofList1.get(i).setExVar2(FormValidation.Encrypt(String.valueOf(claimProofList1.get(i).getClaimId())));
-
-		}
-		
-		
-		 model.addObject("claimProofList1",claimProofList1);
-		 model.addObject("fileUrl",Constants.getImageSaveUrl);
-		
+			String claimDate = request.getParameter("claimDate");
+			int projectTypeId =Integer.parseInt( request.getParameter("projectTypeId"));
+			int claimTypeId =Integer.parseInt( request.getParameter("claimTypeId"));
+			int claimAmt = Integer.parseInt( request.getParameter("claimAmt"));
+			int empId = Integer.parseInt( request.getParameter("empId"));
+			String remark=null;
+			try {
+			  remark=request.getParameter("remark");
+			}
+			  catch (Exception e){
+				  remark=null;
+			}
+			ct.setEmpId(empId);
+			ct.setClaimAmt(claimAmt);
+			ct.setClaimDate(claimDate);
+			ct.setClaimProjectId(projectTypeId);
+ 			ct.setClaimTypeId(claimTypeId);
+			ct.setClaimRemark(remark);
+			System.err.println("temp claim set:::"+ct.toString());
+		 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return model;
 	}
 	
-	
+	@RequestMapping(value = "/uploadOtherMediaProccessForClaim", method = RequestMethod.POST)
+	public void uploadOtherMediaProccessForClaim(@RequestParam("file") List<MultipartFile> file, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		try {
+
+			Date date = new Date();
+			SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+			String imageName = new String();
+
+			System.out.println("sdfsdfsdf" + file.get(0).getOriginalFilename());
+			
+			  imageName = dateTimeInGMT.format(date)+"_"+file.get(0).getOriginalFilename();
+			 
+			  imgList.add(file.get(0));
+				System.err.println("temp claim imaglist:::"+imgList.toString());
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// return "redirect:/fileUpload";
+		// return "{}";
+
+	}
+
 	@RequestMapping(value = "/uploadClaimProof", method = RequestMethod.POST)
-	public void uploadClaimProof(@RequestParam("file") List<MultipartFile> file, HttpServletRequest request, HttpServletResponse response) {
+	public String uploadClaimProof( HttpServletRequest request, HttpServletResponse response) {
 
 		 
 		try {
@@ -641,35 +668,123 @@ public class ClaimApplicationController {
 		   SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 		   SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		   VpsImageUpload upload = new VpsImageUpload();
-		   System.out.println("sdfsdfsdf" + file.get(0).getOriginalFilename());
+		  
 			
-		   int claimId = Integer.parseInt(request.getParameter("claimId"));
+		  // int claimId = Integer.parseInt(request.getParameter("claimId"));
+		
+		   
 			String remark = request.getParameter("remark");
+			
+			
+			int empId=ct.getEmpId();
+			
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("empId", empId);
+			map.add("companyId", userObj.getCompanyId());
+			
+			GetAuthorityIds  editEmp = Constants.getRestTemplate().postForObject(Constants.url + "/getClaimAuthIds", map,
+					GetAuthorityIds.class);
+			
+			
+			int stat=0;
+			
+			if(editEmp.getFinAuthEmpId()==userObj.getEmpId()) {
+				stat=3;
+			}
+			else if(editEmp.getIniAuthEmpId()==userObj.getEmpId()) {
+				stat=2;
+			}
+			else {
+				stat=1;
+			}
+			
+			
+			System.out.println("stat is "+stat);
+			
+			
+			ClaimApply leaveSummary = new ClaimApply();
 
-			Boolean ret = false;
+			leaveSummary.setEmpId(ct.getEmpId());
+			leaveSummary.setClaimAmount(ct.getClaimAmt());
+			leaveSummary.setClaimDate(DateConvertor.convertToYMD(ct.getClaimDate()));
+			leaveSummary.setClaimFinalStatus(stat);
+			leaveSummary.setClaimRemarks( ct.getClaimRemark());
+			leaveSummary.setClaimTypeId(ct.getClaimTypeId());
+			leaveSummary.setProjectId(ct.getClaimProjectId());
+			leaveSummary.setCirculatedTo("1");
+			
+			leaveSummary.setExInt1(stat);
+			leaveSummary.setExInt2(1);
+			leaveSummary.setExInt3(1);
+			leaveSummary.setExVar1("NA");
+			leaveSummary.setExVar2("NA");
+			leaveSummary.setExVar3("NA");
+			leaveSummary.setIsActive(1);
+			leaveSummary.setDelStatus(1);
+			leaveSummary.setMakerUserId(userObj.getUserId());
+			leaveSummary.setMakerEnterDatetime(sf.format(date));
 
 			
-			if (FormValidation.Validaton(file.get(0).getOriginalFilename(), "") == true) {
-				ret = true;
+
+			ClaimApply res = Constants.getRestTemplate().postForObject(Constants.url + "/saveClaimApply", leaveSummary,
+					ClaimApply.class);
+			
+			
+			if(res!=null) {
+				System.out.println("claim saved success");
+				ClaimTrail lt = new ClaimTrail();
+				
+				lt.setEmpRemarks(remark);;
+				lt.setClaimId(res.getClaimId());
+				lt.setClaimStatus(stat);
+				lt.setEmpId(empId);
+				lt.setExInt1(1);
+				lt.setExInt2(1);
+				lt.setExInt3(1);
+				lt.setExVar1("NA");
+				lt.setExVar2("NA");
+				lt.setExVar3("NA");
+				
+				lt.setMakerUserId(userObj.getUserId());
+				lt.setMakerEnterDatetime(sf.format(date));
+				
+
+				ClaimTrail res1 = Constants.getRestTemplate().postForObject(Constants.url + "/saveClaimTrail", lt,
+						ClaimTrail.class);
+				System.err.println("trail detail::"+res1.toString());
+				
+				if(res1.isError()==false) {
+					System.out.println("claim trail saved success");	
+				 map = new LinkedMultiValueMap<>();
+				map.add("claimId", res.getClaimId());
+				map.add("trailId", res1.getClaimTrailPkey());
+				Info info = Constants.getRestTemplate().postForObject(Constants.url + "/updateClaimTrailId", map, Info.class);
+
+
+				}
 			}
+			
+			
+			/////////////////proof image
+           System.err.println("img list final ::"+imgList.toString());
+			for(int i=0;i<imgList.size();i++) {
+				
+				String imageName = new String();
+				 System.out.println("sdfsdfsdf" + imgList.get(i).getOriginalFilename());
+				imageName = dateTimeInGMT.format(date) + "_" + imgList.get(i).getOriginalFilename();
 
-			if (ret == false) {
-
+				
 				ClaimProof company = new ClaimProof();
 				
 				company.setCpDocRemark(remark);
-				company.setClaimId(claimId);				
+				company.setClaimId(res.getClaimId());				
 				company.setIsActive(1);
 				company.setDelStatus(1);
 				company.setMakerUserId(userObj.getUserId());
 				company.setMakerEnterDatetime(sf.format(date));
 				
-
-				String imageName = new String();
-				imageName = dateTimeInGMT.format(date) + "_" + file.get(0).getOriginalFilename();
-
 				try {
-					upload.saveUploadedImge(file.get(0), Constants.imageSaveUrl, imageName, Constants.values, 0, 0,
+					upload.saveUploadedImge(imgList.get(i), Constants.imageSaveUrl, imageName, Constants.values, 0, 0,
 							0, 0, 0);
 					company.setCpDocPath(imageName);
 				} catch (Exception e) {
@@ -677,18 +792,21 @@ public class ClaimApplicationController {
 					e.printStackTrace();
 				}
 
-				ClaimProof res = Constants.getRestTemplate().postForObject(Constants.url + "/saveClaimProof", company,
+				ClaimProof res1 = Constants.getRestTemplate().postForObject(Constants.url + "/saveClaimProof", company,
 						ClaimProof.class);
-
+				if(res1.isError()==false) {
+				System.out.println("claim proof saved success");	
+				}
 			}
 				
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-
+		return "redirect:/showClaimList?empId="+FormValidation.Encrypt(String.valueOf(ct.getEmpId()));
 	}
 	
+      //*************end*****************************
 	
 	@RequestMapping(value = "/deleteClaimProof", method = RequestMethod.GET)
 	public String deletdeleteClaimProofeEmployee(HttpServletRequest request, HttpServletResponse response) {
@@ -717,6 +835,8 @@ public class ClaimApplicationController {
 		}
 		return "redirect:/showClaimProof?claimId="+FormValidation.Encrypt(claimId1);
 	}
+	
+	///*******************************History******************************************
 	@RequestMapping(value = "/claimDetailHistory", method = RequestMethod.GET)
 	public ModelAndView claimDetailHistory(HttpServletRequest request, HttpServletResponse response) {
 
