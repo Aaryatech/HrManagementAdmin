@@ -160,7 +160,7 @@
 										<td class="text-center">
 										
 														<a
-															href="${pageContext.request.contextPath}/showClaimProof?claimId=${lvTypeList.circulatedTo}"
+															href="${pageContext.request.contextPath}/showClaimProofAgain?claimId=${lvTypeList.circulatedTo}"
 															title="Upload Document"><i class="icon-file-upload" style="color: black;"></i></a>
 															<a
 															href="${pageContext.request.contextPath}/showClaimHistDetailList?claimId=${lvTypeList.circulatedTo}"

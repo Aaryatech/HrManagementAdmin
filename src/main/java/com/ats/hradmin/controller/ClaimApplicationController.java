@@ -806,6 +806,102 @@ public class ClaimApplicationController {
 		return "redirect:/showClaimList?empId="+FormValidation.Encrypt(String.valueOf(ct.getEmpId()));
 	}
 	
+	
+	
+	@RequestMapping(value = "/showClaimProofAgain", method = RequestMethod.GET)
+	public ModelAndView showClaimProofAgain(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("claim/claimProofAgain");
+		int claimId = Integer.parseInt(FormValidation.DecodeKey(request.getParameter("claimId")));
+		model.addObject("claimId",claimId);
+
+		try {
+
+			MultiValueMap<String, Object>  map = new LinkedMultiValueMap<>();
+			map.add("claimId",claimId);
+		
+			ClaimProof[] employeeDoc1 = Constants.getRestTemplate().postForObject(Constants.url +
+						 "/getClaimProofByClaimId",map, ClaimProof[].class);
+						
+		List<ClaimProof> claimProofList1 = new ArrayList<ClaimProof>(Arrays.asList(employeeDoc1));			
+		System.err.println("claimProofList1 list"+claimProofList1.toString());
+		for (int i = 0; i < claimProofList1.size(); i++) {
+
+			claimProofList1.get(i).setExVar1(FormValidation.Encrypt(String.valueOf(claimProofList1.get(i).getCpId())));
+			claimProofList1.get(i).setExVar2(FormValidation.Encrypt(String.valueOf(claimProofList1.get(i).getClaimId())));
+
+		}
+		
+		
+		 model.addObject("claimProofList1",claimProofList1);
+		 model.addObject("fileUrl",Constants.getImageSaveUrl);
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+	}
+	@RequestMapping(value = "/uploadClaimProofAgain", method = RequestMethod.POST)
+	public void uploadClaimProof(@RequestParam("file") List<MultipartFile> file, HttpServletRequest request, HttpServletResponse response) {
+
+		 
+		try {
+			HttpSession session = request.getSession();
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+			 
+		   Date date = new Date();
+		   SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+		   SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		   VpsImageUpload upload = new VpsImageUpload();
+		   System.out.println("sdfsdfsdf" + file.get(0).getOriginalFilename());
+			
+		   int claimId = Integer.parseInt(request.getParameter("claimId"));
+			String remark = request.getParameter("remark");
+
+			Boolean ret = false;
+
+			
+			if (FormValidation.Validaton(file.get(0).getOriginalFilename(), "") == true) {
+				ret = true;
+			}
+
+			if (ret == false) {
+
+				ClaimProof company = new ClaimProof();
+				
+				company.setCpDocRemark(remark);
+				company.setClaimId(claimId);				
+				company.setIsActive(1);
+				company.setDelStatus(1);
+				company.setMakerUserId(userObj.getUserId());
+				company.setMakerEnterDatetime(sf.format(date));
+				
+
+				String imageName = new String();
+				imageName = dateTimeInGMT.format(date) + "_" + file.get(0).getOriginalFilename();
+
+				try {
+					upload.saveUploadedImge(file.get(0), Constants.imageSaveUrl, imageName, Constants.values, 0, 0,
+							0, 0, 0);
+					company.setCpDocPath(imageName);
+				} catch (Exception e) {
+					// TODO: handle exception
+					e.printStackTrace();
+				}
+
+				ClaimProof res = Constants.getRestTemplate().postForObject(Constants.url + "/saveClaimProof", company,
+						ClaimProof.class);
+
+			}
+				
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+
+	}
+	
+	
       //*************end*****************************
 	
 	@RequestMapping(value = "/deleteClaimProof", method = RequestMethod.GET)
