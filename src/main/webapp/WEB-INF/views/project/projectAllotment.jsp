@@ -6,7 +6,9 @@
 <head>
 
 <jsp:include page="/WEB-INF/views/include/metacssjs.jsp"></jsp:include>
-<c:url var="getSubmoduleList" value="/getSubmoduleList" />
+<c:url var="getFreeEmployeeList" value="/getFreeEmployeeList" />
+<c:url var="moveEmp" value="/moveEmp" />
+<c:url var="deleteEmp" value="/deleteEmp" />
 </head>
 
 <body>
@@ -73,7 +75,7 @@
 						<div class="card">
 							<div class="card-header header-elements-inline">
 								<h6 class="card-title">Project Allotment</h6>
-							<!-- 	<div class="header-elements">
+								<!-- 	<div class="header-elements">
 									<div class="list-icons">
 										<a class="list-icons-item" data-action="collapse"></a>
 									</div>
@@ -118,32 +120,37 @@
 								%>
 
 								<form
-									action="${pageContext.request.contextPath}/submitInsertEmpType"
+									action="${pageContext.request.contextPath}/submitProjectAllotment"
 									id="submitInsertEmpType" method="post">
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2"> Project Title
-											: </label> <label class="col-form-label col-lg-3"> HR
-											management</label> <label class="col-form-label col-lg-2">
-											Project Type : </label> <label class="col-form-label col-lg-3">
-											XYZ</label>
+											: </label> <label class="col-form-label col-lg-3">
+											${projectInfo.projectTitle}</label> <label
+											class="col-form-label col-lg-2"> Project Type : </label> <label
+											class="col-form-label col-lg-3">
+											${projectInfo.projectTypeId} <input id="projectId"
+											name="projectId" value="${projectInfo.projectId}"
+											type="hidden">
+										</label>
 									</div>
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2"> Customer : </label> <label
-											class="col-form-label col-lg-3"> Madhusudhan
-											Electronics</label> <label class="col-form-label col-lg-2">
+											class="col-form-label col-lg-3">
+											${projectInfo.custId}</label> <label class="col-form-label col-lg-2">
 											Project Management Location : </label> <label
-											class="col-form-label col-lg-3"> Nashik</label>
+											class="col-form-label col-lg-3"> ${projectInfo.locId}</label>
 									</div>
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="catId">
-											Employee Category <span style="color:red">* </span>:</label>
+											Employee Category <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<select name="catId" data-placeholder="Select Category"
 												id="catId"
 												class="form-control form-control-select2 select2-hidden-accessible"
-												data-fouc="" tabindex="-1" aria-hidden="true">
+												data-fouc="" aria-hidden="true">
 
 												<option value="">Select Category</option>
 
@@ -169,28 +176,54 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="fullHalfwork">Select
-											<span style="color:red">* </span>:</label>
+											<span style="color: red">* </span>:
+										</label>
 										<div class="form-check form-check-inline">
 											<label class="form-check-label"> <input type="radio"
 												class="form-check-input" name="fullHalfwork"
-												id="fullHalfwork" checked value="1"> Full Time
+												id="fullHalfwork" checked value="0"> Full Time
 											</label>
 										</div>
 										<div class="form-check form-check-inline">
 											<label class="form-check-label"> <input type="radio"
 												class="form-check-input" name="fullHalfwork"
-												id="fullHalfwork" value="0"> Partial Time
+												id="fullHalfwork" value="1"> Partial Time
 											</label>
 										</div>
 									</div>
 
-									<div class="form-group" style="text-align: center;">
-										 
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="locationId">
+											Select Location :</label>
+										<div class="col-lg-10">
+											<select name="locationId" data-placeholder="Select Category"
+												id="locationId"
+												class="form-control form-control-select2 select2-hidden-accessible"
+												data-fouc="" aria-hidden="true" multiple="multiple">
 
-											<button type="button" class="btn bg-blue ml-3 legitRipple"
-												id="searchbtn">Search</button>
-										 
-									</div><br>
+												<option value="">Select Category</option>
+
+												<c:forEach items="${locationIds}" var="locationId">
+													<c:forEach items="${locationList}" var="locationList">
+														<c:if test="${locationList.locId==locationId}">
+															<option value="${locationList.locId}">${locationList.locName}</option>
+														</c:if>
+
+													</c:forEach>
+												</c:forEach>
+											</select> <span class="validation-invalid-label" id="error_catId"
+												style="display: none;">This field is required.</span>
+										</div>
+									</div>
+
+									<div class="form-group" style="text-align: center;">
+
+
+										<button type="button" class="btn bg-blue ml-3 legitRipple"
+											id="searchbtn" onclick="getFreeEmployeeList()">Search</button>
+
+									</div>
+									<br>
 
 									<div class="row">
 										<div class="col-md-6">
@@ -217,6 +250,8 @@
 													<tr class="bg-blue">
 														<th width="10%">Sr. No.</th>
 														<th>Employee Name</th>
+														<th width="20%">From Date</th>
+														<th width="20%">To Date</th>
 														<th width="10%" style="text-align: center;">Action</th>
 													</tr>
 												</thead>
@@ -226,16 +261,13 @@
 											</table>
 										</div>
 									</div>
-									<br>
-
-									<div class="form-group row mb-0">
-										<div class="col-lg-10 ml-lg-auto">
-											<button type="reset" class="btn btn-light legitRipple">Reset</button>
-											<button type="submit" class="btn bg-blue ml-3 legitRipple"
-												id="submtbtn">
-												Submit <i class="icon-paperplane ml-2"></i>
-											</button>
-										</div>
+									<br>  
+									<div class="form-group" style="text-align: center;">
+										<button type="reset" class="btn btn-light legitRipple">Reset</button>
+										<button type="submit" class="btn bg-blue ml-3 legitRipple"
+											id="submtbtn">
+											Submit <i class="icon-paperplane ml-2"></i>
+										</button>
 									</div>
 								</form>
 							</div>
@@ -281,7 +313,7 @@
 			}
 		});
 	</script>
-	 
+
 
 	<script>
 		function trim(el) {
@@ -296,38 +328,15 @@
 			$("#submitInsertEmpType").submit(function(e) {
 				var isError = false;
 				var errMsg = "";
-
+				/* $("#error_empTypeName").hide();
+				
 				if (!$("#empTypeName").val()) {
 
 					isError = true;
 
-					$("#error_empTypeName").show()
+					$("#error_empTypeName").show();
 					//return false;
-				} else {
-					$("#error_empTypeName").hide()
-				}
-
-				if (!$("#empShortName").val()) {
-
-					isError = true;
-
-					$("#error_empShortName").show()
-
-				} else {
-					$("#error_empShortName").hide()
-				}
-
-				var checkboxes = $("input[type='checkbox']");
-
-				if (!checkboxes.is(":checked")) {
-
-					isError = true;
-
-					$("#error_checkbox").show()
-
-				} else {
-					$("#error_checkbox").hide()
-				}
+				}   */
 
 				if (!isError) {
 
@@ -343,6 +352,137 @@
 			});
 		});
 		//
+
+		function getFreeEmployeeList() {
+
+			var catId = document.getElementById("catId").value;
+			var daterange = document.getElementById("leaveDateRange").value;
+			var res = daterange.split(" to ");
+			var locationId = document.getElementById("locationId").value;
+
+			var selectedValues = ",";
+			$("#locationId :selected").each(
+					function() {
+						selectedValues = selectedValues
+								+ parseInt($(this).val()) + ",";
+					});
+
+			if (locationId == "") {
+				selectedValues = 0;
+			}
+
+			//alert(selectedValues);
+			$.getJSON('${getFreeEmployeeList}', {
+
+				fromDate : res[0],
+				toDate : res[1],
+				catId : catId,
+				locationId : selectedValues,
+				ajax : 'true',
+
+			}, function(data) {
+
+				//alert(data);
+				$("#printtable1 tbody").empty();
+
+				for (var i = 0; i < data.length; i++) {
+
+					var tr_data = '<tr>' + '<td  >' + (i + 1) + '</td>'
+							+ '<td  >' + data[i].empFname + ' '
+							+ data[i].empSname + '</td>'
+							+ '<td  >  <a  onclick="moveEmp(' + data[i].empId
+							+ ')"><i class="icon-drag-right "></i></a></td>'
+							+ '</tr>';
+					$('#printtable1' + ' tbody').append(tr_data);
+				}
+
+			});
+
+		}
+		function moveEmp(empId) {
+
+			$.getJSON('${moveEmp}', {
+
+				empId : empId,
+				ajax : 'true',
+
+			}, function(data) {
+
+				$("#printtable1 tbody").empty();
+
+				for (var i = 0; i < data.freeList.length; i++) {
+
+					var tr_data = '<tr>' + '<td  >' + (i + 1) + '</td>'
+							+ '<td  >' + data.freeList[i].empFname + ' '
+							+ data.freeList[i].empSname + '</td>'
+							+ '<td  >  <a  onclick="moveEmp('
+							+ data.freeList[i].empId
+							+ ')"><i class="icon-drag-right "></i></a></td>'
+							+ '</tr>';
+					$('#printtable1' + ' tbody').append(tr_data);
+				}
+
+				$("#printtable2 tbody").empty();
+
+				for (var i = 0; i < data.bsyList.length; i++) {
+
+					var tr_data = '<tr>' + '<td  >' + (i + 1) + '</td>'
+							+ '<td  >' + data.bsyList[i].empFname + ' '
+							+ data.bsyList[i].empSname + '</td>'
+							+ '<td  >' + data.bsyList[i].pallotFromdt + '</td>'
+							+ '<td  >' + data.bsyList[i].pallotTodt + '</td>'
+							+ '<td  >  <a  onclick="deleteEmp('
+							+ data.bsyList[i].empId
+							+ ')"><i class="icon-trash"></i></a></td>'
+							+ '</tr>';
+					$('#printtable2' + ' tbody').append(tr_data);
+				}
+
+			});
+
+		}
+		function deleteEmp(empId) {
+
+			$.getJSON('${deleteEmp}', {
+
+				empId : empId,
+				ajax : 'true',
+
+			}, function(data) {
+
+				$("#printtable1 tbody").empty();
+
+				for (var i = 0; i < data.freeList.length; i++) {
+
+					var tr_data = '<tr>' + '<td  >' + (i + 1) + '</td>'
+							+ '<td  >' + data.freeList[i].empFname + ' '
+							+ data.freeList[i].empSname + '</td>'
+							+ '<td  >  <a  onclick="moveEmp('
+							+ data.freeList[i].empId
+							+ ')"><i class="icon-drag-right "></i></a></td>'
+							+ '</tr>';
+					$('#printtable1' + ' tbody').append(tr_data);
+				}
+
+				$("#printtable2 tbody").empty();
+
+				for (var i = 0; i < data.bsyList.length; i++) {
+
+					var tr_data = '<tr>' + '<td  >' + (i + 1) + '</td>'
+							+ '<td  >' + data.bsyList[i].empFname + ' '
+							+ data.bsyList[i].empSname + '</td>'
+							+ '<td  >' + data.bsyList[i].pallotFromdt + '</td>'
+							+ '<td  >' + data.bsyList[i].pallotTodt + '</td>'
+							+ '<td  >  <a  onclick="deleteEmp('
+							+ data.bsyList[i].empId
+							+ ')"><i class="icon-trash"></i></a></td>'
+							+ '</tr>';
+					$('#printtable2' + ' tbody').append(tr_data);
+				}
+
+			});
+
+		}
 	</script>
 
 	<!-- <script type="text/javascript">
