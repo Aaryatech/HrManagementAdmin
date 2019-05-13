@@ -140,7 +140,7 @@
 								</div>
 								<div class="form-group row">
 									<label class="col-form-label col-lg-2" for="lvsName">
-										Employee Name :</label>
+										Employee Name : </label>
 									<div class="col-lg-10">
 										<input type="text" class="form-control" id="empName"
 											value="${empInfo.empFname} ${empInfo.empMname} ${empInfo.empSname}   "
@@ -174,18 +174,18 @@
 								</div>
 								<hr>
 								<form
-									action="${pageContext.request.contextPath}/submitInsertKraReview"
+									action="${pageContext.request.contextPath}/submitInsertKpi"
 									id="submitInsertLeave" method="post">
 
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="kra_review">
-											KRA Review : *</label>
+											KPI Title : *</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
-												placeholder="KRA Review" id="kra_review" name="kra_review"
+												placeholder="KPI Title" id="kpi_title" name="kpi_title"
 												autocomplete="off"> <span
-												class="validation-invalid-label" id="error_kra_review"
+												class="validation-invalid-label" id="error_kpi_title"
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
@@ -243,7 +243,7 @@
 														</c:if>	
 														
 															</td>
- 															
+														 
 												</tr>
 											</c:forEach>
 

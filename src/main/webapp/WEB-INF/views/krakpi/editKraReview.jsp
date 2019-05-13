@@ -130,7 +130,7 @@
 
 								<div class="form-group row">
 									<label class="col-form-label col-lg-2" for="lvsName">
-										Employee Code : *</label>
+										Employee Code : </label>
 									<div class="col-lg-10">
 										<input type="text" class="form-control" id="empCode"
 											value="${empInfo.empCode}" name="lvsName" autocomplete="off"
@@ -140,7 +140,7 @@
 								</div>
 								<div class="form-group row">
 									<label class="col-form-label col-lg-2" for="lvsName">
-										Employee Name : *</label>
+										Employee Name : </label>
 									<div class="col-lg-10">
 										<input type="text" class="form-control" id="empName"
 											value="${empInfo.empFname} ${empInfo.empMname} ${empInfo.empSname}   "
@@ -152,7 +152,7 @@
 
 								<div class="form-group row">
 									<label class="col-form-label col-lg-2" for="lvsName">
-										KRA Title: *</label>
+										KRA Title: </label>
 									<div class="col-lg-10">
 										<input type="text" class="form-control" id="empName"
 											value="${editKra.kraTitle}" name="lvsName" autocomplete="off"
@@ -163,7 +163,7 @@
 
 								<div class="form-group row">
 									<label class="col-form-label col-lg-2" for="lvsName">
-										Financial Year : *</label>
+										Financial Year :</label>
 									<div class="col-lg-10">
 										<input type="text" class="form-control" id="empName"
 											value="${finYr.finYrFrom} To  ${finYr.finYrFrom} "
