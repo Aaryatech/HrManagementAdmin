@@ -2,21 +2,21 @@ package com.ats.hradmin.krakpi.model;
 
   
 public class GetEmpKraKpiCount {
- 	private int empId;
+private int empId;
 	
  	private String empCode;
 	 
 	private int empCatId;
 
-	private String empCategory;
+	private String empCatName;
 	
 	private int empTypeId;
 	
-	private String empType;
+	private String empTypeName;
 	
 	private int empDeptId;
 	
-	private String empDept;
+	private String empDeptName;
 	
 	private String empDeptShortName;
 	
@@ -57,14 +57,7 @@ public class GetEmpKraKpiCount {
 	public void setEmpCatId(int empCatId) {
 		this.empCatId = empCatId;
 	}
-
-	public String getEmpCategory() {
-		return empCategory;
-	}
-
-	public void setEmpCategory(String empCategory) {
-		this.empCategory = empCategory;
-	}
+ 
 
 	public int getEmpTypeId() {
 		return empTypeId;
@@ -74,13 +67,7 @@ public class GetEmpKraKpiCount {
 		this.empTypeId = empTypeId;
 	}
 
-	public String getEmpType() {
-		return empType;
-	}
-
-	public void setEmpType(String empType) {
-		this.empType = empType;
-	}
+ 
 
 	public int getEmpDeptId() {
 		return empDeptId;
@@ -90,13 +77,7 @@ public class GetEmpKraKpiCount {
 		this.empDeptId = empDeptId;
 	}
 
-	public String getEmpDept() {
-		return empDept;
-	}
-
-	public void setEmpDept(String empDept) {
-		this.empDept = empDept;
-	}
+	 
 
 	public String getEmpDeptShortName() {
 		return empDeptShortName;
@@ -162,16 +143,49 @@ public class GetEmpKraKpiCount {
 		this.kpiCount = kpiCount;
 	}
 
+	public String getEmpCatName() {
+		return empCatName;
+	}
+
+	public void setEmpCatName(String empCatName) {
+		this.empCatName = empCatName;
+	}
+
+	public String getEmpTypeName() {
+		return empTypeName;
+	}
+
+	public void setEmpTypeName(String empTypeName) {
+		this.empTypeName = empTypeName;
+	}
+
+	public String getEmpDeptName() {
+		return empDeptName;
+	}
+
+	public void setEmpDeptName(String empDeptName) {
+		this.empDeptName = empDeptName;
+	}
+
 	@Override
 	public String toString() {
-		return "GetEmpKraKpiCount [empId=" + empId + ", empCode=" + empCode + ", empCatId=" + empCatId
-				+ ", empCategory=" + empCategory + ", empTypeId=" + empTypeId + ", empType=" + empType + ", empDeptId="
-				+ empDeptId + ", empDept=" + empDept + ", empDeptShortName=" + empDeptShortName + ", empTypeShortName="
+		return "GetEmpKraKpiCount [empId=" + empId + ", empCode=" + empCode + ", empCatId=" + empCatId + ", empCatName="
+				+ empCatName + ", empTypeId=" + empTypeId + ", empTypeName=" + empTypeName + ", empDeptId=" + empDeptId
+				+ ", empDeptName=" + empDeptName + ", empDeptShortName=" + empDeptShortName + ", empTypeShortName="
 				+ empTypeShortName + ", empCatShortName=" + empCatShortName + ", empFname=" + empFname + ", empMname="
-				+ empMname + ", empSname=" + empSname + ", kraCount=" + kraCount + ", kpiCount=" + kpiCount + "]";
+				+ empMname + ", empSname=" + empSname + ", kraCount=" + kraCount + ", kpiCount=" + kpiCount
+				+ ", getEmpId()=" + getEmpId() + ", getEmpCode()=" + getEmpCode() + ", getEmpCatId()=" + getEmpCatId()
+				+ ", getEmpTypeId()=" + getEmpTypeId() + ", getEmpDeptId()=" + getEmpDeptId()
+				+ ", getEmpDeptShortName()=" + getEmpDeptShortName() + ", getEmpTypeShortName()="
+				+ getEmpTypeShortName() + ", getEmpCatShortName()=" + getEmpCatShortName() + ", getEmpFname()="
+				+ getEmpFname() + ", getEmpMname()=" + getEmpMname() + ", getEmpSname()=" + getEmpSname()
+				+ ", getKraCount()=" + getKraCount() + ", getKpiCount()=" + getKpiCount() + ", getEmpCatName()="
+				+ getEmpCatName() + ", getEmpTypeName()=" + getEmpTypeName() + ", getEmpDeptName()=" + getEmpDeptName()
+				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString()
+				+ "]";
 	}
-	
-	
+
+	 
 	
 	
 

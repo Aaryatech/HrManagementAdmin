@@ -1852,9 +1852,11 @@ try {
 				if(editEmp.getEmpLeavingDate()!=null) {
 					editEmp.setEmpLeavingDate(DateConvertor.convertToDMY(editEmp.getEmpLeavingDate()));
 					
+					
 				}
-			
+				editEmp.setEmpJoiningDate(DateConvertor.convertToDMY(editEmp.getEmpJoiningDate()));
 				model.addObject("editEmp", editEmp);
+				System.err.println("getEmpJoiningDate" + editEmp.getEmpJoiningDate());
 
 				map = new LinkedMultiValueMap<>();
 				map.add("empId", compId);

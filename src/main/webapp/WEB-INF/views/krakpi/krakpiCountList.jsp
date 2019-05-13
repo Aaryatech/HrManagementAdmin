@@ -125,8 +125,9 @@
 									<option value="0">All</option>
 									<option value="1">KRA Alloted</option>
 									<option value="2">KPI Alloted</option>
-									<option value="3">KRA & KPI Alloted</option>
-									<option value="4">KRA & KPI Not Alloted</option>
+									<option value="3">KRA Not Alloted</option>
+									<option value="4">KPI Not Alloted</option>
+									<option value="5">BothAlloted</option>
 
 								</select> <span class="validation-invalid-label" id="error_status"
 									style="display: none;">This field is required.</span>
