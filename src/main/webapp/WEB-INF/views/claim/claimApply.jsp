@@ -387,6 +387,10 @@
 											.html(
 													document
 															.getElementById("claimDate").value);
+											$('#remark1')
+											.html(
+													document
+															.getElementById("claimRemark").value);
 									
 											$('#modal_scrollable')
 													.modal('show');
@@ -474,6 +478,12 @@ function chkAssign(){
 						<label class="col-form-label col-lg-3" for="claimDate1"> Claim Date
 							 : </label> <label class="col-form-label col-lg-3" id="claimDate1"
 							for="claimDate1"> </label>
+
+					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-3" for="remark1"> Claim Remark
+							 : </label> <label class="col-form-label col-lg-3" id="remark1"
+							for="remark1"> </label>
 
 					</div>
 				</div>

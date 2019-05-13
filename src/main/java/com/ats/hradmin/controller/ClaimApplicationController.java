@@ -611,7 +611,7 @@ public class ClaimApplicationController {
 			int empId = Integer.parseInt( request.getParameter("empId"));
 			String remark=null;
 			try {
-			  remark=request.getParameter("remark");
+			  remark=request.getParameter("claimRemark");
 			}
 			  catch (Exception e){
 				  remark=null;
