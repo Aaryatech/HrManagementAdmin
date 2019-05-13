@@ -46,9 +46,10 @@
 					</div>
 
 					<div class="breadcrumb justify-content-center">
-					<c:if test="${addAccess == 0}">
-						<a href="${pageContext.request.contextPath}/addProjectHeader"
-							class="breadcrumb-elements-item"> Add Project </a></c:if>
+						<c:if test="${addAccess == 0}">
+							<a href="${pageContext.request.contextPath}/addProjectHeader"
+								class="breadcrumb-elements-item"> Add Project </a>
+						</c:if>
 
 					</div>
 
@@ -66,7 +67,7 @@
 				<div class="card">
 					<div class="card-header header-elements-inline">
 						<h5 class="card-title">Project List</h5>
-					<!-- 	<div class="header-elements">
+						<!-- 	<div class="header-elements">
 							<div class="list-icons">
 								<a class="list-icons-item" data-action="collapse"></a>
 							</div>
@@ -144,20 +145,21 @@
 										<td>${project.custName}</td>
 
 
-										<td class="text-center">
-										
-													<c:if test="${editAccess == 0}">
-														<a
-															href="${pageContext.request.contextPath}/editProject?projectId=${project.exVar1}"
-															title="Edit"><i class="icon-pencil7" style="color: black;"></i></a></c:if>
-															<c:if
-																test="${deleteAccess == 0}">
-														<a
-															href="${pageContext.request.contextPath}/deleteProject?projectId=${project.exVar1}"
-															onClick="return confirm('Are you sure want to delete this record');"
-														title="Delete"><i class="icon-trash" style="color: black;"></i>
-															</a></c:if>
-												
+										<td class="text-center"><c:if test="${editAccess == 0}">
+												<a
+													href="${pageContext.request.contextPath}/editProject?projectId=${project.exVar1}"
+													title="Edit"><i class="icon-pencil7"
+													style="color: black;"></i></a>
+											</c:if> <c:if test="${deleteAccess == 0}">
+												<a
+													href="${pageContext.request.contextPath}/deleteProject?projectId=${project.exVar1}"
+													onClick="return confirm('Are you sure want to delete this record');"
+													title="Delete"><i class="icon-trash"
+													style="color: black;"></i> </a>
+											</c:if> <a
+											href="${pageContext.request.contextPath}/projectAllotment?projectId=${project.exVar1}" 
+											title="Project Team"> <i class="fas fa-user-friends " style="color: black;" ></i></a>
+
 										</td>
 									</tr>
 								</c:forEach>

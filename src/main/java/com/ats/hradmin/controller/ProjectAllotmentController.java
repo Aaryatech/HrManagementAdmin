@@ -49,6 +49,9 @@ public class ProjectAllotmentController {
 
 		try {
 
+			String base64encodedString = request.getParameter("projectId");
+			String projectId = FormValidation.DecodeKey(base64encodedString);
+			
 			HttpSession session = request.getSession();
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
@@ -67,7 +70,7 @@ public class ProjectAllotmentController {
 			List<Location> locationList = new ArrayList<Location>(Arrays.asList(location));
 
 			map = new LinkedMultiValueMap<>();
-			map.add("projectId", 1);
+			map.add("projectId", projectId);
 			GetProjectHeader projectInfo = Constants.getRestTemplate()
 					.postForObject(Constants.url + "/getProjectDetailById", map, GetProjectHeader.class);
 
@@ -213,8 +216,10 @@ public class ProjectAllotmentController {
 					save.setPallotTodt(toDate); 
 					if(hours>=9) {
 						save.setPallotDailyHrs(9); 
+						save.setExInt1(2);
 					}else {
 						save.setPallotDailyHrs(hours); 
+						save.setExInt1(selectWorkType);
 					}
 					
 					save.setDelStatus(1);
@@ -224,7 +229,7 @@ public class ProjectAllotmentController {
 					save.setEmpFname(freelist.get(empId).getEmpFname());
 					save.setEmpMname(freelist.get(empId).getEmpMname());
 					save.setEmpSname(freelist.get(empId).getEmpSname());
-					save.setExInt1(selectWorkType);
+					
 					freelist.remove(empId);
 					employeeFreeBsyList.getBsyList().add(save);
 				 
@@ -317,7 +322,7 @@ public class ProjectAllotmentController {
 			e.printStackTrace();
 		}
 
-		return "redirect:/projectAllotment";
+		return "redirect:/showProjectHeaderList";
 
 	}
 
