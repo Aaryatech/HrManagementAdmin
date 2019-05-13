@@ -54,8 +54,8 @@
 					</div>
 
 					<div class="breadcrumb justify-content-center">
-						<%-- <a href="${pageContext.request.contextPath}/showApplyForLeave"
-							class="breadcrumb-elements-item">Employee List</a> --%>
+						<a href="${pageContext.request.contextPath}/showApplyForLeave"
+							class="breadcrumb-elements-item">Employee List</a>
 
 					</div>
 
@@ -81,7 +81,7 @@
 
 						<div class="card">
 							<div class="card-header header-elements-inline">
-								<h6 class="card-title">Add KRA</h6>
+								<h6 class="card-title">Edit KRA</h6>
 								<!-- <div class="header-elements">
 									<div class="list-icons">
 										<a class="list-icons-item" data-action="collapse"></a>
@@ -126,13 +126,14 @@
 									}
 								%>
 
-
+							
 
 								<div class="form-group row">
 									<label class="col-form-label col-lg-2" for="lvsName">
 										Employee Code : *</label>
 									<div class="col-lg-10">
-										<input type="text" class="form-control" id="empCode"
+										<input type="text" class="form-control"
+											  id="empCode"
 											value="${empInfo.empCode}" name="lvsName" autocomplete="off"
 											onchange="trim(this)" readonly>
 
@@ -142,19 +143,21 @@
 									<label class="col-form-label col-lg-2" for="lvsName">
 										Employee Name : *</label>
 									<div class="col-lg-10">
-										<input type="text" class="form-control" id="empName"
+										<input type="text" class="form-control"
+											  id="empName"
 											value="${empInfo.empFname} ${empInfo.empMname} ${empInfo.empSname}   "
 											name="lvsName" autocomplete="off" onchange="trim(this)"
 											readonly>
 
 									</div>
 								</div>
-
+								
 								<div class="form-group row">
 									<label class="col-form-label col-lg-2" for="lvsName">
 										Financial Year : *</label>
 									<div class="col-lg-10">
-										<input type="text" class="form-control" id="empName"
+										<input type="text" class="form-control"
+											  id="empName"
 											value="${finYr.finYrFrom} To  ${finYr.finYrFrom} "
 											name="lvsName" autocomplete="off" onchange="trim(this)"
 											readonly>
@@ -162,35 +165,38 @@
 									</div>
 								</div>
 								<hr>
-								<form
-									action="${pageContext.request.contextPath}/submitInsertKra"
+								<form action="${pageContext.request.contextPath}/submitEditKra"
 									id="submitInsertLeave" method="post">
 
-
+ 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="noOfDays">
 											KRA Title : *</label>
 										<div class="col-lg-4">
-											<input type="text" class="form-control" placeholder="KRA"
-												id="kra_title" name="kra_title" autocomplete="off">
-											<span class="validation-invalid-label" id="error_kra_title"
+											<input type="text" class="form-control"
+												placeholder="KRA" id="kra_title" name="kra_title" value="${editKra.kraTitle}"
+												autocomplete="off"  > <span
+												class="validation-invalid-label" id="error_kra_title"
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
-
+									 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="lvngReson">Remark
 											: </label>
 										<div class="col-lg-10">
 											<textarea rows="3" cols="3" class="form-control"
 												placeholder="Remark" onchange="trim(this)" id="leaveRemark"
-												name="leaveRemark">  </textarea>
+												name="leaveRemark" >${editKra.remark} </textarea>
 										</div>
 									</div>
-									<input type="hidden" class="form-control numbersOnly"
-										id="empId" value="${empInfo.empId}" name="empId"> <input
-										type="hidden" class="form-control numbersOnly" id="finYrId"
-										value="${finYr.finYrId}" name="finYrId">
+									<input type="text" class="form-control numbersOnly"
+										id="empId" value="${editKra.empId}" name="empId"> 
+										
+										 
+										
+										<input type="text" class="form-control numbersOnly"
+										id="finYrId" value="${editKra.yearId}" name="finYrId">  
 
 									<div class="col-md-12" style="text-align: center;">
 
@@ -198,51 +204,55 @@
 											id="submtbtn">
 											Add <i class="icon-paperplane ml-2"></i>
 										</button>
-
+										 
 
 									</div>
 								</form>
 								<h6 class="card-title">KRA List</h6>
-
+								
 								<div class="table-responsive">
 									<table
 										class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic1  datatable-button-print-columns1"
 										id="printtable1">
-
+ 
 
 										<thead>
 											<tr class="bg-blue" style="text-align: center;">
-												<th width="10%">Sr.no</th>
+
 												<th>KRA Title</th>
 												<th>KPI Count</th>
 												<th>Remark</th>
-
-												<th width="10%" class="text-center">Actions</th>
+												 
+ <th width="10%" class="text-center">Actions</th>
 
 											</tr>
 										</thead>
 										<tbody>
-											<c:forEach items="${kraList}" var="kraList" varStatus="count">
+											<c:forEach items="${kraList}" var="kraList">
 												<tr>
-													<td>${count.index+1}</td>
+													 
 													<td>${kraList.kraTitle}</td>
 													<td>${kraList.kpiCount}</td>
-													<td>${kraList.remark}</td>
+													<td>${kraList.remark} </td>
+													 
 
-
-													<td class="text-center"><a
-														href="${pageContext.request.contextPath}/showAddKraReview?kraId=${kraList.exvar1}"
-														title="Add Review"><i class="icon-diff-added"
-															style="color: black;"></i></a> <a
-														href="${pageContext.request.contextPath}/addKpi?kraId=${kraList.exvar1}"
-														title="Add Kpi"><i class="icon-diff-added"
-															style="color: black;"></i></a> <a
-														href="${pageContext.request.contextPath}/editKraDetail?kraId=${kraList.exvar1}"><i
-															class="icon-pencil7"></i></a> <a
-														href="${pageContext.request.contextPath}/deleteKra?kraId=${kraList.exvar1}"
-														onClick="return confirm('Are you sure want to delete this record');"
-														title="Delete"><i class="icon-trash"
-															style="color: black;"></i> </a></td>
+<td class="text-center">
+									<%-- 		<a
+															href="${pageContext.request.contextPath}/addKraReview?kraId=${kraList.exvar1}"
+															title="Add Review"><i class="icon-pencil7"></i></a>
+															<a
+															href="${pageContext.request.contextPath}/addKpi?kraId=${kraList.exvar1}"
+															title="Add Kpi"><i class="icon-pencil7"></i></a> --%>
+														<a
+															href="${pageContext.request.contextPath}/editKraDetail?kraId=${kraList.exvar1}"
+															><i class="icon-pencil7"></i></a>
+														<a
+															href="${pageContext.request.contextPath}/deleteKra?kraId=${kraList.exvar1}"
+															onClick="return confirm('Are you sure want to delete this record');"
+															title="Delete"><i class="icon-trash" style="color: black;"></i>
+															</a>
+												
+										</td>
 
 												</tr>
 											</c:forEach>
@@ -254,7 +264,7 @@
 									</table>
 								</div>
 								<br>
-
+								
 							</div>
 						</div>
 
@@ -277,8 +287,8 @@
 	<!-- /page content -->
 
 
-
-
+   
+	 
 	<script type="text/javascript">
 		function calculateDiff() {
 
@@ -326,6 +336,7 @@
 	</script>
 
 	<script>
+		 
 		function trim(el) {
 			el.value = el.value.replace(/(^\s*)|(\s*$)/gi, ""). // removes leading and trailing spaces
 			replace(/[ ]{2,}/gi, " "). // replaces multiple spaces with one space 
@@ -333,34 +344,42 @@
 			return;
 		}
 
-		$(document).ready(function($) {
+		$(document)
+				.ready(
+						function($) {
 
-			$("#submitInsertLeave").submit(function(e) {
-				var isError = false;
-				var errMsg = "";
+							$("#submitInsertLeave")
+									.submit(
+											function(e) {
+												var isError = false;
+												var errMsg = "";
 
-				if (!$("#kra_title").val()) {
+												if (!$("#kra_title").val()) {
 
-					isError = true;
+													isError = true;
 
-					$("#error_kra_title").show()
-					//return false;
-				} else {
-					$("#error_kra_title").hide()
-				}
+													$("#error_kra_title")
+															.show()
+													//return false;
+												} else {
+													$("#error_kra_title")
+															.hide()
+												}
 
-				if (!isError) {
+												
 
-					var x = confirm("Do you really want to submit the form?");
-					if (x == true) {
+												if (!isError) {
 
-						document.getElementById("submtbtn").disabled = true;
-						return true;
-					}
-				}
-				return false;
-			});
-		});
+													var x = confirm("Do you really want to submit the form?");
+													if (x == true) {
+
+														document.getElementById("submtbtn").disabled = true;
+														return true;
+													}
+												}
+												return false;
+											});
+						});
 		//
 	</script>
 	<script>
@@ -382,8 +401,7 @@
 				</div>
 
 				<div class="modal-body py-0">
-					<h5 class="modal-title">Leave Details</h5>
-					<br>
+					<h5 class="modal-title">Leave Details</h5><br>
 
 					<div class="form-group row">
 						<label class="col-form-label col-lg-3" for="lvType">
@@ -408,9 +426,10 @@
 					<div class="form-group row">
 						<label class="col-form-label col-lg-3" for="fromdate1">
 							From Date : </label> <label class="col-form-label col-lg-3"
-							id="fromdate1" for="noOfDays1"> </label> <label
-							class="col-form-label col-lg-3" for="todate1"> To Date :
-						</label> <label class="col-form-label col-lg-2" id="todate1"
+							id="fromdate1" for="noOfDays1"> </label>
+						<label class="col-form-label col-lg-3" for="todate1">
+							To Date : </label>
+						<label class="col-form-label col-lg-2" id="todate1"
 							for="noOfDays1"> </label>
 
 					</div>

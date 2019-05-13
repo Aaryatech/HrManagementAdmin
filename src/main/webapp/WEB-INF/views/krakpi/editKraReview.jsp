@@ -81,7 +81,7 @@
 
 						<div class="card">
 							<div class="card-header header-elements-inline">
-								<h6 class="card-title">Add KRA</h6>
+								<h6 class="card-title">Add KRA Review</h6>
 								<!-- <div class="header-elements">
 									<div class="list-icons">
 										<a class="list-icons-item" data-action="collapse"></a>
@@ -152,6 +152,17 @@
 
 								<div class="form-group row">
 									<label class="col-form-label col-lg-2" for="lvsName">
+										KRA Title: *</label>
+									<div class="col-lg-10">
+										<input type="text" class="form-control" id="empName"
+											value="${editKra.kraTitle}" name="lvsName" autocomplete="off"
+											onchange="trim(this)" readonly>
+
+									</div>
+								</div>
+
+								<div class="form-group row">
+									<label class="col-form-label col-lg-2" for="lvsName">
 										Financial Year : *</label>
 									<div class="col-lg-10">
 										<input type="text" class="form-control" id="empName"
@@ -163,46 +174,38 @@
 								</div>
 								<hr>
 								<form
-									action="${pageContext.request.contextPath}/submitInsertKra"
+									action="${pageContext.request.contextPath}/submitInsertEditKraReview"
 									id="submitInsertLeave" method="post">
 
 
 									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="noOfDays">
-											KRA Title : *</label>
+										<label class="col-form-label col-lg-2" for="kra_review">
+											KRA Review : *</label>
 										<div class="col-lg-4">
-											<input type="text" class="form-control" placeholder="KRA"
-												id="kra_title" name="kra_title" autocomplete="off">
-											<span class="validation-invalid-label" id="error_kra_title"
+											<input type="text" class="form-control"
+												placeholder="KRA Review" id="kra_review" name="kra_review" 	value="${editKraReview.review}"
+												autocomplete="off"> <span
+												class="validation-invalid-label" id="error_kra_review"
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
 
-									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="lvngReson">Remark
-											: </label>
-										<div class="col-lg-10">
-											<textarea rows="3" cols="3" class="form-control"
-												placeholder="Remark" onchange="trim(this)" id="leaveRemark"
-												name="leaveRemark">  </textarea>
-										</div>
-									</div>
-									<input type="hidden" class="form-control numbersOnly"
-										id="empId" value="${empInfo.empId}" name="empId"> <input
-										type="hidden" class="form-control numbersOnly" id="finYrId"
-										value="${finYr.finYrId}" name="finYrId">
+
+								 <input
+										type="hidden" class="form-control numbersOnly" id="kraId"
+										value="${editKraReview.kraId}" name="kraId">
 
 									<div class="col-md-12" style="text-align: center;">
 
 										<button type="submit" class="btn bg-blue ml-3 legitRipple"
 											id="submtbtn">
-											Add <i class="icon-paperplane ml-2"></i>
+											Add <i class="icon-paperplanereviewreview ml-2"></i>
 										</button>
 
 
 									</div>
 								</form>
-								<h6 class="card-title">KRA List</h6>
+								<h6 class="card-title">KRA Review List</h6>
 
 								<div class="table-responsive">
 									<table
@@ -213,42 +216,30 @@
 										<thead>
 											<tr class="bg-blue" style="text-align: center;">
 												<th width="10%">Sr.no</th>
-												<th>KRA Title</th>
-												<th>KPI Count</th>
-												<th>Remark</th>
+												<th>KRA Review</th>
+
 
 												<th width="10%" class="text-center">Actions</th>
 
 											</tr>
 										</thead>
 										<tbody>
-											<c:forEach items="${kraList}" var="kraList" varStatus="count">
+											<c:forEach items="${kraReviewList}" var="kraReviewList"
+												varStatus="count">
 												<tr>
 													<td>${count.index+1}</td>
-													<td>${kraList.kraTitle}</td>
-													<td>${kraList.kpiCount}</td>
-													<td>${kraList.remark}</td>
-
-
+													<td>${kraReviewList.review}(${kraReviewList.makerEnterDatetime})</td>
+<c:if test="${kraReviewList.makerUserId==empIdOrig}">
 													<td class="text-center"><a
-														href="${pageContext.request.contextPath}/showAddKraReview?kraId=${kraList.exvar1}"
-														title="Add Review"><i class="icon-diff-added"
-															style="color: black;"></i></a> <a
-														href="${pageContext.request.contextPath}/addKpi?kraId=${kraList.exvar1}"
-														title="Add Kpi"><i class="icon-diff-added"
-															style="color: black;"></i></a> <a
-														href="${pageContext.request.contextPath}/editKraDetail?kraId=${kraList.exvar1}"><i
+														href="${pageContext.request.contextPath}/editKraReviewDetail?kraReviewId=${kraReviewList.exVar1}"><i
 															class="icon-pencil7"></i></a> <a
-														href="${pageContext.request.contextPath}/deleteKra?kraId=${kraList.exvar1}"
+														href="${pageContext.request.contextPath}/deleteKraReview?kraReviewId=${kraReviewList.exVar1}"
 														onClick="return confirm('Are you sure want to delete this record');"
 														title="Delete"><i class="icon-trash"
 															style="color: black;"></i> </a></td>
-
+															</c:if>
 												</tr>
 											</c:forEach>
-
-
-
 
 										</tbody>
 									</table>
@@ -339,14 +330,14 @@
 				var isError = false;
 				var errMsg = "";
 
-				if (!$("#kra_title").val()) {
+				if (!$("#kra_review").val()) {
 
 					isError = true;
 
-					$("#error_kra_title").show()
+					$("#error_kra_review").show()
 					//return false;
 				} else {
-					$("#error_kra_title").hide()
+					$("#error_kra_review").hide()
 				}
 
 				if (!isError) {
