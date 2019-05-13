@@ -128,7 +128,7 @@
 											${projectInfo.projectTitle}</label> <label
 											class="col-form-label col-lg-2"> Project Type : </label> <label
 											class="col-form-label col-lg-3">
-											${projectInfo.projectTypeId} <input id="projectId"
+											${projectInfo.projectTypeTitle} <input id="projectId"
 											name="projectId" value="${projectInfo.projectId}"
 											type="hidden">
 										</label>
@@ -137,9 +137,10 @@
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2"> Customer : </label> <label
 											class="col-form-label col-lg-3">
-											${projectInfo.custId}</label> <label class="col-form-label col-lg-2">
-											Project Management Location : </label> <label
-											class="col-form-label col-lg-3"> ${projectInfo.locId}</label>
+											${projectInfo.custName}</label> <label
+											class="col-form-label col-lg-2"> Project Management
+											Location : </label> <label class="col-form-label col-lg-3">
+											${projectInfo.locName}</label>
 									</div>
 
 									<div class="form-group row">
@@ -181,7 +182,7 @@
 										<div class="form-check form-check-inline">
 											<label class="form-check-label"> <input type="radio"
 												class="form-check-input" name="fullHalfwork"
-												id="fullHalfwork" checked value="0"> Full Time
+												id="fullHalfwork" checked value="2"> Full Time
 											</label>
 										</div>
 										<div class="form-check form-check-inline">
@@ -266,8 +267,10 @@
 															<td>${bsyList.empFname}&nbsp;${bsyList.empSname}</td>
 															<td>${bsyList.pallotFromdt}</td>
 															<td>${bsyList.pallotTodt}</td>
-															<td><%-- <a onclick="deleteEmp(${count.index})"><i
-																	class="icon-trash"></i></a> --%></td>
+															<td>
+																<%-- <a onclick="deleteEmp(${count.index})"><i
+																	class="icon-trash"></i></a> --%>
+															</td>
 														</tr>
 
 													</c:forEach>
@@ -374,59 +377,107 @@
 			var daterange = document.getElementById("leaveDateRange").value;
 			var res = daterange.split(" to ");
 			var locationId = document.getElementById("locationId").value;
+			var worktime = document
+					.querySelector('input[name="fullHalfwork"]:checked').value;
 
-			if(catId==""){
+			if (catId == "") {
 				$("#error_catId").show();
-			}else{
-				
+			} else {
+
 				$("#error_catId").hide();
-				
-			var selectedValues = ",";
-			$("#locationId :selected").each(
-					function() {
-						selectedValues = selectedValues
-								+ parseInt($(this).val()) + ",";
-					});
 
-			if (locationId == "") {
-				selectedValues = 0;
-			}
+				var selectedValues = ",";
+				$("#locationId :selected").each(
+						function() {
+							selectedValues = selectedValues
+									+ parseInt($(this).val()) + ",";
+						});
 
-			//alert(selectedValues);
-			$.getJSON('${getFreeEmployeeList}', {
-
-				fromDate : res[0],
-				toDate : res[1],
-				catId : catId,
-				locationId : selectedValues,
-				ajax : 'true',
-
-			}, function(data) {
-
-				//alert(data);
-				$("#printtable1 tbody").empty();
-
-				for (var i = 0; i < data.length; i++) {
-
-					var tr_data = '<tr>' + '<td  >' + (i + 1) + '</td>'
-							+ '<td  >' + data[i].empFname + ' '
-							+ data[i].empSname + '</td>'
-							+ '<td  >  <a  onclick="moveEmp(' + i
-							+ ')"><i class="icon-drag-right "></i></a></td>'
-							+ '</tr>';
-					$('#printtable1' + ' tbody').append(tr_data);
+				if (locationId == "") {
+					selectedValues = 0;
 				}
 
-			});
-			
+				//alert(selectedValues);
+				$
+						.getJSON(
+								'${getFreeEmployeeList}',
+								{
+
+									fromDate : res[0],
+									toDate : res[1],
+									catId : catId,
+									locationId : selectedValues,
+									worktime : worktime,
+									ajax : 'true',
+
+								},
+								function(data) {
+
+									//alert(data);
+									$("#printtable1 tbody").empty();
+
+									for (var i = 0; i < data.length; i++) {
+
+										var tr_data = '<tr>'
+												+ '<td  >'
+												+ (i + 1)
+												+ '</td>'
+												+ '<td  >'
+												+ data[i].empFname
+												+ ' '
+												+ data[i].empSname
+												+ '</td>'
+												+ '<td  >  <a  onclick="fillEmpInfo('
+												+ i
+												+ ')"><i class="icon-drag-right "></i></a></td>'
+												+ '</tr>';
+										$('#printtable1' + ' tbody').append(
+												tr_data);
+									}
+
+								});
+
 			}
 
 		}
-		function moveEmp(empId) {
+		function moveEmp() {
 
+			var empId = document.getElementById("tempEmpId").value;
+			var selectWorkType = document
+			.querySelector('input[name="selectWorkType"]:checked').value;
+			var worktime = document
+			.querySelector('input[name="fullHalfwork"]:checked').value;
+			var hours = parseFloat(document.getElementById("hours").value);
+			 var flag=0;
+			 $("#error_fullTimeError").hide();
+			 $("#error_hours").hide();
+			 
+			if(selectWorkType==1){
+				
+				if(isNaN(hours)){
+					
+				flag=1;
+				$("#error_hours").show();
+				
+				}
+				
+			}else{
+				hours=9;
+			}
+			
+			if(selectWorkType==2 && worktime==1){
+				flag=1;
+				$("#error_fullTimeError").show();
+				
+			}
+			
+			if(flag==0){
+				 
 			$.getJSON('${moveEmp}', {
 
 				empId : empId,
+				selectWorkType : selectWorkType,
+				hours : hours,
 				ajax : 'true',
 
 			}, function(data) {
@@ -438,7 +489,7 @@
 					var tr_data = '<tr>' + '<td  >' + (i + 1) + '</td>'
 							+ '<td  >' + data.freeList[i].empFname + ' '
 							+ data.freeList[i].empSname + '</td>'
-							+ '<td  >  <a  onclick="moveEmp(' + i
+							+ '<td  >  <a  onclick="fillEmpInfo(' + i
 							+ ')"><i class="icon-drag-right "></i></a></td>'
 							+ '</tr>';
 					$('#printtable1' + ' tbody').append(tr_data);
@@ -449,25 +500,48 @@
 				for (var i = 0; i < data.bsyList.length; i++) {
 
 					var atn;
-					if(data.bsyList[i].pallotId==0){
-						atn='<td  >  <a  onclick="deleteEmp(' + i
-						+ ')"><i class="icon-trash"></i></a></td>';
-					}else{
-						atn='<td  >  </td>';
+					if (data.bsyList[i].pallotId == 0) {
+						atn = '<td  >  <a  onclick="deleteEmp(' + i
+								+ ')"><i class="icon-trash"></i></a></td>';
+					} else {
+						atn = '<td  >  </td>';
 					}
 					var tr_data = '<tr>' + '<td  >' + (i + 1) + '</td>'
 							+ '<td  >' + data.bsyList[i].empFname + ' '
 							+ data.bsyList[i].empSname + '</td>' + '<td  >'
 							+ data.bsyList[i].pallotFromdt + '</td>' + '<td  >'
-							+ data.bsyList[i].pallotTodt + '</td>'
-							+ atn
+							+ data.bsyList[i].pallotTodt + '</td>' + atn
 							+ '</tr>';
 					$('#printtable2' + ' tbody').append(tr_data);
 				}
+				
+				$('#modal_scrollable').modal('hide');
 
 			});
+			} 
 
 		}
+
+		function fillEmpInfo(empId) {
+
+			document.getElementById("fulltimeWorkType").checked = true;
+			document.getElementById("hours").value = "";
+			$('#hoursDiv').hide();
+			$("#error_hours").hide();
+			$("#error_fullTimeError").hide();
+			document.getElementById("tempEmpId").value = empId;
+			$('#modal_scrollable').modal('show');
+
+		}
+		  function opneCloseHoursDiv(value) {
+ 
+			 if(value==1){
+				 $('#hoursDiv').show();
+			 }else{
+				 $('#hoursDiv').hide();
+			 }
+
+		}  
 		function deleteEmp(empId) {
 
 			$.getJSON('${deleteEmp}', {
@@ -484,7 +558,7 @@
 					var tr_data = '<tr>' + '<td  >' + (i + 1) + '</td>'
 							+ '<td  >' + data.freeList[i].empFname + ' '
 							+ data.freeList[i].empSname + '</td>'
-							+ '<td  >  <a  onclick="moveEmp(' + i
+							+ '<td  >  <a  onclick="fillEmpInfo(' + i
 							+ ')"><i class="icon-drag-right "></i></a></td>'
 							+ '</tr>';
 					$('#printtable1' + ' tbody').append(tr_data);
@@ -495,18 +569,17 @@
 				for (var i = 0; i < data.bsyList.length; i++) {
 
 					var atn;
-					if(data.bsyList[i].pallotId==0){
-						atn='<td  >  <a  onclick="deleteEmp(' + i
-						+ ')"><i class="icon-trash"></i></a></td>';
-					}else{
-						atn='<td  >  </td>';
+					if (data.bsyList[i].pallotId == 0) {
+						atn = '<td  >  <a  onclick="deleteEmp(' + i
+								+ ')"><i class="icon-trash"></i></a></td>';
+					} else {
+						atn = '<td  >  </td>';
 					}
 					var tr_data = '<tr>' + '<td  >' + (i + 1) + '</td>'
 							+ '<td  >' + data.bsyList[i].empFname + ' '
 							+ data.bsyList[i].empSname + '</td>' + '<td  >'
 							+ data.bsyList[i].pallotFromdt + '</td>' + '<td  >'
-							+ data.bsyList[i].pallotTodt + '</td>'
-							+ atn
+							+ data.bsyList[i].pallotTodt + '</td>' + atn
 							+ '</tr>';
 					$('#printtable2' + ' tbody').append(tr_data);
 				}
@@ -516,37 +589,61 @@
 		}
 	</script>
 
-	<!-- <script type="text/javascript">
-	$('#submtbtn').on('click', function() {
-        swalInit({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Yes, delete it!',
-            cancelButtonText: 'No, cancel!',
-            confirmButtonClass: 'btn btn-success',
-            cancelButtonClass: 'btn btn-danger',
-            buttonsStyling: false
-        }).then(function(result) {
-            if(result.value) {
-                swalInit(
-                    'Deleted!',
-                    'Your file has been deleted.',
-                    'success'
-                );
-            }
-            else if(result.dismiss === swal.DismissReason.cancel) {
-                swalInit(
-                    'Cancelled',
-                    'Your imaginary file is safe :)',
-                    'error'
-                );
-            }
-        });
-    });
-	
-	</script> -->
+	<!-- Scrollable modal -->
+	<div id="modal_scrollable" class="modal fade" data-backdrop="false"
+		tabindex="-1">
+		<div class="modal-dialog modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-header pb-3">
+
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<div class="modal-body py-0">
+					<h5 class="modal-title">Fill Info</h5>
+					<br>
+					<div class="form-group row">
+
+						<div class="form-check form-check-inline">
+							<label class="form-check-label"> <input type="radio"
+								class="form-check-input" name="selectWorkType"
+								id="fulltimeWorkType" checked value="2"
+								onclick="opneCloseHoursDiv(2)"> Full Time
+							</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<label class="form-check-label"> <input type="radio"
+								class="form-check-input" name="selectWorkType"
+								id="parttimeWorkType" value="1" onclick="opneCloseHoursDiv(1)">
+								Partial Time
+							</label>
+						</div>
+						<span
+							class="validation-invalid-label" id="error_fullTimeError"
+							style="display: none;">You Can't Select Full Time</span>
+					</div>
+
+					<div class="form-group row" style="display: none;" id="hoursDiv">
+						<label class="col-form-label col-lg-5" for="hours"> Enter
+							Hours :<span style="color: red">* </span> <input type="text"
+							class="form-control" name="hours" data-placeholder="Enter Hours"
+							id="hours" autocomplete="off"> <span
+							class="validation-invalid-label" id="error_hours"
+							style="display: none;">Enter Valid Hours </span>
+						</label>
+
+					</div>
+				</div>
+
+				<div class="modal-footer pt-3">
+					<button type="button" class="btn btn-link" data-dismiss="modal">Cancel</button>
+					<button type="button" class="btn bg-primary" onclick="moveEmp()">Add</button>
+					<input id="tempEmpId" name="tempEmpId" type="hidden">
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /scrollable modal -->
 
 </body>
 </html>
