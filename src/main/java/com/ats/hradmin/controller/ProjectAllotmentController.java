@@ -76,9 +76,15 @@ public class ProjectAllotmentController {
 			model.addObject("locationIds", userObj.getLocationIds().split(","));
 
 			employeeFreeBsyList = new EmployeeFreeBsyList();
-			bsyList = new ArrayList<>();
+			
+			
 			freelist = new ArrayList<>();
-
+			ProjectAllotment[] projectAllotment = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getAllocatedEmployeeList", map, ProjectAllotment[].class);
+			
+			bsyList = new ArrayList<>(Arrays.asList(projectAllotment));
+			
+			model.addObject("bsyList", bsyList);
 			employeeFreeBsyList.setBsyList(bsyList);
 			employeeFreeBsyList.setFreeList(freelist);
 
@@ -124,15 +130,30 @@ public class ProjectAllotmentController {
 			EmployeeInfo[] employeeInfo = Constants.getRestTemplate()
 					.postForObject(Constants.url + "/getFullTimeFreeEmpList", map, EmployeeInfo[].class);
 			freelist = new ArrayList<EmployeeInfo>(Arrays.asList(employeeInfo));
-
+ 
+			DateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
+			 Date fDate = sf.parse(fromDate);
+			 Date tDate = sf.parse(toDate);
+			
 			for (int i = 0; i < employeeFreeBsyList.getBsyList().size(); i++) {
 
 				for (int j = 0; j < freelist.size(); j++) {
 
 					if (employeeFreeBsyList.getBsyList().get(i).getEmpId() == freelist.get(j).getEmpId()) {
 
-						freelist.remove(j);
-						break;
+						Date afDate = sf.parse(employeeFreeBsyList.getBsyList().get(i).getPallotFromdt());
+						 Date atDate = sf.parse(employeeFreeBsyList.getBsyList().get(i).getPallotTodt());
+						 
+						 /*System.out.println(fDate);
+						 System.out.println(tDate);
+						 System.out.println(afDate);
+						 System.out.println(atDate);*/
+						 
+						 if((afDate.compareTo(fDate)<=0 && afDate.compareTo(fDate)>=0) || (afDate.compareTo(tDate)<=0 && atDate.compareTo(tDate)>=0)) {
+							 freelist.remove(j);
+								break;
+						 }
+						  
 					}
 
 				}
@@ -155,7 +176,7 @@ public class ProjectAllotmentController {
 
 			int empId = Integer.parseInt(request.getParameter("empId"));
 
-			for (int i = 0; i < freelist.size(); i++) {
+			/*for (int i = 0; i < freelist.size(); i++) {
 
 				if (freelist.get(i).getEmpId() == empId) {
 					//employeeFreeBsyList.getBsyList().add(freelist.get(i));
@@ -175,7 +196,25 @@ public class ProjectAllotmentController {
 					employeeFreeBsyList.getBsyList().add(save);
 					break;
 				}
-			}
+			}*/
+			 
+					//employeeFreeBsyList.getBsyList().add(freelist.get(i));
+					ProjectAllotment save = new ProjectAllotment(); 
+					save.setEmpId(freelist.get(empId).getEmpId());
+					save.setPallotFromdt(fromDate);
+					save.setPallotTodt(toDate);
+					save.setPallotDailyHrs(9);
+					save.setDelStatus(1);
+					save.setIsActive(1);
+					save.setMakerUserId(userObj.getUserId());
+					save.setMakerEnterDatetime(dateTime);
+					save.setEmpFname(freelist.get(empId).getEmpFname());
+					save.setEmpMname(freelist.get(empId).getEmpMname());
+					save.setEmpSname(freelist.get(empId).getEmpSname());
+					freelist.remove(empId);
+					employeeFreeBsyList.getBsyList().add(save);
+				 
+			
 
 			employeeFreeBsyList.setBsyList(bsyList);
 			employeeFreeBsyList.setFreeList(freelist);
@@ -196,15 +235,17 @@ public class ProjectAllotmentController {
 
 			int empId = Integer.parseInt(request.getParameter("empId"));
 
-			for (int i = 0; i < employeeFreeBsyList.getBsyList().size(); i++) {
+			/*for (int i = 0; i < employeeFreeBsyList.getBsyList().size(); i++) {
 
 				if (employeeFreeBsyList.getBsyList().get(i).getEmpId() == empId) {
 
 					employeeFreeBsyList.getBsyList().remove(i);
 					break;
 				}
-			}
-
+			}*/
+			
+		 employeeFreeBsyList.getBsyList().remove(empId);
+				 
 			employeeFreeBsyList.setBsyList(bsyList);
 			employeeFreeBsyList.setFreeList(freelist);
 

@@ -152,8 +152,8 @@
 
 														<input type="file" class="form-control"
 															id="doc${count.index}" name="doc"
-															accept=".jpg,.png,.gif,.doc,.xls,.pdf" required>
-														<!-- * Only jpg,gif,png * Best image size is 369px × 64px -->
+															accept=".jpg,.png,.gif,.doc,.xls,.pdf" required> 
+														<span class="form-text text-muted">Only .jpg,.png,.gif,.doc,.xls,.pdf</span>
 														<span class="validation-invalid-label"
 															id="error_doc${docList.doctypeId}" style="display: none;">This
 															field is required.</span>
@@ -162,8 +162,8 @@
 
 														<input type="file" class="form-control"
 															id="doc${count.index}" name="doc"
-															accept=".jpg,.png,.gif,.doc,.xls,.pdf">
-														<!-- * Only jpg,gif,png * Best image size is 369px × 64px -->
+															accept=".jpg,.png,.gif,.doc,.xls,.pdf"> 
+														<span class="form-text text-muted">Only .jpg,.png,.gif,.doc,.xls,.pdf</span>
 														<span class="validation-invalid-label"
 															id="error_doc${docList.doctypeId}" style="display: none;">This
 															field is required.</span>

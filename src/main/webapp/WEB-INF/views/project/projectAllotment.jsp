@@ -256,12 +256,27 @@
 													</tr>
 												</thead>
 												<tbody>
+													<c:forEach items="${bsyList}" var="bsyList"
+														varStatus="count">
+
+														<tr>
+															<td>${count.index+1}</td>
+
+
+															<td>${bsyList.empFname}&nbsp;${bsyList.empSname}</td>
+															<td>${bsyList.pallotFromdt}</td>
+															<td>${bsyList.pallotTodt}</td>
+															<td><%-- <a onclick="deleteEmp(${count.index})"><i
+																	class="icon-trash"></i></a> --%></td>
+														</tr>
+
+													</c:forEach>
 
 												</tbody>
 											</table>
 										</div>
 									</div>
-									<br>  
+									<br>
 									<div class="form-group" style="text-align: center;">
 										<button type="reset" class="btn btn-light legitRipple">Reset</button>
 										<button type="submit" class="btn bg-blue ml-3 legitRipple"
@@ -360,6 +375,12 @@
 			var res = daterange.split(" to ");
 			var locationId = document.getElementById("locationId").value;
 
+			if(catId==""){
+				$("#error_catId").show();
+			}else{
+				
+				$("#error_catId").hide();
+				
 			var selectedValues = ",";
 			$("#locationId :selected").each(
 					function() {
@@ -390,13 +411,15 @@
 					var tr_data = '<tr>' + '<td  >' + (i + 1) + '</td>'
 							+ '<td  >' + data[i].empFname + ' '
 							+ data[i].empSname + '</td>'
-							+ '<td  >  <a  onclick="moveEmp(' + data[i].empId
+							+ '<td  >  <a  onclick="moveEmp(' + i
 							+ ')"><i class="icon-drag-right "></i></a></td>'
 							+ '</tr>';
 					$('#printtable1' + ' tbody').append(tr_data);
 				}
 
 			});
+			
+			}
 
 		}
 		function moveEmp(empId) {
@@ -415,8 +438,7 @@
 					var tr_data = '<tr>' + '<td  >' + (i + 1) + '</td>'
 							+ '<td  >' + data.freeList[i].empFname + ' '
 							+ data.freeList[i].empSname + '</td>'
-							+ '<td  >  <a  onclick="moveEmp('
-							+ data.freeList[i].empId
+							+ '<td  >  <a  onclick="moveEmp(' + i
 							+ ')"><i class="icon-drag-right "></i></a></td>'
 							+ '</tr>';
 					$('#printtable1' + ' tbody').append(tr_data);
@@ -426,14 +448,19 @@
 
 				for (var i = 0; i < data.bsyList.length; i++) {
 
+					var atn;
+					if(data.bsyList[i].pallotId==0){
+						atn='<td  >  <a  onclick="deleteEmp(' + i
+						+ ')"><i class="icon-trash"></i></a></td>';
+					}else{
+						atn='<td  >  </td>';
+					}
 					var tr_data = '<tr>' + '<td  >' + (i + 1) + '</td>'
 							+ '<td  >' + data.bsyList[i].empFname + ' '
-							+ data.bsyList[i].empSname + '</td>'
-							+ '<td  >' + data.bsyList[i].pallotFromdt + '</td>'
-							+ '<td  >' + data.bsyList[i].pallotTodt + '</td>'
-							+ '<td  >  <a  onclick="deleteEmp('
-							+ data.bsyList[i].empId
-							+ ')"><i class="icon-trash"></i></a></td>'
+							+ data.bsyList[i].empSname + '</td>' + '<td  >'
+							+ data.bsyList[i].pallotFromdt + '</td>' + '<td  >'
+							+ data.bsyList[i].pallotTodt + '</td>'
+							+ atn
 							+ '</tr>';
 					$('#printtable2' + ' tbody').append(tr_data);
 				}
@@ -457,8 +484,7 @@
 					var tr_data = '<tr>' + '<td  >' + (i + 1) + '</td>'
 							+ '<td  >' + data.freeList[i].empFname + ' '
 							+ data.freeList[i].empSname + '</td>'
-							+ '<td  >  <a  onclick="moveEmp('
-							+ data.freeList[i].empId
+							+ '<td  >  <a  onclick="moveEmp(' + i
 							+ ')"><i class="icon-drag-right "></i></a></td>'
 							+ '</tr>';
 					$('#printtable1' + ' tbody').append(tr_data);
@@ -468,14 +494,19 @@
 
 				for (var i = 0; i < data.bsyList.length; i++) {
 
+					var atn;
+					if(data.bsyList[i].pallotId==0){
+						atn='<td  >  <a  onclick="deleteEmp(' + i
+						+ ')"><i class="icon-trash"></i></a></td>';
+					}else{
+						atn='<td  >  </td>';
+					}
 					var tr_data = '<tr>' + '<td  >' + (i + 1) + '</td>'
 							+ '<td  >' + data.bsyList[i].empFname + ' '
-							+ data.bsyList[i].empSname + '</td>'
-							+ '<td  >' + data.bsyList[i].pallotFromdt + '</td>'
-							+ '<td  >' + data.bsyList[i].pallotTodt + '</td>'
-							+ '<td  >  <a  onclick="deleteEmp('
-							+ data.bsyList[i].empId
-							+ ')"><i class="icon-trash"></i></a></td>'
+							+ data.bsyList[i].empSname + '</td>' + '<td  >'
+							+ data.bsyList[i].pallotFromdt + '</td>' + '<td  >'
+							+ data.bsyList[i].pallotTodt + '</td>'
+							+ atn
 							+ '</tr>';
 					$('#printtable2' + ' tbody').append(tr_data);
 				}
