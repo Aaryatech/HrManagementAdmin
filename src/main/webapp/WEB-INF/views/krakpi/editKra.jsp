@@ -186,16 +186,16 @@
 											: </label>
 										<div class="col-lg-10">
 											<textarea rows="3" cols="3" class="form-control"
-												placeholder="Remark" onchange="trim(this)" id="leaveRemark"
-												name="leaveRemark" >${editKra.remark} </textarea>
+												placeholder="Remark" onchange="trim(this)" id="remark"
+												name="remark" >${editKra.remark} </textarea>
 										</div>
 									</div>
-									<input type="text" class="form-control numbersOnly"
+									<input type="hidden" class="form-control numbersOnly"
 										id="empId" value="${editKra.empId}" name="empId"> 
 										
 										 
 										
-										<input type="text" class="form-control numbersOnly"
+										<input type="hidden" class="form-control numbersOnly"
 										id="finYrId" value="${editKra.yearId}" name="finYrId">  
 
 									<div class="col-md-12" style="text-align: center;">

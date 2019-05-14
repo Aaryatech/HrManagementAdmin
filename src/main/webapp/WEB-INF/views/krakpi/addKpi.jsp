@@ -81,7 +81,7 @@
 
 						<div class="card">
 							<div class="card-header header-elements-inline">
-								<h6 class="card-title">Add KRA Review</h6>
+								<h6 class="card-title">Add KPI</h6>
 								<!-- <div class="header-elements">
 									<div class="list-icons">
 										<a class="list-icons-item" data-action="collapse"></a>
@@ -189,7 +189,15 @@
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
-
+                            <div class="form-group row">
+										<label class="col-form-label col-lg-2" for="lvngReson">Remark
+											: </label>
+										<div class="col-lg-10">
+											<textarea rows="3" cols="3" class="form-control"
+												placeholder="Remark" onchange="trim(this)" id="leaveRemark"
+												name="remark">  </textarea>
+										</div>
+									</div>
 
 									<input type="hidden" class="form-control numbersOnly"
 										id="empId" value="${empInfo.empId}" name="empId"> <input
@@ -206,7 +214,7 @@
 
 									</div>
 								</form>
-								<h6 class="card-title">KRA Review List</h6>
+								<h6 class="card-title">KPI List</h6>
 
 								<div class="table-responsive">
 									<table
@@ -217,7 +225,8 @@
 										<thead>
 											<tr class="bg-blue" style="text-align: center;">
 												<th width="10%">Sr.no</th>
-												<th>KRA Review</th>
+												<th>KPI Title</th>
+												<th>Remark</th>
 
 
 												<th width="10%" class="text-center">Actions</th>
@@ -225,22 +234,26 @@
 											</tr>
 										</thead>
 										<tbody>
-											<c:forEach items="${kraReviewList}" var="kraReviewList"
+											<c:forEach items="${kpiList}" var="kpiList"
 												varStatus="count">
 												<tr>
 													<td>${count.index+1}</td>
-													<td>${kraReviewList.review}(${kraReviewList.makerEnterDatetime})</td>
+													<td>${kpiList.kpiTitle}</td>
+													<td>${kpiList.remark}</td>
 
 													<td class="text-center">
-													<c:if test="${kraReviewList.makerUserId==empIdOrig}">
+													 <a
+														href="${pageContext.request.contextPath}/showAddKpiReview?kpiId=${kpiList.exVar1}"
+														title="Add Review"><i class="icon-diff-added"
+															style="color: black;"></i></a>
 													<a
-														href="${pageContext.request.contextPath}/editKraReviewDetail?kraReviewId=${kraReviewList.exVar1}"><i
+														href="${pageContext.request.contextPath}/showEditKpi?kpiId=${kpiList.exVar1}"><i
 															class="icon-pencil7"></i></a> <a
-														href="${pageContext.request.contextPath}/deleteKraReview?kraReviewId=${kraReviewList.exVar1}"
+														href="${pageContext.request.contextPath}/deleteKpi?kpiId=${kpiList.exVar1}"
 														onClick="return confirm('Are you sure want to delete this record');"
 														title="Delete"><i class="icon-trash"
 															style="color: black;"></i> </a>
-														</c:if>	
+														 
 														
 															</td>
 														 
@@ -336,14 +349,14 @@
 				var isError = false;
 				var errMsg = "";
 
-				if (!$("#kra_review").val()) {
+				if (!$("#kpi_title").val()) {
 
 					isError = true;
 
-					$("#error_kra_review").show()
+					$("#error_kpi_title").show()
 					//return false;
 				} else {
-					$("#error_kra_review").hide()
+					$("#error_kpi_title").hide()
 				}
 
 				if (!isError) {

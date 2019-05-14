@@ -183,8 +183,8 @@
 											: </label>
 										<div class="col-lg-10">
 											<textarea rows="3" cols="3" class="form-control"
-												placeholder="Remark" onchange="trim(this)" id="leaveRemark"
-												name="leaveRemark">  </textarea>
+												placeholder="Remark" onchange="trim(this)" id="remark"
+												name="remark">  </textarea>
 										</div>
 									</div>
 									<input type="hidden" class="form-control numbersOnly"
@@ -234,7 +234,7 @@
 														href="${pageContext.request.contextPath}/showAddKraReview?kraId=${kraList.exvar1}"
 														title="Add Review"><i class="icon-diff-added"
 															style="color: black;"></i></a> <a
-														href="${pageContext.request.contextPath}/addKpi?kraId=${kraList.exvar1}"
+														href="${pageContext.request.contextPath}/showAddKpi?kraId=${kraList.exvar1}"
 														title="Add Kpi"><i class="icon-diff-added"
 															style="color: black;"></i></a> <a
 														href="${pageContext.request.contextPath}/editKraDetail?kraId=${kraList.exvar1}"><i

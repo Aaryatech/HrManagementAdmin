@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ats.hradmin.common.Constants;
 import com.ats.hradmin.common.FormValidation;
 import com.ats.hradmin.krakpi.model.FinancialYear;
+import com.ats.hradmin.krakpi.model.GetEmpKpiReview;
 import com.ats.hradmin.krakpi.model.GetEmpKra;
 import com.ats.hradmin.krakpi.model.GetEmpKraKpiCount;
 import com.ats.hradmin.krakpi.model.GetKraReviewList;
@@ -429,7 +430,7 @@ public class KraKpiController {
 					}
 				  
 				  model.addObject("kraReviewList", employeeInfoList);
-				  System.err.println("kra Review List is edit:"+employeeInfoList.toString());
+				  System.err.println("kraReviewList is edit:"+employeeInfoList.toString());
 				
 				 model.addObject("empIdOrig",userObj.getEmpId()) ;
 				
