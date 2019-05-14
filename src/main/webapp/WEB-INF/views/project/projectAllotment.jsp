@@ -9,6 +9,8 @@
 <c:url var="getFreeEmployeeList" value="/getFreeEmployeeList" />
 <c:url var="moveEmp" value="/moveEmp" />
 <c:url var="deleteEmp" value="/deleteEmp" />
+<c:url var="getEmployeeAllocatedHistory"
+	value="/getEmployeeAllocatedHistory" />
 </head>
 
 <body>
@@ -47,7 +49,7 @@
 					</div>
 
 					<div class="breadcrumb justify-content-center">
-						<a href="${pageContext.request.contextPath}/showEmpTypeList"
+						<a href="${pageContext.request.contextPath}/showProjectHeaderList"
 							class="breadcrumb-elements-item"> Project List</a>
 
 					</div>
@@ -281,11 +283,14 @@
 									</div>
 									<br>
 									<div class="form-group" style="text-align: center;">
-										<button type="reset" class="btn btn-light legitRipple">Reset</button>
 										<button type="submit" class="btn bg-blue ml-3 legitRipple"
 											id="submtbtn">
 											Submit <i class="icon-paperplane ml-2"></i>
 										</button>
+										<a
+											href="${pageContext.request.contextPath}/showProjectHeaderList"><button
+												type="button" class="btn bg-blue ml-3 legitRipple"
+												id="searchbtn">Cancel</button></a>
 									</div>
 								</form>
 							</div>
@@ -429,6 +434,8 @@
 												+ '</td>'
 												+ '<td  >  <a  onclick="fillEmpInfo('
 												+ i
+												+ ','
+												+ data[i].empId
 												+ ')"><i class="icon-drag-right "></i></a></td>'
 												+ '</tr>';
 										$('#printtable1' + ' tbody').append(
@@ -444,104 +451,164 @@
 
 			var empId = document.getElementById("tempEmpId").value;
 			var selectWorkType = document
-			.querySelector('input[name="selectWorkType"]:checked').value;
+					.querySelector('input[name="selectWorkType"]:checked').value;
 			var worktime = document
-			.querySelector('input[name="fullHalfwork"]:checked').value;
+					.querySelector('input[name="fullHalfwork"]:checked').value;
 			var hours = parseFloat(document.getElementById("hours").value);
-			 var flag=0;
-			 $("#error_fullTimeError").hide();
-			 $("#error_hours").hide();
-			 
-			if(selectWorkType==1){
-				
-				if(isNaN(hours)){
-					
-				flag=1;
-				$("#error_hours").show();
-				
+			var flag = 0;
+			$("#error_fullTimeError").hide();
+			$("#error_hours").hide();
+
+			if (selectWorkType == 1) {
+
+				if (isNaN(hours)) {
+
+					flag = 1;
+					$("#error_hours").show();
+
 				}
-				
-			}else{
-				hours=9;
+
+			} else {
+				hours = 9;
 			}
-			
-			if(selectWorkType==2 && worktime==1){
-				flag=1;
+
+			if (selectWorkType == 2 && worktime == 1) {
+				flag = 1;
 				$("#error_fullTimeError").show();
-				
+
 			}
-			
-			if(flag==0){
-				 
-			$.getJSON('${moveEmp}', {
 
-				empId : empId,
-				selectWorkType : selectWorkType,
-				hours : hours,
-				ajax : 'true',
+			if (flag == 0) {
 
-			}, function(data) {
+				$
+						.getJSON(
+								'${moveEmp}',
+								{
 
-				$("#printtable1 tbody").empty();
+									empId : empId,
+									selectWorkType : selectWorkType,
+									hours : hours,
+									ajax : 'true',
 
-				for (var i = 0; i < data.freeList.length; i++) {
+								},
+								function(data) {
 
-					var tr_data = '<tr>' + '<td  >' + (i + 1) + '</td>'
-							+ '<td  >' + data.freeList[i].empFname + ' '
-							+ data.freeList[i].empSname + '</td>'
-							+ '<td  >  <a  onclick="fillEmpInfo(' + i
-							+ ')"><i class="icon-drag-right "></i></a></td>'
-							+ '</tr>';
-					$('#printtable1' + ' tbody').append(tr_data);
-				}
+									$("#printtable1 tbody").empty();
 
-				$("#printtable2 tbody").empty();
+									for (var i = 0; i < data.freeList.length; i++) {
 
-				for (var i = 0; i < data.bsyList.length; i++) {
+										var tr_data = '<tr>'
+												+ '<td  >'
+												+ (i + 1)
+												+ '</td>'
+												+ '<td  >'
+												+ data.freeList[i].empFname
+												+ ' '
+												+ data.freeList[i].empSname
+												+ '</td>'
+												+ '<td  >  <a  onclick="fillEmpInfo('
+												+ i
+												+ ','
+												+ data.freeList[i].empId
+												+ ')"><i class="icon-drag-right "></i></a></td>'
+												+ '</tr>';
+										$('#printtable1' + ' tbody').append(
+												tr_data);
+									}
 
-					var atn;
-					if (data.bsyList[i].pallotId == 0) {
-						atn = '<td  >  <a  onclick="deleteEmp(' + i
-								+ ')"><i class="icon-trash"></i></a></td>';
-					} else {
-						atn = '<td  >  </td>';
-					}
-					var tr_data = '<tr>' + '<td  >' + (i + 1) + '</td>'
-							+ '<td  >' + data.bsyList[i].empFname + ' '
-							+ data.bsyList[i].empSname + '</td>' + '<td  >'
-							+ data.bsyList[i].pallotFromdt + '</td>' + '<td  >'
-							+ data.bsyList[i].pallotTodt + '</td>' + atn
-							+ '</tr>';
-					$('#printtable2' + ' tbody').append(tr_data);
-				}
-				
-				$('#modal_scrollable').modal('hide');
+									$("#printtable2 tbody").empty();
 
-			});
-			} 
+									for (var i = 0; i < data.bsyList.length; i++) {
+
+										var atn;
+										if (data.bsyList[i].pallotId == 0) {
+											atn = '<td  >  <a  onclick="deleteEmp('
+													+ i
+													+ ')"><i class="icon-trash"></i></a></td>';
+										} else {
+											atn = '<td  >  </td>';
+										}
+										var tr_data = '<tr>' + '<td  >'
+												+ (i + 1) + '</td>' + '<td  >'
+												+ data.bsyList[i].empFname
+												+ ' '
+												+ data.bsyList[i].empSname
+												+ '</td>' + '<td  >'
+												+ data.bsyList[i].pallotFromdt
+												+ '</td>' + '<td  >'
+												+ data.bsyList[i].pallotTodt
+												+ '</td>' + atn + '</tr>';
+										$('#printtable2' + ' tbody').append(
+												tr_data);
+									}
+
+									$('#modal_full').modal('hide');
+
+								});
+			}
 
 		}
 
-		function fillEmpInfo(empId) {
+		function fillEmpInfo(index, empId) {
 
 			document.getElementById("fulltimeWorkType").checked = true;
 			document.getElementById("hours").value = "";
 			$('#hoursDiv').hide();
 			$("#error_hours").hide();
+			$("#historyTableDiv").hide();
 			$("#error_fullTimeError").hide();
-			document.getElementById("tempEmpId").value = empId;
-			$('#modal_scrollable').modal('show');
+			document.getElementById("tempEmpId").value = index;
+			document.getElementById("tempEmployeeId").value = empId;
+			$('#modal_full').modal('show');
 
 		}
-		  function opneCloseHoursDiv(value) {
- 
-			 if(value==1){
-				 $('#hoursDiv').show();
-			 }else{
-				 $('#hoursDiv').hide();
-			 }
 
-		}  
+		function getEmpHistory() {
+
+			$("#historyTableDiv").show();
+			var empId = document.getElementById("tempEmployeeId").value;
+
+			$.getJSON('${getEmployeeAllocatedHistory}', {
+
+				empId : empId,
+				ajax : 'true',
+
+			}, function(data) {
+
+				//alert(data);
+				$("#historyTable tbody").empty();
+
+				for (var i = 0; i < data.length; i++) {
+
+					var halfFull;
+
+					if (data[i].exInt1 == 1) {
+						halfFull = "Partial";
+					} else {
+						halfFull = "Full";
+					}
+					var tr_data = '<tr>' + '<td  >' + (i + 1) + '</td>'
+							+ '<td  >' + data[i].projectTitle + '</td>' 
+							+'<td  >' + halfFull + '</td>' + '<td  >'
+							+ data[i].pallotFromdt + '</td>' + '<td  >'
+							+ data[i].pallotTodt + '</td>' 
+							+ '<td  >' + data[i].pallotDailyHrs + '</td>' + '</tr>';
+					$('#historyTable' + ' tbody').append(tr_data);
+				}
+
+			});
+
+		}
+
+		function opneCloseHoursDiv(value) {
+
+			if (value == 1) {
+				$('#hoursDiv').show();
+			} else {
+				$('#hoursDiv').hide();
+			}
+
+		}
 		function deleteEmp(empId) {
 
 			$.getJSON('${deleteEmp}', {
@@ -558,7 +625,8 @@
 					var tr_data = '<tr>' + '<td  >' + (i + 1) + '</td>'
 							+ '<td  >' + data.freeList[i].empFname + ' '
 							+ data.freeList[i].empSname + '</td>'
-							+ '<td  >  <a  onclick="fillEmpInfo(' + i
+							+ '<td  >  <a  onclick="fillEmpInfo(' + i + ','
+							+ data.freeList[i].empId
 							+ ')"><i class="icon-drag-right "></i></a></td>'
 							+ '</tr>';
 					$('#printtable1' + ' tbody').append(tr_data);
@@ -590,7 +658,7 @@
 	</script>
 
 	<!-- Scrollable modal -->
-	<div id="modal_scrollable" class="modal fade" data-backdrop="false"
+	<!-- <div id="modal_scrollable" class="modal fade" data-backdrop="false"
 		tabindex="-1">
 		<div class="modal-dialog modal-dialog-scrollable">
 			<div class="modal-content">
@@ -602,7 +670,7 @@
 				<div class="modal-body py-0">
 					<h5 class="modal-title">Fill Info</h5>
 					<br>
-					<div class="form-group row">
+					<div class="col-md-10">
 
 						<div class="form-check form-check-inline">
 							<label class="form-check-label"> <input type="radio"
@@ -618,19 +686,20 @@
 								Partial Time
 							</label>
 						</div>
-						<span
-							class="validation-invalid-label" id="error_fullTimeError"
+						<span class="validation-invalid-label" id="error_fullTimeError"
 							style="display: none;">You Can't Select Full Time</span>
 					</div>
 
-					<div class="form-group row" style="display: none;" id="hoursDiv">
+					<div class="col-lg-10" style="display: none;" id="hoursDiv">
 						<label class="col-form-label col-lg-5" for="hours"> Enter
-							Hours :<span style="color: red">* </span> <input type="text"
-							class="form-control" name="hours" data-placeholder="Enter Hours"
-							id="hours" autocomplete="off"> <span
-							class="validation-invalid-label" id="error_hours"
-							style="display: none;">Enter Valid Hours </span>
+							Hours :<span style="color: red">* </span>
 						</label>
+						<div class="col-md-10">
+							<input type="text" class="form-control" name="hours"
+								data-placeholder="Enter Hours" id="hours" autocomplete="off">
+							<span class="validation-invalid-label" id="error_hours"
+								style="display: none;">Enter Valid Hours </span>
+						</div>
 
 					</div>
 				</div>
@@ -642,7 +711,93 @@
 				</div>
 			</div>
 		</div>
+	</div> -->
+
+	<!-- Full width modal -->
+	<div id="modal_full" class="modal fade" data-backdrop="false"
+		tabindex="-1">
+		<div class="modal-dialog modal-full">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Fill Info</h5>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<div class="modal-body">
+
+					<div class="form-group row">
+						<label class="col-form-label col-lg-2" for="fulltimeWorkType">
+							Select : <span style="color: red">* </span>
+						</label>
+						<div class="col-lg-10">
+							<div class="form-check form-check-inline">
+								<label class="form-check-label"> <input type="radio"
+									class="form-check-input" name="selectWorkType"
+									id="fulltimeWorkType" checked value="2"
+									onclick="opneCloseHoursDiv(2)"> Full Time
+								</label>
+							</div>
+							<div class="form-check form-check-inline">
+								<label class="form-check-label"> <input type="radio"
+									class="form-check-input" name="selectWorkType"
+									id="parttimeWorkType" value="1" onclick="opneCloseHoursDiv(1)">
+									Partial Time
+								</label>
+							</div>
+							<span class="validation-invalid-label" id="error_fullTimeError"
+								style="display: none;">You Can't Select Full Time</span>
+						</div>
+					</div>
+
+					<div class="form-group row" style="display: none;" id="hoursDiv">
+						<label class="col-form-label col-lg-2" for="hours">Enter
+							Hours :<span style="color: red">* </span>
+						</label>
+						<div class="col-lg-10">
+							<input type="text" class="form-control" name="hours"
+								data-placeholder="Enter Hours" id="hours" autocomplete="off">
+							<span class="validation-invalid-label" id="error_hours"
+								style="display: none;">Enter Valid Hours </span>
+						</div>
+					</div>
+
+					<div class="modal-footer">
+						<button type="button" class="btn bg-primary" data-dismiss="modal">Cancel</button>
+						<button type="button" class="btn bg-primary"
+							onclick="getEmpHistory()">History</button>
+						<button type="button" class="btn bg-primary" onclick="moveEmp()">Add</button>
+						<input id="tempEmpId" name="tempEmpId" type="hidden"> <input
+							id="tempEmployeeId" name="tempEmployeeId" type="hidden">
+					</div>
+
+					<div class="row" id="historyTableDiv" style="display: none;">
+
+						<table
+							class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic1  datatable-button-print-columns1"
+							id="historyTable">
+							<thead>
+								<tr class="bg-blue">
+									<th width="10%">Sr. No.</th>
+									<th>Project Name</th>
+									<th width="10%">Half/Full</th>
+									<th width="10%">From Date</th>
+									<th width="10%">To Date</th>
+									<th width="10%">Hours</th>
+								</tr>
+							</thead>
+							<tbody>
+
+							</tbody>
+						</table>
+
+					</div>
+				</div>
+
+
+			</div>
+		</div>
 	</div>
+	<!-- /full width modal -->
 	<!-- /scrollable modal -->
 
 </body>

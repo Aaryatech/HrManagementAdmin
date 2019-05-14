@@ -5,7 +5,7 @@
 		<div class="navbar-brand">
 			<a href="${pageContext.request.contextPath}/dashboard" class="d-inline-block">
 				<%-- <img src="${pageContext.request.contextPath}/resources/global_assets/images/logo_light.png" alt=""> --%>
-				<img src="${pageContext.request.contextPath}/resources/global_assets/images/companylogo.png" alt="" style="height: 80px; width: 150px;" >
+				<img src="${pageContext.request.contextPath}/resources/global_assets/images/companylogo.png" alt="" style="height: 50px; width: 150px;" >
 			</a>
 		</div>
 

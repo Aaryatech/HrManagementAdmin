@@ -836,6 +836,46 @@
 						</tbody>
 					</table>
 				</div>
+				
+				<!-- Multiple selection -->
+				<div class="card">
+					<div class="card-header header-elements-inline">
+						<h5 class="card-title">Multiple selection</h5>
+						<div class="header-elements">
+							<div class="list-icons">
+		                		<a class="list-icons-item" data-action="collapse"></a>
+		                		<a class="list-icons-item" data-action="reload"></a>
+		                		<a class="list-icons-item" data-action="remove"></a>
+		                	</div>
+	                	</div>
+					</div>
+
+					<div class="card-body">
+						<p class="mb-3">Multiple selection example. By default, only single selection is allowed: once you click on the option, it automatically moves to another box. To disable single selection and turn on multiple, set <code>moveOnSelect</code> option to <code>false</code> in plugin configuration. Defaults to <code>true</code> and this option is forced to <code>true</code> on the Android browser.</p>
+						
+						<select multiple="multiple" class="form-control listbox-no-selection" data-fouc>
+							<option value="option1" selected>Classical mechanics</option>
+							<option value="option2">Electromagnetism</option>
+							<option value="option4">Relativity</option>
+							<option value="option5" selected>Quantum mechanics</option>
+							<option value="option7">Astrophysics</option>
+							<option value="option8" selected>Biophysics</option>
+							<option value="option9">Chemical physics</option>
+							<option value="option10">Econophysics</option>
+							<option value="option11">Geophysics</option>
+							<option value="option12">Medical physics</option>
+							<option value="option13">Physical chemistry</option>
+							<option value="option14" selected>Continuum mechanics</option>
+							<option value="option15">Electrodynamics</option>
+							<option value="option16" selected>Quantum field theory</option>
+							<option value="option17">Scattering theory</option>
+							<option value="option18" selected>Chaos theory</option>
+							<option value="option19" selected>Newton's laws of motion</option>
+							<option value="option20">Thermodynamics</option>
+						</select>
+					</div>
+				</div>
+				<!-- /multiple selection -->
 				<!-- /left fixed column -->
 				<!-- /table listing  area -->
 				<!-- /table listing  area -->

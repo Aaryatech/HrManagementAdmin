@@ -80,7 +80,7 @@ body {
 			</a> --%>
 			<img
 				src="${pageContext.request.contextPath}/resources/global_assets/images/companylogo.png"
-				alt="" style="height: 80px; width: 150px;">
+				alt="" style="height: 50px; width: 150px;">
 		</div>
 
 		<div class="d-md-none">
