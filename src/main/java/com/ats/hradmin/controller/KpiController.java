@@ -57,6 +57,7 @@ public class KpiController {
 
 			GetEmployeeInfo empInfo = Constants.getRestTemplate().postForObject(Constants.url + "/GetEmployeeInfo", map,
 					GetEmployeeInfo.class);
+			empInfo.setEmpEmail(FormValidation.Encrypt(String.valueOf(empInfo.getEmpId())));
 			model.addObject("empInfo", empInfo);
 			
 			map = new LinkedMultiValueMap<>();

@@ -54,8 +54,8 @@
 					</div>
 
 					<div class="breadcrumb justify-content-center">
-						<%-- <a href="${pageContext.request.contextPath}/showApplyForLeave"
-							class="breadcrumb-elements-item">Employee List</a> --%>
+						<a href="${pageContext.request.contextPath}/showEmpKraKpiCountList"
+							class="breadcrumb-elements-item">KRAKPI List</a>
 
 					</div>
 
@@ -238,11 +238,11 @@
 														title="Add Kpi"><i class="icon-diff-added"
 															style="color: black;"></i></a> <a
 														href="${pageContext.request.contextPath}/editKraDetail?kraId=${kraList.exvar1}"><i
-															class="icon-pencil7"></i></a> <a
+															class="icon-pencil7"style="color: black;"></i></a> <a
 														href="${pageContext.request.contextPath}/deleteKra?kraId=${kraList.exvar1}"
 														onClick="return confirm('Are you sure want to delete this record');"
 														title="Delete"><i class="icon-trash"
-															style="color: black;"></i> </a></td>
+															style="color: black;"style="color: black;"></i> </a></td>
 
 												</tr>
 											</c:forEach>

@@ -54,8 +54,8 @@
 					</div>
 
 					<div class="breadcrumb justify-content-center">
-						<%-- <a href="${pageContext.request.contextPath}/showApplyForLeave"
-							class="breadcrumb-elements-item">Employee List</a> --%>
+						<a href="${pageContext.request.contextPath}/showAddKra?empId=${empInfo.empEmail}&finYrId=${editKra.yearId}"
+							class="breadcrumb-elements-item">KRA List</a>
 
 					</div>
 
@@ -235,7 +235,7 @@
 													<c:if test="${kraReviewList.makerUserId==empIdOrig}">
 													<a
 														href="${pageContext.request.contextPath}/editKraReviewDetail?kraReviewId=${kraReviewList.exVar1}"><i
-															class="icon-pencil7"></i></a> <a
+															class="icon-pencil7" style="color: black;"></i></a> <a
 														href="${pageContext.request.contextPath}/deleteKraReview?kraReviewId=${kraReviewList.exVar1}"
 														onClick="return confirm('Are you sure want to delete this record');"
 														title="Delete"><i class="icon-trash"

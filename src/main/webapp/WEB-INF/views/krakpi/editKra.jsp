@@ -54,8 +54,8 @@
 					</div>
 
 					<div class="breadcrumb justify-content-center">
-						<a href="${pageContext.request.contextPath}/showApplyForLeave"
-							class="breadcrumb-elements-item">Employee List</a>
+						<a href="${pageContext.request.contextPath}/showAddKra?empId=${empInfo.empEmail}&finYrId=${editKra.yearId}"
+							class="breadcrumb-elements-item">KRA List</a>
 
 					</div>
 
@@ -242,7 +242,7 @@
 															title="Add Review"><i class="icon-pencil7"></i></a>
 															<a
 															href="${pageContext.request.contextPath}/addKpi?kraId=${kraList.exvar1}"
-															title="Add Kpi"><i class="icon-pencil7"></i></a> --%>
+															title="Add Kpi"><i class="icon-pencil7" style="color: black;"></i></a> --%>
 														<a
 															href="${pageContext.request.contextPath}/editKraDetail?kraId=${kraList.exvar1}"
 															><i class="icon-pencil7"></i></a>

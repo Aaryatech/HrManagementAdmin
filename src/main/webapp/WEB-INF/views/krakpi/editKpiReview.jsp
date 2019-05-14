@@ -54,8 +54,8 @@
 					</div>
 
 					<div class="breadcrumb justify-content-center">
-						<%-- <a href="${pageContext.request.contextPath}/showApplyForLeave"
-							class="breadcrumb-elements-item">Employee List</a> --%>
+						<a href="${pageContext.request.contextPath}/showAddKpiReview?kpiId=${empInfo.empEmail}"
+							class="breadcrumb-elements-item">KPI Review List</a>
 
 					</div>
 
@@ -248,7 +248,7 @@
 													<c:if test="${kpiReviewList.makerUserId==empIdOrig}">
 													<a
 														href="${pageContext.request.contextPath}/editKpiReviewDetail?kpiReviewId=${kpiReviewList.exVar1}"><i
-															class="icon-pencil7"></i></a> <a
+															class="icon-pencil7" style="color: black;"></i></a> <a
 														href="${pageContext.request.contextPath}/deleteKpiReview?kpiReviewId=${kpiReviewList.exVar1}"
 														onClick="return confirm('Are you sure want to delete this record');"
 														title="Delete"><i class="icon-trash"

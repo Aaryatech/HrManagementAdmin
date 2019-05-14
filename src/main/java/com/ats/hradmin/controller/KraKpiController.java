@@ -314,10 +314,14 @@ public class KraKpiController {
 			//
 			  map = new LinkedMultiValueMap<>();
 			map.add("empId", editKra.getEmpId());
+			
 
 			GetEmployeeInfo empInfo = Constants.getRestTemplate().postForObject(Constants.url + "/GetEmployeeInfo", map,
 					GetEmployeeInfo.class);
+			
+			empInfo.setEmpEmail(FormValidation.Encrypt(String.valueOf(empInfo.getEmpId())));
 			model.addObject("empInfo", empInfo);
+			
 			
 			map = new LinkedMultiValueMap<>();
 			map.add("finYrId", editKra.getYearId());
@@ -341,7 +345,7 @@ public class KraKpiController {
 			  
 			  model.addObject("kraList", employeeInfoList);
 			  System.err.println("kraList List is edit:"+employeeInfoList.toString());
-			
+			 // model.add("empId1",FormValidation.Encrypt(String.valueOf(empInfo.getEmpId())));
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -408,6 +412,7 @@ public class KraKpiController {
 
 				GetEmployeeInfo empInfo = Constants.getRestTemplate().postForObject(Constants.url + "/GetEmployeeInfo", map,
 						GetEmployeeInfo.class);
+				empInfo.setEmpEmail(FormValidation.Encrypt(String.valueOf(empInfo.getEmpId())));
 				model.addObject("empInfo", empInfo);
 				
 				map = new LinkedMultiValueMap<>();
