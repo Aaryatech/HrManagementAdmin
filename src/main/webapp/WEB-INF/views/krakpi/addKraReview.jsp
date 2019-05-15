@@ -54,8 +54,8 @@
 					</div>
 
 					<div class="breadcrumb justify-content-center">
-						<a href="${pageContext.request.contextPath}/showAddKra?empId=${empInfo.empEmail}&finYrId=${editKra.yearId}"
-							class="breadcrumb-elements-item">KRA List</a>
+					<%-- 	<a href="${pageContext.request.contextPath}/showAddKra?empId=${empInfo.empEmail}&finYrId=${editKra.yearId}"
+							class="breadcrumb-elements-item">KRA List</a> --%>
 
 					</div>
 

@@ -55,7 +55,7 @@
 
 					<div class="breadcrumb justify-content-center">
 						<a href="${pageContext.request.contextPath}/showAddKpiReview?kpiId=${empInfo.empEmail}"
-							class="breadcrumb-elements-item">KPI Review List</a>
+							class="breadcrumb-elements-item">KPI List</a>
 
 					</div>
 
@@ -81,7 +81,7 @@
 
 						<div class="card">
 							<div class="card-header header-elements-inline">
-								<h6 class="card-title">Add KRA Review</h6>
+								<h6 class="card-title">Edit KPI Review</h6>
 								<!-- <div class="header-elements">
 									<div class="list-icons">
 										<a class="list-icons-item" data-action="collapse"></a>
