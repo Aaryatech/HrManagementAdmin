@@ -804,6 +804,17 @@ System.out.println("project list is"+projectHeaderList.toString());
 			map.add("projectId", projectId);
 			  updateProjectHeader = Constants.getRestTemplate()
 					.postForObject(Constants.url + "/getProjectHeaderByProjectId", map, ProjectHeader.class);
+			
+
+					 
+				  updateProjectHeader
+					.setProjectEstStartdt(DateConvertor.convertToDMY(updateProjectHeader.getProjectEstStartdt()));
+				  updateProjectHeader.
+					setProjectEstEnddt(DateConvertor.convertToDMY(updateProjectHeader.getProjectEstEnddt()));
+					
+					
+					
+				
 			model.addObject("updateProjectHeader", updateProjectHeader);
 
 			
