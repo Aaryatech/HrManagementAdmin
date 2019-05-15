@@ -46,6 +46,7 @@ public class ProjectController {
 	String dateTime = dateFormat.format(now);
 
 	ProjectType editproType = new ProjectType();
+	ProjectHeader  updateProjectHeader =new ProjectHeader();
 
 	ProjectHeader editProjectHeader = new ProjectHeader();
 	
@@ -485,7 +486,7 @@ public class ProjectController {
 
 				save.setProjectEstStartdt(DateConvertor.convertToYMD(fromDate));
 				save.setProjectEstEnddt(DateConvertor.convertToYMD(toDate));
-				save.setProjectStatus("aaa");
+				save.setProjectStatus("0");
 				save.setProjectTypeId(projectTypeId);
 				save.setProjectManagerEmpId(empId);
 
@@ -503,8 +504,8 @@ public class ProjectController {
 					projectTrail.setMakerUserId(userObj.getUserId());
 					projectTrail.setProjectCompletion(0);
 					projectTrail.setProjectId(res.getProjectId());
-					projectTrail.setProjectRemarks("NULL");
-					projectTrail.setProjectStatus("Null");
+					projectTrail.setProjectRemarks(remark);
+					projectTrail.setProjectStatus("0");
 
 					ProjectTrail res1 = Constants.getRestTemplate().postForObject(Constants.url + "/saveProjectTrail",
 							projectTrail, ProjectTrail.class);
@@ -552,8 +553,15 @@ public class ProjectController {
 
 				projectHeaderList.get(i)
 						.setExVar1(FormValidation.Encrypt(String.valueOf(projectHeaderList.get(i).getProjectId())));
+				projectHeaderList.get(i)
+				.setProjectEstStartdt(DateConvertor.convertToDMY(projectHeaderList.get(i).getProjectEstStartdt()));
+				projectHeaderList.get(i)
+				.setProjectEstEnddt(DateConvertor.convertToDMY(projectHeaderList.get(i).getProjectEstEnddt()));
+				
+				
+				
 			}
-
+System.out.println("project list is"+projectHeaderList.toString());
 			model.addObject("projectHeaderList", projectHeaderList);
 			Info add = AcessController.checkAccess("showProjectHeaderList", "showProjectHeaderList", 0, 1, 0, 0, newModuleList);
 			Info edit = AcessController.checkAccess("showProjectHeaderList", "showProjectHeaderList", 0, 0, 1, 0, newModuleList);
@@ -765,6 +773,95 @@ public class ProjectController {
 				if (res.isError() == false) {
 					session.setAttribute("successMsg", "Record Inserted Successfully");
 
+				} else {
+					session.setAttribute("errorMsg", "Failed to Insert Record");
+				}
+
+			} else {
+				session.setAttribute("errorMsg", "Failed to Insert Record");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:/showProjectHeaderList";
+
+	}
+	
+	@RequestMapping(value = "/upDateProjectStatus", method = RequestMethod.GET)
+	public ModelAndView upDateProjectStatus(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		HttpSession session = request.getSession();
+		try {
+
+				model = new ModelAndView("project/project_status_update");
+			String base64encodedString = request.getParameter("projectId");
+			String projectId = FormValidation.DecodeKey(base64encodedString);
+ 			
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("projectId", projectId);
+			  updateProjectHeader = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getProjectHeaderByProjectId", map, ProjectHeader.class);
+			model.addObject("updateProjectHeader", updateProjectHeader);
+
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+	}
+
+	
+	@RequestMapping(value = "/submitUpdateProStatus", method = RequestMethod.POST)
+	public String submitUpdateProStatus(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			HttpSession session = request.getSession();
+
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+ 
+			String status = (request.getParameter("status"));
+			int proComp = Integer.parseInt(request.getParameter("proComp"));
+			
+			// String[] arrOfStr = dateRange.split("to", 2);
+
+			String remark = null;
+			try {
+				remark = request.getParameter("remark");
+			} catch (Exception e) {
+				remark = "NA";
+			}
+
+			Boolean ret = false;
+
+			
+
+			if (ret == false) {
+
+ 				updateProjectHeader.setProjectCompletion(proComp);
+ 				updateProjectHeader.setProjectStatus(status);
+				updateProjectHeader.setMakerEnterDatetime(dateTime);
+				updateProjectHeader.setMakerUserId(userObj.getUserId());
+				 
+				 
+				ProjectHeader res = Constants.getRestTemplate().postForObject(Constants.url + "/saveProjectHeader",
+						updateProjectHeader, ProjectHeader.class);
+				if (res.isError() == false) {
+					session.setAttribute("successMsg", "Record Inserted Successfully");
+
+					ProjectTrail projectTrail = new ProjectTrail();
+					projectTrail.setDelStatus(1);
+					projectTrail.setIsActive(1);
+					projectTrail.setMakerEnterDatetime(dateTime);
+					projectTrail.setMakerUserId(userObj.getUserId());
+					projectTrail.setProjectCompletion(proComp);
+					projectTrail.setProjectId(res.getProjectId());
+					projectTrail.setProjectRemarks(remark);
+					projectTrail.setProjectStatus(status);
+
+					ProjectTrail res1 = Constants.getRestTemplate().postForObject(Constants.url + "/saveProjectTrail",
+							projectTrail, ProjectTrail.class);
 				} else {
 					session.setAttribute("errorMsg", "Failed to Insert Record");
 				}

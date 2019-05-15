@@ -45,6 +45,8 @@ public class KraKpiController {
 	public ModelAndView showEmpKraKpiCountList(HttpServletRequest request, HttpServletResponse response) {
 		
 		ModelAndView model = new ModelAndView("krakpi/krakpiCountList");
+		HttpSession session = request.getSession();
+		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 		try {
 			
 			  FinancialYear[] employeeDoc = Constants.getRestTemplate().getForObject(Constants.url + "/getFinYearList",FinancialYear[].class);
@@ -65,7 +67,7 @@ public class KraKpiController {
 					  MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 					  map.add("status",status);
 					  map.add("finYrId",finYrId);
-					   
+					  map.add("locIdList", userObj.getLocationIds());
 					  GetEmpKraKpiCount[] employeeInfo = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpKraKpiCount",map,
 							  GetEmpKraKpiCount[].class);
 					   

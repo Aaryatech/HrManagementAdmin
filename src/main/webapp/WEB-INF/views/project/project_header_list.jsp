@@ -124,7 +124,8 @@
 									<th>Project Manager</th>
 									<th>Location Name</th>
 									<th>Customer Name</th>
-
+									<th>Project Completion</th>
+									<th>Status</th>
 
 
 									<th width="10%" class="text-center">Actions</th>
@@ -143,7 +144,24 @@
 										<td>${project.empCode}</td>
 										<td>${project.locName}</td>
 										<td>${project.custName}</td>
-
+										<td>${project.projectCompletion}</td>
+										<c:if test="${project.projectStatus=='0'}">
+										<td><span class="badge badge-success">Created</span></td>
+										</c:if>
+										
+                                        <c:if test="${project.projectStatus eq '1'}">
+										<td><span class="badge badge-info">Work in Progress</span></td>
+										</c:if>
+										<c:if test="${project.projectStatus eq '2'}">
+										<td><span class="badge badge-secondary">Completed</span></td>
+										</c:if>
+											<c:if test="${project.projectStatus eq '3'}">
+										<td><span class="badge badge-danger">Cancelled</span></td>
+										</c:if>
+											<c:if test="${project.projectStatus eq '4'}">
+										<td><span class="badge badge-danger">On Hold</span></td>
+										</c:if>
+											
 
 										<td class="text-center"><c:if test="${editAccess == 0}">
 												<a
@@ -156,11 +174,17 @@
 													onClick="return confirm('Are you sure want to delete this record');"
 													title="Delete"><i class="icon-trash"
 													style="color: black;"></i> </a>
+													<a
+											href="${pageContext.request.contextPath}/upDateProjectStatus?projectId=${project.exVar1}"
+											title="Update Project Staus"> <i class="icon-cogs "
+												style="color: black;"></i></a>
 											</c:if> <a
-											href="${pageContext.request.contextPath}/projectAllotment?projectId=${project.exVar1}" 
-											title="Project Team"> <i class="fas fa-user-friends " style="color: black;" ></i></a>
-
-										</td>
+											href="${pageContext.request.contextPath}/projectAllotment?projectId=${project.exVar1}"
+											title="Project Team"> <i class="fas fa-user-friends "
+												style="color: black;"></i></a>
+												
+												
+												 </td>
 									</tr>
 								</c:forEach>
 

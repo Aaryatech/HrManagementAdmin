@@ -297,6 +297,15 @@
 												field is required.</span>
 										</div>
 									</div>
+									
+										<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="remark">Remark :  </label>
+										<div class="col-lg-10">
+											<textarea rows="3" cols="3" class="form-control"
+												placeholder="Remark" onchange="trim(this)"
+												id="remark" name="remark"> </textarea>
+												</div>
+									</div>
 
 									<div class="form-group row mb-0">
 										<div class="col-lg-10 ml-lg-auto">
