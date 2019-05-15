@@ -52,6 +52,38 @@ public class KraKpiController {
 			  List<FinancialYear> employeeList = new
 			  ArrayList<FinancialYear>(Arrays.asList(employeeDoc));
 		      model.addObject("finYrList",employeeList);
+		       
+		      //Show List
+		       
+		      List<GetEmpKraKpiCount> employeeInfoList=new ArrayList<GetEmpKraKpiCount>();
+				try {
+					
+				
+					int status=Integer.parseInt(request.getParameter("status"));
+					int finYrId=Integer.parseInt(request.getParameter("finYrId"));
+					
+					  MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+					  map.add("status",status);
+					  map.add("finYrId",finYrId);
+					   
+					  GetEmpKraKpiCount[] employeeInfo = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpKraKpiCount",map,
+							  GetEmpKraKpiCount[].class);
+					   
+					  employeeInfoList = new ArrayList<GetEmpKraKpiCount>(Arrays.asList(employeeInfo));
+					  for (int i = 0; i < employeeInfoList.size(); i++) {
+
+						  employeeInfoList.get(i).setEmpMname(FormValidation.Encrypt(String.valueOf(employeeInfoList.get(i).getEmpId())));
+						  employeeInfoList.get(i).setEmpDeptName(FormValidation.Encrypt(String.valueOf(finYrId)));
+
+		  				}
+					  System.err.println("emp List final  is:"+employeeInfoList.toString());
+					   model.addObject("employeeInfoList",employeeInfoList);
+					   model.addObject("fin",finYrId);
+					   model.addObject("stat",status);
+					  
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		      
 			
 	} catch (Exception e) {
@@ -98,9 +130,12 @@ public class KraKpiController {
 		try {
 			List<GetEmpKra> employeeInfoList=new ArrayList<GetEmpKra>();
  			String base64encodedString = request.getParameter("empId");
- 			System.out.println("base64encodedString:"+base64encodedString);
-			String empId = FormValidation.DecodeKey(base64encodedString);			
-			String finYrId = request.getParameter("finYrId");	
+ 			System.out.println("empId encypt:"+base64encodedString);
+			String empId = FormValidation.DecodeKey(base64encodedString);	
+			System.out.println("empId:"+empId);
+			String base64encodedString1 = request.getParameter("finYrId");
+			String finYrId = FormValidation.DecodeKey(base64encodedString1);	
+ 			System.out.println("finYrId"+finYrId);
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("empId", empId);
 

@@ -114,49 +114,74 @@
 							}
 						%>
 
+						<form
+							action="${pageContext.request.contextPath}/showEmpKraKpiCountList"
+							id="submitInsertLeave" method="GET">
 
-						<div class="form-group row">
-							<label class="col-form-label col-lg-2" for="select2">Select
-								:*</label>
-							<div class="col-md-2">
-								<select name="empId" data-placeholder="Select " id="status"
-									class="form-control form-control-select2 select2-hidden-accessible"
-									tabindex="-1" aria-hidden="true">
-									<option value="0">All</option>
-									<option value="1">KRA Alloted</option>
-									<option value="2">KPI Alloted</option>
-									<option value="3">KRA Not Alloted</option>
-									<option value="4">KPI Not Alloted</option>
-									<option value="5">BothAlloted</option>
+							<div class="form-group row">
+								<label class="col-form-label col-lg-2" for="select2">Select
+									:*</label>
+								<div class="col-md-2">
+									<select name="status" data-placeholder="Select " id="status"
+										class="form-control form-control-select2 select2-hidden-accessible"
+										tabindex="-1" aria-hidden="true">
+									
+										<option value="">Please Select</option>
 
-								</select> <span class="validation-invalid-label" id="error_status"
-									style="display: none;">This field is required.</span>
+										<option ${stat == '0'  ? 'Selected': '' } value="0">All</option>
+										<option ${stat == '1' ? 'Selected': '' } value="1">KRA
+											Alloted</option>
+										<option ${stat == '2'  ? 'Selected': '' } value="2">KPI
+											Alloted</option>
+										<option ${stat == '3' ? 'Selected': '' } value="3">KRA
+											Not Alloted</option>
+										<option ${stat == '4'  ? 'Selected': '' } value="4">KPI
+											Not Alloted</option>
+										<option ${stat == '5'  ? 'Selected': '' } value="5">Both
+											Alloted</option>
+
+
+
+									</select> <span class="validation-invalid-label" id="error_status"
+										style="display: none;">This field is required.</span>
+								</div>
+
+
+								<label class="col-form-label col-lg-2" for="select2">Select
+									Financial Year :*</label>
+								<div class="col-md-2">
+									<select name="finYrId" data-placeholder="Select Year"
+										id="finYrId"
+										class="form-control form-control-select2 select2-hidden-accessible"
+										tabindex="-1" aria-hidden="true">
+										<option value="">Select Financial Year</option>
+										<c:forEach items="${finYrList}" var="finYear">
+
+											<c:choose>
+												<c:when test="${finYear.finYrId==fin}">
+													<option selected value="${finYear.finYrId}">${finYear.finYrFrom}
+														to ${finYear.finYrTo}</option>
+
+												</c:when>
+												<c:otherwise>
+													<option value="${finYear.finYrId}">${finYear.finYrFrom}
+														to ${finYear.finYrTo}</option>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+									</select> <span class="validation-invalid-label" id="error_finYrId"
+										style="display: none;">This field is required.</span>
+								</div>
+
+								<input type="submit" class="btn bg-blue ml-3 legitRipple"
+									id="submtbtn" value="Submit">
+								<!-- <button type="button" class="btn bg-blue ml-3 legitRipple"
+									id="submtbtn">
+									Submit <i class="icon-paperplane ml-2"></i>
+								</button>
+ -->
 							</div>
-
-
-							<label class="col-form-label col-lg-2" for="select2">Select
-								Financial Year :*</label>
-							<div class="col-md-2">
-								<select name="finYrId" data-placeholder="Select Year"
-									id="finYrId"
-									class="form-control form-control-select2 select2-hidden-accessible"
-									tabindex="-1" aria-hidden="true">
-									<option value="">Select Financial Year</option>
-									<c:forEach items="${finYrList}" var="finYear">
-										<option value="${finYear.finYrId}">${finYear.finYrFrom}
-											to ${finYear.finYrTo}</option>
-									</c:forEach>
-								</select> <span class="validation-invalid-label" id="error_finYrId"
-									style="display: none;">This field is required.</span>
-							</div>
-
-
-							<button type="button" class="btn bg-blue ml-3 legitRipple"
-								id="submtbtn" onclick="show()">
-								Submit <i class="icon-paperplane ml-2"></i>
-							</button>
-
-						</div>
+						</form>
 						<div id='loader' style='display: none;'>
 							<img
 								src='${pageContext.request.contextPath}/resources/assets/images/giphy.gif'
@@ -179,6 +204,25 @@
 									<th class="text-center" width="10%">Actions</th>
 								</tr>
 							</thead>
+							<tbody>
+								<c:forEach items="${employeeInfoList}" var="employeeInfoList"
+									varStatus="count">
+									<tr>
+										<td>${count.index+1}</td>
+										<td>${employeeInfoList.empCode}</td>
+										<td>${employeeInfoList.empSname}${employeeInfoList.empFname}</td>
+										<td>${employeeInfoList.empDeptShortName}${employeeInfoList.empTypeShortName}${employeeInfoList.empCatShortName}</td>
+										<td>${employeeInfoList.kraCount}</td>
+										<td>${employeeInfoList.kpiCount}</td>
+										<td class="text-center"><a
+											href="${pageContext.request.contextPath}/showAddKra?empId=${employeeInfoList.empMname}&finYrId=${employeeInfoList.empDeptName}"><i
+												class="icon-list-unordered" style="color: black;"></i></a></td>
+											
+										
+									</tr>
+								</c:forEach>
+
+							</tbody>
 						</table>
 					</div>
 
@@ -281,99 +325,6 @@
 
 		}
 	</script>
-	<script>
-		function trim(el) {
-			el.value = el.value.replace(/(^\s*)|(\s*$)/gi, ""). // removes leading and trailing spaces
-			replace(/[ ]{2,}/gi, " "). // replaces multiple spaces with one space 
-			replace(/\n +/, "\n"); // Removes spaces after newlines
-			return;
-		}
 
-		function validateEmail(email) {
-
-			var eml = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-
-			if (eml.test($.trim(email)) == false) {
-
-				return false;
-
-			}
-
-			return true;
-
-		}
-		function validateMobile(mobile) {
-			var mob = /^[1-9]{1}[0-9]{9}$/;
-
-			if (mob.test($.trim(mobile)) == false) {
-
-				//alert("Please enter a valid email address .");
-				return false;
-
-			}
-			return true;
-
-		}
-		$(document).ready(function($) {
-
-			$("#submtbtn").submit(function(e) {
-				var isError = false;
-				var errMsg = "";
-
-				if (!$("#clYrId").val()) {
-
-					isError = true;
-
-					$("#error_clYrId").show()
-
-				} else {
-					$("#error_clYrId").hide()
-				}
-
-				if (!$("#empId").val()) {
-
-					isError = true;
-
-					$("#error_empId").show()
-
-				} else {
-					$("#error_empId").hide()
-				}
-
-				/* if (!$("#calYrId").val()) {
-
-					isError = true;
-
-					$("#error_calYrId").show()
-
-				} else {
-					$("#error_calYrId").hide()
-				} */
-
-				if (!$("#dateRange").val()) {
-
-					isError = true;
-
-					$("#error_Range").show()
-
-				} else {
-					$("#error_Range").hide()
-				}
-
-				if (!isError) {
-
-					var x = confirm("Do you really want to submit the form?");
-					if (x == true) {
-
-						document.getElementById("submtbtn").disabled = true;
-						return true;
-					}
-					//end ajax send this to php page
-				}
-				return false;
-			});
-		});
-		//
-	</script>
 </body>
 </html>
