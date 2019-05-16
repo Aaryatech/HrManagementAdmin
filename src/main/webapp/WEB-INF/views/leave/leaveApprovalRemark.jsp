@@ -263,6 +263,8 @@
 											<textarea rows="3" cols="3" class="form-control"
 												placeholder="Any Remark" onchange="trim(this)" id="remark"
 												name="remark"></textarea>
+												<span class="validation-invalid-label" id="error_remark"
+												style="display: none;">This field is required.</span>
 										</div>
 									</div>
 
@@ -342,6 +344,18 @@
 			$("#submitInsertCompany").submit(function(e) {
 				var isError = false;
 				var errMsg = "";
+				if ($("#stat").val()==7 || $("#stat").val()==8 || $("#stat").val()==9) {
+					if(!$("#remark").val()){
+
+					isError = true;
+
+					$("#error_remark").show()
+
+				} else {
+					$("#error_remark").hide()
+				}
+				
+			}
 
 				
 				if (!isError) {

@@ -186,7 +186,7 @@
 												tabindex="-1" aria-hidden="true">
 												<option value="">Select Project Manager</option>
 												<c:forEach items="${empList}" var="emp">
-													<option value="${emp.empId}">${emp.empSname}${emp.empFname}</option>
+													<option value="${emp.empId}">${emp.empSname}&nbsp;${emp.empFname}</option>
 												</c:forEach>
 											</select> <span class="validation-invalid-label" id="error_empId"
 												style="display: none;">This field is required.</span>
@@ -253,7 +253,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2">Project
-											Establishment Start Date :</label>
+											Estimated Start Date :</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control datepickerclass "
 												value="21-04-2019" name="fromDate" id="fromDate">
@@ -263,7 +263,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2">Project
-											Establishment End Date :</label>
+											Estimated End Date :</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control datepickerclass "
 												value="21-04-2019" name="toDate" id="toDate">
@@ -272,7 +272,7 @@
 
 
 									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="add">Project Establishment Man Hrs <span style="color:red">* </span>:</label>
+										<label class="col-form-label col-lg-2" for="add">Project Estimated Man Hrs <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Project Establishment Man Hours"
@@ -286,7 +286,7 @@
 
 
 									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="add">Project Establishment Budget <span style="color:red">* </span>:</label>
+										<label class="col-form-label col-lg-2" for="add">Project Estimated Budget <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Project Establishment Budget"
