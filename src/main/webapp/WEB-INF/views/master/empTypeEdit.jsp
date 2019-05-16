@@ -513,7 +513,7 @@ function checkSame(){
 				
 				if (!isError) {
 
-					var x = confirm("Do you really want to submit the form?");
+					var x = true;
 					if (x == true) {
 
 						document.getElementById("submtbtn").disabled = true;
