@@ -152,22 +152,22 @@
 												<td>${leaveList.leaveNumDays}</td>
 
 										<c:if test="${leaveList.exInt1==1}">
-										<td><span class="badge badge-info">Initial Applied</span></td>
+										<td><span class="badge badge-info">Initial Pending</span></td>
 										</c:if>
 										<c:if test="${leaveList.exInt1==2}">
-										<td><span class="badge badge-secondary">Approve By Initial Authority</span></td>
+										<td><span class="badge badge-secondary">Final Pending</span></td>
 										</c:if>
 											<c:if test="${leaveList.exInt1==3}">
-										<td><span class="badge badge-success">Approve By Final Authority</span></td>
+										<td><span class="badge badge-success"> Final Approved</span></td>
 										</c:if>
 											<c:if test="${leaveList.exInt1==7}">
-										<td><span class="badge badge-danger">Cancel By Employee</span></td>
+										<td><span class="badge badge-danger">Leave Cancelled</span></td>
 										</c:if>
 											<c:if test="${leaveList.exInt1==8}">
-										<td><span class="badge badge-danger">Reject By Initial Authority</span></td>
+										<td><span class="badge badge-danger">Initial Rejected</span></td>
 										</c:if>
 											<c:if test="${leaveList.exInt1==9}">
-										<td><span class="badge badge-danger">Reject By Final Authority</span></td>
+										<td><span class="badge badge-danger"> Final Rejected</span></td>
 										</c:if>
 
 												<td class="text-center">
@@ -276,22 +276,22 @@
 												</c:choose> --%>
 
 										<c:if test="${leaveList1.exInt1==1}">
-										<td><span class="badge badge-info">Initial Applied</span></td>
+										<td><span class="badge badge-info">Initial Pending & Final Pending</span></td>
 										</c:if>
 										<c:if test="${leaveList1.exInt1==2}">
-										<td><span class="badge badge-secondary">Approve By Initial Authority</span></td>
+										<td><span class="badge badge-secondary">Final Pending</span></td>
 										</c:if>
 											<c:if test="${leaveList1.exInt1==3}">
-										<td><span class="badge badge-success">Approve By Final Authority</span></td>
+										<td><span class="badge badge-success"> Final Approved</span></td>
 										</c:if>
 											<c:if test="${leaveList1.exInt1==7}">
-										<td><span class="badge badge-danger">Cancel By Employee</span></td>
+										<td><span class="badge badge-danger"> Leave Cancelled</span></td>
 										</c:if>
 											<c:if test="${leaveList1.exInt1==8}">
-										<td><span class="badge badge-danger">Reject By Initial Authority</span></td>
+										<td><span class="badge badge-danger">Initial Rejected</span></td>
 										</c:if>
 											<c:if test="${leaveList1.exInt1==9}">
-										<td><span class="badge badge-danger">Reject By Final Authority</span></td>
+										<td><span class="badge badge-danger">Final Rejected</span></td>
 										</c:if>
 
 

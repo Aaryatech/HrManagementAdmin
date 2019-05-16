@@ -260,18 +260,18 @@
 														if (v.exInt1 == 1) {
 															/* current_status="Pending"; */
 
-															current_status = '<span class="badge badge-info">Initial Applied</span>';
+															current_status = '<span class="badge badge-info">Initial Pending</span>';
 														} else if (v.exInt1 == 2) {
 
-															current_status = '<span class="badge badge-secondary">Approve By Initial Authority</span>';
+															current_status = '<span class="badge badge-secondary">Final Pending</span>';
 														} else if (v.exInt1 == 3) {
-															current_status = '<span class="badge badge-success">Approve By Final Authority</span>';
+															current_status = '<span class="badge badge-success">Final Approved</span>';
 														} else if (v.exInt1 == 7) {
-															current_status = '<span class="badge badge-danger">Cancel By Employee</span>';
+															current_status = '<span class="badge badge-danger">Leave Cancelled</span>';
 														} else if (v.exInt1 == 8) {
-															current_status = '<span class="badge badge-danger">Reject By Initial Authority</span>';
+															current_status = '<span class="badge badge-danger">Initial Rejected</span>';
 														} else if (v.exInt1 == 9) {
-															current_status = '<span class="badge badge-danger">Reject By Final Authority</span>';
+															current_status = '<span class="badge badge-danger">Final Rejected</span>';
 														}
 
 														var duration;
