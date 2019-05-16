@@ -749,7 +749,7 @@ System.out.println("project list is"+projectHeaderList.toString());
 
 				editProjectHeader.setProjectCity(projectCity);
 
-				editProjectHeader.setProjectCompletion(0);
+				//editProjectHeader.setProjectCompletion(0);
 				editProjectHeader.setProjectDesc(projectDesc);
 				editProjectHeader.setProjectEstBudget(project_est_budget);
 				editProjectHeader.setProjectEstManhrs(project_est_manhrs);
@@ -762,7 +762,7 @@ System.out.println("project list is"+projectHeaderList.toString());
 
 				editProjectHeader.setProjectEstStartdt(DateConvertor.convertToYMD(fromDate));
 				editProjectHeader.setProjectEstEnddt(DateConvertor.convertToYMD(toDate));
-				editProjectHeader.setProjectStatus("aaa");
+				//editProjectHeader.setProjectStatus("aaa");
 				editProjectHeader.setProjectTypeId(projectTypeId);
 				editProjectHeader.setProjectManagerEmpId(empId);
 

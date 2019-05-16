@@ -54,8 +54,8 @@
 					</div>
 
 					<div class="breadcrumb justify-content-center">
-						<a href="${pageContext.request.contextPath}/showApplyForLeave"
-							class="breadcrumb-elements-item">Employee List</a>
+						<a href="${pageContext.request.contextPath}/showProjectHeaderList"
+							class="breadcrumb-elements-item">Project List</a>
 
 					</div>
 
@@ -81,7 +81,7 @@
 
 						<div class="card">
 							<div class="card-header header-elements-inline">
-								<h6 class="card-title">Add Leave</h6>
+								<h6 class="card-title">Project Details</h6>
 								<!-- <div class="header-elements">
 									<div class="list-icons">
 										<a class="list-icons-item" data-action="collapse"></a>
