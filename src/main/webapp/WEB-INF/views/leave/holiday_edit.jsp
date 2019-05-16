@@ -72,7 +72,7 @@
 						<div class="card">
 							<div class="card-header header-elements-inline">
 								<h6 class="card-title">Edit Holiday</h6>
-							<!-- 	<div class="header-elements">
+								<!-- 	<div class="header-elements">
 									<div class="list-icons">
 										<a class="list-icons-item" data-action="collapse"></a>
 									</div>
@@ -123,7 +123,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="locShortName">Holiday
-											Title <span style="color:red">* </span>:</label>
+											Title <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Enter Holiday Title" id="holidayTitle"
@@ -137,7 +138,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="select2">Select
-											Location <span style="color:red">* </span>:</label>
+											Location <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<select name="locId" data-placeholder="Select Location"
 												id="locId"
@@ -237,11 +239,14 @@
 
 									<div class="form-group row mb-0">
 										<div class="col-lg-10 ml-lg-auto">
-											<button type="reset" class="btn btn-light legitRipple">Reset</button>
+
 											<button type="submit" class="btn bg-blue ml-3 legitRipple"
 												id="submtbtn">
 												Submit <i class="icon-paperplane ml-2"></i>
 											</button>
+
+											<a href="${pageContext.request.contextPath}/showHolidayList"><button
+													type="button" class="btn btn-primary">Cancel</button></a>
 										</div>
 									</div>
 								</form>
@@ -314,7 +319,7 @@
 					$("#error_holidayTitle").hide()
 				}
 
-				if ($("#locId").val()=="") {
+				if ($("#locId").val() == "") {
 
 					isError = true;
 

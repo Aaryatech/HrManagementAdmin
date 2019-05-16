@@ -379,7 +379,7 @@ public class WeeklyOffController {
 			session.setAttribute("errorMsg", "Failed to Update Record");
 		}
 
-		return "redirect:/showWeeklyOffList";
+		return "redirect:/addWeeklyOff";
 	}
 
 }

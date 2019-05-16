@@ -233,8 +233,7 @@
 											</button>
 											<a
 												href="${pageContext.request.contextPath}/showWeeklyOffList"><button
-													type="button" class="btn btn-primary">
-													<i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp;
+													type="button" class="btn btn-primary"> 
 													Cancel
 												</button></a>
 										</div>

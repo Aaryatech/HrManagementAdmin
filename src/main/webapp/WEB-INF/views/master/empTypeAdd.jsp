@@ -122,7 +122,8 @@
 									id="submitInsertEmpType" method="post">
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="empTypeName">Employee
-											Type Name <span style="color:red">* </span>:</label>
+											Type Name <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Employee Type Name" id="empTypeName"
@@ -134,7 +135,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="empShortName">Employee
-											Type Short Name <span style="color:red">* </span>:</label>
+											Type Short Name <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Employee Type Short Name" id="empShortName"
@@ -145,9 +147,10 @@
 										</div>
 									</div>
 
-									<div class="form-group row">
+									<!-- <div class="form-group row">
 										<label class="col-form-label col-lg-2" for="comoffallowed">Comp
-											Off Request Allowed <span style="color:red">* </span>:</label>
+											Off Request Allowed <span style="color: red">* </span>:
+										</label>
 										<div class="form-check form-check-inline">
 											<label class="form-check-label"> <input type="radio"
 												class="form-check-input" name="comoffallowed"
@@ -160,8 +163,9 @@
 												id="comoffallowed" value="0"> No
 											</label>
 										</div>
-									</div>
-
+									</div> -->
+									<input type="hidden"   id="comoffallowed"
+										name="comoffallowed" value="1">
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="remark">Remark
 											: </label>
@@ -172,7 +176,7 @@
 
 										</div>
 									</div>
- 
+
 									<table
 										class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic1  datatable-button-print-columns1"
 										id="printtable1">
@@ -197,7 +201,7 @@
 														id="header${moduleList.moduleId}"
 														name="header${moduleList.moduleId}" class="select_all"
 														onclick="checkSubmodule(${moduleList.moduleId})" value="0"></td>
-													<td colspan="5">${moduleList.iconDiv} &nbsp; <b>${moduleList.moduleName}</b></td>
+													<td colspan="5">${moduleList.iconDiv}&nbsp; <b>${moduleList.moduleName}</b></td>
 
 												</tr>
 
@@ -240,7 +244,8 @@
 
 										</tbody>
 									</table>
-									<span class="form-text text-muted">* If Want To Access Add, Edit,Delete Then View Access is Compulsory</span>
+									<span class="form-text text-muted">* If Want To Access
+										Add, Edit,Delete Then View Access is Compulsory</span>
 									<div class="form-group row">
 										<div class="col-lg-10">
 											<span class="validation-invalid-label" id="error_checkbox"
@@ -249,16 +254,15 @@
 									</div>
 									<br>
 
-									<div class="form-group row mb-0">
-										<div class="col-lg-10 ml-lg-auto">
-											
-											<button type="submit" class="btn bg-blue ml-3 legitRipple"
-												id="submtbtn">
-												Submit <i class="icon-paperplane ml-2"></i>
-											</button>
-											<a href="${pageContext.request.contextPath}/showEmpTypeList"><button
-										type="button" class="btn btn-primary"><i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp; Cancel</button></a>
-										</div>
+									<div class="col-md-12" style="text-align: center;">
+
+										<button type="submit" class="btn bg-blue ml-3 legitRipple"
+											id="submtbtn">
+											Submit <i class="icon-paperplane ml-2"></i>
+										</button>
+										<a href="${pageContext.request.contextPath}/showEmpTypeList"><button
+												type="button" class="btn btn-primary">Cancel</button></a>
+
 									</div>
 								</form>
 							</div>
@@ -281,7 +285,7 @@
 
 	</div>
 	<!-- /page content -->
-<script type="text/javascript">
+	<script type="text/javascript">
 
 function checkSame(){
 	x=document.getElementById("empTypeName").value;

@@ -127,8 +127,7 @@
 								%>
 
 								<span class="validation-invalid-label" id="error_assign"
-									style="display: none;">Sorry You Can Not Apply for Leave
-									as Leave Authorities or Leave Structure Are not Assigned !!</span>
+									style="display: none;">You Can Not Apply for Leave as either Leave Authority or Leave Structure is not Assigned !!</span>
 
 
 								<div class="form-group row">
@@ -239,7 +238,7 @@
 												data-fouc="" aria-hidden="true"
 												onchange="calholidayWebservice()">
 												<option></option>
-												<option selected value="1" >Full Day</option>
+												<option selected value="1">Full Day</option>
 												<option value="2">Half Day</option>
 
 
@@ -313,10 +312,19 @@
 
 									<div class="col-md-12" style="text-align: center;">
 
-										<button type="submit" class="btn bg-blue ml-3 legitRipple"
-											id="submtbtn">
-											Submit <i class="icon-paperplane ml-2"></i>
-										</button>
+										  <c:choose>
+											<c:when
+												test="${lvsId==0 || authorityInformation.leaveInitialAuth=='0'}">
+												 
+											</c:when>
+											<c:otherwise>
+												<button type="submit" class="btn bg-blue ml-3 legitRipple"
+													id="submtbtn">
+													Submit <i class="icon-paperplane ml-2"></i>
+												</button>
+											</c:otherwise>
+										</c:choose>  
+
 										<a href="${pageContext.request.contextPath}/showApplyForLeave"><button
 												type="button" class="btn btn-primary">
 												<i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp;
@@ -404,8 +412,9 @@
 			if (auth == 0 || lvsId == 0) {
 				//alert("in if");
 				//document.getElementById("submtbtn").disabled = true;
-				document.getElementById('submtbtn').disabled = 'disabled';
-				$("#error_assign").show()
+				$("#error_assign").show();
+				document.getElementById("submtbtn").disabled = true;
+				
 			} else {
 				//alert("in else");
 				document.getElementById("submtbtn").disabled = false;
@@ -1177,7 +1186,8 @@
 				</div>
 
 				<div class="modal-body py-0">
-					<h5 class="modal-title">Leave Details</h5><br>
+					<h5 class="modal-title">Leave Details</h5>
+					<br>
 
 					<div class="form-group row">
 						<label class="col-form-label col-lg-3" for="lvType">
@@ -1202,10 +1212,9 @@
 					<div class="form-group row">
 						<label class="col-form-label col-lg-3" for="fromdate1">
 							From Date : </label> <label class="col-form-label col-lg-3"
-							id="fromdate1" for="noOfDays1"> </label>
-						<label class="col-form-label col-lg-3" for="todate1">
-							To Date : </label>
-						<label class="col-form-label col-lg-2" id="todate1"
+							id="fromdate1" for="noOfDays1"> </label> <label
+							class="col-form-label col-lg-3" for="todate1"> To Date :
+						</label> <label class="col-form-label col-lg-2" id="todate1"
 							for="noOfDays1"> </label>
 
 					</div>

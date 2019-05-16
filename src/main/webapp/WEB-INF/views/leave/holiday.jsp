@@ -136,14 +136,14 @@
 
 
 									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="select2">Select
+										<label class="col-form-label col-lg-2" for="locId">Select
 											Location <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
 											<select name="locId" data-placeholder="Select Location"
 												id="locId" multiple="multiple"
 												class="form-control form-control-sm select"
 												data-container-css-class="select-sm" data-fouc>
-											
+											<option value="">Select Location</option>
 												<c:forEach items="${locationList}" var="location">
 													<option value="${location.locId}">${location.locName}</option>
 												</c:forEach>
@@ -203,7 +203,7 @@
 												Submit <i class="icon-paperplane ml-2"></i>
 											</button>
 											<a href="${pageContext.request.contextPath}/showHolidayList"><button
-										type="button" class="btn btn-primary"><i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp; Cancel</button></a>
+										type="button" class="btn btn-primary"> Cancel</button></a>
 										</div>
 									</div>
 								</form>
@@ -277,7 +277,7 @@
 					$("#error_holidayTitle").hide()
 				}
 
-				if (!$("#locId").val()) {
+				if ($("#locId").val()=="") {
 
 					isError = true;
 
