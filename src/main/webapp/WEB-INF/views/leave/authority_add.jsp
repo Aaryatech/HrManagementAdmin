@@ -162,9 +162,9 @@
 												<th class="check" style="text-align: center; width: 5%;"><input
 													type="checkbox" name="selAll" id="selAll" /></th>
 
-
+<th>Employee Name</th>
 												<th>Employee Code</th>
-												<th>Employee Name</th>
+												
 												<th>Department</th>
 												<!-- <th>Designation</th> -->
 
@@ -178,9 +178,9 @@
 													<td class="text-center"><input type="checkbox"
 														class="chk1" name="empIds" id="empIds${count.index+1}"
 														value="${emp.empId}" /></td>
-
+<td>${emp.empSname}&nbsp;${emp.empFname}</td>
 													<td>${emp.empCode}</td>
-													<td>${emp.empSname}&nbsp;${emp.empFname}</td>
+													
 													<td>${emp.empDept}</td>
 													<%-- <td>${emp.empCategory}</td> --%>
 												</tr>
@@ -203,8 +203,9 @@
 													Authority</th>
 
 												<!-- <th width="10%">Sr. No.</th> -->
-												<th>Employee Code</th>
 												<th>Employee Name</th>
+												<th>Employee Code</th>
+												
 												<th>Department</th>
 												<!-- <th>Desgn</th> -->
 											</tr>
@@ -219,8 +220,9 @@
 														<input type="checkbox" class="chk" name="repToEmpIds"
 														id="repToEmpIds${count.index+1}" value="${emp.empId}" />Reporting</td>
 													<%-- <td>${count.index+1}</td> --%>
-													<td>${emp.empCode}</td>
 													<td>${emp.empSname}&nbsp;${emp.empFname}</td>
+													<td>${emp.empCode}</td>
+													
 													<td>${emp.empDept}</td>
 													<%-- <td>${emp.empCategory}</td> --%>
 												</tr>

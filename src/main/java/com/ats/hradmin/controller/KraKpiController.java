@@ -253,7 +253,7 @@ public class KraKpiController {
 			e.printStackTrace();
 		}
 
-		return "redirect:/showAddKra?empId="+FormValidation.Encrypt(empId)+"&finYrId="+finYrId;
+		return "redirect:/showAddKra?empId="+FormValidation.Encrypt(empId)+"&finYrId="+FormValidation.Encrypt(finYrId);
 	 
 	}
 	
@@ -314,9 +314,9 @@ public class KraKpiController {
 						editKra, Kra.class);
 
 				if (res.isError() == false) {
-					session.setAttribute("successMsg", "Record edited Successfully");
+					session.setAttribute("successMsg", "Record Edited Successfully");
 				} else {
-					session.setAttribute("errorMsg", "Failed to edit Record");
+					session.setAttribute("errorMsg", "Failed to Edit Record");
 				}
 
 
@@ -329,7 +329,7 @@ public class KraKpiController {
 			e.printStackTrace();
 		}
 
-		return "redirect:/showAddKra?empId="+FormValidation.Encrypt(empId)+"&finYrId="+finYrId;
+		return "redirect:/showAddKra?empId="+FormValidation.Encrypt(empId)+"&finYrId="+FormValidation.Encrypt(finYrId);
 	 
 	}
 	
@@ -423,7 +423,7 @@ public class KraKpiController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:/showAddKra?empId="+FormValidation.Encrypt(empId)+"&finYrId="+yrd;
+		return "redirect:/showAddKra?empId="+FormValidation.Encrypt(empId)+"&finYrId="+FormValidation.Encrypt(String.valueOf(yrd));
 	}
 	
 	  

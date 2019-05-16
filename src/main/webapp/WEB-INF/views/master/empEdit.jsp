@@ -590,11 +590,7 @@
 
 									<div class="card-header header-elements-inline">
 										<h6 class="card-title">Edit User</h6>
-										<div class="header-elements">
-											<div class="list-icons">
-												<a class="list-icons-item" data-action="collapse"></a>
-											</div>
-										</div>
+										
 									</div>
 
 									<div class="form-group row">
@@ -1091,7 +1087,7 @@
 												}
 												if (!isError) {
 
-													var x = confirm("Do you really want to submit the form?");
+													var x = true;
 													if (x == true) {
 
 														document

@@ -121,7 +121,7 @@
 									<th width="10%">Sr.no</th>
 									<th>Leave Type</th>
 									<th>Leave Short Name</th>
-									<th>Working Hours</th>
+									 
 									 
 									<th class="text-center" width="10%">Actions</th>
 								</tr>
@@ -134,7 +134,7 @@
 										<td>${count.index+1}</td>
 										<td>${lvTypeList.lvTitle}</td>
 										<td>${lvTypeList.lvTitleShort}</td>
-										<td>${lvTypeList.lvWorkingHrs}</td>
+										 
 										 
 										
 										<td class="text-center">

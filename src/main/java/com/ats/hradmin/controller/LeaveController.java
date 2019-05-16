@@ -141,7 +141,7 @@ public class LeaveController {
 			String compName = request.getParameter("1");
 			String leaveTypeTitle = request.getParameter("leaveTypeTitle");
 			String leaveShortTypeTitle = request.getParameter("leaveShortTypeTitle");
-			int WprkingHrs = Integer.parseInt(request.getParameter("leaveWorlHrs"));
+			//int WprkingHrs = Integer.parseInt(request.getParameter("leaveWorlHrs"));
 			int summId = Integer.parseInt(request.getParameter("summId"));
 			String leaveColor = request.getParameter("leaveColor");
 			String remark = null;
@@ -167,12 +167,7 @@ public class LeaveController {
 				System.out.println("add" + ret);
 			}
 
-			if (FormValidation.Validaton(request.getParameter("leaveWorlHrs"), "") == true) {
-
-				ret = true;
-				System.out.println("add" + ret);
-			}
-
+			 
 			if (FormValidation.Validaton(request.getParameter("leaveColor"), "") == true) {
 
 				ret = true;
@@ -188,7 +183,7 @@ public class LeaveController {
 				leaveSummary.setLvColor(leaveColor);
 				leaveSummary.setLvTitle(leaveTypeTitle);
 				leaveSummary.setLvTitleShort(leaveShortTypeTitle);
-				leaveSummary.setLvWorkingHrs(WprkingHrs);
+				leaveSummary.setLvWorkingHrs(0);
 				leaveSummary.setLvSumupId(summId);
 				leaveSummary.setLvRmarks(remark);
 				leaveSummary.setExInt1(1);
@@ -377,7 +372,7 @@ public class LeaveController {
 			String compName = request.getParameter("1");
 			String leaveTypeTitle = request.getParameter("leaveTypeTitle");
 			String leaveShortTypeTitle = request.getParameter("leaveShortTypeTitle");
-			int WprkingHrs = Integer.parseInt(request.getParameter("leaveWorlHrs"));
+			//int WprkingHrs = Integer.parseInt(request.getParameter("leaveWorlHrs"));
 			int summId = Integer.parseInt(request.getParameter("summId"));
 			String leaveColor = request.getParameter("leaveColor");
 			String remark = null;
@@ -401,13 +396,7 @@ public class LeaveController {
 				ret = true;
 				System.out.println("add" + ret);
 			}
-
-			if (FormValidation.Validaton(request.getParameter("leaveWorlHrs"), "") == true) {
-
-				ret = true;
-				System.out.println("add" + ret);
-			}
-
+ 
 			if (FormValidation.Validaton(request.getParameter("leaveColor"), "") == true) {
 
 				ret = true;
@@ -421,7 +410,7 @@ public class LeaveController {
 				editLeaveType.setLvColor(leaveColor);
 				editLeaveType.setLvTitle(leaveTypeTitle);
 				editLeaveType.setLvTitleShort(leaveShortTypeTitle);
-				editLeaveType.setLvWorkingHrs(WprkingHrs);
+				editLeaveType.setLvWorkingHrs(0);
 				editLeaveType.setLvSumupId(summId);
 				editLeaveType.setLvRmarks(remark);
 				editLeaveType.setMakerUserId(userObj.getUserId());

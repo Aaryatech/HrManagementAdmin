@@ -158,7 +158,7 @@
 												id="shortname" value="${editCompany.lvTitleShort}"
 												name="shortname"> 
 
-									<div class="form-group row">
+									<%-- <div class="form-group row">
 										<label class="col-form-label col-lg-2" for="leaveWorlHrs">Working
 											Hours <span style="color:red">* </span>:</label>
 										<div class="col-lg-10">
@@ -169,7 +169,7 @@
 												class="validation-invalid-label" id="error_leaveWHours"
 												style="display: none;">This field is required.</span>
 										</div>
-									</div>
+									</div> --%>
 
 
 									<div class="form-group row">
@@ -376,19 +376,12 @@ function checkSame(){
 					$("#error_leaveScType").hide()
 				}
 
-				if (!$("#leaveWorlHrs").val()) {
-
-					isError = true;
-
-					$("#error_leaveWHours").show()
-					//return false;
-				} else {
-					$("#error_leaveWHours").hide()
-				}
+				 
 
 				if (!isError) {
 
-					var x = confirm("Do you really want to submit the form?");
+
+					var x = true;
 					if (x == true) {
 
 						document.getElementById("submtbtn").disabled = true;

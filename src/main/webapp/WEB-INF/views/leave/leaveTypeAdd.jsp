@@ -144,7 +144,7 @@
 										</div>
 									</div>
 
-
+<!-- 
 								<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="leaveWorlHrs">Working Hours <span style="color:red">* </span>:
 										</label>
@@ -157,7 +157,7 @@
 										</div>
 									</div>
 
-
+ -->
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2">Color:</label>
@@ -351,17 +351,7 @@ function checkSame(){
 				}
 
 				
-
-				if (!$("#leaveWorlHrs").val()) {
-
-					isError = true;
-
-					$("#error_leaveWHours").show()
-					//return false;
-				} else {
-					$("#error_leaveWHours").hide()
-				}
-
+ 
 				
 				
 				
@@ -369,7 +359,7 @@ function checkSame(){
 
 				if (!isError) {
 
-					var x = confirm("Do you really want to submit the form?");
+					var x = true;
 					if (x == true) {
 
 						document.getElementById("submtbtn").disabled = true;

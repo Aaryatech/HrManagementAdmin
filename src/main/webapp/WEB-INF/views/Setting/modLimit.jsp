@@ -127,10 +127,7 @@
 								</tr>
 							</thead>
 							<tbody>
-
-
-
-								<tr>
+ 								<tr>
 									<td>${count.index+1}</td>
 									<td>${setlimit.group}</td>
 									<td class="text-center"><input type="checkbox"

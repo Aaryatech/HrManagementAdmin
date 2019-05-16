@@ -288,12 +288,15 @@
 									</div>
 
 									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="lvngReson">Remark
+										<label class="col-form-label col-lg-2" for="lvngReson">Remark*
 											: </label>
 										<div class="col-lg-10">
 											<textarea rows="3" cols="3" class="form-control"
 												placeholder="Remark" onchange="trim(this)" id="leaveRemark"
 												name="leaveRemark"> </textarea>
+												 <span
+												class="validation-invalid-label" id="error_leaveRemark"
+												style="display: none;">This field is required.</span>
 										</div>
 									</div>
 									<input type="hidden" class="form-control numbersOnly"
@@ -1128,6 +1131,19 @@
 												} else {
 													$("#error_insuf").hide()
 												}
+
+												if (!$("#leaveRemark").val()) {
+
+													isError = true;
+
+													$("#error_leaveRemark")
+															.show()
+													//return false;
+												} else {
+													$("#error_leaveRemark")
+															.hide()
+												}
+												
 
 												if (!isError) {
 													var option = $(
