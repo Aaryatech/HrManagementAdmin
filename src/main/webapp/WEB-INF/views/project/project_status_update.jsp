@@ -175,7 +175,7 @@
 									action="${pageContext.request.contextPath}/submitUpdateProStatus"
 									id="submitUpdateProStatus" method="post">
 
- 
+
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="select2">Select
@@ -186,84 +186,60 @@
 												id="status"
 												class="form-control form-control-select2 select2-hidden-accessible"
 												tabindex="-1" aria-hidden="true">
-												<c:if test="${updateProjectHeader.projectStatus eq '0'}">
-													<option value="">Please Select</option>
+												<option value="">Please Select</option>
 
-													<option
-														${updateProjectHeader.projectStatus == '0'  ? 'Selected': '' }
-														value="0">Created</option>
-													<option
-														${updateProjectHeader.projectStatus == '1' ? 'Selected': '' }
-														value="1">Work in Progress</option>
-													<option
-														${updateProjectHeader.projectStatus == '2'  ? 'Selected': '' }
-														value="2">Completed</option>
-													<option
-														${updateProjectHeader.projectStatus== '3' ? 'Selected': '' }
-														value="3">Cancelled</option>
-													<option
-														${updateProjectHeader.projectStatus == '4'  ? 'Selected': '' }
-														value="4">Hold</option>
-												</c:if>
-												<c:if test="${updateProjectHeader.projectStatus eq '1'}">
-													<option value="">Please Select</option>
+												<c:choose>
+													<c:when test="${updateProjectHeader.projectStatus eq '0'}">
 
-													<option
-														${updateProjectHeader.projectStatus == '1' ? 'Selected': '' }
-														value="1">Work in Progress</option>
-													<option
-														${updateProjectHeader.projectStatus == '2'  ? 'Selected': '' }
-														value="2">Completed</option>
-													<option
-														${updateProjectHeader.projectStatus== '3' ? 'Selected': '' }
-														value="3">Cancelled</option>
-													<option
-														${updateProjectHeader.projectStatus == '4'  ? 'Selected': '' }
-														value="4">Hold</option>
-												</c:if>
-												<c:if test="${updateProjectHeader.projectStatus eq '2'}">
-													<option value="">Please Select</option>
+														<option selected value="0">Created</option>
+														<option value="1">Work in Progress</option>
+														<option value="2">Completed</option>
+														<option value="3">Cancelled</option>
+														<option value="4">Hold</option>
+													</c:when>
+													<c:when test="${updateProjectHeader.projectStatus eq '1'}">
 
-													<option
-														${updateProjectHeader.projectStatus == '2'  ? 'Selected': '' }
-														value="2">Completed</option>
-													<option
-														${updateProjectHeader.projectStatus== '3' ? 'Selected': '' }
-														value="3">Cancelled</option>
-													<option
-														${updateProjectHeader.projectStatus == '4'  ? 'Selected': '' }
-														value="4">Hold</option>
-												</c:if>
-												<c:if test="${updateProjectHeader.projectStatus eq '3'}">
-													<option value="">Please Select</option>
+														<option selected value="1">Work in Progress</option>
+														<option value="2">Completed</option>
+														<option value="3">Cancelled</option>
+														<option value="4">Hold</option>
+													</c:when>
+													<c:when test="${updateProjectHeader.projectStatus eq '2'}">
+													
+														<option selected value="2">Completed</option>
+														<option value="3">Cancelled</option>
+														<option value="4">Hold</option>
+													</c:when>
+													<c:when test="${updateProjectHeader.projectStatus eq '3'}">
 
-													<option
-														${updateProjectHeader.projectStatus== '3' ? 'Selected': '' }
-														value="3">Cancelled</option>
-													<option
-														${updateProjectHeader.projectStatus == '4'  ? 'Selected': '' }
-														value="4">Hold</option>
-												</c:if>
-												<c:if test="${updateProjectHeader.projectStatus eq '4'}">
-													<option value="">Please Select</option>
+														<option selected value="3">Cancelled</option>
+														<option value="4">Hold</option>
+													</c:when>
+													<c:when test="${updateProjectHeader.projectStatus eq '4'}">
 
-													<option
-														${updateProjectHeader.projectStatus == '4'  ? 'Selected': '' }
-														value="4">Hold</option>
-												</c:if>
+														<option selected value="4">Hold</option>
+													</c:when>
+													<c:otherwise>
+														<option value="0">Created</option>
+														<option value="1">Work in Progress</option>
+														<option value="2">Completed</option>
+														<option value="3">Cancelled</option>
+														<option value="4">Hold</option>
+													</c:otherwise>
 
+												</c:choose>
 											</select> <span class="validation-invalid-label" id="error_status"
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
 
-<div class="form-group row">
+									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="proComp">
-											Project Completion<span style="color:red">* </span> : </label>
+											Project Completion<span style="color: red">* </span> :
+										</label>
 										<div class="col-lg-2">
-											<input type="number" class="form-control"
-												  id="proComp" name="proComp" min="0" max="100"
-											  autocomplete="off"
+											<input type="number" class="form-control" id="proComp"
+												name="proComp" min="0" max="100" autocomplete="off"
 												onchange="trim(this)"> <span
 												class="validation-invalid-label" id="error_proComp"
 												style="display: none;">This field is required.</span>
@@ -346,8 +322,6 @@
 	</script>
 
 	<script>
-		 
-
 		function trim(el) {
 			el.value = el.value.replace(/(^\s*)|(\s*$)/gi, ""). // removes leading and trailing spaces
 			replace(/[ ]{2,}/gi, " "). // replaces multiple spaces with one space 
@@ -355,56 +329,47 @@
 			return;
 		}
 
-		$(document)
-				.ready(
-						function($) {
+		$(document).ready(function($) {
 
-							$("#submitUpdateProStatus")
-									.submit(
-											function(e) {
-												var isError = false;
-												var errMsg = "";
+			$("#submitUpdateProStatus").submit(function(e) {
+				var isError = false;
+				var errMsg = "";
 
-												if (!$("#status").val()) {
+				if (!$("#status").val()) {
 
-													isError = true;
+					isError = true;
 
-													$("#error_status")
-															.show()
-													//return false;
-												} else {
-													$("#error_status")
-															.hide()
-												}
+					$("#error_status").show()
+					//return false;
+				} else {
+					$("#error_status").hide()
+				}
 
-												if (!$("#proComp").val()) {
+				if (!$("#proComp").val()) {
 
-													isError = true;
+					isError = true;
 
-													$("#error_proComp").show()
+					$("#error_proComp").show()
 
-												} else {
-													$("#error_proComp").hide()
-												}
+				} else {
+					$("#error_proComp").hide()
+				}
 
-												 
+				if (!isError) {
 
-												if (!isError) { 	 
-													
-													var x = confirm("Do you really want to submit the form?");
-													if (x == true) {
+					var x = confirm("Do you really want to submit the form?");
+					if (x == true) {
 
-														document
-																.getElementById("submtbtn").disabled = true;
-														return true;
-													}
-												}
-												return false;
-											});
-						});
+						document.getElementById("submtbtn").disabled = true;
+						return true;
+					}
+				}
+				return false;
+			});
+		});
 		//
 	</script>
- 
+
 	<!-- Scrollable modal -->
 
 	<!-- /scrollable modal -->

@@ -834,6 +834,7 @@ System.out.println("project list is"+projectHeaderList.toString());
  
 			String status = (request.getParameter("status"));
 			int proComp = Integer.parseInt(request.getParameter("proComp"));
+			System.err.println("pro status  is :"+status);
 			
 			// String[] arrOfStr = dateRange.split("to", 2);
 
@@ -845,20 +846,26 @@ System.out.println("project list is"+projectHeaderList.toString());
 			}
 
 			Boolean ret = false;
-
-			
-
+ System.out.println("updateProjectHeader is :"+updateProjectHeader.toString());
 			if (ret == false) {
-
- 				updateProjectHeader.setProjectCompletion(proComp);
- 				updateProjectHeader.setProjectStatus(status);
-				updateProjectHeader.setMakerEnterDatetime(dateTime);
-				updateProjectHeader.setMakerUserId(userObj.getUserId());
+				/*
+				 * updateProjectHeader.setProjectCompletion(proComp);
+				 * updateProjectHeader.setProjectStatus(status);
+				 * updateProjectHeader.setMakerEnterDatetime(dateTime);
+				 * updateProjectHeader.setMakerUserId(userObj.getUserId());
+				 */
+				System.out.println("updateProjectHeader is after :"+updateProjectHeader.toString());
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+				map.add("projectId", updateProjectHeader.getProjectId());
+				map.add("status", status);
+				map.add("proComp", proComp);
+				map.add("userId", userObj.getUserId());
+				map.add("dateTime", dateTime);
+				Info info = Constants.getRestTemplate().postForObject(Constants.url + "/updateProjectHeader", map,
+						Info.class);
 				 
-				 
-				ProjectHeader res = Constants.getRestTemplate().postForObject(Constants.url + "/saveProjectHeader",
-						updateProjectHeader, ProjectHeader.class);
-				if (res.isError() == false) {
+				
+				if (info.isError() == false) {
 					session.setAttribute("successMsg", "Record Inserted Successfully");
 
 					ProjectTrail projectTrail = new ProjectTrail();
@@ -867,7 +874,7 @@ System.out.println("project list is"+projectHeaderList.toString());
 					projectTrail.setMakerEnterDatetime(dateTime);
 					projectTrail.setMakerUserId(userObj.getUserId());
 					projectTrail.setProjectCompletion(proComp);
-					projectTrail.setProjectId(res.getProjectId());
+					projectTrail.setProjectId(updateProjectHeader.getProjectId());
 					projectTrail.setProjectRemarks(remark);
 					projectTrail.setProjectStatus(status);
 
