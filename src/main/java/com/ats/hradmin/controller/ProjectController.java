@@ -426,10 +426,12 @@ public class ProjectController {
 			/* String dateRange = request.getParameter("dateRange"); */
 			String fromDate = request.getParameter("fromDate");
 			String toDate = request.getParameter("toDate");
+			String billing_type = request.getParameter("billingType");
+			String project_revenue = request.getParameter("project_revenue");
 
 			int project_est_manhrs = Integer.parseInt(request.getParameter("project_est_manhrs"));
 			int project_est_budget = Integer.parseInt(request.getParameter("project_est_budget"));
-
+System.out.println("billing_type:project_revenue"+billing_type+ project_revenue);
 			// String[] arrOfStr = dateRange.split("to", 2);
 
 			String remark = null;
@@ -489,6 +491,8 @@ public class ProjectController {
 				save.setProjectStatus("0");
 				save.setProjectTypeId(projectTypeId);
 				save.setProjectManagerEmpId(empId);
+				save.setExInt1(Integer.parseInt(billing_type));
+				save.setExVar1(project_revenue);
 
 				save.setProjectTitle(projectTitle);
 
@@ -715,7 +719,8 @@ System.out.println("project list is"+projectHeaderList.toString());
 			/* String dateRange = request.getParameter("dateRange"); */
 			String fromDate = request.getParameter("fromDate");
 			String toDate = request.getParameter("toDate");
-
+			String billing_type = request.getParameter("billingType");
+			String project_revenue = request.getParameter("project_revenue");
 			int project_est_manhrs = Integer.parseInt(request.getParameter("project_est_manhrs"));
 			int project_est_budget = Integer.parseInt(request.getParameter("project_est_budget"));
 
@@ -767,7 +772,8 @@ System.out.println("project list is"+projectHeaderList.toString());
 				editProjectHeader.setProjectManagerEmpId(empId);
 
 				editProjectHeader.setProjectTitle(projectTitle);
-
+				editProjectHeader.setExInt1(Integer.parseInt(billing_type));
+				editProjectHeader.setExVar1(project_revenue);
 				ProjectHeader res = Constants.getRestTemplate().postForObject(Constants.url + "/saveProjectHeader",
 						editProjectHeader, ProjectHeader.class);
 				if (res.isError() == false) {

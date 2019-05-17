@@ -89,6 +89,16 @@ public class HomeController {
 
 		return mav;
 	}
+	
+	@RequestMapping(value = "/changePass", method = RequestMethod.GET)
+	public ModelAndView changePass(HttpServletRequest request, HttpServletResponse res) {
+		HttpSession session = request.getSession();
+		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+		ModelAndView mav = new ModelAndView("changePassword");
+		mav.addObject("empId",userObj.getUserId());
+
+		return mav;
+	}
 
 	@RequestMapping(value = "/fileUpload", method = RequestMethod.GET)
 	public ModelAndView fileUpload(Locale locale, Model model) {

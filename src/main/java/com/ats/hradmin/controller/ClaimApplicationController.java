@@ -55,7 +55,7 @@ public class ClaimApplicationController {
 		ModelAndView model = new ModelAndView("claim/applyForClaim");
 
 		try {
-			
+			GetEmployeeInfo temp =new GetEmployeeInfo();
 			HttpSession session = request.getSession();
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
@@ -82,20 +82,18 @@ public class ClaimApplicationController {
 			model.addObject("editEmp", editEmp);
 			
 			
-			
-			
-			
 			for (int i = 0; i < employeeDepartmentlist.size(); i++) {
 				if(employeeDepartmentlist.get(i).getEmpId()==userObj.getEmpId()) {
 					flag=0;
 					System.err.println(" matched");
+					employeeDepartmentlist.remove(i);
 					break;
 				}
 				
 			}
-			if(flag == 1) {
+		/*	if(flag == 1) {*/
 				System.err.println("not matched");
-				GetEmployeeInfo temp =new GetEmployeeInfo();
+			
 				temp.setCompanyId(editEmp.getCompanyId());
 				temp.setCompanyName(editEmp.getCompanyName());
 				temp.setEmpCategory(editEmp.getEmpCategory());
@@ -113,11 +111,14 @@ public class ClaimApplicationController {
 				temp.setEmpSname(editEmp.getEmpSname());
 				temp.setEmpType(editEmp.getEmpType());
 				temp.setEmpTypeId(editEmp.getEmpTypeId());
-				employeeDepartmentlist.add(temp);
-			}
+				temp.setEmpDeptShortName(editEmp.getEmpDeptShortName());
+				temp.setEmpCatShortName(editEmp.getEmpCatShortName());
+				temp.setEmpTypeShortName(editEmp.getEmpTypeShortName());
+				//employeeDepartmentlist.add(temp);
+			/* } */
 			
-			
-
+				temp.setExVar1(FormValidation.Encrypt(String.valueOf(editEmp.getEmpId())));
+				System.err.println("temp list is claim  " + temp.toString());
 			for (int i = 0; i < employeeDepartmentlist.size(); i++) {
 						//System.out.println("employeeDepartmentlist.get(i).getEmpId()"+employeeDepartmentlist.get(i).getEmpId());
 				employeeDepartmentlist.get(i).setExVar1(
@@ -126,7 +127,7 @@ public class ClaimApplicationController {
 
 			model.addObject("empList", employeeDepartmentlist);
 			System.err.println("emp list is  "+employeeDepartment.toString());
-
+			model.addObject("tempList", temp);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

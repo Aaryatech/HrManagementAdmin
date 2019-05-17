@@ -445,7 +445,7 @@ public class LeaveController {
 		ModelAndView model = new ModelAndView("leave/appplyForLeave");
 
 		try {
-
+			GetEmployeeInfo temp = new GetEmployeeInfo();
 			HttpSession session = request.getSession();
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
@@ -473,13 +473,15 @@ public class LeaveController {
 				if (employeeDepartmentlist.get(i).getEmpId() == userObj.getEmpId()) {
 					flag = 0;
 					System.err.println(" matched");
+					employeeDepartmentlist.remove(i);
 					break;
 				}
 
 			}
-			if (flag == 1) {
-				System.err.println("not matched");
-				GetEmployeeInfo temp = new GetEmployeeInfo();
+			 
+		/*	if (flag == 1) {*/
+				//System.err.println("not matched");
+			
 				temp.setCompanyId(editEmp.getCompanyId());
 				temp.setCompanyName(editEmp.getCompanyName());
 				temp.setEmpCategory(editEmp.getEmpCategory());
@@ -500,9 +502,10 @@ public class LeaveController {
 				temp.setEmpSname(editEmp.getEmpSname());
 				temp.setEmpType(editEmp.getEmpType());
 				temp.setEmpTypeId(editEmp.getEmpTypeId());
-				employeeDepartmentlist.add(temp);
-			}
-
+				//employeeDepartmentlist.add(temp);
+			/* } */
+			 
+				temp.setExVar1(FormValidation.Encrypt(String.valueOf(editEmp.getEmpId())));
 			for (int i = 0; i < employeeDepartmentlist.size(); i++) {
 				// System.out.println("employeeDepartmentlist.get(i).getEmpId()"+employeeDepartmentlist.get(i).getEmpId());
 				employeeDepartmentlist.get(i)
@@ -510,6 +513,7 @@ public class LeaveController {
 			}
 
 			model.addObject("empList", employeeDepartmentlist);
+			model.addObject("tempList", temp);
 			System.err.println("emp list is  " + employeeDepartment.toString());
 
 		} catch (Exception e) {

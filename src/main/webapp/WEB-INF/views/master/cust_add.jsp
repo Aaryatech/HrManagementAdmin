@@ -198,7 +198,7 @@
 
 			$(document)
 					.ready(
-							function($) {
+							function($) {confirm("Do you really want to submit the form?")
 
 								$("#submitInsertCustomer")
 										.submit(

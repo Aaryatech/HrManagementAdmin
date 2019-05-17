@@ -223,22 +223,22 @@
 										<td>${empTrailList.makerEnterDatetime}</td>
 										<td>${empTrailList.userName}</td>
 										<c:if test="${empTrailList.claimStatus==1}">
-										<td><span class="badge badge-info">Initial Applied</span></td>
+										<td><span class="badge badge-info">Initial Pending</span></td>
 										</c:if>
 										<c:if test="${empTrailList.claimStatus==2}">
-										<td><span class="badge badge-secondary">Approve By Initial Authority</span></td>
+										<td><span class="badge badge-secondary">Final Pending</span></td>
 										</c:if>
 											<c:if test="${empTrailList.claimStatus==3}">
-										<td><span class="badge badge-success">Approve By Final Authority</span></td>
+										<td><span class="badge badge-success">Final Approved</span></td>
 										</c:if>
 											<c:if test="${empTrailList.claimStatus==7}">
-										<td><span class="badge badge-danger">Cancel By Employee</span></td>
+										<td><span class="badge badge-danger">Leave Cancelled</span></td>
 										</c:if>
 											<c:if test="${empTrailList.claimStatus==8}">
-										<td><span class="badge badge-danger">Reject By Initial Authority</span></td>
+										<td><span class="badge badge-danger">Initial Rejected</span></td>
 										</c:if>
 											<c:if test="${empTrailList.claimStatus==9}">
-										<td><span class="badge badge-danger">Reject By Final Authority</span></td>
+										<td><span class="badge badge-danger">Final Rejected</span></td>
 										</c:if>
 	
 									
@@ -261,6 +261,8 @@
 											<textarea rows="3" cols="3" class="form-control"
 												placeholder="Any Remark" onchange="trim(this)" id="remark"
 												name="remark"></textarea>
+													<span class="validation-invalid-label" id="error_remark"
+												style="display: none;">This field is required.</span>
 										</div>
 									</div>
 
@@ -340,6 +342,18 @@
 			$("#submitInsertCompany").submit(function(e) {
 				var isError = false;
 				var errMsg = "";
+				if ($("#stat").val()==7 || $("#stat").val()==8 || $("#stat").val()==9) {
+					if(!$("#remark").val()){
+
+					isError = true;
+
+					$("#error_remark").show()
+
+				} else {
+					$("#error_remark").hide()
+				}
+				
+			}
 
 				//alert("asdf");
 				if (!isError) {

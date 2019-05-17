@@ -41,13 +41,13 @@
 
 						<a href="#" class="header-elements-toggle text-default d-md-none"><i
 							class="icon-more"></i></a>
-							
-							
-							
+
+
+
 					</div>
 
 
-				<%-- 	<div class="breadcrumb justify-content-center">
+					<%-- 	<div class="breadcrumb justify-content-center">
 						<a href="${pageContext.request.contextPath}/employeeAdd"
 							class="breadcrumb-elements-item"> Add Employee </a>
 
@@ -116,49 +116,70 @@
 							id="printtable1">
 							<thead>
 								<tr class="bg-blue">
-									<th width="10%">Sr.no</th>
+									<th width="5%">Sr.no</th>
 									<th>Name</th>
-									<th>Category</th>
-									<th>Type</th>
+									<th>Work Description</th>
+
 									<th>Email</th>
 									<th>Mobile</th>
-									<th>Department</th>
+
 									<th>Rate Per Hour</th>
-									  
+
+
 									<th class="text-center" width="10%">Actions</th>
 								</tr>
 							</thead>
 							<tbody>
 
+								<tr>
+								<td>1</td>
+										<td>${tempList.empSname}&nbsp;${tempList.empFname}</td>
+										<td>${tempList.empCatShortName}-
+											${tempList.empTypeShortName} -
+											${tempList.empDeptShortName}</td>
 
-								<c:forEach items="${empList}" var="lvTypeList" varStatus="count">
-									<tr>
-										<td>${count.index+1}</td>
-										<td>${lvTypeList.empSname} ${lvTypeList.empFname}</td>
-										<td>${lvTypeList.empCategory}</td>
-										<td>${lvTypeList.empType}</td>
-										<td>${lvTypeList.empEmail}</td>
-										<td>${lvTypeList.empMobile1}</td>
-										<td>${lvTypeList.empDept}</td>
-										<td>${lvTypeList.empRatePerhr}</td>
-										 
+										<td>${tempList.empEmail}</td>
+										<td>${tempList.empMobile1}</td>
+										<td>${tempList.empRatePerhr}</td>
+										
 										
 										<td class="text-center">
-										<!-- 	<div class="list-icons">
-												<div class="dropdown">
-													<a href="#" class="list-icons-item" data-toggle="dropdown">
-														<i class="icon-menu9"></i>
-													</a>
+											 <a
+											href="${pageContext.request.contextPath}/showClaimApply?empId=${tempList.exVar1}"
+											title="Add Claim"><i class="icon-diff-added"
+												style="color: black;"></i></a> <a
+											href="${pageContext.request.contextPath}/showClaimList?empId=${tempList.exVar1}"
+											title="Claim History"><i class="icon-history"
+												style="color: black;"></i></a>
 
-													<div class="dropdown-menu dropdown-menu-right"> -->
-					
-														<a
-															href="${pageContext.request.contextPath}/showClaimApply?empId=${lvTypeList.exVar1}"
-																title="Add Claim"><i class="icon-diff-added" style="color: black;"></i></a>
-															<a
-															href="${pageContext.request.contextPath}/showClaimList?empId=${lvTypeList.exVar1}"
-															title="Claim History"><i class="icon-history" style="color: black;"></i></a>
-												
+										</td>
+								
+								</tr>
+								<c:set var="index" value="2"></c:set>
+								<c:forEach items="${empList}" var="lvTypeList"  >
+									<tr>
+										<td>${index}</td>
+										<c:set var="index" value="${index+1}"></c:set>
+										
+<td>${lvTypeList.empSname}&nbsp;${lvTypeList.empFname}</td>
+										<td>${lvTypeList.empCatShortName}-
+											${lvTypeList.empTypeShortName} -
+											${lvTypeList.empDeptShortName}</td>
+
+										<td>${lvTypeList.empEmail}</td>
+										<td>${lvTypeList.empMobile1}</td>
+										<td>${lvTypeList.empRatePerhr}</td>
+										
+
+										<td class="text-center">
+											 <a
+											href="${pageContext.request.contextPath}/showClaimApply?empId=${lvTypeList.exVar1}"
+											title="Add Claim"><i class="icon-diff-added"
+												style="color: black;"></i></a> <a
+											href="${pageContext.request.contextPath}/showClaimList?empId=${lvTypeList.exVar1}"
+											title="Claim History"><i class="icon-history"
+												style="color: black;"></i></a>
+
 										</td>
 									</tr>
 								</c:forEach>

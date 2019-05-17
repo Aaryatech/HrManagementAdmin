@@ -123,7 +123,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="select2">Select
-											Location <span style="color:red">* </span>:</label>
+											Location <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<select name="locId" data-placeholder="Select Location"
 												id="locId"
@@ -152,7 +153,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="select2">Select
-											Project Type <span style="color:red">* </span>:</label>
+											Project Type <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<select name="projectTypeId"
 												data-placeholder="Select Project Type" id="projectTypeId"
@@ -184,15 +186,14 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="select2">Select
-											Customer <span style="color:red">* </span>:</label>
+											Customer <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<select name="custId" data-placeholder="Select Customer"
 												id="custId"
 												class="form-control form-control-select2 select2-hidden-accessible"
 												tabindex="-1" aria-hidden="true">
 												<option value="">Select Customer</option>
-
-
 
 												<c:forEach items="${custlist}" var="cust">
 													<c:choose>
@@ -220,7 +221,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="select2">Select
-											Project Manager <span style="color:red">* </span>:</label>
+											Project Manager <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<select name="empId"
 												data-placeholder="Select Project Manager " id="empId"
@@ -235,7 +237,7 @@
 															<option selected value="${emp.empId}">${emp.empSname}${emp.empFname}</option>
 														</c:when>
 														<c:otherwise>
-															<option value="${emp.empId}">${emp.empSname}${emp.empFname}</option>
+															<option value="${emp.empId}">${emp.empSname}&nbsp;${emp.empFname}</option>
 														</c:otherwise>
 
 													</c:choose>
@@ -251,7 +253,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="projectTitle">
-											Project Title <span style="color:red">* </span>:</label>
+											Project Title <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Enter Project Title" id="projectTitle"
@@ -265,7 +268,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="projectDesc">
-											Project Description <span style="color:red">* </span>:</label>
+											Project Description <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Enter Project Description" id="projectDesc"
@@ -276,12 +280,47 @@
 										</div>
 									</div>
 
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="select2">Select
+											Billing Type<span style="color: red">* </span>:
+										</label>
+										<div class="col-lg-10">
+											<select name="billingType" data-placeholder="Please Select"
+												id="billingType"
+												class="form-control form-control-select2 select2-hidden-accessible"
+												tabindex="-1" aria-hidden="true">
+												<option value="">Please Select</option>
 
+												<option ${editProjectHeader.exInt1 == '1'  ? 'Selected': '' }
+													value="1">Support - Fix Monthly Billable</option>
+												<option ${editProjectHeader.exInt1 == '2' ? 'Selected': '' }
+													value="2">Project Revenue</option>
+
+											</select> <span class="validation-invalid-label"
+												id="error_billingType" style="display: none;">This
+												field is required.</span>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="add">Revenue
+											<span style="color: red">* </span>:
+										</label>
+										<div class="col-lg-10">
+											<input type="text" class="form-control"
+												placeholder="Revenue Amount" id="project_revenue"
+												value="${editProjectHeader.exVar1}" name="project_revenue"
+												autocomplete="off" onchange="trim(this)"> <span
+												class="validation-invalid-label" id="error_project_revenue"
+												style="display: none;">This field is required.</span>
+										</div>
+									</div>
 
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="add">Project
-											City <span style="color:red">* </span>:</label>
+											City <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Enter Project City" id="projectCity"
@@ -311,7 +350,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2">Project
-											Establishment Start Date :</label>
+											Estimated Start Date :</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control datepickerclass "
 												value="${editProjectHeader.projectEstStartdt}"
@@ -322,7 +361,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2">Project
-											Establishment End Date:</label>
+											Estimated End Date:</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control datepickerclass "
 												value="${editProjectHeader.projectEstEnddt}"
@@ -333,7 +372,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="add">Project
-											Establishment Man Hours <span style="color:red">* </span>:</label>
+											Estimated Man Hours <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Project Establishment Man Hours"
@@ -349,7 +389,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="add">Project
-											Establishment Budget <span style="color:red">* </span>:</label>
+											Estimated Budget <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Project Establishment Budget"
@@ -364,13 +405,17 @@
 
 									<div class="form-group row mb-0">
 										<div class="col-lg-10 ml-lg-auto">
-											<button type="reset" class="btn btn-light legitRipple">Reset</button>
+											<!-- <button type="reset" class="btn btn-light legitRipple">Reset</button> -->
 											<button type="submit" class="btn bg-blue ml-3 legitRipple"
 												id="submtbtn">
 												Submit <i class="icon-paperplane ml-2"></i>
 											</button>
-											<a href="${pageContext.request.contextPath}/showProjectHeaderList"><button
-										type="button" class="btn btn-primary"><i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp; Cancel</button></a>
+											<a
+												href="${pageContext.request.contextPath}/showProjectHeaderList"><button
+													type="button" class="btn btn-primary">
+													<i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp;
+													Cancel
+												</button></a>
 										</div>
 									</div>
 								</form>
@@ -523,7 +568,24 @@
 				} else {
 					$("#error_project_est_budget").hide()
 				}
+				if (!$("#billingType").val()) {
 
+					isError = true;
+
+					$("#error_billingType").show()
+
+				} else {
+					$("#error_billingType").hide()
+				}
+				if (!$("#project_revenue").val()) {
+
+					isError = true;
+
+					$("#error_project_revenue").show()
+
+				} else {
+					$("#error_project_revenue").hide()
+				}
 				if (!isError) {
 
 					var x = confirm("Do you really want to submit the form?");

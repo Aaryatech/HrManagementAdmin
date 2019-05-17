@@ -211,7 +211,7 @@
 										<td>${count.index+1}</td>
 										<td>${employeeInfoList.empCode}</td>
 										<td>${employeeInfoList.empSname}&nbsp;${employeeInfoList.empFname}</td>
-										<td>${employeeInfoList.empDeptShortName}${employeeInfoList.empTypeShortName}${employeeInfoList.empCatShortName}</td>
+										<td>${employeeInfoList.empDeptShortName}-${employeeInfoList.empTypeShortName}-${employeeInfoList.empCatShortName}</td>
 										<td>${employeeInfoList.kraCount}</td>
 										<td>${employeeInfoList.kpiCount}</td>
 										<td class="text-center"><a

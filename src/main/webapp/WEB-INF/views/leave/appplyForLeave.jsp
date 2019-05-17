@@ -129,11 +129,30 @@
 								</tr>
 							</thead>
 							<tbody>
+								<tr>
+									<td>1</td>
+									<td>${tempList.empSname}&nbsp;${tempList.empFname}</td>
+									<td>${tempList.empCatShortName}-
+										${tempList.empTypeShortName} - ${tempList.empDeptShortName}</td>
 
+									<td>${tempList.empEmail}</td>
+									<td>${tempList.empMobile1}</td>
+									<td>${tempList.empRatePerhr}</td>
 
-								<c:forEach items="${empList}" var="lvTypeList" varStatus="count">
-									<tr>
-										<td>${count.index+1}</td>
+									<td class="text-center"><a
+										href="${pageContext.request.contextPath}/leaveApply?empId=${tempList.exVar1}"
+										title="Add Leave" class=" "><i class="fas fa-walking"
+											style="color: black;"></i></a> <a
+										href="${pageContext.request.contextPath}/showLeaveHistList?empId=${tempList.exVar1}"
+										title="Leave History"><i class="icon-history"
+											style="color: black;"></i></a></td>
+
+								</tr>
+								<c:set var="index" value="2"></c:set>
+								<c:forEach items="${empList}" var="lvTypeList">
+ 									<tr>
+										<td>${index}</td>
+										<c:set var="index" value="${index+1}"></c:set>
 										<td>${lvTypeList.empSname}&nbsp;${lvTypeList.empFname}</td>
 										<td>${lvTypeList.empCatShortName}-
 											${lvTypeList.empTypeShortName} -
@@ -141,9 +160,7 @@
 
 										<td>${lvTypeList.empEmail}</td>
 										<td>${lvTypeList.empMobile1}</td>
-										<%-- 	<td>${lvTypeList.empDeptShortName}</td>
-											<td>${lvTypeList.empTypeShortName}</td>
-												<td>${lvTypeList.empCatShortName}</td> --%>
+
 										<td>${lvTypeList.empRatePerhr}</td>
 
 
