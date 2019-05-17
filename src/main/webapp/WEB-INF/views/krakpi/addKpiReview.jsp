@@ -54,8 +54,10 @@
 					</div>
 
 					<div class="breadcrumb justify-content-center">
-						<%-- <a href="${pageContext.request.contextPath}/showApplyForLeave"
-							class="breadcrumb-elements-item">Employee List</a> --%>
+						 
+							
+							<a href="${pageContext.request.contextPath}/showAddKpi?kraId=${editKra.exVar3}"
+							class="breadcrumb-elements-item">KPI List</a>
 
 					</div>
 

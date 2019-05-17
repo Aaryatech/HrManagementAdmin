@@ -50,6 +50,9 @@ public class KpiController {
 			map.add("kraId", kraId);
 			Kra editKra = Constants.getRestTemplate().postForObject(Constants.url + "/getKraByKraId", map,
 					Kra.class);
+			editKra.setExVar3(FormValidation.Encrypt(String.valueOf(editKra.getEmpId())));
+			editKra.setExVar2(FormValidation.Encrypt(String.valueOf(editKra.getYearId())));
+				
 			model.addObject("editKra", editKra);
 			//
 			  map = new LinkedMultiValueMap<>();
@@ -347,6 +350,7 @@ public class KpiController {
 			map.add("kraId", editKpi.getKraId());
 			Kra editKra = Constants.getRestTemplate().postForObject(Constants.url + "/getKraByKraId", map,
 					Kra.class);
+			editKra.setExVar3(FormValidation.Encrypt(String.valueOf(editKra.getKraId())));
 			model.addObject("editKra", editKra);
 			//
 			  map = new LinkedMultiValueMap<>();

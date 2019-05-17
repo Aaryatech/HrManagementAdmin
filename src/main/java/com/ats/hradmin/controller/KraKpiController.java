@@ -348,7 +348,9 @@ public class KraKpiController {
 			editKra = Constants.getRestTemplate().postForObject(Constants.url + "/getKraByKraId", map,
 					Kra.class);
 			model.addObject("editKra", editKra);
-			//
+			editKra.setExVar3(FormValidation.Encrypt(String.valueOf(editKra.getEmpId())));
+			editKra.setExVar2(FormValidation.Encrypt(String.valueOf(editKra.getYearId())));
+				
 			  map = new LinkedMultiValueMap<>();
 			map.add("empId", editKra.getEmpId());
 			
