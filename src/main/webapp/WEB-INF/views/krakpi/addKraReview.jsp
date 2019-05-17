@@ -54,8 +54,8 @@
 					</div>
 
 					<div class="breadcrumb justify-content-center">
-					<%-- 	<a href="${pageContext.request.contextPath}/showAddKra?empId=${empInfo.empEmail}&finYrId=${editKra.yearId}"
-							class="breadcrumb-elements-item">KRA List</a> --%>
+					<a href="${pageContext.request.contextPath}/showAddKra?empId=${editKra.exVar3}&finYrId=${editKra.exVar2}"
+							class="breadcrumb-elements-item">KRA List</a>
 
 					</div>
 
@@ -218,6 +218,7 @@
 											<tr class="bg-blue" style="text-align: center;">
 												<th width="10%">Sr.no</th>
 												<th>KRA Review</th>
+												<th>Date & Time</th>
 
 
 												<th width="10%" class="text-center">Actions</th>
@@ -229,8 +230,8 @@
 												varStatus="count">
 												<tr>
 													<td>${count.index+1}</td>
-													<td>${kraReviewList.review}(${kraReviewList.makerEnterDatetime})</td>
-
+													<td>${kraReviewList.review}</td>
+                                                    <td>${kraReviewList.makerEnterDatetime}</td>
 													<td class="text-center">
 													<c:if test="${kraReviewList.makerUserId==empIdOrig}">
 													<a

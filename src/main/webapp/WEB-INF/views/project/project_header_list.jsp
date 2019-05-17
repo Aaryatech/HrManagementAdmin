@@ -117,18 +117,18 @@
 							<thead>
 								<tr class="bg-blue">
 
-									<th width="10%">Sr. No.</th>
-									<th>Project Title</th>
+									<th width="3%">Sr. No.</th>
+									<th width="15%"> Project Title</th>
 									<th>Project Description</th>
 									<th>Project Type Title</th>
 									<th>Project Manager</th>
 									<th>Location Name</th>
 									<th>Customer Name</th>
-									<th>Project Completion</th>
+									<th width="8%" class="text-center">Project Completion</th>
 									<th>Status</th>
 
 
-									<th width="10%" class="text-center">Actions</th>
+									<th width="8%" class="text-center">Actions</th>
 								</tr>
 							</thead>
 							<tbody>

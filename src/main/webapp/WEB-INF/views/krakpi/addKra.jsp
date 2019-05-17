@@ -54,7 +54,7 @@
 					</div>
 
 					<div class="breadcrumb justify-content-center">
-						<a href="${pageContext.request.contextPath}/showEmpKraKpiCountList"
+						<a href="${pageContext.request.contextPath}/showEmpKraKpiCountList?empId=${empInfo.empEmail}&finYrId=${editKra.yearId}"
 							class="breadcrumb-elements-item">KRAKPI List</a>
 
 					</div>

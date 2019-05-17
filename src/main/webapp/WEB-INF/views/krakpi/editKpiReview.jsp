@@ -54,7 +54,8 @@
 					</div>
 
 					<div class="breadcrumb justify-content-center">
-						<a href="${pageContext.request.contextPath}/showAddKpiReview?kpiId=${empInfo.empEmail}"
+						<a
+							href="${pageContext.request.contextPath}/showAddKpiReview?kpiId=${empInfo.empEmail}"
 							class="breadcrumb-elements-item">KPI List</a>
 
 					</div>
@@ -160,7 +161,7 @@
 
 									</div>
 								</div>
-								
+
 								<div class="form-group row">
 									<label class="col-form-label col-lg-2" for="lvsName">
 										KPI Title: </label>
@@ -194,18 +195,17 @@
 											KPI Review : *</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
-												placeholder="KPI Review" id="kpi_review" name="kpi_review" value="${editKpiReview.review}"
-												autocomplete="off"> <span
-												class="validation-invalid-label" id="error_kra_review" 
+												placeholder="KPI Review" id="kpi_review" name="kpi_review"
+												value="${editKpiReview.review}" autocomplete="off">
+											<span class="validation-invalid-label" id="error_kra_review"
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
- 
+
 									<input type="hidden" class="form-control numbersOnly"
 										id="empId" value="${empInfo.empId}" name="empId"> <input
 										type="hidden" class="form-control numbersOnly" id="kraId"
-										value="${editKra.kraId}" name="kraId">
-										 <input
+										value="${editKra.kraId}" name="kraId"> <input
 										type="hidden" class="form-control numbersOnly" id="kpiId"
 										value="${editKpi.kpiId}" name="kpiId">
 
@@ -231,7 +231,7 @@
 											<tr class="bg-blue" style="text-align: center;">
 												<th width="10%">Sr.no</th>
 												<th>KPI Review</th>
-
+												<th>Date & Time</th>
 
 												<th width="10%" class="text-center">Actions</th>
 
@@ -242,20 +242,20 @@
 												varStatus="count">
 												<tr>
 													<td>${count.index+1}</td>
-													<td>${kpiReviewList.review}(${kpiReviewList.makerEnterDatetime})</td>
+													<td>${kpiReviewList.review}</td>
+													<td>${kpiReviewList.makerEnterDatetime}</td>
+													<td class="text-center"><c:if
+															test="${kpiReviewList.makerUserId==empIdOrig}">
+															<a
+																href="${pageContext.request.contextPath}/editKpiReviewDetail?kpiReviewId=${kpiReviewList.exVar1}"><i
+																class="icon-pencil7" style="color: black;"></i></a>
+															<a
+																href="${pageContext.request.contextPath}/deleteKpiReview?kpiReviewId=${kpiReviewList.exVar1}"
+																onClick="return confirm('Are you sure want to delete this record');"
+																title="Delete"><i class="icon-trash"
+																style="color: black;"></i> </a>
+														</c:if></td>
 
-													<td class="text-center">
-													<c:if test="${kpiReviewList.makerUserId==empIdOrig}">
-													<a
-														href="${pageContext.request.contextPath}/editKpiReviewDetail?kpiReviewId=${kpiReviewList.exVar1}"><i
-															class="icon-pencil7" style="color: black;"></i></a> <a
-														href="${pageContext.request.contextPath}/deleteKpiReview?kpiReviewId=${kpiReviewList.exVar1}"
-														onClick="return confirm('Are you sure want to delete this record');"
-														title="Delete"><i class="icon-trash"
-															style="color: black;"></i> </a>
-														</c:if>	
- 															</td>
- 															
 												</tr>
 											</c:forEach>
 

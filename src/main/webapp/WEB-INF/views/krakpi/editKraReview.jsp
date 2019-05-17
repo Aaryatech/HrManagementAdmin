@@ -183,17 +183,16 @@
 											KRA Review : *</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
-												placeholder="KRA Review" id="kra_review" name="kra_review" 	value="${editKraReview.review}"
-												autocomplete="off"> <span
-												class="validation-invalid-label" id="error_kra_review"
+												placeholder="KRA Review" id="kra_review" name="kra_review"
+												value="${editKraReview.review}" autocomplete="off">
+											<span class="validation-invalid-label" id="error_kra_review"
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
 
 
-								 <input
-										type="hidden" class="form-control numbersOnly" id="kraId"
-										value="${editKraReview.kraId}" name="kraId">
+									<input type="hidden" class="form-control numbersOnly"
+										id="kraId" value="${editKraReview.kraId}" name="kraId">
 
 									<div class="col-md-12" style="text-align: center;">
 
@@ -218,7 +217,7 @@
 												<th width="10%">Sr.no</th>
 												<th>KRA Review</th>
 
-
+												<th>Date & Time</th>
 												<th width="10%" class="text-center">Actions</th>
 
 											</tr>
@@ -228,16 +227,17 @@
 												varStatus="count">
 												<tr>
 													<td>${count.index+1}</td>
-													<td>${kraReviewList.review}(${kraReviewList.makerEnterDatetime})</td>
-<c:if test="${kraReviewList.makerUserId==empIdOrig}">
-													<td class="text-center"><a
-														href="${pageContext.request.contextPath}/editKraReviewDetail?kraReviewId=${kraReviewList.exVar1}"><i
-															class="icon-pencil7" style="color: black;"></i></a> <a
-														href="${pageContext.request.contextPath}/deleteKraReview?kraReviewId=${kraReviewList.exVar1}"
-														onClick="return confirm('Are you sure want to delete this record');"
-														title="Delete"><i class="icon-trash"
-															style="color: black;"></i> </a></td>
-															</c:if>
+													<td>${kraReviewList.review}</td>
+													<td>${kraReviewList.makerEnterDatetime}</td>
+													<c:if test="${kraReviewList.makerUserId==empIdOrig}">
+														<td class="text-center"><a
+															href="${pageContext.request.contextPath}/editKraReviewDetail?kraReviewId=${kraReviewList.exVar1}"><i
+																class="icon-pencil7" style="color: black;"></i></a> <a
+															href="${pageContext.request.contextPath}/deleteKraReview?kraReviewId=${kraReviewList.exVar1}"
+															onClick="return confirm('Are you sure want to delete this record');"
+															title="Delete"><i class="icon-trash"
+																style="color: black;"></i> </a></td>
+													</c:if>
 												</tr>
 											</c:forEach>
 

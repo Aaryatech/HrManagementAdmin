@@ -29,13 +29,17 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.hradmin.common.Constants;
+import com.ats.hradmin.common.FormValidation;
+import com.ats.hradmin.common.VpsImageUpload;
 import com.ats.hradmin.leave.model.CalenderYear;
 import com.ats.hradmin.leave.model.GetAuthorityIds;
 import com.ats.hradmin.model.AccessRightModule;
 import com.ats.hradmin.model.AuthorityInformation;
+import com.ats.hradmin.model.Company;
 import com.ats.hradmin.model.EmployeeInfo;
 import com.ats.hradmin.model.Info;
 import com.ats.hradmin.model.LoginResponse;
+import com.ats.hradmin.model.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
@@ -99,6 +103,70 @@ public class HomeController {
 
 		return mav;
 	}
+	
+	@RequestMapping(value = "/checkPass", method = RequestMethod.GET)
+	public @ResponseBody User updateLeaveLimit(HttpServletRequest request, HttpServletResponse response) {
+
+		User user1=new User();		  
+		try {
+			System.err.println("in  checkPass is ");
+			String empId=(request.getParameter("empId"));
+			String password=(request.getParameter("password"));
+			
+			  MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			  map.add("empId",empId);
+			  map.add("password",password);
+			  try {
+				    user1 = Constants.getRestTemplate().postForObject(Constants.url + "/getUserInfoByEmpIdPass", map, User.class);
+				//System.err.println("info is "+info.toString());
+				
+				    
+			  }
+			  catch(Exception e){
+				  user1.setEmpId(0);
+				
+				  System.err.println("user found "+user1.toString());
+			  }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return user1;
+	}
+	@RequestMapping(value = "/submitUpdatePass", method = RequestMethod.POST)
+	public String submitInsertCompany(  HttpServletRequest request,
+			HttpServletResponse response) {
+
+		try {
+			/*
+			 * HttpSession session = request.getSession(); LoginResponse userObj =
+			 * (LoginResponse) session.getAttribute("UserDetail"); Date date = new Date();
+			 * SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			 * SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+			 * VpsImageUpload upload = new VpsImageUpload();
+			 */
+			String empId = request.getParameter("empId");
+			String password = request.getParameter("password");
+
+			Boolean ret = false;
+
+			 
+
+			if (ret == false) {
+
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+				map.add("empId", empId);
+				map.add("password", password);
+				Info info = Constants.getRestTemplate().postForObject(Constants.url + "/updateUserPass", map, Info.class);
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:/showCompanyList";
+	}
+
 
 	@RequestMapping(value = "/fileUpload", method = RequestMethod.GET)
 	public ModelAndView fileUpload(Locale locale, Model model) {

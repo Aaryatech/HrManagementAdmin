@@ -76,6 +76,7 @@ public class KraKpiController {
 
 						  employeeInfoList.get(i).setEmpMname(FormValidation.Encrypt(String.valueOf(employeeInfoList.get(i).getEmpId())));
 						  employeeInfoList.get(i).setEmpDeptName(FormValidation.Encrypt(String.valueOf(finYrId)));
+						  
 
 		  				}
 					  System.err.println("emp List final  is:"+employeeInfoList.toString());
@@ -95,36 +96,35 @@ public class KraKpiController {
 		
 	}
 
-	@RequestMapping(value = "/empInfoCountList", method = RequestMethod.GET)
-	public @ResponseBody List<GetEmpKraKpiCount> empInfoCountList(HttpServletRequest request, HttpServletResponse response) {
-
-		  List<GetEmpKraKpiCount> employeeInfoList=new ArrayList<GetEmpKraKpiCount>();
-		try {
-			
-		
-			int status=Integer.parseInt(request.getParameter("status"));
-			int finYrId=Integer.parseInt(request.getParameter("finYrId"));
-			
-			  MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			  map.add("status",status);
-			  map.add("finYrId",finYrId);
-			   
-			  GetEmpKraKpiCount[] employeeInfo = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpKraKpiCount",map,
-					  GetEmpKraKpiCount[].class);
-			   
-			  employeeInfoList = new ArrayList<GetEmpKraKpiCount>(Arrays.asList(employeeInfo));
-			  for (int i = 0; i < employeeInfoList.size(); i++) {
-
-				  employeeInfoList.get(i).setEmpMname(FormValidation.Encrypt(String.valueOf(employeeInfoList.get(i).getEmpId())));
-  				}
-			  System.err.println("emp List is:"+employeeInfoList.toString());
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return employeeInfoList;
-	}
-	  
+	/*
+	 * @RequestMapping(value = "/empInfoCountList", method = RequestMethod.GET)
+	 * public @ResponseBody List<GetEmpKraKpiCount>
+	 * empInfoCountList(HttpServletRequest request, HttpServletResponse response) {
+	 * 
+	 * List<GetEmpKraKpiCount> employeeInfoList=new ArrayList<GetEmpKraKpiCount>();
+	 * try {
+	 * 
+	 * 
+	 * int status=Integer.parseInt(request.getParameter("status")); int
+	 * finYrId=Integer.parseInt(request.getParameter("finYrId"));
+	 * 
+	 * MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+	 * map.add("status",status); map.add("finYrId",finYrId);
+	 * 
+	 * GetEmpKraKpiCount[] employeeInfo =
+	 * Constants.getRestTemplate().postForObject(Constants.url +
+	 * "/getEmpKraKpiCount",map, GetEmpKraKpiCount[].class);
+	 * 
+	 * employeeInfoList = new
+	 * ArrayList<GetEmpKraKpiCount>(Arrays.asList(employeeInfo)); for (int i = 0; i
+	 * < employeeInfoList.size(); i++) {
+	 * 
+	 * employeeInfoList.get(i).setEmpMname(FormValidation.Encrypt(String.valueOf(
+	 * employeeInfoList.get(i).getEmpId()))); }
+	 * System.err.println("emp List is:"+employeeInfoList.toString());
+	 * 
+	 * } catch (Exception e) { e.printStackTrace(); } return employeeInfoList; }
+	 */
 	@RequestMapping(value = "/showAddKra", method = RequestMethod.GET)
 	public ModelAndView showAddKra(HttpServletRequest request, HttpServletResponse response) {
 		
@@ -429,7 +429,7 @@ public class KraKpiController {
 	  
 		@RequestMapping(value = "/showAddKraReview", method = RequestMethod.GET)
 		public ModelAndView showAddKraReview(HttpServletRequest request, HttpServletResponse response) {
-			
+			String empId=null;int yrd=0;
 			ModelAndView model = new ModelAndView("krakpi/addKraReview");
 			HttpSession session = request.getSession();
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
@@ -442,7 +442,11 @@ public class KraKpiController {
 				map.add("kraId", kraId);
 				editKra = Constants.getRestTemplate().postForObject(Constants.url + "/getKraByKraId", map,
 						Kra.class);
+				editKra.setExVar3(FormValidation.Encrypt(String.valueOf(editKra.getEmpId())));
+				editKra.setExVar2(FormValidation.Encrypt(String.valueOf(editKra.getYearId())));
+ 				
 				model.addObject("editKra", editKra);
+				
 				//
 				  map = new LinkedMultiValueMap<>();
 				map.add("empId", editKra.getEmpId());
