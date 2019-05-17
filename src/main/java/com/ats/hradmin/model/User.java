@@ -38,16 +38,6 @@ public class User {
  	
  	private boolean error;
 
-
-	public boolean isError() {
-		return error;
-	}
-
-	public void setError(boolean error) {
-		this.error = error;
-	}
-
-
 	public int getUserId() {
 		return userId;
 	}
@@ -72,7 +62,6 @@ public class User {
 		this.empTypeId = empTypeId;
 	}
 
-	
 	public String getLocId() {
 		return locId;
 	}
@@ -177,21 +166,23 @@ public class User {
 		this.exVar3 = exVar3;
 	}
 
+	public boolean isError() {
+		return error;
+	}
+
+	public void setError(boolean error) {
+		this.error = error;
+	}
+
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", empId=" + empId + ", empTypeId=" + empTypeId + ", locId=" + locId
 				+ ", userName=" + userName + ", userPwd=" + userPwd + ", delStatus=" + delStatus + ", isActive="
 				+ isActive + ", makerUserId=" + makerUserId + ", makerEnterDatetime=" + makerEnterDatetime + ", exInt1="
 				+ exInt1 + ", exInt2=" + exInt2 + ", exInt3=" + exInt3 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2
-				+ ", exVar3=" + exVar3 + ", getUserId()=" + getUserId() + ", getEmpId()=" + getEmpId()
-				+ ", getEmpTypeId()=" + getEmpTypeId() + ", getLocId()=" + getLocId() + ", getUserName()="
-				+ getUserName() + ", getUserPwd()=" + getUserPwd() + ", getDelStatus()=" + getDelStatus()
-				+ ", getIsActive()=" + getIsActive() + ", getMakerUserId()=" + getMakerUserId()
-				+ ", getMakerEnterDatetime()=" + getMakerEnterDatetime() + ", getExInt1()=" + getExInt1()
-				+ ", getExInt2()=" + getExInt2() + ", getExInt3()=" + getExInt3() + ", getExVar1()=" + getExVar1()
-				+ ", getExVar2()=" + getExVar2() + ", getExVar3()=" + getExVar3() + ", getClass()=" + getClass()
-				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+				+ ", exVar3=" + exVar3 + ", error=" + error + "]";
 	}
-	
+ 
+ 	
 	
 }

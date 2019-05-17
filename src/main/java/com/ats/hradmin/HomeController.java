@@ -116,17 +116,11 @@ public class HomeController {
 			  MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			  map.add("empId",empId);
 			  map.add("password",password);
-			  try {
+			  
 				    user1 = Constants.getRestTemplate().postForObject(Constants.url + "/getUserInfoByEmpIdPass", map, User.class);
-				//System.err.println("info is "+info.toString());
+				System.err.println("info is "+ user1);
 				
-				    
-			  }
-			  catch(Exception e){
-				  user1.setEmpId(0);
-				
-				  System.err.println("user found "+user1.toString());
-			  }
+				   
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -164,7 +158,7 @@ public class HomeController {
 			e.printStackTrace();
 		}
 
-		return "redirect:/showCompanyList";
+		return "redirect:/changePass";
 	}
 
 
