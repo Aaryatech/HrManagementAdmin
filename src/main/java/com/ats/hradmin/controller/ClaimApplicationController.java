@@ -48,6 +48,7 @@ public class ClaimApplicationController {
 	ClaimTemp ct=new ClaimTemp();
 	ArrayList<String> a =new ArrayList<String>();
 	List<MultipartFile> imgList=new ArrayList<MultipartFile>();
+	List<ClaimProof> proofList=new ArrayList<ClaimProof>();
 	
 	@RequestMapping(value = "/showApplyForClaim", method = RequestMethod.GET)
 	public ModelAndView showEmpList(HttpServletRequest request, HttpServletResponse response) {
@@ -604,7 +605,7 @@ public class ClaimApplicationController {
 		ModelAndView model = new ModelAndView("claim/claimProof");
 		
 		try {
-
+			proofList=new ArrayList<ClaimProof>();
 			String claimDate = request.getParameter("claimDate");
 			int projectTypeId =Integer.parseInt( request.getParameter("projectTypeId"));
 			int claimTypeId =Integer.parseInt( request.getParameter("claimTypeId"));
@@ -636,16 +637,42 @@ public class ClaimApplicationController {
 			HttpServletResponse response) {
 
 		try {
+			HttpSession session = request.getSession();
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
 			Date date = new Date();
+			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+			 
 			String imageName = new String();
 
 			System.out.println("sdfsdfsdf" + file.get(0).getOriginalFilename());
-			
+			 VpsImageUpload upload = new VpsImageUpload();
+			 
 			  imageName = dateTimeInGMT.format(date)+"_"+file.get(0).getOriginalFilename();
 			 
-			  imgList.add(file.get(0));
+			 
+				 System.out.println("sdfsdfsdf" + file.get(0).getOriginalFilename());
+				imageName = dateTimeInGMT.format(date) + "_" + file.get(0).getOriginalFilename();
+
+				
+				ClaimProof company = new ClaimProof();
+				 
+				company.setIsActive(1);
+				company.setDelStatus(1);
+				company.setMakerUserId(userObj.getUserId());
+				company.setMakerEnterDatetime(sf.format(date));
+				
+				try {
+					upload.saveUploadedImge(file.get(0), Constants.imageSaveUrl, imageName, Constants.values, 0, 0,
+							0, 0, 0);
+					company.setCpDocPath(imageName);
+				} catch (Exception e) {
+					// TODO: handle exception
+					e.printStackTrace();
+				}
+				proofList.add(company);
+			  
 				System.err.println("temp claim imaglist:::"+imgList.toString());
 			
 
@@ -768,37 +795,16 @@ public class ClaimApplicationController {
 			
 			/////////////////proof image
            System.err.println("img list final ::"+imgList.toString());
-			for(int i=0;i<imgList.size();i++) {
+			for(int i=0;i<proofList.size();i++) {
 				
-				String imageName = new String();
-				 System.out.println("sdfsdfsdf" + imgList.get(i).getOriginalFilename());
-				imageName = dateTimeInGMT.format(date) + "_" + imgList.get(i).getOriginalFilename();
-
-				
-				ClaimProof company = new ClaimProof();
-				
-				company.setCpDocRemark(remark);
-				company.setClaimId(res.getClaimId());				
-				company.setIsActive(1);
-				company.setDelStatus(1);
-				company.setMakerUserId(userObj.getUserId());
-				company.setMakerEnterDatetime(sf.format(date));
-				
-				try {
-					upload.saveUploadedImge(imgList.get(i), Constants.imageSaveUrl, imageName, Constants.values, 0, 0,
-							0, 0, 0);
-					company.setCpDocPath(imageName);
-				} catch (Exception e) {
-					// TODO: handle exception
-					e.printStackTrace();
-				}
-
-				ClaimProof res1 = Constants.getRestTemplate().postForObject(Constants.url + "/saveClaimProof", company,
-						ClaimProof.class);
-				if(res1.isError()==false) {
-				System.out.println("claim proof saved success");	
-				}
+				proofList.get(i).setClaimId(res.getClaimId());
+ 
 			}
+			List<ClaimProof> res1 = Constants.getRestTemplate().postForObject(Constants.url + "/saveClaimProof", proofList,
+					List.class);
+			
+			System.err.println("res1 claim is"+res1.toString());
+		
 				
 		} catch (Exception e) {
 			e.printStackTrace();
