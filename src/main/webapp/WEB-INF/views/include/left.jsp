@@ -174,9 +174,9 @@
 
 			</c:forEach>
 
-			<li class="nav-item"><a class="nav-link"
+			<%-- <li class="nav-item"><a class="nav-link"
 				href="${pageContext.request.contextPath}/logout"><i
-					class="icon-width"></i> <span>Logout</span></a></li>
+					class="icon-width"></i> <span>Logout</span></a></li> --%>
 			<!-- /main -->
 
 

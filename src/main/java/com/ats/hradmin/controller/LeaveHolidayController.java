@@ -239,7 +239,10 @@ public class LeaveHolidayController {
 			editHoliday = Constants.getRestTemplate().postForObject(Constants.url + "/getHolidayById", map,
 					Holiday.class);
 			model.addObject("editHoliday", editHoliday);
-
+			System.out.println(editHoliday);
+			editHoliday.setHolidayFromdt(DateConvertor.convertToDMY(editHoliday.getHolidayFromdt()));
+			editHoliday.setHolidayTodt(DateConvertor.convertToDMY(editHoliday.getHolidayTodt()));
+			System.out.println(editHoliday);
 			List<Integer> locIdList = Stream.of(editHoliday.getLocId().split(",")).map(Integer::parseInt)
 					.collect(Collectors.toList());
 
