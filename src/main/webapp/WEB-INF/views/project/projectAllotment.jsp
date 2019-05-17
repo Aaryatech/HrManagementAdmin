@@ -144,6 +144,18 @@
 											Location : </label> <label class="col-form-label col-lg-3">
 											${projectInfo.locName}</label>
 									</div>
+									
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2"> Estimated Start Date
+											: </label> <label class="col-form-label col-lg-3">
+											${projectInfo.projectEstStartdt}</label> <label
+											class="col-form-label col-lg-2"> Estimated End Date : </label> <label
+											class="col-form-label col-lg-3">
+											${projectInfo.projectEstEnddt} <input id="projectId"
+											name="projectId" value="${projectInfo.projectId}"
+											type="hidden">
+										</label>
+									</div>
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="catId">
@@ -229,21 +241,27 @@
 									<br>
 
 									<div class="row">
-										<div class="col-md-6">
+										<div class="col-md-5">
 											<table
 												class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic1  datatable-button-print-columns1"
 												id="printtable1">
 												<thead>
 													<tr class="bg-blue">
-														<th width="10%">Sr. No.</th>
+														<th width="20%">Sr. No. <input type="checkbox"
+															name="selAll" id="selAll" /></th>
 														<th>Employee Name</th>
-														<th width="10%" style="text-align: center;">Action</th>
+														<th>Available</th>
+														<th width="15%" style="text-align: center;">Action</th>
 													</tr>
 												</thead>
 												<tbody>
 
 												</tbody>
 											</table>
+										</div>
+										<div class="col-md-1" style="text-align: center;">
+											<a onclick="allocateMultipleEmployee()"><i
+												class="icon-drag-right "></i></a>
 										</div>
 										<div class="col-md-6">
 											<table
@@ -252,9 +270,11 @@
 												<thead>
 													<tr class="bg-blue">
 														<th width="10%">Sr. No.</th>
-														<th>Employee Name</th>
+														<th width="30%">Employee Name</th>
 														<th width="20%">From Date</th>
 														<th width="20%">To Date</th>
+														<th width="10%">Partial/Full</th>
+														<th width="10%">Hours</th>
 														<th width="10%" style="text-align: center;">Action</th>
 													</tr>
 												</thead>
@@ -269,6 +289,15 @@
 															<td>${bsyList.empFname}&nbsp;${bsyList.empSname}</td>
 															<td>${bsyList.pallotFromdt}</td>
 															<td>${bsyList.pallotTodt}</td>
+															<td><c:choose>
+																	<c:when test="${bsyList.exInt1==1}">
+																Partial
+																</c:when>
+																	<c:otherwise>
+																Full
+																</c:otherwise>
+																</c:choose></td>
+															<td>${bsyList.pallotDailyHrs}</td>
 															<td>
 																<%-- <a onclick="deleteEmp(${count.index})"><i
 																	class="icon-trash"></i></a> --%>
@@ -315,6 +344,18 @@
 	<!-- /page content -->
 	<script type="text/javascript">
 		// Single picker
+
+		$(document).ready(
+				function() {
+					//$('#bootstrap-data-table-export').DataTable();
+
+					$("#selAll").click(
+							function() {
+								$('#printtable1 tbody input[type="checkbox"]')
+										.prop('checked', this.checked);
+							});
+				});
+
 		$('.datepickerclass').daterangepicker({
 			singleDatePicker : true,
 			selectMonths : true,
@@ -423,23 +464,39 @@
 
 									for (var i = 0; i < data.length; i++) {
 
+										var partialFull;
+
+										if (data[i].exInt1 == 1) {
+											partialFull = "Partial";
+										} else {
+											partialFull = "Full";
+										}
 										var tr_data = '<tr>'
 												+ '<td  >'
 												+ (i + 1)
+												+ ' '
+												+ '<input type="checkbox" class="chk" name="empIds" id="empIds'+i+'" value="'+i+'" data-empFname="'+data[i].empFname+'" data-empSname="'+data[i].empSname+'"  />'
 												+ '</td>'
 												+ '<td  >'
 												+ data[i].empFname
 												+ ' '
 												+ data[i].empSname
 												+ '</td>'
-												+ '<td  >  <a  onclick="fillEmpInfo('
-												+ i
-												+ ','
+												+ '<td  >'
+												+ partialFull
+												+ '</td>'
+												+ '<td  >  <a onclick="getEmpHistory('
 												+ data[i].empId
-												+ ')"><i class="icon-drag-right "></i></a></td>'
+												+ ');"><i class="fas fa-list"></i></a></td>'
 												+ '</tr>';
 										$('#printtable1' + ' tbody').append(
 												tr_data);
+										
+										/* <a  onclick="fillEmpInfo('
+											+ i
+											+ ','
+											+ data[i].empId
+											+ ')"><i class="icon-drag-right "></i></a>&nbsp; */
 									}
 
 								});
@@ -472,8 +529,15 @@
 				hours = 9;
 			}
 
-			if (selectWorkType == 2 && worktime == 1) {
+			/* if (selectWorkType == 2 && worktime == 1) {
 				flag = 1;
+				$("#error_fullTimeError").show();
+
+			} */
+
+			if (empId == '-1') {
+				flag = 1;
+				$("#error_fullTimeError").html("Select atleast one employee. ");
 				$("#error_fullTimeError").show();
 
 			}
@@ -496,21 +560,31 @@
 									$("#printtable1 tbody").empty();
 
 									for (var i = 0; i < data.freeList.length; i++) {
+										var partialFull;
+
+										if (data.freeList[i].exInt1 == 1) {
+											partialFull = "Partial";
+										} else {
+											partialFull = "Full";
+										}
 
 										var tr_data = '<tr>'
 												+ '<td  >'
 												+ (i + 1)
+												+ ' '
+												+ '<input type="checkbox" class="chk" name="empIds" id="empIds'+i+'" value="'+i+'" data-empFname="'+data.freeList[i].empFname+'" data-empSname="'+data.freeList[i].empSname+'"   />'
 												+ '</td>'
 												+ '<td  >'
 												+ data.freeList[i].empFname
 												+ ' '
 												+ data.freeList[i].empSname
 												+ '</td>'
-												+ '<td  >  <a  onclick="fillEmpInfo('
-												+ i
-												+ ','
+												+ '<td  >'
+												+ partialFull
+												+ '</td>'
+												+ '<td  >   <a onclick="getEmpHistory('
 												+ data.freeList[i].empId
-												+ ')"><i class="icon-drag-right "></i></a></td>'
+												+ ');"><i class="fas fa-list"></i></a></td>'
 												+ '</tr>';
 										$('#printtable1' + ' tbody').append(
 												tr_data);
@@ -521,6 +595,7 @@
 									for (var i = 0; i < data.bsyList.length; i++) {
 
 										var atn;
+										var partialFull;
 										if (data.bsyList[i].pallotId == 0) {
 											atn = '<td  >  <a  onclick="deleteEmp('
 													+ i
@@ -528,24 +603,77 @@
 										} else {
 											atn = '<td  >  </td>';
 										}
-										var tr_data = '<tr>' + '<td  >'
-												+ (i + 1) + '</td>' + '<td  >'
+										if (data.bsyList[i].exInt1 == 1) {
+											partialFull = 'Partial';
+										} else {
+											partialFull = 'Full';
+										}
+										var tr_data = '<tr>'
+												+ '<td  >'
+												+ (i + 1)
+												+ '</td>'
+												+ '<td  >'
 												+ data.bsyList[i].empFname
 												+ ' '
 												+ data.bsyList[i].empSname
-												+ '</td>' + '<td  >'
+												+ '</td>'
+												+ '<td  >'
 												+ data.bsyList[i].pallotFromdt
-												+ '</td>' + '<td  >'
+												+ '</td>'
+												+ '<td  >'
 												+ data.bsyList[i].pallotTodt
+												+ '</td>'
+												+ '<td  >'
+												+ partialFull
+												+ '</td>'
+												+ '<td  >'
+												+ data.bsyList[i].pallotDailyHrs
 												+ '</td>' + atn + '</tr>';
 										$('#printtable2' + ' tbody').append(
 												tr_data);
 									}
 
 									$('#modal_full').modal('hide');
-
+									 document.getElementById("selAll").checked = false;
 								});
 			}
+
+		}
+
+		function allocateMultipleEmployee() {
+
+			document.getElementById("fulltimeWorkType").checked = true;
+			document.getElementById("hours").value = "";
+			$('#hoursDiv').hide();
+			$("#error_hours").hide();
+			$('#historyTableDiv').modal('hide');
+			$("#error_fullTimeError").hide();
+			$('#modal_full').modal('show');
+			$("#tempallocatedTable tbody").empty();
+
+			var index = "-1";
+			$('.chk:checkbox:checked')
+					.each(
+							function(i) {
+								var val = $(this).val();
+
+								if (val != 'on') {
+									var empFname = $("#empIds" + val).attr(
+											'data-empFname');
+									var empSname = $("#empIds" + val).attr(
+											'data-empSname');
+
+									var tr_data = '<tr>' + '<td  >' + (i + 1)
+											+ '</td>' + '<td  >' + empFname
+											+ ' ' + empSname + '</td>'
+											+ '</tr>';
+									$('#tempallocatedTable' + ' tbody').append(
+											tr_data);
+									index = index + "," + val;
+								}
+							});
+
+			document.getElementById("tempEmpId").value = index;
 
 		}
 
@@ -555,7 +683,7 @@
 			document.getElementById("hours").value = "";
 			$('#hoursDiv').hide();
 			$("#error_hours").hide();
-			$("#historyTableDiv").hide();
+			$('#historyTableDiv').modal('hide');
 			$("#error_fullTimeError").hide();
 			document.getElementById("tempEmpId").value = index;
 			document.getElementById("tempEmployeeId").value = empId;
@@ -563,10 +691,10 @@
 
 		}
 
-		function getEmpHistory() {
+		function getEmpHistory(empId) {
 
-			$("#historyTableDiv").show();
-			var empId = document.getElementById("tempEmployeeId").value;
+			$('#historyTableDiv').modal('show');
+			//var empId = document.getElementById("tempEmployeeId").value;
 
 			$.getJSON('${getEmployeeAllocatedHistory}', {
 
@@ -588,11 +716,11 @@
 						halfFull = "Full";
 					}
 					var tr_data = '<tr>' + '<td  >' + (i + 1) + '</td>'
-							+ '<td  >' + data[i].projectTitle + '</td>' 
-							+'<td  >' + halfFull + '</td>' + '<td  >'
+							+ '<td  >' + data[i].projectTitle + '</td>'
+							+ '<td  >' + halfFull + '</td>' + '<td  >'
 							+ data[i].pallotFromdt + '</td>' + '<td  >'
-							+ data[i].pallotTodt + '</td>' 
-							+ '<td  >' + data[i].pallotDailyHrs + '</td>' + '</tr>';
+							+ data[i].pallotTodt + '</td>' + '<td  >'
+							+ data[i].pallotDailyHrs + '</td>' + '</tr>';
 					$('#historyTable' + ' tbody').append(tr_data);
 				}
 
@@ -611,48 +739,86 @@
 		}
 		function deleteEmp(empId) {
 
-			$.getJSON('${deleteEmp}', {
+			$
+					.getJSON(
+							'${deleteEmp}',
+							{
 
-				empId : empId,
-				ajax : 'true',
+								empId : empId,
+								ajax : 'true',
 
-			}, function(data) {
+							},
+							function(data) {
 
-				$("#printtable1 tbody").empty();
+								$("#printtable1 tbody").empty();
 
-				for (var i = 0; i < data.freeList.length; i++) {
+								for (var i = 0; i < data.freeList.length; i++) {
 
-					var tr_data = '<tr>' + '<td  >' + (i + 1) + '</td>'
-							+ '<td  >' + data.freeList[i].empFname + ' '
-							+ data.freeList[i].empSname + '</td>'
-							+ '<td  >  <a  onclick="fillEmpInfo(' + i + ','
-							+ data.freeList[i].empId
-							+ ')"><i class="icon-drag-right "></i></a></td>'
-							+ '</tr>';
-					$('#printtable1' + ' tbody').append(tr_data);
-				}
+									if (data.freeList[i].exInt1 == 1) {
+										partialFull = "Partial";
+									} else {
+										partialFull = "Full";
+									}
 
-				$("#printtable2 tbody").empty();
+									var tr_data = '<tr>'
+											+ '<td  >'
+											+ (i + 1)
+											+ ' '
+											+ '<input type="checkbox" class="chk" name="empIds" id="empIds'+i+'" value="'+i+'" data-empFname="'+data.freeList[i].empFname+'" data-empSname="'+data.freeList[i].empSname+'"   />'
+											+ '</td>'
+											+ '<td  >'
+											+ data.freeList[i].empFname
+											+ ' '
+											+ data.freeList[i].empSname
+											+ '</td>'
+											+ '<td  >'
+											+ partialFull
+											+ '</td>'
+											+ '<td  >   <a onclick="getEmpHistory('
+											+ data.freeList[i].empId
+											+ ');"><i class="fas fa-list"></i></a></td>'
+											+ '</tr>';
+									$('#printtable1' + ' tbody')
+											.append(tr_data);
+								}
 
-				for (var i = 0; i < data.bsyList.length; i++) {
+								$("#printtable2 tbody").empty();
 
-					var atn;
-					if (data.bsyList[i].pallotId == 0) {
-						atn = '<td  >  <a  onclick="deleteEmp(' + i
-								+ ')"><i class="icon-trash"></i></a></td>';
-					} else {
-						atn = '<td  >  </td>';
-					}
-					var tr_data = '<tr>' + '<td  >' + (i + 1) + '</td>'
-							+ '<td  >' + data.bsyList[i].empFname + ' '
-							+ data.bsyList[i].empSname + '</td>' + '<td  >'
-							+ data.bsyList[i].pallotFromdt + '</td>' + '<td  >'
-							+ data.bsyList[i].pallotTodt + '</td>' + atn
-							+ '</tr>';
-					$('#printtable2' + ' tbody').append(tr_data);
-				}
+								for (var i = 0; i < data.bsyList.length; i++) {
 
-			});
+									var atn;
+									var partialFull;
+									if (data.bsyList[i].pallotId == 0) {
+										atn = '<td  >  <a  onclick="deleteEmp('
+												+ i
+												+ ')"><i class="icon-trash"></i></a></td>';
+									} else {
+										atn = '<td  >  </td>';
+									}
+
+									if (data.bsyList[i].exInt1 == 1) {
+										partialFull = 'Partial';
+									} else {
+										partialFull = 'Full';
+									}
+
+									var tr_data = '<tr>' + '<td  >' + (i + 1)
+											+ '</td>' + '<td  >'
+											+ data.bsyList[i].empFname + ' '
+											+ data.bsyList[i].empSname
+											+ '</td>' + '<td  >'
+											+ data.bsyList[i].pallotFromdt
+											+ '</td>' + '<td  >'
+											+ data.bsyList[i].pallotTodt
+											+ '</td>' + '<td  >' + partialFull
+											+ '</td>' + '<td  >'
+											+ data.bsyList[i].pallotDailyHrs
+											+ '</td>' + atn + '</tr>';
+									$('#printtable2' + ' tbody')
+											.append(tr_data);
+								}
+
+							});
 
 		}
 	</script>
@@ -761,36 +927,31 @@
 						</div>
 					</div>
 
-					<div class="modal-footer">
+
+					<table
+						class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic1  datatable-button-print-columns1"
+						id="tempallocatedTable">
+						<thead>
+							<tr class="bg-blue">
+								<th width="10%">Sr. No.</th>
+								<th>Employee Name</th>
+							</tr>
+						</thead>
+						<tbody>
+
+						</tbody>
+					</table>
+					<br>
+
+					<div class="modal-footer" style="text-align: center;">
 						<button type="button" class="btn bg-primary" data-dismiss="modal">Cancel</button>
-						<button type="button" class="btn bg-primary"
-							onclick="getEmpHistory()">History</button>
+						<!-- <button type="button" class="btn bg-primary"
+							onclick="getEmpHistory()">History</button> -->
 						<button type="button" class="btn bg-primary" onclick="moveEmp()">Add</button>
 						<input id="tempEmpId" name="tempEmpId" type="hidden"> <input
 							id="tempEmployeeId" name="tempEmployeeId" type="hidden">
 					</div>
 
-					<div class="row" id="historyTableDiv" style="display: none;">
-
-						<table
-							class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic1  datatable-button-print-columns1"
-							id="historyTable">
-							<thead>
-								<tr class="bg-blue">
-									<th width="10%">Sr. No.</th>
-									<th>Project Name</th>
-									<th width="10%">Half/Full</th>
-									<th width="10%">From Date</th>
-									<th width="10%">To Date</th>
-									<th width="10%">Hours</th>
-								</tr>
-							</thead>
-							<tbody>
-
-							</tbody>
-						</table>
-
-					</div>
 				</div>
 
 
@@ -798,6 +959,41 @@
 		</div>
 	</div>
 	<!-- /full width modal -->
+
+	<div class="modal fade" data-backdrop="false" id="historyTableDiv">
+		<div class="modal-dialog modal-full">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Employee History</h5>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<div class="modal-body">
+
+					<table
+						class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic1  datatable-button-print-columns1"
+						id="historyTable">
+						<thead>
+							<tr class="bg-blue">
+								<th width="10%">Sr. No.</th>
+								<th>Project Name</th>
+								<th width="10%">Half/Full</th>
+								<th width="10%">From Date</th>
+								<th width="10%">To Date</th>
+								<th width="10%">Hours</th>
+							</tr>
+						</thead>
+						<tbody>
+
+						</tbody>
+					</table>
+
+				</div>
+
+
+			</div>
+		</div>
+	</div>
 	<!-- /scrollable modal -->
 
 </body>
