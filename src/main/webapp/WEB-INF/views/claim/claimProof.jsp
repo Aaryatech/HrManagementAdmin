@@ -91,11 +91,11 @@
 							<div class="card-header header-elements-inline">
 								<h6 class="card-title">Upload Documents</h6>
 								<div class="header-elements">
-									<div class="list-icons">
+									<!-- <div class="list-icons">
 										<a class="list-icons-item" data-action="collapse"></a> <a
 											class="list-icons-item" data-action="reload"></a> <a
 											class="list-icons-item" data-action="remove"></a>
-									</div>
+									</div> -->
 								</div>
 							</div>
 
@@ -120,14 +120,14 @@
 
 											</form>
 										</div>
-										</div>
+										</div><br>
 							
 									
 											<form
 									action="${pageContext.request.contextPath}/uploadClaimProof"
 									id="submitInsertLeave" method="post">
-									<div class="form-group row mb-0">
-										<div class="col-lg-10 ml-lg-auto">
+									 
+										<div class="col-md-12" style="text-align: center;">
 
 											<button type="submit" class="btn bg-blue ml-3 legitRipple"
 												id="submtbtn">
@@ -135,9 +135,9 @@
 											</button>
 											
 											<a href="${pageContext.request.contextPath}/showApplyForClaim"><button
-										type="button" class="btn btn-primary"><i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp; Cancel</button></a>
+										type="button" class="btn btn-primary">Cancel</button></a>
 										</div>
-									</div>
+									 
 									</form>
 									
 								
