@@ -73,7 +73,7 @@
 						<div class="card">
 							<div class="card-header header-elements-inline">
 								<h6 class="card-title">Edit Employee</h6>
-							<!-- 	<div class="header-elements">
+								<!-- 	<div class="header-elements">
 									<div class="list-icons">
 										<a class="list-icons-item" data-action="collapse"></a>
 									</div>
@@ -121,7 +121,8 @@
 									id="SubmitEditEmp" method="post" enctype="multipart/form-data">
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="empCode">
-											Employee Code <span style="color:red">* </span> : </label>
+											Employee Code <span style="color: red">* </span> :
+										</label>
 										<div class="col-lg-2">
 											<input type="text" class="form-control"
 												placeholder="Employee Code" id="empCode" name="empCode"
@@ -136,25 +137,8 @@
 									<input type="hidden" id="url" value='${weighImageUrl}' /> <input
 										type="hidden" name="imageName" id="imageName">
 
+
 									<%-- <div class="form-group row">
-										<label class="col-form-label col-lg-2" for="profilePic">
-											Profile Pic : </label>
-										<div class="col-lg-6">
-											<div class="uniform-uploader">
-												<input type="file" name="profilePic" value="${editEmp.empPhoto}"
-													class="form-input-styled" data-fouc="" id="profilePic"><span
-													class="filename" style="user-select: none;">No file
-													selected</span><span class="action btn bg-blue legitRipple"
-													style="user-select: none;">Choose File</span>
-											</div>
-										</div>
-										
-										<div class="col-lg-2">
-										<img id="image1" name="image1"
-											alt="l" height="50px;" width="50px;">
-									</div>
-									</div> --%>
-									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="profilePic">Profile
 											Pic :</label>
 										<div class="col-lg-6">
@@ -168,12 +152,48 @@
 											<img id="image1" name="image1" alt="l" height="50px;"
 												width="50px;">
 										</div>
+									</div> --%>
+
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="profilePic">
+											Profile Pic :</label>
+										<div class="col-lg-10">
+											<div class="input-group-btn  ">
+
+												<c:if test="${not empty editEmp.empPhoto}">
+													<img src="${imageUrl}${editEmp.empPhoto}"
+														style="width: 200px; height: auto;">
+												</c:if>
+
+												<span class="filename" style="user-select: none1;"><img
+													id="temppreviewimageki1" name="image1"
+													class="temppreviewimageki1" alt="l"
+													style="width: 200px; height: auto; display: none"> </span>
+												<!-- image-preview-clear button -->
+												<button type="button" title="Clear selected files"
+													class="btn btn-default btn-secondary fileinput-remove fileinput-remove-button legitRipple image-preview-clear image-preview-clear1"
+													id="1" style="display: none;">
+													<i class="icon-cross2 font-size-base mr-2"></i> Clear
+												</button>
+
+												<div class="btn btn-primary btn-file legitRipple">
+													<i class="icon-file-plus"></i> <span class="hidden-xs">Browse</span><input
+														type="file" class="file-input browseimage browseimage1"
+														data-fouc="" id="1" name="profilePic"
+														accept=".jpg,.png,.gif">
+												</div>
+											</div>
+
+
+										</div>
+
 									</div>
 
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="fname">
-											Employee Name <span style="color:red">* </span>: </label>
+											Employee Name <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-3">
 											<input type="text" class="form-control  "
 												placeholder="First Name" id="fname" name="fname"
@@ -209,7 +229,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="locId">
-											Location <span style="color:red">* </span>: </label>
+											Location <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<select name="locId" data-placeholder="Select Location"
 												id="locId"
@@ -241,7 +262,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="catId">
-											Category <span style="color:red">* </span>: </label>
+											Category <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<select name="catId" data-placeholder="Select Category"
 												id="catId"
@@ -268,7 +290,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="typeId">
-											Type <span style="color:red">* </span>: </label>
+											Type <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<select name="typeId" data-placeholder="Select Type"
 												id="typeId"
@@ -296,7 +319,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="deptId">
-											Department <span style="color:red">* </span>: </label>
+											Department <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<select name="deptId" data-placeholder="Select Department"
 												id="deptId"
@@ -324,7 +348,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="tempAdd">Temporary
-											Address <span style="color:red">* </span>: </label>
+											Address <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<textarea rows="3" cols="3" class="form-control"
 												placeholder="Temporary Address" onchange="trim(this)"
@@ -349,7 +374,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="permntAdd">Permanent
-											Address <span style="color:red">* </span>: </label>
+											Address <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<textarea rows="3" cols="3" class="form-control"
 												placeholder="Permanent Address" onchange="trim(this)"
@@ -375,7 +401,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="select2">Select
-											Blood Group <span style="color:red">* </span>:</label>
+											Blood Group <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<select name="bloodGrp" data-placeholder="Please Select"
 												id="bloodGrp"
@@ -409,30 +436,32 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="mobile1">Contact
-											No <span style="color:red">* </span>: </label>
+											No <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
 												placeholder="Contact No." id="mobile1" name="mobile1"
-												value="${editEmp.empMobile1}"  
-												autocomplete="off" onchange="trim(this)" maxlength="10">
-											<span class="validation-invalid-label" id="error_mobile1"
+												value="${editEmp.empMobile1}" autocomplete="off"
+												onchange="trim(this)" maxlength="10"> <span
+												class="validation-invalid-label" id="error_mobile1"
 												style="display: none;">This field is required.</span>
 										</div>
 
 										<label class="col-form-label col-lg-2" for="mobile2">Alternate
-											Contact No <span style="color:red">* </span>: </label>
+											Contact No <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
 												placeholder="Alternate Contact No." id="mobile2"
 												value="${editEmp.empMobile2}" name="mobile2"
-												autocomplete="off" onchange="trim(this)"
-												 f maxlength="10">
+												autocomplete="off" onchange="trim(this)" f maxlength="10">
 										</div>
 									</div>
 
 									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="email">Email <span style="color:red">* </span>
-											: </label>
+										<label class="col-form-label col-lg-2" for="email">Email
+											<span style="color: red">* </span> :
+										</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control" placeholder="Email"
 												id="email" name="email" value="${editEmp.empEmail}"
@@ -444,7 +473,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="emgContPrsn1">Emergency
-											Contact Person 1 <span style="color:red">* </span>: </label>
+											Contact Person 1 <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
 												placeholder="Emergency Contact Person" id="emgContPrsn1"
@@ -456,21 +486,22 @@
 
 
 										<label class="col-form-label col-lg-2" for="emgContNo1">Emergency
-											Contact No 1 <span style="color:red">* </span>:</label>
+											Contact No 1 <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
 												placeholder="Emergency Contact No." id="emgContNo1"
 												value="${editEmp.empEmergencyNo1}" name="emgContNo1"
-												autocomplete="off" onchange="trim(this)"
-												  maxlength="10"> <span
-												class="validation-invalid-label" id="error_emgContNo1"
+												autocomplete="off" onchange="trim(this)" maxlength="10">
+											<span class="validation-invalid-label" id="error_emgContNo1"
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="emgContPrsn2">Emergency
-											Contact Person 2 <span style="color:red">* </span>:</label>
+											Contact Person 2 <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
 												placeholder="Emergency Alternate Contact Person"
@@ -482,14 +513,14 @@
 										</div>
 
 										<label class="col-form-label col-lg-2" for="emgContNo2">Emergency
-											Contact No 2 <span style="color:red">* </span>: </label>
+											Contact No 2 <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
 												placeholder="Emergency Alternate Contact No."
 												id="emgContNo2" name="emgContNo2"
 												value="${editEmp.empEmergencyNo2}" autocomplete="off"
-												onchange="trim(this)"  
-												maxlength="10"> <span
+												onchange="trim(this)" maxlength="10"> <span
 												class="validation-invalid-label" id="error_emgContNo2"
 												style="display: none;">This field is required.</span>
 										</div>
@@ -497,7 +528,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="ratePerHr">
-											Employee Rate Per Hour <span style="color:red">* </span>: </label>
+											Employee Rate Per Hour <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control numbersOnly"
 												placeholder="Employee Rate Per Hour" id="ratePerHr"
@@ -510,7 +542,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="joiningDate">Joining
-											Date <span style="color:red">* </span>: </label>
+											Date <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control datepickerclass "
 												name="joiningDate" id="joiningDate"
@@ -522,7 +555,9 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="prevsExpYr">
-											Previous Experience in Year <span style="color:red">* </span>: </label>
+											Previous Experience in Year <span style="color: red">*
+										</span>:
+										</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control numbersOnly"
 												value="${editEmp.empPrevExpYrs}"
@@ -533,7 +568,9 @@
 										</div>
 
 										<label class="col-form-label col-lg-2" for="prevsExpMn">
-											Previous Experience in Month <span style="color:red">* </span> : </label>
+											Previous Experience in Month <span style="color: red">*
+										</span> :
+										</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control numbersOnly"
 												placeholder="Previous Experience in Month" id="prevsExpMn"
@@ -543,54 +580,56 @@
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
-									
-<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="comoffallowed">Is Working Today
-											<span style="color:red">* </span>:</label>
+
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="comoffallowed">Is
+											Working Today <span style="color: red">* </span>:
+										</label>
 										<div class="form-check form-check-inline">
 											<label class="form-check-label"> <input type="radio"
 												${editEmp.exInt1==1 ? 'checked' : ''}
-												class="form-check-input" name="isWorking"
-												id="isStructured" onclick="setDate(this.value)" checked value="1"> Yes
+												class="form-check-input" name="isWorking" id="isStructured"
+												onclick="setDate(this.value)" checked value="1"> Yes
 											</label>
 										</div>
 										<div class="form-check form-check-inline">
 											<label class="form-check-label"> <input type="radio"
 												${editEmp.exInt1==0 ? 'checked' : ''}
-												class="form-check-input" onclick="setDate(this.value)" name="isWorking"
-												id="isStructured" value="0"> No
+												class="form-check-input" onclick="setDate(this.value)"
+												name="isWorking" id="isStructured" value="0"> No
 											</label>
 										</div>
 									</div>
-									<div id="abc" style="display:none;">
-									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="leavingDate">Leaving
-											Date : </label>
-										<div class="col-lg-10">
-											<input type="text" class="form-control datepickerclass "
-												name="leavingDate" id="leavingDate"
-												value="${editEmp.empLeavingDate}" placeholder="Leaving Date">
+									<div id="abc" style="display: none;">
+										<div class="form-group row">
+											<label class="col-form-label col-lg-2" for="leavingDate">Leaving
+												Date : </label>
+											<div class="col-lg-10">
+												<input type="text" class="form-control datepickerclass "
+													name="leavingDate" id="leavingDate"
+													value="${editEmp.empLeavingDate}"
+													placeholder="Leaving Date">
+											</div>
 										</div>
 									</div>
-</div>
-<div id="xyz" style="display:none;">
+									<div id="xyz" style="display: none;">
 
-									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="lvngReson">
-											Leaving Reason : </label>
-										<div class="col-lg-10">
-											<textarea rows="3" cols="3" class="form-control"
-												placeholder="Leaving Reason" onchange="trim(this)"
-												id="lvngReson" name="lvngReson"> ${editEmp.empLeavingReason}</textarea>
+										<div class="form-group row">
+											<label class="col-form-label col-lg-2" for="lvngReson">
+												Leaving Reason : </label>
+											<div class="col-lg-10">
+												<textarea rows="3" cols="3" class="form-control"
+													placeholder="Leaving Reason" onchange="trim(this)"
+													id="lvngReson" name="lvngReson"> ${editEmp.empLeavingReason}</textarea>
 
 
+											</div>
 										</div>
 									</div>
-</div>
 
 									<div class="card-header header-elements-inline">
 										<h6 class="card-title">Edit User</h6>
-										
+
 									</div>
 
 									<div class="form-group row">
@@ -608,7 +647,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="upass">
-											User Password <span style="color:red">* </span> : </label>
+											User Password <span style="color: red">* </span> :
+										</label>
 										<div class="col-lg-10">
 											<input type="password" class="form-control  "
 												placeholder="User Password " id="upass" name="upass"
@@ -621,7 +661,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="locId2">
-											Location <span style="color:red">* </span> :</label>
+											Location <span style="color: red">* </span> :
+										</label>
 										<div class="col-lg-10">
 
 											<select data-placeholder="Select Location" name="locId2"
@@ -665,9 +706,12 @@
 												id="submtbtn">
 												Submit <i class="icon-paperplane ml-2"></i>
 											</button>
-												<a href="${pageContext.request.contextPath}/showEmpList"><button
-										type="button" class="btn btn-primary"><i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp; Cancel</button></a>
-											
+											<a href="${pageContext.request.contextPath}/showEmpList"><button
+													type="button" class="btn btn-primary">
+													<i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp;
+													Cancel
+												</button></a>
+
 										</div>
 									</div>
 								</form>
@@ -691,7 +735,7 @@
 
 	</div>
 	<!-- /page content -->
-<script type="text/javascript">
+	<script type="text/javascript">
 		function setDate(value) {
 			//alert("Value " +value)
 			if (value == 1) {
@@ -699,7 +743,6 @@
 				//document.getElementById("relDate").removeAttribute("required");
 				document.getElementById("abc").style.display = "none";
 				document.getElementById("xyz").style.display = "none";
-
 
 				//alert(value)
 			} else {
@@ -712,18 +755,18 @@
 			}
 
 		}
-		
-		
-		
 	</script>
 	<script type="text/javascript">
-	
-	function showIsReg() {
-		//alert("Hi");
-		var x = ${editEmp.exInt1};
+		function showIsReg() {
+			//alert("Hi");
+			var x = $
+			{
+				editEmp.exInt1
+			}
+			;
 
-		if (x == 1) {
-			
+			if (x == 1) {
+
 				document.getElementById("abc").style.display = "none";
 				document.getElementById("xyz").style.display = "none";
 
@@ -1124,48 +1167,71 @@
 			}
 		});
 	</script>
-	<!-- <script type="text/javascript">
-	$('#submtbtn').on('click', function() {
-        swalInit({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Yes, delete it!',
-            cancelButtonText: 'No, cancel!',
-            confirmButtonClass: 'btn btn-success',
-            cancelButtonClass: 'btn btn-danger',
-            buttonsStyling: false
-        }).then(function(result) {
-            if(result.value) {
-                swalInit(
-                    'Deleted!',
-                    'Your file has been deleted.',
-                    'success'
-                );
-            }
-            else if(result.dismiss === swal.DismissReason.cancel) {
-                swalInit(
-                    'Cancelled',
-                    'Your imaginary file is safe :)',
-                    'error'
-                );
-            }
-        });
-    });
-	
-	</script> -->
+	<script type="text/javascript">
+		function readURL(input) {
+			/* 
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+
+				reader.onload = function(e) {
+					$('#image1').attr('src', e.target.result);
+				}
+
+				reader.readAsDataURL(input.files[0]);
+			} */
+		}
+
+		$("#profilePic").change(function() {
+
+			//readURL(this);
+		});
+
+		$(function() {
+
+			//image 1
+			// Create the close button
+
+			// Clear event
+			$('.image-preview-clear').click(function() {
+				var imgid = $(this).attr('id');
+
+				$('.browseimage' + imgid).val("");
+				$('.image-preview-clear' + imgid).hide();
+
+				//$('.image-preview-input-title'+imgid).text("Browse"); 
+				$('.temppreviewimageki' + imgid).attr("src", '');
+				$('.temppreviewimageki' + imgid).hide();
+			});
+			// Create the preview image
+			$(".browseimage").change(
+					function() {
+						var img = $('<img/>', {
+							id : 'dynamic',
+							width : 250,
+							height : 200,
+						});
+						var imgid = $(this).attr('id');
+						var file = this.files[0];
+						var reader = new FileReader();
+						// Set preview image into the popover data-content
+						reader.onload = function(e) {
+
+							//	$('.image-preview-input-title'+imgid).text("Change");
+							$('.image-preview-clear' + imgid).show();
+							//	$('.image-preview-filename'+imgid).val(file.name);   
+							img.attr('src', e.target.result);
+
+							$(".temppreviewimageki" + imgid).attr("src",
+									$(img)[0].src);
+							$(".temppreviewimageki" + imgid).show();
+
+						}
+						reader.readAsDataURL(file);
+					});
+			//end  
+		});
+	</script>
 
 </body>
 </html>
-<%-- <select name="locId2" id="locId2" data-placeholder="Select Location"
-												
-												class="form-control form-control-select2 select2-hidden-accessible"
-												data-fouc="" tabindex="-1" aria-hidden="true">
 
-												<option value="">Select Location</option>
-
-												<c:forEach items="${locationList}" var="locationList">
-													<option value="${locationList.locId}">${locationList.locName}</option>
-												</c:forEach>
-											</select> --%>

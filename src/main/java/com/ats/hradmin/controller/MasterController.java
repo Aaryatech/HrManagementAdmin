@@ -1897,7 +1897,8 @@ try {
 				model.addObject("locationList", locationList);
 				model.addObject("deptList", employeeDepartmentlist);
 				model.addObject("catList", employeeCategorylist);
-
+				model.addObject("imageUrl", Constants.getImageSaveUrl);
+				
 				System.out.println(locationList.toString());
 			}
 		} catch (Exception e) {

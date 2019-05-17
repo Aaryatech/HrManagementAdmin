@@ -141,19 +141,34 @@
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="profilePic">
 											Profile Pic :</label>
-										<div class="col-lg-6">
-											<input type="file" class="form-control" id="profilePic"
-												name="profilePic" accept=".jpg,.png,.gif"> <span
-												class="filename" style="user-select: none;"> </span>
+										<div class="col-lg-4">
+											<div class="input-group-btn  ">
+
+												<span class="filename" style="user-select: none1;"><img
+													id="temppreviewimageki1" name="image1"
+													class="temppreviewimageki1" alt="l"
+													style="width: 200px; height: auto; display: none"> </span>
+												<!-- image-preview-clear button -->
+												<button type="button" title="Clear selected files"
+													class="btn btn-default btn-secondary fileinput-remove fileinput-remove-button legitRipple image-preview-clear image-preview-clear1"
+													id="1" style="display: none;">
+													<i class="icon-cross2 font-size-base mr-2"></i> Clear
+												</button>
+
+												<div class="btn btn-primary btn-file legitRipple">
+													<i class="icon-file-plus"></i> <span class="hidden-xs">Browse</span><input
+														type="file" class="file-input browseimage browseimage1"
+														data-fouc="" id="1" name="profilePic"
+														accept=".jpg,.png,.gif">
+												</div>
+											</div>
+
+
 										</div>
 
-										<div class="col-lg-2">
-											<img id="image1" name="image1" alt="l" height="50px;"
-												width="50px;">
-										</div>
+										<div class="col-lg-4"></div>
 									</div>
-
-
+									  
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="fname">
 											Employee Name <span style="color: red">* </span>:
@@ -489,47 +504,48 @@
 										</div>
 									</div>
 
-<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="comoffallowed">Is Working Today
-											<span style="color:red">* </span>:</label>
-										<div class="form-check form-check-inline">
-											<label class="form-check-label"> <input type="radio"
-												class="form-check-input" name="isWorking"
-												id="isStructured" onclick="setDate(this.value)" checked value="1"> Yes
-											</label>
-										</div>
-										<div class="form-check form-check-inline">
-											<label class="form-check-label"> <input type="radio"
-												class="form-check-input" onclick="setDate(this.value)" name="isWorking"
-												id="isStructured" value="0"> No
-											</label>
-										</div>
-									</div>
-									
-<div id="abc" style="display:none;">
-									<div class="form-group row"  >
-										<label class="col-form-label col-lg-2" for="leavingDate">Leaving
-											Date : </label>
-										<div class="col-lg-10">
-											<input type="text" class="form-control datepickerclass "
-												name="leavingDate" id="leavingDate"
-												placeholder="Leaving Date">
-										</div>
-									</div>
-</div>
-<div id="xyz" style="display:none;">
 									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="lvngReson">
-											Leaving Reason : </label>
-										<div class="col-lg-10">
-											<textarea rows="3" cols="3" class="form-control"
-												placeholder="Leaving Reason" onchange="trim(this)"
-												id="lvngReson" name="lvngReson"></textarea>
-
-
+										<label class="col-form-label col-lg-2" for="comoffallowed">Is
+											Working Today <span style="color: red">* </span>:
+										</label>
+										<div class="form-check form-check-inline">
+											<label class="form-check-label"> <input type="radio"
+												class="form-check-input" name="isWorking" id="isStructured"
+												onclick="setDate(this.value)" checked value="1"> Yes
+											</label>
+										</div>
+										<div class="form-check form-check-inline">
+											<label class="form-check-label"> <input type="radio"
+												class="form-check-input" onclick="setDate(this.value)"
+												name="isWorking" id="isStructured" value="0"> No
+											</label>
 										</div>
 									</div>
-</div>
+
+									<div id="abc" style="display: none;">
+										<div class="form-group row">
+											<label class="col-form-label col-lg-2" for="leavingDate">Leaving
+												Date : </label>
+											<div class="col-lg-10">
+												<input type="text" class="form-control datepickerclass "
+													name="leavingDate" id="leavingDate"
+													placeholder="Leaving Date">
+											</div>
+										</div>
+									</div>
+									<div id="xyz" style="display: none;">
+										<div class="form-group row">
+											<label class="col-form-label col-lg-2" for="lvngReson">
+												Leaving Reason : </label>
+											<div class="col-lg-10">
+												<textarea rows="3" cols="3" class="form-control"
+													placeholder="Leaving Reason" onchange="trim(this)"
+													id="lvngReson" name="lvngReson"></textarea>
+
+
+											</div>
+										</div>
+									</div>
 
 									<div class="card-header header-elements-inline">
 										<h6 class="card-title">Add User</h6>
@@ -598,7 +614,8 @@
 													type="button" class="btn btn-primary">
 													<i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp;
 													Cancel
-												</button></a> <input type="hidden" id="mobile1Exist" name="mobile1Exist"><input type="hidden" id="emailExist" name="emailExist">
+												</button></a> <input type="hidden" id="mobile1Exist" name="mobile1Exist"><input
+												type="hidden" id="emailExist" name="emailExist">
 										</div>
 									</div>
 								</form>
@@ -622,7 +639,7 @@
 
 	</div>
 	<!-- /page content -->
-<script type="text/javascript">
+	<script type="text/javascript">
 		function setDate(value) {
 			///alert("Value " +value)
 			if (value == 1) {
@@ -901,14 +918,17 @@
 													$("#error_mobile1").show()
 
 												} else {
-													
-													if($("#mobile1Exist").val()==1){
-														
-														$("#error_mobile1").show()
-													}else{
-														$("#error_mobile1").hide()
+
+													if ($("#mobile1Exist")
+															.val() == 1) {
+
+														$("#error_mobile1")
+																.show()
+													} else {
+														$("#error_mobile1")
+																.hide()
 													}
-													
+
 												}
 
 												if (!$("#emgContNo1").val()
@@ -974,14 +994,16 @@
 													$("#error_email").show()
 
 												} else {
-													
-													if($("#emailExist").val()==1){
-														
-														$("#error_email").show()
-													}else{
-														$("#error_email").hide()
+
+													if ($("#emailExist").val() == 1) {
+
+														$("#error_email")
+																.show()
+													} else {
+														$("#error_email")
+																.hide()
 													}
-													 
+
 												}
 
 												if (!$("#uname").val()) {
@@ -1045,6 +1067,7 @@
 
 	<script type="text/javascript">
 		function readURL(input) {
+			/* 
 			if (input.files && input.files[0]) {
 				var reader = new FileReader();
 
@@ -1053,12 +1076,57 @@
 				}
 
 				reader.readAsDataURL(input.files[0]);
-			}
+			} */
 		}
 
 		$("#profilePic").change(function() {
 
-			readURL(this);
+			//readURL(this);
+		});
+
+		$(function() {
+
+			//image 1
+			// Create the close button
+
+			// Clear event
+			$('.image-preview-clear').click(function() {
+				var imgid = $(this).attr('id');
+
+				$('.browseimage' + imgid).val("");
+				$('.image-preview-clear' + imgid).hide();
+
+				//$('.image-preview-input-title'+imgid).text("Browse"); 
+				$('.temppreviewimageki' + imgid).attr("src", '');
+				$('.temppreviewimageki' + imgid).hide();
+			});
+			// Create the preview image
+			$(".browseimage").change(
+					function() {
+						var img = $('<img/>', {
+							id : 'dynamic',
+							width : 250,
+							height : 200,
+						});
+						var imgid = $(this).attr('id');
+						var file = this.files[0];
+						var reader = new FileReader();
+						// Set preview image into the popover data-content
+						reader.onload = function(e) {
+
+							//	$('.image-preview-input-title'+imgid).text("Change");
+							$('.image-preview-clear' + imgid).show();
+							//	$('.image-preview-filename'+imgid).val(file.name);   
+							img.attr('src', e.target.result);
+
+							$(".temppreviewimageki" + imgid).attr("src",
+									$(img)[0].src);
+							$(".temppreviewimageki" + imgid).show();
+
+						}
+						reader.readAsDataURL(file);
+					});
+			//end  
 		});
 	</script>
 
@@ -1107,7 +1175,7 @@
 
 											$("#error_email").hide();
 											document
-											.getElementById("emailExist").value = 0;
+													.getElementById("emailExist").value = 0;
 
 										} else {
 											$("#error_email").show();
@@ -1124,7 +1192,7 @@
 
 											$("#error_mobile1").hide();
 											document
-											.getElementById("mobile1Exist").value = 0;
+													.getElementById("mobile1Exist").value = 0;
 
 										} else {
 											$("#error_mobile1").show()
