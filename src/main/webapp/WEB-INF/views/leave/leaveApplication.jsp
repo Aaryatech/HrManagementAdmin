@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page import="java.io.*,java.util.*, javax.servlet.*"
+	import="java.text.SimpleDateFormat"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1003,9 +1005,19 @@
 
 		//daterange-basic_new
 		// Basic initialization
+		   var today = new Date();
+		var last = new Date(today.getTime() - (7 * 24 * 60 * 60 * 1000)); 
+		 
+		<%-- <%Date today = new Date();
+		SimpleDateFormat sdf3 = new SimpleDateFormat("EEE MMM dd yyyy HH:mm:ss ", Locale.ENGLISH);
+		Date lstDate=new Date(today.getTime() - (7 * 24 * 60 * 60 * 1000));
+		System.out.println(sdf3.format(lstDate)+"GMT+0530 (India Standard Time)");
+		
+		out.print("var last = '" + (sdf3.format(lstDate)+" GMT+0530 (India Standard Time)")+ "' ");%> --%>
+		   
 		$('.daterange-basic_new').daterangepicker({
 			applyClass : 'bg-slate-600',
-
+			minDate: last,
 			cancelClass : 'btn-light',
 			locale : {
 				format : 'DD-MM-YYYY',
