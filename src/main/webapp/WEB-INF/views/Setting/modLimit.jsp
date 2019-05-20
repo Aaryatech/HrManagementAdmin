@@ -127,27 +127,29 @@
 								</tr>
 							</thead>
 							<tbody>
- 								<tr>
+								<tr>
 									<td>${count.index+1}</td>
 									<td>${setlimit.group}</td>
-									<td class="text-center"><input type="checkbox"
-										class="form-check form-check-inline" id="checkSameAdd"
-										${setlimit.value eq '1' ? 'checked' : 'checked'}
-										name="checkSameAdd" onclick="checkAdd()"  /></td>
+									<td class="text-center"><c:choose>
+											<c:when test="${setlimit.value==1}">
+												<input type="checkbox" class="form-check form-check-inline"
+													id="checkSameAdd" name="checkSameAdd" onclick="checkAdd()"
+													checked />
+											</c:when>
+											<c:otherwise>
+											<input type="checkbox" class="form-check form-check-inline"
+													id="checkSameAdd" name="checkSameAdd" onclick="checkAdd()"
+													  />
+											</c:otherwise>
+										</c:choose></td>
 
-									<%-- 	<td class="text-center"> ${setlimit.value}
-												</td>
-												
-												
-												<td class="check" style="text-align: center;">
-													</td> --%>
 								</tr>
 
 
 							</tbody>
 						</table>
-						val=${setlimit.value}
-						<input type="hidden" name="setId"  id="setId" value="${setlimit.settingId}">
+						val=${setlimit.value} <input type="hidden" name="setId" id="setId"
+							value="${setlimit.settingId}">
 					</div>
 
 				</div>
@@ -166,36 +168,27 @@
 
 	</div>
 	<!-- /page content -->
-<script>
+	<script>
 		function checkAdd() {
 			//alert("hii..");
 			var temp;
 			if (document.getElementById("checkSameAdd").checked == true) {
- 				temp=1;
- 			} else {
- 				temp=0;
+				temp = 1;
+			} else {
+				temp = 0;
 			}
 			//alert("hii.."+temp);
 			var setId = document.getElementById("setId").value;
-			var valid=true;
-			
-			 
-				$
-						.getJSON(
-								'${updateLeaveLimit}',
-								{
-									temp : temp,
-									setId : setId,
-									ajax : 'true',
+			var valid = true;
 
-								},
-								function(data) {
+			$.getJSON('${updateLeaveLimit}', {
+				temp : temp,
+				setId : setId,
+				ajax : 'true',
 
-									 
+			}, function(data) {
 
-								});
-				 
-			 
+			});
 
 		}
 	</script>
