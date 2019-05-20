@@ -307,7 +307,7 @@
 											<span style="color: red">* </span>:
 										</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control"
+											<input type="text" class="form-control numbersOnly"
 												placeholder="Revenue Amount" id="project_revenue"
 												value="${editProjectHeader.exVar1}" name="project_revenue"
 												autocomplete="off" onchange="trim(this)"> <span
@@ -322,7 +322,7 @@
 											City <span style="color: red">* </span>:
 										</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control"
+											<input type="text" class="form-control numbersOnly"
 												placeholder="Enter Project City" id="projectCity"
 												value="${editProjectHeader.projectCity}" name="projectCity"
 												autocomplete="off" onchange="trim(this)"> <span
@@ -375,7 +375,7 @@
 											Estimated Man Hours <span style="color: red">* </span>:
 										</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control"
+											<input type="text" class="form-control numbersOnly"
 												placeholder="Project Establishment Man Hours"
 												value="${editProjectHeader.projectEstManhrs}"
 												id="project_est_manhrs" name="project_est_manhrs"
@@ -392,7 +392,7 @@
 											Estimated Budget <span style="color: red">* </span>:
 										</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control"
+											<input type="text" class="form-control numbersOnly"
 												placeholder="Project Establishment Budget"
 												id="project_est_budget" name="project_est_budget"
 												value="${editProjectHeader.projectEstBudget}"

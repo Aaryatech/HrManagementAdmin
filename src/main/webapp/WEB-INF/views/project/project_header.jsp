@@ -250,7 +250,7 @@
 											<span style="color: red">* </span>:
 										</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control"
+											<input type="text" class="form-control numbersOnly"
 												placeholder="Revenue Amount" id="project_revenue"
 												name="project_revenue" autocomplete="off"
 												onchange="trim(this)"> <span
@@ -314,7 +314,7 @@
 											Estimated Man Hrs <span style="color: red">* </span>:
 										</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control"
+											<input type="text" class="form-control numbersOnly"
 												placeholder="Project Establishment Man Hours"
 												id="project_est_manhrs" name="project_est_manhrs"
 												autocomplete="off" onchange="trim(this)"> <span
@@ -330,7 +330,7 @@
 											Estimated Budget <span style="color: red">* </span>:
 										</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control"
+											<input type="text"class="form-control numbersOnly"
 												placeholder="Project Establishment Budget"
 												id="project_est_budget" name="project_est_budget"
 												autocomplete="off" onchange="trim(this)"> <span

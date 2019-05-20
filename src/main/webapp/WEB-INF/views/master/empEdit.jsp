@@ -214,9 +214,6 @@
 												style="display: none;">This field is required.</span>
 										</div>
 
-
-
-
 										<div class="col-lg-3">
 											<input type="text" class="form-control  "
 												placeholder="Last Name" id="sname" name="sname"
