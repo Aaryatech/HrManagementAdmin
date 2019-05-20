@@ -144,6 +144,9 @@
 													autocomplete="off" onchange="trim(this)"> <span
 													class="validation-invalid-label" id="error_claimScType"
 													style="display: none;">This field is required.</span>
+													<span
+												class="validation-invalid-label" id="error_sameName"
+												style="display: none;">Claim Type Short Name Can Not be same as  Claim Type Name. </span>
 											</div>
 										</div>
 
@@ -203,20 +206,23 @@
 		</div>
 		<!-- /page content -->
 <script type="text/javascript">
+		function checkSame() {
+			//alert("hii");
+			x = document.getElementById("claimShortTypeTitle").value;
+			y = document.getElementById("calimTypeTitle").value;
+			//alert(x);
 
-function checkSame(){
-	x=document.getElementById("claimShortTypeTitle").value;
-	y=document.getElementById("claimTypeTitle").value;
-	//alert(x);
-	
-	if(x!== '' && y!== ''){
-	if(x==y){
-		alert(" Claim Type Short Name Can Not be same as  Claim Type Name ");
-		document.getElementById("claimShortTypeTitle").value="";
-	}
-}
-	
-}</script>
+			if (x !== '' && y !== '') {
+				if (x == y) {
+					$("#error_sameName").show()
+					document.getElementById("claimShortTypeTitle").value = "";
+				} else {
+					$("#error_sameName").hide()
+				}
+			}
+
+		}
+	</script>
 		<script>
 			function trim(el) {
 				el.value = el.value.replace(/(^\s*)|(\s*$)/gi, ""). // removes leading and trailing spaces

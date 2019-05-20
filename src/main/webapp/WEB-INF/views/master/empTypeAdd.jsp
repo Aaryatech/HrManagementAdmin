@@ -144,6 +144,12 @@
 												maxlength="5"> <span
 												class="validation-invalid-label" id="error_empShortName"
 												style="display: none;">This field is required.</span>
+												<span
+												class="validation-invalid-label" id="error_sameName"
+												style="display: none;">Employee Type Short Name Can Not be same as Employee Type Name.</span>
+												
+												
+												
 										</div>
 									</div>
 
@@ -285,21 +291,7 @@
 
 	</div>
 	<!-- /page content -->
-	<script type="text/javascript">
-
-function checkSame(){
-	x=document.getElementById("empTypeName").value;
-	y=document.getElementById("empShortName").value;
-	//alert(x);
 	
-	if(x!== '' && y!== ''){
-	if(x==y){
-		alert("Employee Type Short Name Can Not be same as Employee Type Name ");
-		document.getElementById("empShortName").value="";
-	}
-}
-	
-}</script>
 	<script>
 			function checkSubmodule(moduleId) {
 				
@@ -439,6 +431,7 @@ function checkSame(){
 				} else {
 					$("#error_checkbox").hide()
 				}
+				
 
 				if (!isError) {
 
@@ -455,7 +448,31 @@ function checkSame(){
 		});
 		//
 	</script>
+<script type="text/javascript">
 
+function checkSame(){
+	//alert("Hii..");
+	x=document.getElementById("empTypeName").value;
+	y=document.getElementById("empShortName").value;
+	//alert(x);
+	//alert(y);
+	
+	if(x!== '' && y!== ''){
+	if(x==y){
+		  
+			$("#error_sameName").show()
+			document.getElementById("empShortName").value="";
+
+		} else {
+
+			$("#error_sameName").hide()
+		}
+		
+		
+	}
+}
+	
+</script>
 	<!-- <script type="text/javascript">
 	$('#submtbtn').on('click', function() {
         swalInit({

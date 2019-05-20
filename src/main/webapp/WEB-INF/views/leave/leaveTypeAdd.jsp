@@ -141,6 +141,12 @@
 												style="display: none;">This field is required.</span>
 												<span class="validation-invalid-label" id="error_leaveShortname"
 												style="display: none;">Already exist.</span>
+												<span
+												class="validation-invalid-label" id="error_sameName"
+												style="display: none;">Leave Type Short Name Can Not be same as  Leave Type Name. </span>
+												
+												
+												
 										</div>
 									</div>
 
@@ -293,10 +299,13 @@ function checkSame(){
 	//alert(x);
 	
 	if(x!== '' && y!== ''){
-	if(x==y){
-		alert(" Leave Type Short Name Can Not be same as  Leave Type Name ");
-		document.getElementById("leaveShortTypeTitle").value="";
-	}
+		if(x==y){
+			$("#error_sameName").show()
+			document.getElementById("leaveShortTypeTitle").value="";
+		}
+		else{
+			$("#error_sameName").hide()
+		}
 }
 	
 }</script>

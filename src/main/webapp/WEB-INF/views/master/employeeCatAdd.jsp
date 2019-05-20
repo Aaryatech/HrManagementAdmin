@@ -138,6 +138,10 @@
 												maxlength="5"> <span
 												class="validation-invalid-label" id="error_catShortName"
 												style="display: none;">This field is required.</span>
+												<span
+												class="validation-invalid-label" id="error_sameName"
+												style="display: none;">Category Short Name Can Not be same as Category Name </span>
+												
 										</div>
 									</div>
 
@@ -193,10 +197,13 @@ function checkSame(){
 	//alert(x);
 	
 	if(x!== '' && y!== ''){
-	if(x==y){
-		alert(" Category Short Name Can Not be same as Category Name ");
-		document.getElementById("catShortName").value="";
-	}
+		if(x==y){
+			$("#error_sameName").show()
+			document.getElementById("catShortName").value="";
+		}
+		else{
+			$("#error_sameName").hide()
+		}
 }
 	
 }</script>

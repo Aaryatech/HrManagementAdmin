@@ -106,6 +106,11 @@
 											<span class="validation-invalid-label"
 												id="error_locShortName" style="display: none;">This
 												field is required.</span>
+												<span
+												class="validation-invalid-label" id="error_sameName"
+												style="display: none;">Location Short Name Can Not be same as Location Name.</span>
+												
+												
 										</div>
 									</div>
 
@@ -210,10 +215,13 @@
 		//alert(x);
 		
 		if(x!== '' && y!== ''){
-		if(x==y){
-			alert("Location Short Name Can Not be same as Location Name ");
-			document.getElementById("locShortName").value="";
-		}
+			if(x==y){
+				$("#error_sameName").show()
+				document.getElementById("locShortName").value="";
+			}
+			else{
+				$("#error_sameName").hide()
+			}
 	}
 		
 	}

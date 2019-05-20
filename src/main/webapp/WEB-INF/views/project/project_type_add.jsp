@@ -144,13 +144,13 @@
 													class="validation-invalid-label"
 													id="error_proShortTypeTitle" style="display: none;">This
 													field is required.</span>
+													<span
+												class="validation-invalid-label" id="error_sameName"
+												style="display: none;">Project Short Name Can Not be same as Project Name. </span>
 											</div>
 										</div>
 
-
-
-
-
+ 
 
 										<div class="form-group row">
 											<label class="col-form-label col-lg-2">Project Type
@@ -214,10 +214,13 @@ function checkSame(){
 	//alert(x);
 	
 	if(x!== '' && y!== ''){
-	if(x==y){
-		alert(" Project Type Short Name Can Not be same as  Project Type Name ");
-		document.getElementById("proShortTypeTitle").value="";
-	}
+		if(x==y){
+			$("#error_sameName").show()
+			document.getElementById("proShortTypeTitle").value="";
+		}
+		else{
+			$("#error_sameName").hide()
+		}
 }
 	
 }</script>

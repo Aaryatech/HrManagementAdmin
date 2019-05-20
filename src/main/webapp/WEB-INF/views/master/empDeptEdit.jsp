@@ -140,6 +140,9 @@
 												maxlength="5"> <span
 												class="validation-invalid-label" id="error_deptShortName"
 												style="display: none;">This field is required.</span>
+													<span
+												class="validation-invalid-label" id="error_sameName"
+												style="display: none;">Department Short Name Can Not be same as Department Name </span>
 										</div>
 									</div>
  
@@ -196,10 +199,13 @@ function checkSame(){
 	//alert(x);
 	
 	if(x!== '' && y!== ''){
-	if(x==y){
-		alert(" Department Short Name Can Not be same as Department Name ");
-		document.getElementById("deptShortName").value="";
-	}
+		if(x==y){
+			$("#error_sameName").show()
+			document.getElementById("deptShortName").value="";
+		}
+		else{
+			$("#error_sameName").hide()
+		}
 }
 	
 }</script>

@@ -144,6 +144,12 @@
 											<span class="validation-invalid-label"
 												id="error_empShortName" style="display: none;">This
 												field is required.</span>
+												<span
+												class="validation-invalid-label" id="error_sameName"
+												style="display: none;">Employee Type Short Name Can Not be same as Employee Type Name.</span>
+												
+												
+												
 										</div>
 									</div>
 
@@ -364,8 +370,11 @@ function checkSame(){
 	
 	if(x!== '' && y!== ''){
 	if(x==y){
-		alert("Employee Type Short Name Can Not be same as Employee Type Name ");
+		$("#error_sameName").show()
 		document.getElementById("empShortName").value="";
+	}
+	else{
+		$("#error_sameName").hide()
 	}
 }
 	
