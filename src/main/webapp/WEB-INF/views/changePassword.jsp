@@ -139,7 +139,7 @@
 											</label>
 											
 											<div class="col-lg-4">
-												<input type="text" class="form-control"
+												<input type="password" class="form-control"
 													placeholder="Enter New Password" id="password"
 													name="password" autocomplete="off"
 													onkeyup="return passwordChanged();"> <span
@@ -158,7 +158,7 @@
 											</label>
 											
 											<div class="col-lg-4">
-												<input type="text" class="form-control"
+												<input type="password" class="form-control"
 													placeholder="Enter New Password" id="password1"
 													name="password1" autocomplete="off">  
 													<span

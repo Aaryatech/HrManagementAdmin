@@ -12,7 +12,43 @@
 <c:url var="getEmployeeAllocatedHistory"
 	value="/getEmployeeAllocatedHistory" />
 </head>
+<style>
+* {
+	box-sizing: border-box;
+}
 
+.myInput {
+	background-image: url('https://www.w3schools.com/css/searchicon.png');
+	background-position: 8px 5px;
+	background-repeat: no-repeat;
+	width: 20%;
+	font-size: 12px;
+	padding: 5px 5px 5px 40px;
+	border: 1px solid #ddd;
+	border-radius: 20px;
+	margin-bottom: 12px;
+}
+
+#myTable {
+	border-collapse: collapse;
+	width: 100%;
+	border: 1px solid #ddd;
+	font-size: 18px;
+}
+
+#myTable th, #myTable td {
+	text-align: left;
+	padding: 12px;
+}
+
+#myTable tr {
+	border-bottom: 1px solid #ddd;
+}
+
+#myTable tr.header, #myTable tr:hover {
+	background-color: #f1f1f1;
+}
+</style>
 <body>
 
 	<!-- Main navbar -->
@@ -144,13 +180,13 @@
 											Location : </label> <label class="col-form-label col-lg-3">
 											${projectInfo.locName}</label>
 									</div>
-									
+
 									<div class="form-group row">
-										<label class="col-form-label col-lg-2"> Estimated Start Date
-											: </label> <label class="col-form-label col-lg-3">
+										<label class="col-form-label col-lg-2"> Estimated
+											Start Date : </label> <label class="col-form-label col-lg-3">
 											${projectInfo.projectEstStartdt}</label> <label
-											class="col-form-label col-lg-2"> Estimated End Date : </label> <label
-											class="col-form-label col-lg-3">
+											class="col-form-label col-lg-2"> Estimated End Date :
+										</label> <label class="col-form-label col-lg-3">
 											${projectInfo.projectEstEnddt} <input id="projectId"
 											name="projectId" value="${projectInfo.projectId}"
 											type="hidden">
@@ -240,74 +276,92 @@
 									</div>
 									<br>
 
+									<div id='loader' style='display: none;'>
+										<img
+											src='${pageContext.request.contextPath}/resources/assets/images/giphy.gif'
+											width="150px" height="150px"
+											style="display: block; margin-left: auto; margin-right: auto">
+									</div>
+
 									<div class="row">
 										<div class="col-md-5">
-											<table
-												class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic1  datatable-button-print-columns1"
-												id="printtable1">
-												<thead>
-													<tr class="bg-blue">
-														<th width="20%">Sr. No. <input type="checkbox"
-															name="selAll" id="selAll" /></th>
-														<th>Employee Name</th>
-														<th>Available</th>
-														<th width="15%" style="text-align: center;">Action</th>
-													</tr>
-												</thead>
-												<tbody>
+											<input type="text" id="myInput" class="myInput"
+												onkeyup="myFunction()" placeholder="Search for employee.."
+												title="Type in a name">
+											<div class="table-responsive">
+												<table
+													class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic1  datatable-button-print-columns1"
+													id="printtable1">
+													<thead>
+														<tr class="bg-blue">
+															<th width="20%">Sr. No. <input type="checkbox"
+																name="selAll" id="selAll" /></th>
+															<th>Employee Name</th>
+															<th>Available</th>
+															<th width="15%" style="text-align: center;">Action</th>
+														</tr>
+													</thead>
+													<tbody>
 
-												</tbody>
-											</table>
+													</tbody>
+												</table>
+											</div>
 										</div>
 										<div class="col-md-1" style="text-align: center;">
 											<a onclick="allocateMultipleEmployee()"><i
 												class="icon-drag-right "></i></a>
 										</div>
+
 										<div class="col-md-6">
-											<table
-												class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic1  datatable-button-print-columns1"
-												id="printtable2">
-												<thead>
-													<tr class="bg-blue">
-														<th width="10%">Sr. No.</th>
-														<th width="30%">Employee Name</th>
-														<th width="20%">From Date</th>
-														<th width="20%">To Date</th>
-														<th width="10%">Partial/Full</th>
-														<th width="10%">Hours</th>
-														<th width="10%" style="text-align: center;">Action</th>
-													</tr>
-												</thead>
-												<tbody>
-													<c:forEach items="${bsyList}" var="bsyList"
-														varStatus="count">
+										<input type="text" id="myInput1" class="myInput"
+												onkeyup="myFunction1()" placeholder="Search for employee.."
+												title="Type in a name">
+											<div class="table-responsive">
+												<table
+													class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic1  datatable-button-print-columns1"
+													id="printtable2">
+													<thead>
+														<tr class="bg-blue">
+															<th width="10%">Sr. No.</th>
+															<th width="30%">Employee Name</th>
+															<th width="20%">From Date</th>
+															<th width="20%">To Date</th>
+															<th width="10%">Partial/Full</th>
+															<th width="10%">Hours</th>
+															<th width="10%" style="text-align: center;">Action</th>
+														</tr>
+													</thead>
+													<tbody>
+														<c:forEach items="${bsyList}" var="bsyList"
+															varStatus="count">
 
-														<tr>
-															<td>${count.index+1}</td>
+															<tr>
+																<td>${count.index+1}</td>
 
 
-															<td>${bsyList.empFname}&nbsp;${bsyList.empSname}</td>
-															<td>${bsyList.pallotFromdt}</td>
-															<td>${bsyList.pallotTodt}</td>
-															<td><c:choose>
-																	<c:when test="${bsyList.exInt1==1}">
+																<td>${bsyList.empFname}&nbsp;${bsyList.empSname}</td>
+																<td>${bsyList.pallotFromdt}</td>
+																<td>${bsyList.pallotTodt}</td>
+																<td><c:choose>
+																		<c:when test="${bsyList.exInt1==1}">
 																Partial
 																</c:when>
-																	<c:otherwise>
+																		<c:otherwise>
 																Full
 																</c:otherwise>
-																</c:choose></td>
-															<td>${bsyList.pallotDailyHrs}</td>
-															<td>
-																<%-- <a onclick="deleteEmp(${count.index})"><i
+																	</c:choose></td>
+																<td>${bsyList.pallotDailyHrs}</td>
+																<td>
+																	<%-- <a onclick="deleteEmp(${count.index})"><i
 																	class="icon-trash"></i></a> --%>
-															</td>
-														</tr>
+																</td>
+															</tr>
 
-													</c:forEach>
+														</c:forEach>
 
-												</tbody>
-											</table>
+													</tbody>
+												</table>
+											</div>
 										</div>
 									</div>
 									<br>
@@ -442,7 +496,7 @@
 				if (locationId == "") {
 					selectedValues = 0;
 				}
-
+				$("#loader").show();
 				//alert(selectedValues);
 				$
 						.getJSON(
@@ -461,7 +515,7 @@
 
 									//alert(data);
 									$("#printtable1 tbody").empty();
-
+									$("#loader").hide();
 									for (var i = 0; i < data.length; i++) {
 
 										var partialFull;
@@ -491,7 +545,7 @@
 												+ '</tr>';
 										$('#printtable1' + ' tbody').append(
 												tr_data);
-										
+
 										/* <a  onclick="fillEmpInfo('
 											+ i
 											+ ','
@@ -543,7 +597,7 @@
 			}
 
 			if (flag == 0) {
-
+				$("#loader").show();
 				$
 						.getJSON(
 								'${moveEmp}',
@@ -557,6 +611,7 @@
 								},
 								function(data) {
 
+									$("#loader").hide();
 									$("#printtable1 tbody").empty();
 
 									for (var i = 0; i < data.freeList.length; i++) {
@@ -634,7 +689,7 @@
 									}
 
 									$('#modal_full').modal('hide');
-									 document.getElementById("selAll").checked = false;
+									document.getElementById("selAll").checked = false;
 								});
 			}
 
@@ -693,9 +748,8 @@
 
 		function getEmpHistory(empId) {
 
-			$('#historyTableDiv').modal('show');
 			//var empId = document.getElementById("tempEmployeeId").value;
-
+			$("#loader").show();
 			$.getJSON('${getEmployeeAllocatedHistory}', {
 
 				empId : empId,
@@ -704,6 +758,8 @@
 			}, function(data) {
 
 				//alert(data);
+				$("#loader").hide();
+				$('#historyTableDiv').modal('show');
 				$("#historyTable tbody").empty();
 
 				for (var i = 0; i < data.length; i++) {
@@ -738,7 +794,7 @@
 
 		}
 		function deleteEmp(empId) {
-
+			$("#loader").show();
 			$
 					.getJSON(
 							'${deleteEmp}',
@@ -749,7 +805,7 @@
 
 							},
 							function(data) {
-
+								$("#loader").hide();
 								$("#printtable1 tbody").empty();
 
 								for (var i = 0; i < data.freeList.length; i++) {
@@ -822,7 +878,46 @@
 
 		}
 	</script>
-
+<script>
+		function myFunction() {
+			var input, filter, table, tr, td, i, txtValue;
+			input = document.getElementById("myInput");
+			filter = input.value.toUpperCase();
+			table = document.getElementById("printtable1");
+			tr = table.getElementsByTagName("tr");
+			for (i = 0; i < tr.length; i++) {
+				td = tr[i].getElementsByTagName("td")[1];
+				if (td) {
+					txtValue = td.textContent || td.innerText;
+					if (txtValue.toUpperCase().indexOf(filter) > -1) {
+						tr[i].style.display = "";
+					} else {
+						tr[i].style.display = "none";
+					}
+				}
+			}
+		}
+	</script>
+	<script>
+		function myFunction1() {
+			var input, filter, table, tr, td, i, txtValue;
+			input = document.getElementById("myInput1");
+			filter = input.value.toUpperCase();
+			table = document.getElementById("printtable2");
+			tr = table.getElementsByTagName("tr");
+			for (i = 0; i < tr.length; i++) {
+				td = tr[i].getElementsByTagName("td")[1];
+				if (td) {
+					txtValue = td.textContent || td.innerText;
+					if (txtValue.toUpperCase().indexOf(filter) > -1) {
+						tr[i].style.display = "";
+					} else {
+						tr[i].style.display = "none";
+					}
+				}
+			}
+		}
+	</script>
 	<!-- Scrollable modal -->
 	<!-- <div id="modal_scrollable" class="modal fade" data-backdrop="false"
 		tabindex="-1">
