@@ -112,7 +112,7 @@ body {
 
 				<!-- Login form -->
 				<form class="login-form"
-					action="${pageContext.request.contextPath}/forgetPass"
+					action="${pageContext.request.contextPath}/checkUserPassword"
 					id="submitInsertEmpType" method="post">
 					<div class="card mb-0">
 						<div class="card-body">
@@ -120,8 +120,8 @@ body {
 								<i
 									class="icon-reading icon-2x text-slate-300 border-slate-300 border-3 rounded-round p-3 mb-3 mt-1"></i>
 								<h5 class="mb-0">Forgot Password</h5>
-								<span class="d-block text-muted">Enter User Name
-									Below</span>
+								<span class="d-block text-muted">Enter User Name or
+									Contact Number Below</span>
 							</div>
 
 							<div
@@ -132,16 +132,20 @@ body {
 									<i class="icon-user text-muted"></i>
 								</div>
 							</div>
-
-							
+							<c:if test="${sessionScope.errorPassMsg!=null}">
+								<span style="color: Blue;">${sessionScope.errorPassMsg}</span>
+								<%
+									session.removeAttribute("errorPassMsg");
+								%>
+							</c:if>
 
 							<div class="form-group">
 								<button type="submit" class="btn btn-primary btn-block">
-									Send<i class="icon-circle-right2 ml-2"></i>
+									Password Recovery<i class="icon-circle-right2 ml-2"></i>
 								</button>
 							</div>
 
-						
+
 						</div>
 					</div>
 				</form>

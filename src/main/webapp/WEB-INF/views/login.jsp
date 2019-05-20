@@ -117,6 +117,16 @@ body {
 					<div class="card mb-0">
 						<div class="card-body">
 							<div class="text-center mb-3">
+							<c:if test="${msg=null}">
+									<span style="color: red;">${msg}</span>
+									 
+								</c:if>
+								<c:if test="${sessionScope.errorPassMsg!=null}">
+								<span style="color: red;">${sessionScope.errorPassMsg}</span>
+								<%
+									session.removeAttribute("errorPassMsg");
+								%>
+							</c:if>
 								<i
 									class="icon-reading icon-2x text-slate-300 border-slate-300 border-3 rounded-round p-3 mb-3 mt-1"></i>
 								<h5 class="mb-0">Login to your account</h5>
@@ -155,8 +165,9 @@ body {
 							</div>
 
 							<div class="text-center">
-								<a href="/showforgotPassForm">Forgot password?</a>
-							</div>
+ 								<a href="${pageContext.request.contextPath}/showForgotPass">Forgot password?</a>
+<%--  								<a href="${pageContext.request.contextPath}/showForgotPass">sdfsdf</a>
+ --%> 							</div>
 						</div>
 					</div>
 				</form>

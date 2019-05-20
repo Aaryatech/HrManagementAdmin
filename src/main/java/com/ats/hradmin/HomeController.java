@@ -37,6 +37,7 @@ import com.ats.hradmin.model.AccessRightModule;
 import com.ats.hradmin.model.AuthorityInformation;
 import com.ats.hradmin.model.Company;
 import com.ats.hradmin.model.EmployeeInfo;
+import com.ats.hradmin.model.GetUserData;
 import com.ats.hradmin.model.Info;
 import com.ats.hradmin.model.LoginResponse;
 import com.ats.hradmin.model.User;
@@ -93,42 +94,42 @@ public class HomeController {
 
 		return mav;
 	}
-	
+
 	@RequestMapping(value = "/changePass", method = RequestMethod.GET)
 	public ModelAndView changePass(HttpServletRequest request, HttpServletResponse res) {
 		HttpSession session = request.getSession();
 		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 		ModelAndView mav = new ModelAndView("changePassword");
-		mav.addObject("empId",userObj.getUserId());
+		mav.addObject("empId", userObj.getUserId());
 
 		return mav;
 	}
-	
+
 	@RequestMapping(value = "/checkPass", method = RequestMethod.GET)
 	public @ResponseBody User updateLeaveLimit(HttpServletRequest request, HttpServletResponse response) {
 
-		User user1=new User();		  
+		User user1 = new User();
 		try {
 			System.err.println("in  checkPass is ");
-			String empId=(request.getParameter("empId"));
-			String password=(request.getParameter("password"));
-			
-			  MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			  map.add("empId",empId);
-			  map.add("password",password);
-			  
-				    user1 = Constants.getRestTemplate().postForObject(Constants.url + "/getUserInfoByEmpIdPass", map, User.class);
-				System.err.println("info is "+ user1);
-				
-				   
+			String empId = (request.getParameter("empId"));
+			String password = (request.getParameter("password"));
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("empId", empId);
+			map.add("password", password);
+
+			user1 = Constants.getRestTemplate().postForObject(Constants.url + "/getUserInfoByEmpIdPass", map,
+					User.class);
+			System.err.println("info is " + user1);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return user1;
 	}
+
 	@RequestMapping(value = "/submitUpdatePass", method = RequestMethod.POST)
-	public String submitInsertCompany(  HttpServletRequest request,
-			HttpServletResponse response) {
+	public String submitInsertCompany(HttpServletRequest request, HttpServletResponse response) {
 
 		try {
 			/*
@@ -143,14 +144,13 @@ public class HomeController {
 
 			Boolean ret = false;
 
-			 
-
 			if (ret == false) {
 
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 				map.add("empId", empId);
 				map.add("password", password);
-				Info info = Constants.getRestTemplate().postForObject(Constants.url + "/updateUserPass", map, Info.class);
+				Info info = Constants.getRestTemplate().postForObject(Constants.url + "/updateUserPass", map,
+						Info.class);
 
 			}
 
@@ -160,7 +160,6 @@ public class HomeController {
 
 		return "redirect:/changePass";
 	}
-
 
 	@RequestMapping(value = "/fileUpload", method = RequestMethod.GET)
 	public ModelAndView fileUpload(Locale locale, Model model) {
@@ -188,7 +187,7 @@ public class HomeController {
 
 		try {
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>(); 
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("empId", userObj.getEmpId());
 
 			AuthorityInformation authorityInformation = Constants.getRestTemplate()
@@ -352,7 +351,7 @@ public class HomeController {
 	// *************************Forgot
 	// Pass***********************************************
 
-	@RequestMapping(value = "/showForgotPassForm", method = RequestMethod.GET)
+	@RequestMapping(value = "/showForgotPass", method = RequestMethod.GET)
 	public ModelAndView showForgotPassForm(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = null;
@@ -372,13 +371,15 @@ public class HomeController {
 
 	}
 
-	@RequestMapping(value = "/sendForgotPass", method = RequestMethod.POST)
-	public ModelAndView checkUniqueField(HttpServletRequest request, HttpServletResponse response) {
+
+	
+	@RequestMapping(value = "/checkUserPassword", method = RequestMethod.POST)
+	public String submitInsertKra(HttpServletRequest request, HttpServletResponse response) {
 		String c = null;
 		System.err.println("Hiii  checkValue  ");
-		Info info = new Info();
-		ModelAndView model = null;
-
+		GetUserData user = new GetUserData();
+		ModelAndView model = new ModelAndView();
+		HttpSession session = request.getSession();
 		try {
 			// model = new ModelAndView("forgotPassword");
 
@@ -386,21 +387,24 @@ public class HomeController {
 
 			String inputValue = request.getParameter("username");
 			System.err.println("Info inputValue  " + inputValue);
-
+			 
 			map.add("inputValue", inputValue);
+ 			user = Constants.getRestTemplate().postForObject(Constants.url + "checkUserName", map, GetUserData.class);
+			System.err.println("get GetUserData" + user.toString());
 
-			info = Constants.getRestTemplate().postForObject(Constants.url + "checkUserName", map, Info.class);
-			System.err.println("Info Response  " + info.toString());
+			if (user.isError() == true) {
+				//model = new ModelAndView("forgotPassword");
+				 c="redirect:/showForgotPass";
+				//model.addObject("msg", "Invalid User Name");
+				 session.setAttribute("errorPassMsg", "Invalid User Name");
 
-			if (info.isError() == true) {
-				model = new ModelAndView("forgotPassword");
-				// c="redirect:/showforgotPassForm";
-				model.addObject("msg", "Invalid User Name");
 
 			} else {
-				model = new ModelAndView("verifyOTP");
-				// c= "redirect:/showVerifyOTP";
-				model.addObject("username", info.getMsg());
+			//	model = new ModelAndView("login");
+				 c="redirect:/";
+				 session.setAttribute("errorPassMsg", "Password has been sent to your email");
+				//model.addObject("msg", "Password has been sent to your email");
+				model.addObject("user", user);
 			}
 
 		} catch (Exception e) {
@@ -408,8 +412,9 @@ public class HomeController {
 			e.printStackTrace();
 		}
 
-		return model;
-
+		return c;
+	 
 	}
+	
 
 }

@@ -45,6 +45,7 @@ import com.ats.hradmin.model.LeaveSummary;
 import com.ats.hradmin.model.LeaveTrail;
 import com.ats.hradmin.model.LeaveType;
 import com.ats.hradmin.model.LoginResponse;
+import com.ats.hradmin.model.Setting;
 import com.ats.hradmin.model.WeeklyOff;
 
 @Controller
@@ -574,6 +575,11 @@ public class LeaveController {
 			AuthorityInformation authorityInformation = Constants.getRestTemplate()
 					.postForObject(Constants.url + "/getAuthorityInfoByEmpId", map, AuthorityInformation.class);
 			model.addObject("authorityInformation", authorityInformation);
+			map = new LinkedMultiValueMap<>();
+			map.add("limitKey", "LEAVELIMIT");
+			Setting setlimit = Constants.getRestTemplate().postForObject(Constants.url + "/getSettingByKey", map,
+					Setting.class);
+			model.addObject("setlimit", setlimit);
 
 			/*
 			 * map = new LinkedMultiValueMap<String, Object>(); map.add("empId", empId);

@@ -129,7 +129,8 @@
 								%>
 
 								<span class="validation-invalid-label" id="error_assign"
-									style="display: none;">You Can Not Apply for Leave as either Leave Authority or Leave Structure is not Assigned !!</span>
+									style="display: none;">You Can Not Apply for Leave as
+									either Leave Authority or Leave Structure is not Assigned !!</span>
 
 
 								<div class="form-group row">
@@ -296,8 +297,7 @@
 											<textarea rows="3" cols="3" class="form-control"
 												placeholder="Remark" onchange="trim(this)" id="leaveRemark"
 												name="leaveRemark"> </textarea>
-												 <span
-												class="validation-invalid-label" id="error_leaveRemark"
+											<span class="validation-invalid-label" id="error_leaveRemark"
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
@@ -311,16 +311,17 @@
 										name="lvsInfoId"> --%>
 									<input type="hidden" class="form-control numbersOnly" id="auth"
 										value="${authorityInformation.leaveInitialAuth}" name="auth">
+									<input type="hidden" id="leaveLimit" value="${setlimit.value}">
 
 
 
 
 									<div class="col-md-12" style="text-align: center;">
 
-										  <c:choose>
+										<c:choose>
 											<c:when
 												test="${lvsId==0 || authorityInformation.leaveInitialAuth=='0'}">
-												 
+
 											</c:when>
 											<c:otherwise>
 												<button type="submit" class="btn bg-blue ml-3 legitRipple"
@@ -328,7 +329,7 @@
 													Submit <i class="icon-paperplane ml-2"></i>
 												</button>
 											</c:otherwise>
-										</c:choose>  
+										</c:choose>
 
 										<a href="${pageContext.request.contextPath}/showApplyForLeave"><button
 												type="button" class="btn btn-primary">
@@ -1133,6 +1134,8 @@
 															.hide()
 												}
 
+												if($("#leaveLimit").val()==1){
+													//alert("Hii..");
 												if (checkDays(parseFloat($(
 														"#noOfDays").val())) == true) {
 
@@ -1143,6 +1146,9 @@
 												} else {
 													$("#error_insuf").hide()
 												}
+												}
+												
+												
 
 												if (!$("#leaveRemark").val()) {
 
