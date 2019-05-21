@@ -168,7 +168,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="noOfDays">
-											KRA Title : *</label>
+											KRA Title <span style="color:red">* </span>: </label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control" placeholder="KRA"
 												id="kra_title" name="kra_title" value="${editKra.kraTitle}"

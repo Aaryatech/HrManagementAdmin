@@ -599,7 +599,7 @@ public class ClaimApplicationController {
 	//************************************claim new process************************************
 	
 	
-	@RequestMapping(value = "/showClaimProof", method = RequestMethod.POST)
+	@RequestMapping(value = "/showClaimProof", method = RequestMethod.GET)
 	public ModelAndView addCustomer(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("claim/claimProof");
@@ -936,7 +936,7 @@ public class ClaimApplicationController {
 			e.printStackTrace();
 			session.setAttribute("errorMsg", "Failed to Delete");
 		}
-		return "redirect:/showClaimProof?claimId="+FormValidation.Encrypt(claimId1);
+		return "redirect:/showClaimProofAgain?claimId="+FormValidation.Encrypt(claimId1);
 	}
 	
 	///*******************************History******************************************

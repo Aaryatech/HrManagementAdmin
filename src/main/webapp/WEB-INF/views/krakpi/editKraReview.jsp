@@ -180,7 +180,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="kra_review">
-											KRA Review : *</label>
+											KRA Review<span style="color:red">* </span> : </label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
 												placeholder="KRA Review" id="kra_review" name="kra_review"

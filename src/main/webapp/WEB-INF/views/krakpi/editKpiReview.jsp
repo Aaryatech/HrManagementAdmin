@@ -192,7 +192,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="kra_review">
-											KPI Review : *</label>
+											KPI Review <span style="color:red">* </span>: </label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
 												placeholder="KPI Review" id="kpi_review" name="kpi_review"

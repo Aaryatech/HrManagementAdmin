@@ -180,7 +180,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="kra_review">
-											KPI Title : *</label>
+											KPI Title<span style="color:red">* </span> : </label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
 												placeholder="KPI Title" id="kpi_title" name="kpi_title" value="${editKpi.kpiTitle}"
