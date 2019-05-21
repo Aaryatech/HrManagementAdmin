@@ -331,13 +331,13 @@ public class LeaveController {
 
 		try {
 			if (view.isError() == true) {
-
-				a = "redirect:/showLeaveTypeList";
+				a = "redirect:/accessDenied";
+				
 
 			}
 
 			else {
-				a = "redirect:/accessDenied";
+				a = "redirect:/showLeaveTypeList";
 
 				String base64encodedString = request.getParameter("typeId");
 				String typeId = FormValidation.DecodeKey(base64encodedString);

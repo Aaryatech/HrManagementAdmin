@@ -50,10 +50,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class HomeController {
 
 	
-	/*
-	 * <dependency> <groupId>javax.mail</groupId> <artifactId>mail</artifactId>
-	 * <version>1.4</version> </dependency>
-	 */
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
 	/**

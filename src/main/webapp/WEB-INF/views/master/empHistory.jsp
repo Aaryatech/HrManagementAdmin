@@ -117,7 +117,7 @@
 
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2" for="select2">Select
-								Employee :*</label>
+								Employee <span style="color:red">* </span> :</label>
 							<div class="col-md-2">
 								<select name="empId" data-placeholder="Select Employee"
 									id="empId"
@@ -134,7 +134,7 @@
 
 
 							<label class="col-form-label col-lg-2" for="select2">Select
-								Year :*</label>
+								Year <span style="color:red">* </span> :</label>
 							<div class="col-md-2">
 								<select name="calYrId" data-placeholder="Select Year"
 									id="calYrId"

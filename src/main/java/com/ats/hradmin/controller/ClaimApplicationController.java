@@ -863,7 +863,7 @@ public class ClaimApplicationController {
 		   System.out.println("sdfsdfsdf" + file.get(0).getOriginalFilename());
 			
 		   int claimId = Integer.parseInt(request.getParameter("claimId"));
-			String remark = request.getParameter("remark");
+		//	String remark = request.getParameter("remark");
 
 			Boolean ret = false;
 
@@ -876,7 +876,7 @@ public class ClaimApplicationController {
 
 				ClaimProof company = new ClaimProof();
 				
-				company.setCpDocRemark(remark);
+				company.setCpDocRemark(null);
 				company.setClaimId(claimId);				
 				company.setIsActive(1);
 				company.setDelStatus(1);
@@ -896,7 +896,7 @@ public class ClaimApplicationController {
 					e.printStackTrace();
 				}
 
-				ClaimProof res = Constants.getRestTemplate().postForObject(Constants.url + "/saveClaimProof", company,
+				ClaimProof res = Constants.getRestTemplate().postForObject(Constants.url + "/saveSingleClaimProof", company,
 						ClaimProof.class);
 
 			}

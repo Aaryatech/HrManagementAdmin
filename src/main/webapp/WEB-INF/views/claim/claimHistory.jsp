@@ -47,12 +47,12 @@
 					</div>
 
 
-				<%-- 	<div class="breadcrumb justify-content-center">
-						<a href="${pageContext.request.contextPath}/employeeAdd"
-							class="breadcrumb-elements-item"> Add Employee </a>
+					<div class="breadcrumb justify-content-center">
+						<a href="${pageContext.request.contextPath}/showApplyForClaim"
+							class="breadcrumb-elements-item">  Employee List </a>
 
 					</div>
- --%>
+
 
 				</div>
 			</div>
@@ -164,7 +164,7 @@
 															title="Upload Document"><i class="icon-file-upload" style="color: black;"></i></a>
 															<a
 															href="${pageContext.request.contextPath}/showClaimHistDetailList?claimId=${lvTypeList.circulatedTo}"
-															><i class="icon-history" style="color: black;"></i></a>
+															title="History"><i class="icon-history" style="color: black;"></i></a>
 											
 										</td>
 									</tr>

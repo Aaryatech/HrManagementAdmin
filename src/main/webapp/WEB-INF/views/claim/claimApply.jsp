@@ -47,12 +47,12 @@
 							class="icon-more"></i></a>
 					</div>
 
-					<%-- <div class="breadcrumb justify-content-center">
+					<div class="breadcrumb justify-content-center">
 						<a
-							href="${pageContext.request.contextPath}/showLeaveStructureList"
-							class="breadcrumb-elements-item"> Claim List</a>
+							href="${pageContext.request.contextPath}/showApplyForClaim"
+							class="breadcrumb-elements-item"> Employee List</a>
 
-					</div> --%>
+					</div>
 
 
 				</div>
