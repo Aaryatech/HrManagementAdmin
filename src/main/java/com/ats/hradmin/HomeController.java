@@ -99,6 +99,7 @@ public class HomeController {
 
 		return mav;
 	}
+	
 
 	@RequestMapping(value = "/changePass", method = RequestMethod.GET)
 	public ModelAndView changePass(HttpServletRequest request, HttpServletResponse res) {
