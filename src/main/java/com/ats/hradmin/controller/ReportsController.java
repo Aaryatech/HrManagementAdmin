@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.hradmin.common.Constants;
 import com.ats.hradmin.common.DateConvertor;
+import com.ats.hradmin.model.ActivityRevenueReport;
 import com.ats.hradmin.model.EmployeeOnBenchReport;
 import com.ats.hradmin.model.LoginResponse; 
 
@@ -53,6 +54,31 @@ public class ReportsController {
 				model.addObject("toDate", toDate);
 			 }
 				
+			 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+	}
+	
+	@RequestMapping(value = "/activityRevenueReport", method = RequestMethod.GET)
+	public ModelAndView activityRevenueReport(HttpServletRequest request, HttpServletResponse response) {
+	
+		HttpSession session = request.getSession();
+		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+		
+		ModelAndView model = new ModelAndView("reports/activityRevenueReport");
+		try {
+ 
+				/*MultiValueMap<String, Object> map = new LinkedMultiValueMap<>(); 
+				map.add("compId", userObj.getCompanyId());
+				
+				ActivityRevenueReport[] activityRevenueReport = Constants.getRestTemplate().postForObject(Constants.url + "/revenueReportProjectCategoryWise", map,
+						ActivityRevenueReport[].class);
+					
+				List<ActivityRevenueReport> list = new ArrayList<>(Arrays.asList(activityRevenueReport));
+				model.addObject("list", list); */
+			  
 			 
 		} catch (Exception e) {
 			e.printStackTrace();
