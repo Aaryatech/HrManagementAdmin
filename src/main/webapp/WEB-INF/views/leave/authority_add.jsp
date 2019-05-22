@@ -162,9 +162,9 @@
 												<th class="check" style="text-align: center; width: 5%;"><input
 													type="checkbox" name="selAll" id="selAll" /></th>
 
-<th>Employee Name</th>
+												<th>Employee Name</th>
 												<th>Employee Code</th>
-												
+
 												<th>Department</th>
 												<!-- <th>Designation</th> -->
 
@@ -178,9 +178,9 @@
 													<td class="text-center"><input type="checkbox"
 														class="chk1" name="empIds" id="empIds${count.index+1}"
 														value="${emp.empId}" /></td>
-<td>${emp.empSname}&nbsp;${emp.empFname}</td>
+													<td>${emp.empSname}&nbsp;${emp.empFname}</td>
 													<td>${emp.empCode}</td>
-													
+
 													<td>${emp.empDept}</td>
 													<%-- <td>${emp.empCategory}</td> --%>
 												</tr>
@@ -205,7 +205,7 @@
 												<!-- <th width="10%">Sr. No.</th> -->
 												<th>Employee Name</th>
 												<th>Employee Code</th>
-												
+
 												<th>Department</th>
 												<!-- <th>Desgn</th> -->
 											</tr>
@@ -214,15 +214,16 @@
 											<c:forEach items="${empList}" var="emp" varStatus="count">
 												<tr>
 													<td><input type="radio" name="iniAuthEmpId"
-														id="iniAuthEmpId${count.index+1}" value="${emp.empId}" />Initial
-														<input type="radio" name="finAuthEmpId"
-														id="finAuthEmpId${count.index+1}" value="${emp.empId}" />Final
-														<input type="checkbox" class="chk" name="repToEmpIds"
+														id="iniAuthEmpId${count.index+1}" 
+														value="${emp.empId}" />Initial <input type="radio"
+														name="finAuthEmpId" id="finAuthEmpId${count.index+1}"
+														value="${emp.empId}" />Final <input type="checkbox"
+														class="chk" name="repToEmpIds"
 														id="repToEmpIds${count.index+1}" value="${emp.empId}" />Reporting</td>
 													<%-- <td>${count.index+1}</td> --%>
 													<td>${emp.empSname}&nbsp;${emp.empFname}</td>
 													<td>${emp.empCode}</td>
-													
+
 													<td>${emp.empDept}</td>
 													<%-- <td>${emp.empCategory}</td> --%>
 												</tr>
@@ -242,9 +243,9 @@
 										type="button" class="btn btn-primary">
 										<i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp;
 										Cancel
-									</button></a>
-
-
+									</button></a> <input type="text" name="intialChecked"
+									id="intialChecked" 
+									value="0" />
 							</div>
 						</form>
 
@@ -266,6 +267,22 @@
 
 	</div>
 	<!-- /page content -->
+
+	<script>
+		function checkunckedinitial(index) {
+			
+			var value = document.getElementById("intialChecked").value;
+			if(value==0){
+				 
+				document.getElementById("iniAuthEmpId"+index).checked=true;
+				document.getElementById("intialChecked").value=1;
+			}else{
+				 
+				document.getElementById("iniAuthEmpId"+index).checked=false;
+				document.getElementById("intialChecked").value=0;
+			}
+		}
+	</script>
 	<script>
 		function myFunction() {
 			var input, filter, table, tr, td, i, txtValue;

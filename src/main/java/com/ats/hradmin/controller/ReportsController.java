@@ -20,7 +20,9 @@ import com.ats.hradmin.common.Constants;
 import com.ats.hradmin.common.DateConvertor;
 import com.ats.hradmin.model.ActivityRevenueReport;
 import com.ats.hradmin.model.EmployeeOnBenchReport;
-import com.ats.hradmin.model.LoginResponse; 
+import com.ats.hradmin.model.EmployeeProjectWise;
+import com.ats.hradmin.model.LoginResponse;
+import com.ats.hradmin.model.ProjectLocationWise; 
 
 @Controller
 @Scope("session")
@@ -78,6 +80,56 @@ public class ReportsController {
 					
 				List<ActivityRevenueReport> list = new ArrayList<>(Arrays.asList(activityRevenueReport));
 				model.addObject("list", list); */
+			  
+			 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+	}
+	
+	@RequestMapping(value = "/employeeProjectWiseReport", method = RequestMethod.GET)
+	public ModelAndView employeeProjectWiseReport(HttpServletRequest request, HttpServletResponse response) {
+	
+		HttpSession session = request.getSession();
+		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+		
+		ModelAndView model = new ModelAndView("reports/employeeProjectWiseReport");
+		try {
+ 
+				/* MultiValueMap<String, Object> map = new LinkedMultiValueMap<>(); 
+				map.add("compId", userObj.getCompanyId());
+				
+				EmployeeProjectWise[] employeeProjectWise = Constants.getRestTemplate().postForObject(Constants.url + "/employeeProjectWiseReport", map,
+						EmployeeProjectWise[].class);
+					
+				List<EmployeeProjectWise> list = new ArrayList<>(Arrays.asList(employeeProjectWise));
+				model.addObject("list", list);*/ 
+			  
+			 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+	}
+	
+	@RequestMapping(value = "/projectLocationWiseReport", method = RequestMethod.GET)
+	public ModelAndView projectLocationWiseReport(HttpServletRequest request, HttpServletResponse response) {
+	
+		HttpSession session = request.getSession();
+		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+		
+		ModelAndView model = new ModelAndView("reports/projectLocationWiseReport");
+		try {
+ 
+				/*MultiValueMap<String, Object> map = new LinkedMultiValueMap<>(); 
+				map.add("compId", userObj.getCompanyId());
+				
+				ProjectLocationWise[] projectLocationWise = Constants.getRestTemplate().postForObject(Constants.url + "/projectLocationwiseReport", map,
+						ProjectLocationWise[].class);
+					
+				List<ProjectLocationWise> list = new ArrayList<>(Arrays.asList(projectLocationWise));
+				model.addObject("list", list);*/
 			  
 			 
 		} catch (Exception e) {

@@ -6,7 +6,7 @@
 	import="  org.springframework.util.MultiValueMap"
 	import="  com.ats.hradmin.model.LoginResponse"
 	import="  org.springframework.util.LinkedMultiValueMap"
-	import="  com.ats.hradmin.model.ActivityRevenueReport"
+	import="  com.ats.hradmin.model.ProjectLocationWise"
 	import="  com.ats.hradmin.common.Constants" import=" java.text.DecimalFormat"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -74,7 +74,7 @@
 				<!-- Highlighting rows and columns -->
 				<div class="card">
 					<div class="card-header header-elements-inline">
-						<h5 class="card-title">Project Activity Wise Revenue Report</h5>
+						<h5 class="card-title"> Project Location Wise Report</h5>
 						<!-- <div class="header-elements">
 							<div class="list-icons">
 								<a class="list-icons-item" data-action="collapse"></a>
@@ -159,25 +159,26 @@
 								style="display: block; margin-left: auto; margin-right: auto">
 						</div>
 						<%
-						DecimalFormat df = new DecimalFormat("0.00");
+							DecimalFormat df = new DecimalFormat("0.00");
 							LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 							MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 							map.add("compId", userObj.getCompanyId());
 
-							ActivityRevenueReport[] activityRevenueReport = Constants.getRestTemplate().postForObject(
-									Constants.url + "/revenueReportProjectCategoryWise", map, ActivityRevenueReport[].class);
-							List<ActivityRevenueReport> list = new ArrayList<>(Arrays.asList(activityRevenueReport));
+							ProjectLocationWise[] projectLocationWise = Constants.getRestTemplate().postForObject(Constants.url + "/projectLocationwiseReport", map,
+									ProjectLocationWise[].class); 
+							List<ProjectLocationWise> list = new ArrayList<>(Arrays.asList(projectLocationWise));
 						%>
 						<table
 							class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic  datatable-button-print-columns1"
 							id="bootstrap-data-table">
 							<thead>
 								<tr class="bg-blue" style="text-align: center;">
-									<th width="10%">Sr.no</th>
-									<th>Activity</th>
+									<th width="10%">Sr.no</th> 
+									<th>Project Name</th> 
+									<th>Location</th>
 									<th>Revenue</th>
 									<th>Resource Cost</th>
-									<th>Profit</th>
+									<th>Profit</th> 
 								</tr>
 							</thead>
 							<tbody>
@@ -194,7 +195,12 @@
 									</td>
 									<td>
 										<%
-											out.println(list.get(i).getProjectTypeTitle());
+											out.println(list.get(i).getProjectTitle());
+										%>
+									</td>
+									<td >
+										<%
+											out.println(list.get(i).getLocName());
 										%>
 									</td>
 									<td align="right">
@@ -209,7 +215,7 @@
 									</td>
 									<td align="right">
 										<%
-											out.println(df.format(list.get(i).getRevenue() - list.get(i).getResourceCost()));
+											out.println(df.format(list.get(i).getRevenue()-list.get(i).getResourceCost()));
 										%>
 									</td>
 
