@@ -168,7 +168,7 @@
 
 										<div class="col-lg-4"></div>
 									</div>
-									  
+
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="fname">
 											Employee Name <span style="color: red">* </span>:
@@ -388,7 +388,7 @@
 										<label class="col-form-label col-lg-2" for="email">Email
 											<span style="color: red">* </span>:
 										</label>
-										<div class="col-lg-10">
+										<div class="col-lg-4">
 											<input type="text" class="form-control" placeholder="Email"
 												id="email" name="email" onchange="checkUnique(this.value,2)"
 												autocomplete="off"> <span
@@ -397,6 +397,24 @@
 												class="validation-invalid-label" id="error_email_unique"
 												style="display: none;">This Email is already exist.</span>
 										</div>
+
+
+										<label class="col-form-label col-lg-2" for="gender">gender
+											<span style="color: red">* </span>:
+										</label>
+										<div class="form-check form-check-inline">
+											<label class="form-check-label"> <input type="radio"
+												class="form-check-input" name="gender" id="gender" checked
+												value="0"> Male
+											</label>
+										</div>
+										<div class="form-check form-check-inline">
+											<label class="form-check-label"> <input type="radio"
+												class="form-check-input" name="gender" id="gender" value="1">
+												Female
+											</label>
+										</div>
+
 									</div>
 
 									<div class="form-group row">
@@ -414,8 +432,7 @@
 
 
 										<label class="col-form-label col-lg-2" for="emgContNo1">Emergency
-											Contact No 1 <span style="color: red">* </span>:
-										</label>
+											Contact No 1 : </label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
 												placeholder="Emergency Contact No." id="emgContNo1"
@@ -428,8 +445,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="emgContPrsn2">Emergency
-											Contact Person 2 <span style="color: red">* </span>:
-										</label>
+											Contact Person 2 : </label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
 												placeholder="Emergency Alternate Contact Person"
@@ -852,7 +868,7 @@
 															.hide()
 												}
 
-												if (!$("#emgContPrsn2").val()) {
+												/* if (!$("#emgContPrsn2").val()) {
 
 													isError = true;
 
@@ -862,7 +878,7 @@
 												} else {
 													$("#error_emgContPrsn2")
 															.hide()
-												}
+												} */
 
 												if (!$("#ratePerHr").val()) {
 
@@ -954,7 +970,20 @@
 															.hide()
 												}
 
-												if (!$("#emgContNo2").val()
+												if ($("#emgContNo2").val() != ""
+														&& !validateMobile($(
+																"#emgContNo2")
+																.val())) {
+													isError = true;
+													document
+															.getElementById("error_emgContNo2").innerHTML = "Enter valid Mobile No.";
+													$("#error_emgContNo2")
+															.show()
+												} else {
+													$("#error_emgContNo2")
+															.hide()
+												}
+												/* if (!$("#emgContNo2").val()
 														|| !validateMobile($(
 																"#emgContNo2")
 																.val())) {
@@ -975,7 +1004,7 @@
 												} else {
 													$("#error_emgContNo2")
 															.hide()
-												}
+												} */
 
 												if (!$("#email").val()
 														|| !validateEmail($(

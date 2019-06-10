@@ -357,15 +357,15 @@ try {
 
 					for (int j = 0; j < editStructure.getDetailList().size(); j++) {
 
-						int noOfLeaves1 = 0;
+						 
 						try {
 
 							if (editStructure.getDetailList().get(j).getLvTypeId() == leaveTypeList.get(i)
 									.getLvTypeId()) {
 								flag = 1;
-								editStructure.getDetailList().get(i)
+								editStructure.getDetailList().get(j)
 										.setLvsAllotedLeaves(Integer.parseInt(request.getParameter(
-												"noOfLeaves" + editStructure.getDetailList().get(i).getLvTypeId())));
+												"noOfLeaves" + leaveTypeList.get(i).getLvTypeId())));
 							}
 
 						} catch (Exception e) {
@@ -391,9 +391,11 @@ try {
 						}
 
 					}
-					System.err.println("editStructure" + editStructure.getDetailList().toString());
+					//System.err.println("editStructure" + editStructure.getDetailList().toString());
 
 				}
+				
+				System.out.println(editStructure);
 				LeaveStructureHeader res = Constants.getRestTemplate()
 						.postForObject(Constants.url + "saveLeaveStruture", editStructure, LeaveStructureHeader.class);
 

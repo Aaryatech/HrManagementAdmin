@@ -46,7 +46,7 @@
 					</div>
 
 					<div class="breadcrumb justify-content-center">
-				<a href="${pageContext.request.contextPath}/showApplyForLeave"
+						<a href="${pageContext.request.contextPath}/showApplyForLeave"
 							class="breadcrumb-elements-item">Employee List</a>
 
 					</div>
@@ -123,53 +123,71 @@
 									<th>No. of Days</th>
 									<th>Reason</th>
 									<th>Status</th>
-								
+
 									<th width="10%" class="text-center">Actions</th>
 								</tr>
 							</thead>
 							<tbody>
 
 
-								<c:forEach items="${leaveHistoryList}" var="holiday" varStatus="count">
+								<c:forEach items="${leaveHistoryList}" var="holiday"
+									varStatus="count">
 									<tr>
 										<td>${count.index+1}</td>
 										<td>${holiday.lvTitle}</td>
 										<td>${holiday.leaveFromdt}</td>
 										<td>${holiday.leaveTodt}</td>
 										<c:if test="${holiday.leaveDuration==1}">
-										<td>Full Day</td></c:if>
+											<td>Full Day</td>
+										</c:if>
 										<c:if test="${holiday.leaveDuration==2}">
-										<td>Half Day</td></c:if>
-										
+											<td>1st Half</td>
+										</c:if>
+										<c:if test="${holiday.leaveDuration==3}">
+											<td>2nd Half</td>
+										</c:if>
+
 										<td>${holiday.leaveNumDays}</td>
-										
+
 										<td>${holiday.leaveEmpReason}</td>
 										<c:if test="${holiday.exInt1==1}">
-										<td><span class="badge badge-info">Initial Pending</span></td>
+											<td><span class="badge badge-info">Initial
+													Pending</span></td>
 										</c:if>
 										<c:if test="${holiday.exInt1==2}">
-										<td><span class="badge badge-secondary">Final Pending</span></td>
+											<td><span class="badge badge-secondary">Final
+													Pending</span></td>
 										</c:if>
-											<c:if test="${holiday.exInt1==3}">
-										<td><span class="badge badge-success">Final Approved</span></td>
+										<c:if test="${holiday.exInt1==3}">
+											<td><span class="badge badge-success">Final
+													Approved</span></td>
 										</c:if>
-											<c:if test="${holiday.exInt1==7}">
-										<td><span class="badge badge-danger"> Leave Cancelled</span></td>
+										<c:if test="${holiday.exInt1==7}">
+											<td><span class="badge badge-danger"> Leave
+													Cancelled</span></td>
 										</c:if>
-											<c:if test="${holiday.exInt1==8}">
-										<td><span class="badge badge-danger">Initial Rejected</span></td>
+										<c:if test="${holiday.exInt1==8}">
+											<td><span class="badge badge-danger">Initial
+													Rejected</span></td>
 										</c:if>
-											<c:if test="${holiday.exInt1==9}">
-										<td><span class="badge badge-danger">Final Reject</span></td>
+										<c:if test="${holiday.exInt1==9}">
+											<td><span class="badge badge-danger">Final Reject</span></td>
 										</c:if>
-										<td class="text-center">
-											
-														<a
-															href="${pageContext.request.contextPath}/showLeaveHistDetailList?leaveId=${holiday.exVar1}"
-															><i class="icon-history" style="color: black;"></i></a>
-													
+										<td class="text-center"><a
+											href="${pageContext.request.contextPath}/showLeaveHistDetailList?leaveId=${holiday.exVar1}"><i
+												class="icon-history" style="color: black;"></i></a>
 												
-										</td>
+												<c:if test="${empId==loginEmpId && holiday.exInt1!=7}">
+
+																	<a
+																		href="${pageContext.request.contextPath}/approveLeaveByInitialAuth?empId=${encryptEmpId}&leaveId=${holiday.exVar1}&stat=7"
+ 																		title="Cancel"><i
+																		class="icon-cancel-square "style="color: black;"></i></a>
+
+
+																</c:if>
+												
+												</td>
 									</tr>
 								</c:forEach>
 

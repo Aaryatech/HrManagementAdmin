@@ -1942,7 +1942,7 @@ try {
 			int prevsExpYr = Integer.parseInt(request.getParameter("prevsExpYr"));
 			int prevsExpMn = Integer.parseInt(request.getParameter("prevsExpMn"));
 		//	String leavingDate = request.getParameter("leavingDate");
-			
+			int gender = Integer.parseInt(request.getParameter("gender"));
 			String uname = request.getParameter("uname");
 			String upass = request.getParameter("upass");
 			String[] locId2 = request.getParameterValues("locId2");
@@ -1994,7 +1994,7 @@ try {
 				editEmp.setEmpEmergencyNo2(emgContNo2);
 				editEmp.setEmpEmergencyNo1(emgContNo1);
 				editEmp.setEmpRatePerhr(ratePerHr);
-
+				editEmp.setExInt2(gender);
 				editEmp.setEmpJoiningDate(DateConvertor.convertToYMD(joiningDate));
 				int isWorking = Integer.parseInt(request.getParameter("isWorking"));
 				String leavingDate=null;
@@ -2094,7 +2094,7 @@ try {
 			String joiningDate = request.getParameter("joiningDate");
 			int prevsExpYr = Integer.parseInt(request.getParameter("prevsExpYr"));
 			int prevsExpMn = Integer.parseInt(request.getParameter("prevsExpMn"));
-			
+			int gender = Integer.parseInt(request.getParameter("gender"));
 			//String lvngReson = request.getParameter("lvngReson");
 			String uname = request.getParameter("uname");
 			String upass = request.getParameter("upass");
@@ -2310,7 +2310,7 @@ try {
 				//leaveSummary.setEmpLeavingReason(lvngReson);
 
 				leaveSummary.setExInt1(isWorking);
-				leaveSummary.setExInt2(0);
+				leaveSummary.setExInt2(gender);
 				leaveSummary.setExInt3(0);
 				leaveSummary.setExVar1("NA");
 				leaveSummary.setExVar2("NA");

@@ -167,9 +167,9 @@
 											<tr class="bg-blue" style="text-align: center;">
 
 												<th>Leave Type</th>
-												<th>OB</th>
+												<th>Carry Forward</th>
 												<th>Earned</th>
-												<th>Sanction</th>
+												<th>Approved</th>
 												<th>Applied</th>
 												<th>Balanced</th>
 
@@ -179,7 +179,7 @@
 										<tbody>
 											<c:forEach items="${leaveHistoryList}" var="leaveHistoryList">
 												<tr>
-													<td>${leaveHistoryList.lvTitleShort}</td>
+													<td>${leaveHistoryList.lvTitle}</td>
 													<td style="text-align: right;">${leaveHistoryList.balLeave}</td>
 													<td style="text-align: right;">${leaveHistoryList.lvsAllotedLeaves}</td>
 													<td style="text-align: right;">${leaveHistoryList.sactionLeave}</td>
@@ -205,7 +205,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="leaveTypeId">Select
-											Leave Type <span style="color:red">* </span>:</label>
+											Leave Type <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-4">
 											<select name="leaveTypeId"
 												data-placeholder="Select Leave Type" id="leaveTypeId"
@@ -242,7 +243,8 @@
 												onchange="calholidayWebservice()">
 												<option></option>
 												<option selected value="1">Full Day</option>
-												<option value="2">Half Day</option>
+												<option value="2">1st Half</option>
+												<option value="3">2nd Half</option>
 
 
 											</select><span class="validation-invalid-label" id="error_dayType"
@@ -250,7 +252,9 @@
 										</div>
 									</div>
 									<div class="form-group row">
-										<label class="col-form-label col-lg-2">Date Range<span style="color:red">* </span>:</label>
+										<label class="col-form-label col-lg-2">Date Range<span
+											style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control daterange-basic_new "
 												name="leaveDateRange" data-placeholder="Select Date"
@@ -268,7 +272,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="noOfDays">
-											No. of Days<span style="color:red">* </span> : </label>
+											No. of Days<span style="color: red">* </span> :
+										</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control numbersOnly"
 												placeholder="No. of Days " id="noOfDays" name="noOfDays"
@@ -279,7 +284,8 @@
 									</div>
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="noOfDaysExclude">
-											Excluding Weekly Off <span style="color:red">* </span></label>
+											Excluding Weekly Off <span style="color: red">* </span>
+										</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control numbersOnly"
 												placeholder="Excluding Weekly Off: " id="noOfDaysExclude"
@@ -291,8 +297,9 @@
 									</div>
 
 									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="lvngReson">Remark<span style="color:red">* </span>
-											: </label>
+										<label class="col-form-label col-lg-2" for="lvngReson">Remark<span
+											style="color: red">* </span> :
+										</label>
 										<div class="col-lg-10">
 											<textarea rows="3" cols="3" class="form-control"
 												placeholder="Remark" onchange="trim(this)" id="leaveRemark"
@@ -312,7 +319,8 @@
 									<input type="hidden" class="form-control numbersOnly" id="auth"
 										value="${authorityInformation.leaveInitialAuth}" name="auth">
 									<input type="hidden" id="leaveLimit" value="${setlimit.value}">
-
+									<input type="hidden" id="yearFinalDate"
+										value="${currYr.calYrToDate}">
 
 
 
@@ -420,7 +428,7 @@
 				//document.getElementById("submtbtn").disabled = true;
 				$("#error_assign").show();
 				document.getElementById("submtbtn").disabled = true;
-				
+
 			} else {
 				//alert("in else");
 				document.getElementById("submtbtn").disabled = false;
@@ -1004,21 +1012,19 @@
 			}
 		});
 
-		//daterange-basic_new
-		// Basic initialization
-		   var today = new Date();
-		var last = new Date(today.getTime() - (7 * 24 * 60 * 60 * 1000)); 
-		 
-		<%-- <%Date today = new Date();
-		SimpleDateFormat sdf3 = new SimpleDateFormat("EEE MMM dd yyyy HH:mm:ss ", Locale.ENGLISH);
-		Date lstDate=new Date(today.getTime() - (7 * 24 * 60 * 60 * 1000));
-		System.out.println(sdf3.format(lstDate)+"GMT+0530 (India Standard Time)");
-		
-		out.print("var last = '" + (sdf3.format(lstDate)+" GMT+0530 (India Standard Time)")+ "' ");%> --%>
-		   
+		var today = new Date();
+		var last = new Date(today.getTime() - (7 * 24 * 60 * 60 * 1000));
+
+		var daterange = document.getElementById("yearFinalDate").value;
+
+		var date1res = daterange.split("-");
+		var lastdate = new Date(date1res[0], date1res[1] - 1, date1res[2]);
+
+		//alert(lastdate);
 		$('.daterange-basic_new').daterangepicker({
 			applyClass : 'bg-slate-600',
-			minDate: last,
+			minDate : last,
+			maxDate : lastdate,
 			cancelClass : 'btn-light',
 			locale : {
 				format : 'DD-MM-YYYY',
@@ -1134,21 +1140,21 @@
 															.hide()
 												}
 
-												if($("#leaveLimit").val()==1){
+												if ($("#leaveLimit").val() == 1) {
 													//alert("Hii..");
-												if (checkDays(parseFloat($(
-														"#noOfDays").val())) == true) {
+													if (checkDays(parseFloat($(
+															"#noOfDays").val())) == true) {
 
-													isError = true;
+														isError = true;
 
-													$("#error_insuf").show()
+														$("#error_insuf")
+																.show()
 
-												} else {
-													$("#error_insuf").hide()
+													} else {
+														$("#error_insuf")
+																.hide()
+													}
 												}
-												}
-												
-												
 
 												if (!$("#leaveRemark").val()) {
 
@@ -1161,7 +1167,27 @@
 													$("#error_leaveRemark")
 															.hide()
 												}
+
+												/* var daterange = document.getElementById("leaveDateRange").value;
+												var res = daterange.split(" to ");
+												var date2 = new Date(date2res[2],date2res[1] - 1, date2res[0])
+												var daterange = document.getElementById("yearFinalDate").value;
 												
+												if ($("#yearFinalDate").val()) {
+													 
+													if (checkDays(parseFloat($(
+															"#noOfDays").val())) == true) {
+
+														isError = true;
+
+														$("#error_insuf")
+																.show()
+
+													} else {
+														$("#error_insuf")
+																.hide()
+													}
+												} */
 
 												if (!isError) {
 													var option = $(

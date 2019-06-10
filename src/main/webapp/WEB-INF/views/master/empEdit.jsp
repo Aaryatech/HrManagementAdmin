@@ -459,12 +459,46 @@
 										<label class="col-form-label col-lg-2" for="email">Email
 											<span style="color: red">* </span> :
 										</label>
-										<div class="col-lg-10">
+										<div class="col-lg-4">
 											<input type="text" class="form-control" placeholder="Email"
 												id="email" name="email" value="${editEmp.empEmail}"
 												autocomplete="off" readonly onchange="trim(this)"> <span
 												class="validation-invalid-label" id="error_email"
 												style="display: none;">This field is required.</span>
+										</div>
+
+										<label class="col-form-label col-lg-2" for="gender">gender
+											<span style="color: red">* </span>:
+										</label>
+										<div class="form-check form-check-inline">
+											<label class="form-check-label"> <c:choose>
+													<c:when test="${editEmp.exInt2==0}">
+														<input type="radio" class="form-check-input" name="gender"
+															id="gender" checked value="0"> Male
+													</c:when>
+													<c:otherwise>
+														<input type="radio" class="form-check-input" name="gender"
+															id="gender" value="0"> Male
+													
+													</c:otherwise>
+												</c:choose>
+											</label>
+										</div>
+										<div class="form-check form-check-inline">
+											<label class="form-check-label"> <c:choose>
+													<c:when test="${editEmp.exInt2==0}">
+														<input type="radio" class="form-check-input" name="gender"
+															id="gender" value="1">
+												Female
+													</c:when>
+													<c:otherwise>
+														<input type="radio" class="form-check-input" name="gender"
+															checked id="gender" value="1">
+												Female
+													
+													</c:otherwise>
+												</c:choose>
+											</label>
 										</div>
 									</div>
 
@@ -497,7 +531,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="emgContPrsn2">Emergency
-											Contact Person 2 <span style="color: red">* </span>:
+											Contact Person 2 :
 										</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
@@ -510,7 +544,7 @@
 										</div>
 
 										<label class="col-form-label col-lg-2" for="emgContNo2">Emergency
-											Contact No 2 <span style="color: red">* </span>:
+											Contact No 2 :
 										</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
@@ -964,7 +998,7 @@
 															.hide()
 												}
 
-												if (!$("#emgContPrsn2").val()) {
+												/* if (!$("#emgContPrsn2").val()) {
 
 													isError = true;
 
@@ -974,7 +1008,7 @@
 												} else {
 													$("#error_emgContPrsn2")
 															.hide()
-												}
+												} */
 
 												if (!$("#ratePerHr").val()) {
 
@@ -1083,7 +1117,21 @@
 															.hide()
 												}
 
-												if (!$("#emgContNo2").val()
+												if ($("#emgContNo2").val() != ""
+														&& !validateMobile($(
+																"#emgContNo2")
+																.val())) {
+													isError = true;
+													document
+													.getElementById("error_emgContNo2").innerHTML = "Enter valid Mobile No.";
+													$("#error_emgContNo2")
+													.show()
+												}else{
+													$("#error_emgContNo2")
+													.hide()
+												}
+
+												/* if (!$("#emgContNo2").val()
 														|| !validateMobile($(
 																"#emgContNo2")
 																.val())) {
@@ -1104,7 +1152,7 @@
 												} else {
 													$("#error_emgContNo2")
 															.hide()
-												}
+												} */
 
 												if (!$("#email").val()
 														|| !validateEmail($(

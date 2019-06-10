@@ -283,7 +283,11 @@
 														if (v.leaveDuration == 2) {
 															/* current_status="Pending"; */
 
-															duration = 'Half Day';
+															duration = '1st Half Day';
+														}if (v.leaveDuration == 3) {
+															/* current_status="Pending"; */
+
+															duration = '2nd Half Day';
 														}
 
 														dataTable.row

@@ -2,7 +2,6 @@ package com.ats.hradmin.controller;
 
 import java.text.SimpleDateFormat;
 
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -98,52 +97,45 @@ public class LeaveApprovalController {
 		return model;
 	}
 
-	
 	@RequestMapping(value = "/approveLeaveByInitialAuth", method = RequestMethod.GET)
 	public ModelAndView approveLeaveByInitialAuth(HttpServletRequest request, HttpServletResponse response) {
-		
+
 		ModelAndView model = new ModelAndView("leave/leaveApprovalRemark");
 		try {
 
-			
 			int empId = Integer.parseInt(FormValidation.DecodeKey(request.getParameter("empId")));
 			int leaveId = Integer.parseInt(FormValidation.DecodeKey(request.getParameter("leaveId")));
 			String stat = request.getParameter("stat");
-			
-			model.addObject("empId",empId);
+
+			model.addObject("empId", empId);
 			model.addObject("leaveId", leaveId);
 			model.addObject("stat", stat);
-			
-			
-			 MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			  map.add("leaveId",leaveId);
-			  GetLeaveStatus[] employeeDoc = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpInfoListByTrailEmpId", map,GetLeaveStatus[].class);
-			  
-			  List<GetLeaveStatus> employeeList = new
-			  ArrayList<GetLeaveStatus>(Arrays.asList(employeeDoc));
-		      model.addObject("employeeList",employeeList);
-		      
-		      
-		      MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<>();
-		      map1.add("leaveId",leaveId);
 
-			 GetLeaveApplyAuthwise lvEmp = Constants.getRestTemplate().postForObject(Constants.url + "/getLeaveApplyDetailsByLeaveId", map1,
-					 GetLeaveApplyAuthwise.class);
-			 lvEmp.setLeaveFromdt(DateConvertor.convertToDMY(lvEmp.getLeaveFromdt()));
-			 lvEmp.setLeaveTodt(DateConvertor.convertToDMY(lvEmp.getLeaveTodt()));
-				model.addObject("lvEmp", lvEmp);
-				System.out.println("emp leave details"+lvEmp.toString());
-		      
-			
-			
-	} catch (Exception e) {
-		e.printStackTrace();
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("leaveId", leaveId);
+			GetLeaveStatus[] employeeDoc = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getEmpInfoListByTrailEmpId", map, GetLeaveStatus[].class);
+
+			List<GetLeaveStatus> employeeList = new ArrayList<GetLeaveStatus>(Arrays.asList(employeeDoc));
+			model.addObject("employeeList", employeeList);
+
+			MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<>();
+			map1.add("leaveId", leaveId);
+
+			GetLeaveApplyAuthwise lvEmp = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getLeaveApplyDetailsByLeaveId", map1, GetLeaveApplyAuthwise.class);
+			lvEmp.setLeaveFromdt(DateConvertor.convertToDMY(lvEmp.getLeaveFromdt()));
+			lvEmp.setLeaveTodt(DateConvertor.convertToDMY(lvEmp.getLeaveTodt()));
+			model.addObject("lvEmp", lvEmp);
+			System.out.println("emp leave details" + lvEmp.toString());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+
 	}
-	return model;
-		
-	}
-	
-	
+
 	@RequestMapping(value = "/approveLeaveByInitialAuth1", method = RequestMethod.POST)
 	public String approveLeaveByInitialAuth1(HttpServletRequest request, HttpServletResponse response) {
 
@@ -159,22 +151,21 @@ public class LeaveApprovalController {
 			String stat = request.getParameter("stat");
 			String remark = null;
 			try {
-				 remark =  request.getParameter("remark");
-				}
-				catch (Exception e) {
-					 remark =  "NA";
-				}
-			int stat1=Integer.parseInt(stat);
-			
-           String msg=null;
+				remark = request.getParameter("remark");
+			} catch (Exception e) {
+				remark = "NA";
+			}
+			int stat1 = Integer.parseInt(stat);
 
-             if(stat1==2 ||  stat1==3) {
-	            msg="Approved";
-                }else if(stat1==8 ||  stat1==9) {
-            	 msg="Rejected";
-               }else if(stat1==7){
-            	   msg="Cancelled";
-                   }
+			String msg = null;
+
+			if (stat1 == 2 || stat1 == 3) {
+				msg = "Approved";
+			} else if (stat1 == 8 || stat1 == 9) {
+				msg = "Rejected";
+			} else if (stat1 == 7) {
+				msg = "Cancelled";
+			}
 			System.err.println("link data :::" + empId + leaveId + stat);
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
@@ -211,19 +202,18 @@ public class LeaveApprovalController {
 					map.add("trailId", res1.getTrailPkey());
 					Info info1 = Constants.getRestTemplate().postForObject(Constants.url + "/updateTrailId", map,
 							Info.class);
-					
+
 					if (info1.isError() == false) {
-						session.setAttribute("successMsg", "Record "+msg+" Successfully");
+						session.setAttribute("successMsg", "Record " + msg + " Successfully");
 					} else {
-						session.setAttribute("errorMsg", "Failed to "+msg+" Record");
+						session.setAttribute("errorMsg", "Failed to " + msg + " Record");
 					}
-					
 
 				}
 			}
 
 			else {
-				session.setAttribute("errorMsg", "Failed to "+msg+" Record");
+				session.setAttribute("errorMsg", "Failed to " + msg + " Record");
 			}
 
 		} catch (Exception e) {
@@ -233,81 +223,83 @@ public class LeaveApprovalController {
 		return "redirect:/showLeaveApprovalByAuthority";
 
 	}
-	
-	
-	
-	//1 st 
-	
+
+	// 1 st
+
 	@RequestMapping(value = "/showLeaveHistList", method = RequestMethod.GET)
 	public ModelAndView showClaimList(HttpServletRequest request, HttpServletResponse response) {
-		
+
 		ModelAndView model = new ModelAndView("leave/empLeaveHistory");
 		try {
 
-			  List<LeaveDetail> employeeInfoList=new ArrayList<LeaveDetail>();
-			  //String empId1=request.getParameter("empId");
+			List<LeaveDetail> employeeInfoList = new ArrayList<LeaveDetail>();
+			// String empId1=request.getParameter("empId");
 			int empId = Integer.parseInt(FormValidation.DecodeKey(request.getParameter("empId")));
-			System.err.println("emp idis "+empId);
-			MultiValueMap<String, Object>  map = new LinkedMultiValueMap<>();
-				map.add("empId",empId);
-				
-		LeaveDetail[] employeeInfo = Constants.getRestTemplate().postForObject(Constants.url + "/getLeaveListByEmp",map,
-						  LeaveDetail[].class);
-				   
-				  employeeInfoList = new ArrayList<LeaveDetail>(Arrays.asList(employeeInfo));
-				  for (int i = 0; i < employeeInfoList.size(); i++) {
+			System.err.println("emp idis " + empId);
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("empId", empId);
 
-					  employeeInfoList.get(i).setExVar1(FormValidation.Encrypt(String.valueOf(employeeInfoList.get(i).getLeaveId())));
-					}
-				  model.addObject("leaveHistoryList",employeeInfoList);
-				//  model.addObject("empId1",empId1);
+			LeaveDetail[] employeeInfo = Constants.getRestTemplate().postForObject(Constants.url + "/getLeaveListByEmp",
+					map, LeaveDetail[].class);
+
+			employeeInfoList = new ArrayList<LeaveDetail>(Arrays.asList(employeeInfo));
+			for (int i = 0; i < employeeInfoList.size(); i++) {
+
+				employeeInfoList.get(i)
+						.setExVar1(FormValidation.Encrypt(String.valueOf(employeeInfoList.get(i).getLeaveId())));
+			}
+			model.addObject("leaveHistoryList", employeeInfoList);
+			// model.addObject("empId1",empId1);
 			
+			model.addObject("empId", empId);
 			
-	} catch (Exception e) {
-		e.printStackTrace();
+			HttpSession session = request.getSession();
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+			model.addObject("loginEmpId", userObj.getEmpId());
+			model.addObject("encryptEmpId", FormValidation.Encrypt(String.valueOf(empId)));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+
 	}
-	return model;
-		  
-	}
-	
-	//2
+
+	// 2
 	@RequestMapping(value = "/showLeaveHistDetailList", method = RequestMethod.GET)
 	public ModelAndView showLeaveHistDetailList(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("leave/empLeaveHistoryDetail");
 
 		try {
-		
-			String base64encodedString = request.getParameter("leaveId");			
-			String leaveId = FormValidation.DecodeKey(base64encodedString);			
-			  MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			  map.add("leaveId",leaveId);
-			  GetLeaveStatus[] employeeDoc = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpInfoListByTrailEmpId", map,GetLeaveStatus[].class);
-			  
-			  List<GetLeaveStatus> employeeList = new
-			  ArrayList<GetLeaveStatus>(Arrays.asList(employeeDoc));
-		      model.addObject("employeeList",employeeList);
-		      
-		      MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<>();
-		      map1.add("leaveId",leaveId);
 
-			 GetLeaveApplyAuthwise lvEmp = Constants.getRestTemplate().postForObject(Constants.url + "/getLeaveApplyDetailsByLeaveId", map1,
-					 GetLeaveApplyAuthwise.class);
-			 
-			 lvEmp.setLeaveFromdt(DateConvertor.convertToDMY(lvEmp.getLeaveFromdt()));
-			 lvEmp.setLeaveTodt(DateConvertor.convertToDMY(lvEmp.getLeaveTodt()));
-			 String empId1= FormValidation.Encrypt(String.valueOf(lvEmp.getEmpId()));
-				model.addObject("lvEmp", lvEmp);
-				model.addObject("empId1", empId1);
-				System.out.println("emp leave details"+lvEmp.toString());
-		   
+			String base64encodedString = request.getParameter("leaveId");
+			String leaveId = FormValidation.DecodeKey(base64encodedString);
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("leaveId", leaveId);
+			GetLeaveStatus[] employeeDoc = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getEmpInfoListByTrailEmpId", map, GetLeaveStatus[].class);
+
+			List<GetLeaveStatus> employeeList = new ArrayList<GetLeaveStatus>(Arrays.asList(employeeDoc));
+			model.addObject("employeeList", employeeList);
+
+			MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<>();
+			map1.add("leaveId", leaveId);
+
+			GetLeaveApplyAuthwise lvEmp = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getLeaveApplyDetailsByLeaveId", map1, GetLeaveApplyAuthwise.class);
+
+			lvEmp.setLeaveFromdt(DateConvertor.convertToDMY(lvEmp.getLeaveFromdt()));
+			lvEmp.setLeaveTodt(DateConvertor.convertToDMY(lvEmp.getLeaveTodt()));
+			String empId1 = FormValidation.Encrypt(String.valueOf(lvEmp.getEmpId()));
+			model.addObject("lvEmp", lvEmp);
+			model.addObject("empId1", empId1);
+			System.out.println("emp leave details" + lvEmp.toString());
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return model;
 	}
-	
-	
 
 }

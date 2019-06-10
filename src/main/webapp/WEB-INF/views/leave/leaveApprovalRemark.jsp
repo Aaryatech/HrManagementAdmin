@@ -146,6 +146,27 @@
 									</div>
 									
 									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="compName">Type
+											: </label>
+										<div class="col-lg-6">
+										<c:set var="type" value="-"></c:set>
+										<c:if test="${lvEmp.leaveDuration==1}">
+												<c:set var="type" value="Full Day"></c:set> 
+										</c:if>
+										<c:if test="${lvEmp.leaveDuration==2}">
+											<c:set var="type" value="1st Half"></c:set> 
+										</c:if>
+										<c:if test="${lvEmp.leaveDuration==3}">
+											<c:set var="type" value="2nd Half"></c:set> 
+										</c:if>
+											<input type="text" class="form-control"
+												 Value="${type}"
+												name="compName" autocomplete="off" readonly>
+											
+										</div>
+									</div>
+									
+									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="compName">From date
 											: </label>
 										<div class="col-lg-6">

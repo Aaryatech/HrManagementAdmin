@@ -4,7 +4,9 @@ import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +27,7 @@ import com.ats.hradmin.common.AcessController;
 import com.ats.hradmin.common.Constants;
 import com.ats.hradmin.common.DateConvertor;
 import com.ats.hradmin.common.FormValidation;
+import com.ats.hradmin.leave.model.CalenderYear;
 import com.ats.hradmin.leave.model.GetAuthorityIds;
 import com.ats.hradmin.leave.model.GetHoliday;
 import com.ats.hradmin.leave.model.GetLeaveStatus;
@@ -142,7 +145,7 @@ public class LeaveController {
 			String compName = request.getParameter("1");
 			String leaveTypeTitle = request.getParameter("leaveTypeTitle");
 			String leaveShortTypeTitle = request.getParameter("leaveShortTypeTitle");
-			//int WprkingHrs = Integer.parseInt(request.getParameter("leaveWorlHrs"));
+			// int WprkingHrs = Integer.parseInt(request.getParameter("leaveWorlHrs"));
 			int summId = Integer.parseInt(request.getParameter("summId"));
 			String leaveColor = request.getParameter("leaveColor");
 			String remark = null;
@@ -168,7 +171,6 @@ public class LeaveController {
 				System.out.println("add" + ret);
 			}
 
-			 
 			if (FormValidation.Validaton(request.getParameter("leaveColor"), "") == true) {
 
 				ret = true;
@@ -332,7 +334,6 @@ public class LeaveController {
 		try {
 			if (view.isError() == true) {
 				a = "redirect:/accessDenied";
-				
 
 			}
 
@@ -373,7 +374,7 @@ public class LeaveController {
 			String compName = request.getParameter("1");
 			String leaveTypeTitle = request.getParameter("leaveTypeTitle");
 			String leaveShortTypeTitle = request.getParameter("leaveShortTypeTitle");
-			//int WprkingHrs = Integer.parseInt(request.getParameter("leaveWorlHrs"));
+			// int WprkingHrs = Integer.parseInt(request.getParameter("leaveWorlHrs"));
 			int summId = Integer.parseInt(request.getParameter("summId"));
 			String leaveColor = request.getParameter("leaveColor");
 			String remark = null;
@@ -397,7 +398,7 @@ public class LeaveController {
 				ret = true;
 				System.out.println("add" + ret);
 			}
- 
+
 			if (FormValidation.Validaton(request.getParameter("leaveColor"), "") == true) {
 
 				ret = true;
@@ -479,34 +480,34 @@ public class LeaveController {
 				}
 
 			}
-			 
-		/*	if (flag == 1) {*/
-				//System.err.println("not matched");
-			
-				temp.setCompanyId(editEmp.getCompanyId());
-				temp.setCompanyName(editEmp.getCompanyName());
-				temp.setEmpCategory(editEmp.getEmpCategory());
-				temp.setEmpCatId(editEmp.getEmpCatId());
-				temp.setEmpCode(editEmp.getEmpCode());
-				temp.setEmpDept(editEmp.getEmpDept());
-				temp.setEmpDeptShortName(editEmp.getEmpDeptShortName());
-				temp.setEmpCatShortName(editEmp.getEmpCatShortName());
-				temp.setEmpTypeShortName(editEmp.getEmpTypeShortName());
-				temp.setEmpDeptId(editEmp.getEmpDeptId());
-				temp.setEmpEmail(editEmp.getEmpEmail());
-				temp.setEmpFname(editEmp.getEmpFname());
-				temp.setEmpId(editEmp.getEmpId());
-				temp.setEmpMname(editEmp.getEmpMname());
-				temp.setEmpMobile1(editEmp.getEmpMobile1());
-				temp.setEmpPrevExpYrs(editEmp.getEmpPrevExpYrs());
-				temp.setEmpRatePerhr(editEmp.getEmpRatePerhr());
-				temp.setEmpSname(editEmp.getEmpSname());
-				temp.setEmpType(editEmp.getEmpType());
-				temp.setEmpTypeId(editEmp.getEmpTypeId());
-				//employeeDepartmentlist.add(temp);
+
+			/* if (flag == 1) { */
+			// System.err.println("not matched");
+
+			temp.setCompanyId(editEmp.getCompanyId());
+			temp.setCompanyName(editEmp.getCompanyName());
+			temp.setEmpCategory(editEmp.getEmpCategory());
+			temp.setEmpCatId(editEmp.getEmpCatId());
+			temp.setEmpCode(editEmp.getEmpCode());
+			temp.setEmpDept(editEmp.getEmpDept());
+			temp.setEmpDeptShortName(editEmp.getEmpDeptShortName());
+			temp.setEmpCatShortName(editEmp.getEmpCatShortName());
+			temp.setEmpTypeShortName(editEmp.getEmpTypeShortName());
+			temp.setEmpDeptId(editEmp.getEmpDeptId());
+			temp.setEmpEmail(editEmp.getEmpEmail());
+			temp.setEmpFname(editEmp.getEmpFname());
+			temp.setEmpId(editEmp.getEmpId());
+			temp.setEmpMname(editEmp.getEmpMname());
+			temp.setEmpMobile1(editEmp.getEmpMobile1());
+			temp.setEmpPrevExpYrs(editEmp.getEmpPrevExpYrs());
+			temp.setEmpRatePerhr(editEmp.getEmpRatePerhr());
+			temp.setEmpSname(editEmp.getEmpSname());
+			temp.setEmpType(editEmp.getEmpType());
+			temp.setEmpTypeId(editEmp.getEmpTypeId());
+			// employeeDepartmentlist.add(temp);
 			/* } */
-			 
-				temp.setExVar1(FormValidation.Encrypt(String.valueOf(editEmp.getEmpId())));
+
+			temp.setExVar1(FormValidation.Encrypt(String.valueOf(editEmp.getEmpId())));
 			for (int i = 0; i < employeeDepartmentlist.size(); i++) {
 				// System.out.println("employeeDepartmentlist.get(i).getEmpId()"+employeeDepartmentlist.get(i).getEmpId());
 				employeeDepartmentlist.get(i)
@@ -561,8 +562,8 @@ public class LeaveController {
 					.postForObject(Constants.url + "/getLeaveHistoryList", map, LeaveHistory[].class);
 
 			leaveHistoryList = new ArrayList<LeaveHistory>(Arrays.asList(leaveHistory));
-			model.addObject("leaveHistoryList", leaveHistoryList);
-			System.err.println("emp leaveHistoryList is  " + leaveHistoryList.toString());
+			
+			 
 			if (leaveHistoryList.isEmpty()) {
 				model.addObject("lvsId", 0);
 			} else {
@@ -581,17 +582,47 @@ public class LeaveController {
 					Setting.class);
 			model.addObject("setlimit", setlimit);
 
-			/*
-			 * map = new LinkedMultiValueMap<String, Object>(); map.add("empId", empId);
-			 * map.add("currYrId", session.getAttribute("currYearId")); LeavesAllotment
-			 * lvsInformation = Constants.getRestTemplate() .postForObject(Constants.url +
-			 * "/getStructureByEmpId", map, LeavesAllotment.class);
-			 * model.addObject("lvsInformation", lvsInformation); if
-			 * (lvsInformation.equals(null)) { model.addObject("lvsInfoId", 0); }else {
-			 * model.addObject("lvsInfoId", lvsInformation.getLvsId()); }
-			 * 
-			 * System.err.println("lvsInformation is  " + lvsInformation.toString());
-			 */
+			CalenderYear currYr = Constants.getRestTemplate().getForObject(Constants.url + "getcurrentyear",
+					CalenderYear.class);
+
+			 
+			SimpleDateFormat yy = new SimpleDateFormat("yyyy-MM-dd");
+			Date fromDate = yy.parse(currYr.getCalYrFromDate());
+			Date toDate = yy.parse(currYr.getCalYrToDate());
+			Date joiningDate = yy.parse(editEmp.getEmpJoiningDate());
+
+			map = new LinkedMultiValueMap<>();
+			map.add("limitKey", "casualleave");
+			Setting casualLeaveId = Constants.getRestTemplate().postForObject(Constants.url + "/getSettingByKey", map,
+					Setting.class);
+			 
+			
+			if (joiningDate.compareTo(fromDate) > 0 && joiningDate.compareTo(toDate) < 0) {
+
+				Calendar startCalendar = new GregorianCalendar();
+				startCalendar.setTime(fromDate);
+				Calendar endCalendar = new GregorianCalendar();
+				endCalendar.setTime(joiningDate);
+
+				int diffYear = endCalendar.get(Calendar.YEAR) - startCalendar.get(Calendar.YEAR);
+				int diffMonth = diffYear * 12 + endCalendar.get(Calendar.MONTH) - startCalendar.get(Calendar.MONTH);
+
+				System.err.println(diffMonth + 1);
+
+				for (int i = 0; i < leaveHistoryList.size(); i++) {
+					if (leaveHistoryList.get(i).getLvTypeId() == Integer.parseInt(casualLeaveId.getValue())) {
+						
+						float leavePerMonth =leaveHistoryList.get(i).getLvsAllotedLeaves()/12;
+						float minusLeave= leavePerMonth*(diffMonth + 1);
+						leaveHistoryList.get(i).setLvsAllotedLeaves(leaveHistoryList.get(i).getLvsAllotedLeaves()-minusLeave);
+
+					}
+				}
+
+			}
+			model.addObject("leaveHistoryList", leaveHistoryList); 
+			model.addObject("currYr", currYr);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
