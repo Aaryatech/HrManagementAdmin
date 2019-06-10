@@ -27,6 +27,7 @@ import com.ats.hradmin.common.FormValidation;
 import com.ats.hradmin.leave.model.GetLeaveAuthority;
 import com.ats.hradmin.leave.model.GetStructureAllotment;
 import com.ats.hradmin.leave.model.LeaveAuthority;
+import com.ats.hradmin.leave.model.LeaveBalanceCal;
 import com.ats.hradmin.leave.model.LeaveStructureDetails;
 import com.ats.hradmin.leave.model.LeaveStructureHeader;
 import com.ats.hradmin.leave.model.LeavesAllotment;
@@ -51,15 +52,15 @@ public class LeaveStructureController {
 
 	@RequestMapping(value = "/addLeaveStructure", method = RequestMethod.GET)
 	public ModelAndView addLeaveStructure(HttpServletRequest request, HttpServletResponse response) {
-		
+
 		HttpSession session = request.getSession();
 		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 		ModelAndView model = null;
-		
-try {
-			
+
+		try {
+
 			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
-			Info view = AcessController.checkAccess("addLeaveStructure", "showLeaveStructureList",0, 1,0, 0,
+			Info view = AcessController.checkAccess("addLeaveStructure", "showLeaveStructureList", 0, 1, 0, 0,
 					newModuleList);
 
 			if (view.isError() == true) {
@@ -68,19 +69,18 @@ try {
 
 			} else {
 				model = new ModelAndView("leave/add_leave_structure");
-			tempDetailList = new ArrayList<LeaveStructureDetails>();
+				tempDetailList = new ArrayList<LeaveStructureDetails>();
 
-			
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			map.add("companyId", userObj.getCompanyId());
-			LeaveType[] leaveArray = Constants.getRestTemplate()
-					.postForObject(Constants.url + "/getLeaveTypeListIsStructure",map, LeaveType[].class);
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+				map.add("companyId", userObj.getCompanyId());
+				LeaveType[] leaveArray = Constants.getRestTemplate()
+						.postForObject(Constants.url + "/getLeaveTypeListIsStructure", map, LeaveType[].class);
 
-			leaveTypeList = new ArrayList<>(Arrays.asList(leaveArray));
+				leaveTypeList = new ArrayList<>(Arrays.asList(leaveArray));
 
-			model.addObject("leaveTypeList", leaveTypeList);
+				model.addObject("leaveTypeList", leaveTypeList);
 
-			model.addObject("title", "Add Leave Structure");
+				model.addObject("title", "Add Leave Structure");
 			}
 
 		} catch (Exception e) {
@@ -134,23 +134,23 @@ try {
 						noOfLeaves = 0;
 					}
 
-					if (noOfLeaves > 0) {
-						LeaveStructureDetails detail = new LeaveStructureDetails();
-						detail.setDelStatus(1);
-						detail.setExInt1(0);
-						detail.setExInt2(0);
-						detail.setExVar1("NA");
-						detail.setExVar2("NA");
-						detail.setIsActive(1);
+					/* if (noOfLeaves > 0) { */
+					LeaveStructureDetails detail = new LeaveStructureDetails();
+					detail.setDelStatus(1);
+					detail.setExInt1(0);
+					detail.setExInt2(0);
+					detail.setExVar1("NA");
+					detail.setExVar2("NA");
+					detail.setIsActive(1);
 
-						detail.setLvsAllotedLeaves(Integer
-								.parseInt(request.getParameter("noOfLeaves" + leaveTypeList.get(i).getLvTypeId())));
+					detail.setLvsAllotedLeaves(
+							Integer.parseInt(request.getParameter("noOfLeaves" + leaveTypeList.get(i).getLvTypeId())));
 
-						detail.setLvTypeId(leaveTypeList.get(i).getLvTypeId());
-						detail.setMakerUserId(userObj.getUserId());
-						detail.setMakerDatetime(dateTime);
-						detailList.add(detail);
-					}
+					detail.setLvTypeId(leaveTypeList.get(i).getLvTypeId());
+					detail.setMakerUserId(userObj.getUserId());
+					detail.setMakerDatetime(dateTime);
+					detailList.add(detail);
+					/* } */
 				}
 
 				head.setDetailList(detailList);
@@ -179,7 +179,6 @@ try {
 	@RequestMapping(value = "/showLeaveStructureList", method = RequestMethod.GET)
 	public ModelAndView showLeaveStructureList(HttpServletRequest request, HttpServletResponse response) {
 
-
 		ModelAndView model = null;
 		try {
 			HttpSession session = request.getSession();
@@ -194,43 +193,42 @@ try {
 
 			} else {
 				model = new ModelAndView("leave/leave_structure_list");
-			
-			
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			map.add("companyId", userObj.getCompanyId());
-			LeaveStructureHeader[] summary = Constants.getRestTemplate()
-					.postForObject(Constants.url + "/getStructureList", map, LeaveStructureHeader[].class);
 
-			List<LeaveStructureHeader> leaveSummarylist = new ArrayList<>(Arrays.asList(summary));
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+				map.add("companyId", userObj.getCompanyId());
+				LeaveStructureHeader[] summary = Constants.getRestTemplate()
+						.postForObject(Constants.url + "/getStructureList", map, LeaveStructureHeader[].class);
 
-			for (int i = 0; i < leaveSummarylist.size(); i++) {
+				List<LeaveStructureHeader> leaveSummarylist = new ArrayList<>(Arrays.asList(summary));
 
-				leaveSummarylist.get(i)
-						.setExVar1(FormValidation.Encrypt(String.valueOf(leaveSummarylist.get(i).getLvsId())));
-			}
+				for (int i = 0; i < leaveSummarylist.size(); i++) {
 
-			model.addObject("lvStructureList", leaveSummarylist);
-			Info add = AcessController.checkAccess("showLeaveStructureList", "showLeaveStructureList", 0, 1, 0,
-					0, newModuleList);
-			Info edit = AcessController.checkAccess("showLeaveStructureList", "showLeaveStructureList", 0, 0, 1,
-					0, newModuleList);
-			Info delete = AcessController.checkAccess("showLeaveStructureList", "showLeaveStructureList", 0, 0, 0,
-					1, newModuleList);
+					leaveSummarylist.get(i)
+							.setExVar1(FormValidation.Encrypt(String.valueOf(leaveSummarylist.get(i).getLvsId())));
+				}
 
-			if (add.isError() == false) {
-				System.out.println(" add   Accessable ");
-				model.addObject("addAccess", 0);
+				model.addObject("lvStructureList", leaveSummarylist);
+				Info add = AcessController.checkAccess("showLeaveStructureList", "showLeaveStructureList", 0, 1, 0, 0,
+						newModuleList);
+				Info edit = AcessController.checkAccess("showLeaveStructureList", "showLeaveStructureList", 0, 0, 1, 0,
+						newModuleList);
+				Info delete = AcessController.checkAccess("showLeaveStructureList", "showLeaveStructureList", 0, 0, 0,
+						1, newModuleList);
 
-			}
-			if (edit.isError() == false) {
-				System.out.println(" edit   Accessable ");
-				model.addObject("editAccess", 0);
-			}
-			if (delete.isError() == false) {
-				System.out.println(" delete   Accessable ");
-				model.addObject("deleteAccess", 0);
+				if (add.isError() == false) {
+					System.out.println(" add   Accessable ");
+					model.addObject("addAccess", 0);
 
-			}
+				}
+				if (edit.isError() == false) {
+					System.out.println(" edit   Accessable ");
+					model.addObject("editAccess", 0);
+				}
+				if (delete.isError() == false) {
+					System.out.println(" delete   Accessable ");
+					model.addObject("deleteAccess", 0);
+
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -243,15 +241,15 @@ try {
 	@RequestMapping(value = "/editLeaveStructure", method = RequestMethod.GET)
 	public ModelAndView editLeaveStructure(HttpServletRequest request, HttpServletResponse response) {
 
-	
 		HttpSession session = request.getSession();
 		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
-	
+
 		ModelAndView model = null;
 		try {
 
 			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
-			Info view = AcessController.checkAccess("editLeaveStructure", "showLeaveStructureList", 0, 0, 1, 0, newModuleList);
+			Info view = AcessController.checkAccess("editLeaveStructure", "showLeaveStructureList", 0, 0, 1, 0,
+					newModuleList);
 
 			if (view.isError() == true) {
 
@@ -259,26 +257,26 @@ try {
 
 			} else {
 				model = new ModelAndView("leave/edit_leave_structure");
-			String base64encodedString = request.getParameter("lvsId");
-			String lvsId = FormValidation.DecodeKey(base64encodedString);
+				String base64encodedString = request.getParameter("lvsId");
+				String lvsId = FormValidation.DecodeKey(base64encodedString);
 
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			map.add("lvsId", lvsId);
-			editStructure = Constants.getRestTemplate().postForObject(Constants.url + "/getStructureById", map,
-					LeaveStructureHeader.class);
-			model.addObject("editStructure", editStructure);
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+				map.add("lvsId", lvsId);
+				editStructure = Constants.getRestTemplate().postForObject(Constants.url + "/getStructureById", map,
+						LeaveStructureHeader.class);
+				model.addObject("editStructure", editStructure);
 
-			model.addObject("editStructureDetail", editStructure.getDetailList());
+				model.addObject("editStructureDetail", editStructure.getDetailList());
 
-			map.add("companyId", userObj.getCompanyId());
-			LeaveType[] leaveArray = Constants.getRestTemplate()
-					.postForObject(Constants.url + "/getLeaveTypeListIsStructure",map, LeaveType[].class);
-			leaveTypeList = new ArrayList<>(Arrays.asList(leaveArray));
+				map.add("companyId", userObj.getCompanyId());
+				LeaveType[] leaveArray = Constants.getRestTemplate()
+						.postForObject(Constants.url + "/getLeaveTypeListIsStructure", map, LeaveType[].class);
+				leaveTypeList = new ArrayList<>(Arrays.asList(leaveArray));
 
-			model.addObject("leaveTypeList", leaveTypeList);
+				model.addObject("leaveTypeList", leaveTypeList);
 
-			System.out.println("editStructure" + editStructure.toString());
-			System.out.println("editStructureDetail" + editStructure.getDetailList().toString());
+				System.out.println("editStructure" + editStructure.toString());
+				System.out.println("editStructureDetail" + editStructure.getDetailList().toString());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -291,32 +289,32 @@ try {
 
 		HttpSession session = request.getSession();
 		String a = null;
-	
+
 		List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
 
-		Info view = AcessController.checkAccess("deleteLeaveStructure", "showLeaveStructureList", 0, 0, 0, 1, newModuleList);
+		Info view = AcessController.checkAccess("deleteLeaveStructure", "showLeaveStructureList", 0, 0, 0, 1,
+				newModuleList);
 
 		try {
 			if (view.isError() == true) {
 
 				a = "redirect:/accessDenied";
 
-			}
-			else {
-				a="redirect:/showLeaveStructureList";
-			String base64encodedString = request.getParameter("lvsId");
-			String lvsId = FormValidation.DecodeKey(base64encodedString);
-
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			map.add("lvsId", lvsId);
-			Info info = Constants.getRestTemplate().postForObject(Constants.url + "/deleteLeaveStructure", map,
-					Info.class);
-
-			if (info.isError() == false) {
-				session.setAttribute("successMsg", "Deleted Successfully");
 			} else {
-				session.setAttribute("errorMsg", "Failed to Delete");
-			}
+				a = "redirect:/showLeaveStructureList";
+				String base64encodedString = request.getParameter("lvsId");
+				String lvsId = FormValidation.DecodeKey(base64encodedString);
+
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+				map.add("lvsId", lvsId);
+				Info info = Constants.getRestTemplate().postForObject(Constants.url + "/deleteLeaveStructure", map,
+						Info.class);
+
+				if (info.isError() == false) {
+					session.setAttribute("successMsg", "Deleted Successfully");
+				} else {
+					session.setAttribute("errorMsg", "Failed to Delete");
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -357,44 +355,43 @@ try {
 
 					for (int j = 0; j < editStructure.getDetailList().size(); j++) {
 
-						 
 						try {
 
 							if (editStructure.getDetailList().get(j).getLvTypeId() == leaveTypeList.get(i)
 									.getLvTypeId()) {
 								flag = 1;
-								editStructure.getDetailList().get(j)
-										.setLvsAllotedLeaves(Integer.parseInt(request.getParameter(
-												"noOfLeaves" + leaveTypeList.get(i).getLvTypeId())));
+								editStructure.getDetailList().get(j).setLvsAllotedLeaves(Integer.parseInt(
+										request.getParameter("noOfLeaves" + leaveTypeList.get(i).getLvTypeId())));
 							}
 
 						} catch (Exception e) {
 							// editStructure.getDetailList().get(i).setLvsAllotedLeaves(noOfLeaves1);
 						}
 					}
-					if (noOfLeaves > 0) {
-						if (flag == 0) {
-							LeaveStructureDetails detail = new LeaveStructureDetails();
-							detail.setDelStatus(1);
-							detail.setIsActive(1);
-							detail.setLvsAllotedLeaves(noOfLeaves);
-							detail.setLvTypeId(leaveTypeList.get(i).getLvTypeId());
-							detail.setMakerDatetime(dateTime);
-							detail.setLvsId(editStructure.getLvsId());
-							detail.setMakerUserId(userObj.getUserId());
+					/* if (noOfLeaves > 0) { */
+					if (flag == 0) {
+						LeaveStructureDetails detail = new LeaveStructureDetails();
+						detail.setDelStatus(1);
+						detail.setIsActive(1);
+						detail.setLvsAllotedLeaves(noOfLeaves);
+						detail.setLvTypeId(leaveTypeList.get(i).getLvTypeId());
+						detail.setMakerDatetime(dateTime);
+						detail.setLvsId(editStructure.getLvsId());
+						detail.setMakerUserId(userObj.getUserId());
 
-							// LeaveStructureDetails resDetails = Constants.getRestTemplate().postForObject(
-							// Constants.url + "saveLeaveStructureDetail", detail,
-							// LeaveStructureDetails.class);
-							editStructure.getDetailList().add(detail);
-							System.out.println(detail.toString());
-						}
+						// LeaveStructureDetails resDetails = Constants.getRestTemplate().postForObject(
+						// Constants.url + "saveLeaveStructureDetail", detail,
+						// LeaveStructureDetails.class);
+						editStructure.getDetailList().add(detail);
+						System.out.println(detail.toString());
+						/* } */
 
 					}
-					//System.err.println("editStructure" + editStructure.getDetailList().toString());
+					// System.err.println("editStructure" +
+					// editStructure.getDetailList().toString());
 
 				}
-				
+
 				System.out.println(editStructure);
 				LeaveStructureHeader res = Constants.getRestTemplate()
 						.postForObject(Constants.url + "saveLeaveStruture", editStructure, LeaveStructureHeader.class);
@@ -439,6 +436,8 @@ try {
 			map = new LinkedMultiValueMap<>();
 			map.add("companyId", userObj.getCompanyId());
 			map.add("locIdList", userObj.getLocationIds());
+			map.add("typeId", 1);
+
 			GetStructureAllotment[] summary = Constants.getRestTemplate()
 					.postForObject(Constants.url + "/getStructureAllotmentList", map, GetStructureAllotment[].class);
 
@@ -482,13 +481,6 @@ try {
 
 			Boolean ret = false;
 
-			/*
-			 * if (FormValidation.Validaton(lvsId, "") == true) {
-			 * 
-			 * ret = true;
-			 * 
-			 * }
-			 */
 			if (ret == false) {
 
 				LeavesAllotment leavesAllotment = new LeavesAllotment();
@@ -643,45 +635,41 @@ try {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("companyId", userObj.getCompanyId());
 			map.add("locIdList", userObj.getLocationIds());
-			
-			
 
 			GetLeaveAuthority[] empInfoError = Constants.getRestTemplate()
 					.postForObject(Constants.url + "/getLeaveAuthorityList", map, GetLeaveAuthority[].class);
 
 			List<GetLeaveAuthority> empLeaveAuth = new ArrayList<>(Arrays.asList(empInfoError));
 
-			
-			
 			for (int i = 0; i < empLeaveAuth.size(); i++) {
-				System.out.println("i loop for"+i+empLeaveAuth.get(i).getEmpFname());
+				System.out.println("i loop for" + i + empLeaveAuth.get(i).getEmpFname());
 
 				empLeaveAuth.get(i).setExVar1(FormValidation.Encrypt(String.valueOf(empLeaveAuth.get(i).getEmpId())));
-			
-				/*String repTo=empLeaveAuth.get(i).getRepToEmpIds();
-				
-				List<String> idsList = Arrays.asList(repTo.split(","));
-				System.err.println("idsList"+idsList.toString());
-				List<String> list = new ArrayList<String>();
-				
-				
-				for(int j=0;j<idsList.size();j++) {
-					System.err.println("j loop for::"+idsList.get(j));
-					 map = new LinkedMultiValueMap<>();
-						map.add("empId",idsList.get(j));
-						
-						
-						GetEmployeeInfo  empName = Constants.getRestTemplate().postForObject(Constants.url + "/GetEmployeeInfo", map,
-								GetEmployeeInfo.class);
-					
-						list.add(empName.getEmpFname());
-					
-						System.err.println("emp name list "+list.toString());
-				}
-				
-				model.addObject("list", list);
-				
-			*/
+
+				/*
+				 * String repTo=empLeaveAuth.get(i).getRepToEmpIds();
+				 * 
+				 * List<String> idsList = Arrays.asList(repTo.split(","));
+				 * System.err.println("idsList"+idsList.toString()); List<String> list = new
+				 * ArrayList<String>();
+				 * 
+				 * 
+				 * for(int j=0;j<idsList.size();j++) {
+				 * System.err.println("j loop for::"+idsList.get(j)); map = new
+				 * LinkedMultiValueMap<>(); map.add("empId",idsList.get(j));
+				 * 
+				 * 
+				 * GetEmployeeInfo empName =
+				 * Constants.getRestTemplate().postForObject(Constants.url + "/GetEmployeeInfo",
+				 * map, GetEmployeeInfo.class);
+				 * 
+				 * list.add(empName.getEmpFname());
+				 * 
+				 * System.err.println("emp name list "+list.toString()); }
+				 * 
+				 * model.addObject("list", list);
+				 * 
+				 */
 			}
 
 			model.addObject("empLeaveAuth", empLeaveAuth);
@@ -789,6 +777,129 @@ try {
 		}
 
 		return "redirect:/leaveAuthorityList";
+	}
+
+	// **************************** Allotment for probationary
+	// emp*******************************
+
+	@RequestMapping(value = "/leaveStructureAllotmentForProbationary", method = RequestMethod.GET)
+	public ModelAndView leaveStructureAllotmentForProbationary(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("leave/leave_structure_allot_list_for_Prob");
+
+		try {
+
+			HttpSession session = request.getSession();
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("companyId", userObj.getCompanyId());
+			LeaveStructureHeader[] lvStrSummery = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getStructureList", map, LeaveStructureHeader[].class);
+
+			List<LeaveStructureHeader> lSummarylist = new ArrayList<>(Arrays.asList(lvStrSummery));
+			for (int i = 0; i < lSummarylist.size(); i++) {
+				if (lSummarylist.get(i).getLvsId() == 4) {
+					lSummarylist.remove(i);
+
+				}
+
+			}
+			model.addObject("lStrList", lSummarylist);
+
+			map = new LinkedMultiValueMap<>();
+			map.add("companyId", userObj.getCompanyId());
+			map.add("locIdList", userObj.getLocationIds());
+			map.add("typeId", 2);
+			GetStructureAllotment[] summary = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getStructureAllotmentList", map, GetStructureAllotment[].class);
+
+			List<GetStructureAllotment> leaveSummarylist = new ArrayList<>(Arrays.asList(summary));
+			model.addObject("lvStructureList", leaveSummarylist);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+	}
+
+	@RequestMapping(value = "/submitStructureListForProb", method = RequestMethod.POST)
+	public String submitStructureListForProb(HttpServletRequest request, HttpServletResponse response) {
+
+		try {
+			HttpSession session = request.getSession();
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+			int lvsId = Integer.parseInt(request.getParameter("lvsId"));
+
+			String[] empIds = request.getParameterValues("empIds");
+
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < empIds.length; i++) {
+				sb = sb.append(empIds[i] + ",");
+
+			}
+			String items = sb.toString();
+			items = items.substring(0, items.length() - 1);
+
+			String[] arrOfStr = items.split(",");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+
+			map.add("lvsId", lvsId);
+			LeaveStructureDetails[] probLeaveStruct = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getStructureDetailsList", map, LeaveStructureDetails[].class);
+
+			List<LeaveStructureDetails> probLeaveStructList = new ArrayList<>(Arrays.asList(probLeaveStruct));
+
+			Boolean ret = false;
+
+			if (ret == false) {
+
+				for (int i = 0; i < arrOfStr.length; i++) {
+					map = new LinkedMultiValueMap<>();
+					map.add("lvsId", lvsId);
+					map.add("empId", arrOfStr[i]);
+					Info info = Constants.getRestTemplate()
+							.postForObject(Constants.url + "/updateLeaveStructureAllotment", map, Info.class);
+
+					if (info.isError() == false) {
+
+						map.add("empId", arrOfStr[i]);
+						LeaveBalanceCal[] lvBalCal = Constants.getRestTemplate()
+								.postForObject(Constants.url + "/getLeavebalByEmpIdList", map, LeaveBalanceCal[].class);
+
+						List<LeaveBalanceCal> LeaveBalanceCalList = new ArrayList<>(Arrays.asList(lvBalCal));
+
+						for (int p = 0; p < probLeaveStructList.size(); p++) {
+							for (int q = 0; q < LeaveBalanceCalList.size(); q++) {
+								if (probLeaveStructList.get(p).getLvTypeId() == LeaveBalanceCalList.get(q).getLvTypeId()
+									) {
+
+									map = new LinkedMultiValueMap<>();
+									map.add("lvTypeId", LeaveBalanceCalList.get(q).getLvTypeId());
+									map.add("empId", arrOfStr[i]);
+									map.add("noDays",probLeaveStructList.get(p).getLvsAllotedLeaves());
+									Info info1 = Constants.getRestTemplate().postForObject(
+											Constants.url + "/updateLeaveBalCal", map, Info.class);
+
+								}
+
+							}
+						}
+
+					}
+				}
+			} else {
+				session.setAttribute("errorMsg", "Failed to Insert Record");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:/leaveStructureAllotment";
 	}
 
 	/*

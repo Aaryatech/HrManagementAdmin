@@ -1946,6 +1946,7 @@ try {
 			String uname = request.getParameter("uname");
 			String upass = request.getParameter("upass");
 			String[] locId2 = request.getParameterValues("locId2");
+			int salesType = Integer.parseInt(request.getParameter("salesType"));
 
 			StringBuilder sb = new StringBuilder();
 
@@ -1995,6 +1996,7 @@ try {
 				editEmp.setEmpEmergencyNo1(emgContNo1);
 				editEmp.setEmpRatePerhr(ratePerHr);
 				editEmp.setExInt2(gender);
+				editEmp.setExInt3(salesType);
 				editEmp.setEmpJoiningDate(DateConvertor.convertToYMD(joiningDate));
 				int isWorking = Integer.parseInt(request.getParameter("isWorking"));
 				String leavingDate=null;
@@ -2099,6 +2101,8 @@ try {
 			String uname = request.getParameter("uname");
 			String upass = request.getParameter("upass");
 			String[] locId2 = request.getParameterValues("locId2");
+			
+			int salesType = Integer.parseInt(request.getParameter("salesType"));
 
 			StringBuilder sb = new StringBuilder();
 
@@ -2251,6 +2255,11 @@ try {
 				ret = true;
 				System.out.println("add" + ret);
 			}
+			if (FormValidation.Validaton(request.getParameter("salesType"), "") == true) {
+
+				ret = true;
+				System.out.println("add" + ret);
+			}
 
 			EmployeeInfo leaveSummary = new EmployeeInfo();
 			if (ret == false) {
@@ -2311,7 +2320,7 @@ try {
 
 				leaveSummary.setExInt1(isWorking);
 				leaveSummary.setExInt2(gender);
-				leaveSummary.setExInt3(0);
+				leaveSummary.setExInt3(salesType);
 				leaveSummary.setExVar1("NA");
 				leaveSummary.setExVar2("NA");
 				leaveSummary.setExVar3("NA");

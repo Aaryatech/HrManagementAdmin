@@ -148,7 +148,7 @@
 											<div class="col-md-6">
 												<input type="text" class="form-control"
 													placeholder="No.of Leaves Peryear"
-													id="noOfLeaves${leaveType.lvTypeId}"
+													id="noOfLeaves${leaveType.lvTypeId}" value="0"
 													name="noOfLeaves${leaveType.lvTypeId}" autocomplete="off"
 													onchange="trim(this)"> <span
 													class="validation-invalid-label" id="error_prsnName"

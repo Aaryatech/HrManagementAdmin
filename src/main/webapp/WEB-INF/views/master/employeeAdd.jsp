@@ -285,6 +285,25 @@
 
 
 									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="salesType">Select
+											<span style="color: red">* </span>:
+										</label>
+										<div class="form-check form-check-inline">
+											<label class="form-check-label"> <input type="radio"
+												class="form-check-input" name="salesType" id="salesType"
+												checked value="1"> Pre-Sales
+											</label>
+										</div>
+										<div class="form-check form-check-inline">
+											<label class="form-check-label"> <input type="radio"
+												class="form-check-input" name="salesType" id="salesType"
+												value="2"> Sales Claim
+											</label>
+										</div>
+									</div>
+								
+ 
+									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="tempAdd">Temporary
 											Address <span style="color: red">* </span>:
 										</label>

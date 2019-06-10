@@ -343,6 +343,65 @@
 									</div>
 
 
+
+
+									<%-- <div class="form-group row">
+
+										<label class="col-form-label col-lg-2" for="gender">Select 
+											<span style="color: red">* </span>:
+										</label>
+										<div class="form-check form-check-inline">
+											<label class="form-check-label"> <c:choose>
+													<c:when test="${editEmp.exInt3==1}">
+														<input type="radio" class="form-check-input"
+															name="salesType" id="salesType" checked value="1">  Pre-Sales
+													</c:when>
+													<c:otherwise>
+														<input type="radio" class="form-check-input"
+															name="salesType" id="salesType" value="1">  Pre-Sales
+													
+													</c:otherwise>
+												</c:choose>
+											</label>
+										</div>
+										<div class="form-check form-check-inline">
+											<label class="form-check-label"> <c:choose>
+													<c:when test="${editEmp.exInt3==2}">
+														<input type="radio" class="form-check-input"
+															name="salesType" id="salesType"  value="2">
+											 Sales Claim
+													</c:when>
+													<c:otherwise>
+														<input type="radio" class="form-check-input"
+															name="salesType" checked id="salesType" value="2">
+											 Sales Claim
+													
+													</c:otherwise>
+												</c:choose>
+											</label>
+										</div>
+
+									</div> --%>
+									
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="salesType"> 
+											 Select <span style="color: red">* </span>:
+										</label>
+										<div class="form-check form-check-inline">
+											<label class="form-check-label"> <input type="radio"
+												${editEmp.exInt3==1 ? 'checked' : ''}
+												class="form-check-input" name="salesType" id="salesType"
+												  checked value="1"> Pre-Sales
+											</label>
+										</div>
+										<div class="form-check form-check-inline">
+											<label class="form-check-label"> <input type="radio"
+												${editEmp.exInt3==2 ? 'checked' : ''}
+												class="form-check-input" 
+												name="salesType" id="salesType" value="2">  Sales Claim
+											</label>
+										</div>
+									</div>
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="tempAdd">Temporary
 											Address <span style="color: red">* </span>:
@@ -531,8 +590,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="emgContPrsn2">Emergency
-											Contact Person 2 :
-										</label>
+											Contact Person 2 : </label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
 												placeholder="Emergency Alternate Contact Person"
@@ -544,8 +602,7 @@
 										</div>
 
 										<label class="col-form-label col-lg-2" for="emgContNo2">Emergency
-											Contact No 2 :
-										</label>
+											Contact No 2 : </label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
 												placeholder="Emergency Alternate Contact No."
@@ -1123,12 +1180,12 @@
 																.val())) {
 													isError = true;
 													document
-													.getElementById("error_emgContNo2").innerHTML = "Enter valid Mobile No.";
+															.getElementById("error_emgContNo2").innerHTML = "Enter valid Mobile No.";
 													$("#error_emgContNo2")
-													.show()
-												}else{
+															.show()
+												} else {
 													$("#error_emgContNo2")
-													.hide()
+															.hide()
 												}
 
 												/* if (!$("#emgContNo2").val()
