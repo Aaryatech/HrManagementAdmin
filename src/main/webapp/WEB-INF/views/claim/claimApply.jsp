@@ -5,10 +5,13 @@
 <html lang="en">
 <head>
 
-<c:url var="addStrDetail" value="/addStrDetail" />
+
+ <c:url var="addClaimDetailProcess" value="/addClaimDetailProcess" />
+ 
+ <c:url var="getClaimForEdit" value="/getClaimForEdit" />
 
 <c:url var="getLeaveStructureForEdit" value="/getLeaveStructureForEdit" />
-
+<c:url var="addStrDetail" value="/addStrDetail" />
 <jsp:include page="/WEB-INF/views/include/metacssjs.jsp"></jsp:include>
 </head>
 
@@ -48,8 +51,7 @@
 					</div>
 
 					<div class="breadcrumb justify-content-center">
-						<a
-							href="${pageContext.request.contextPath}/showApplyForClaim"
+						<a href="${pageContext.request.contextPath}/showApplyForClaim"
 							class="breadcrumb-elements-item"> Employee List</a>
 
 					</div>
@@ -120,122 +122,178 @@
 									session.removeAttribute("successMsg");
 									}
 								%>
-								<span
-												class="validation-invalid-label" id="error_assign"
-												style="display: none;">Sorry You Can Not Apply for Claim as Claim Authorities Are not Assigned !!</span>
-								
-								
-<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="lvsName">
-											Employee Code <span style="color:red">* </span>:</label>
-										<div class="col-lg-10">
-											<input type="text" class="form-control"
-												placeholder="Enter Leave Structure Name" id="empCode"   value="${editEmp.empCode}" 
-												name="lvsName" autocomplete="off" onchange="trim(this)" readonly>
-											
-										</div>
+								<span class="validation-invalid-label" id="error_assign"
+									style="display: none;">Sorry You Can Not Apply for Claim
+									as Claim Authorities Are not Assigned !!</span>
+
+
+								<div class="form-group row">
+									<label class="col-form-label col-lg-2" for="lvsName">
+										Employee Code <span style="color: red">* </span>:
+									</label>
+									<div class="col-lg-10">
+										<input type="text" class="form-control"
+											placeholder="Enter Leave Structure Name" id="empCode"
+											value="${editEmp.empCode}" name="lvsName" autocomplete="off"
+											onchange="trim(this)" readonly>
+
 									</div>
-									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="lvsName">
-											Employee Name <span style="color:red">* </span>:</label>
-										<div class="col-lg-10">
-											<input type="text" class="form-control"
-												placeholder="Enter Leave Structure Name" id="empName"  value="${editEmp.empFname} ${editEmp.empMname} ${editEmp.empSname}   "
-												name="lvsName" autocomplete="off" onchange="trim(this)" readonly>
-											
-										</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-form-label col-lg-2" for="lvsName">
+										Employee Name <span style="color: red">* </span>:
+									</label>
+									<div class="col-lg-10">
+										<input type="text" class="form-control"
+											placeholder="Enter Leave Structure Name" id="empName"
+											value="${editEmp.empFname} ${editEmp.empMname} ${editEmp.empSname}   "
+											name="lvsName" autocomplete="off" onchange="trim(this)"
+											readonly>
+
 									</div>
-									<hr>
-									
-								<form
-									action="${pageContext.request.contextPath}/showClaimProof"
+								</div>
+
+
+
+
+								<form action="${pageContext.request.contextPath}/showClaimProof"
 									id="submitInsertLeave" method="post">
-									
-									
-									
-										
-										<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="claimTypeId">Select
-											Claim Type <span style="color:red">* </span>:</label>
-										<div class="col-lg-4">
-											<select name="claimTypeId"
-												data-placeholder="Select Claim Type" id="claimTypeId"
-												class="form-control form-control-select2 select2-hidden-accessible"
-												 data-fouc="" aria-hidden="true">
-												<option></option>
-												<c:forEach items="${claimTypeList}" var="claimTypeList">
-													
-															<option value="${claimTypeList.claimTypeId}"  data-clstrname="${claimTypeList.claimTypeTitle}">${claimTypeList.claimTypeTitle}</option>
-														
-													
-												</c:forEach>
-											</select> <span class="validation-invalid-label" id="error_claimTypeId"
-												style="display: none;">This field is required.</span>
-										</div>
-										</div>
-										
-										<div class="form-group row">
+
+
+									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="projectTypeId">Select
-											Project <span style="color:red">* </span>:</label>
+											Project <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-4">
 											<select name="projectTypeId"
 												data-placeholder="Select Project" id="projectTypeId"
 												class="form-control form-control-select2 select2-hidden-accessible"
-												 data-fouc=""  aria-hidden="true">
+												data-fouc="" aria-hidden="true">
 												<option></option>
 												<c:forEach items="${projectTypeList}" var="proTypeList">
-															<option value="${proTypeList.projectId}" data-prostrname="${proTypeList.projectTitle}">${proTypeList.projectTitle}</option>
+													<option value="${proTypeList.projectId}"
+														data-prostrname="${proTypeList.projectTitle}">${proTypeList.projectTitle}</option>
 												</c:forEach>
-											</select> <span class="validation-invalid-label" id="error_projectTypeId"
-												style="display: none;">This field is required.</span>
+											</select> <span class="validation-invalid-label"
+												id="error_projectTypeId" style="display: none;">This
+												field is required.</span>
 										</div>
-										
-											
-										
-										
-										</div>
-											
+
+									</div>
+									
 									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="joiningDate">Claim
-											Date <span style="color:red">* </span>: </label>
+									<label class="col-form-label col-lg-2" for="lvsName">
+									Claim Title <span style="color: red">* </span>:
+									</label>
+									<div class="col-lg-10">
+										<input type="text" class="form-control"
+											placeholder="Enter Claim Title" id="claim_title"
+										  name="claim_title" autocomplete="off"
+											onchange="trim(this)"  >
+
+									</div>
+								</div>
+								
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2">Date Range<span
+											style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control datepickerclass "
-												name="claimDate" id="claimDate"
-												placeholder="Joining Date"> <span
-												class="validation-invalid-label" id="error_claimDate"
+											<input type="text" class="form-control daterange-basic_new "
+												name="claimDate" data-placeholder="Select Date"
+												id="claimDate"> <span
+												class="validation-invalid-label" id="error_Range"
+												style="display: none;">This field is required.</span>
+
+										</div>
+									</div>
+								
+									<hr>
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="claimTypeId">Select
+											Claim Type <span style="color: red">* </span>:
+										</label>
+										<div class="col-lg-4">
+											<select name="claimTypeId"
+												data-placeholder="Select Claim Type" id="claimTypeId"
+												class="form-control form-control-select2 select2-hidden-accessible"
+												data-fouc="" aria-hidden="true">
+												<option></option>
+												<c:forEach items="${claimTypeList}" var="claimTypeList">
+
+													<option value="${claimTypeList.claimTypeId}"
+														data-clstrname="${claimTypeList.claimTypeTitle}">${claimTypeList.claimTypeTitle}</option>
+
+
+												</c:forEach>
+											</select> <span class="validation-invalid-label"
+												id="error_claimTypeId" style="display: none;">This
+												field is required.</span>
+										</div>
+									</div>
+
+
+								
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="claimAmt">
+											Claim Amount <span style="color: red">* </span>:
+										</label>
+										<div class="col-lg-4">
+											<input type="text" class="form-control numbersOnly"
+												placeholder="Amount of Claim in Rs. " id="claimAmt"
+												name="claimAmt" autocomplete="off"> <span
+												class="validation-invalid-label" id="error_claimAmt"
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
-										
-									
-									
-	<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="claimAmt">
-										Claim Amount <span style="color:red">* </span>: </label>
-										<div class="col-lg-4">
-											<input type="text" class="form-control numbersOnly" 
-												placeholder="Amount of Claim in Rs. " id="claimAmt"
-												name="claimAmt" autocomplete="off" >
-											<span class="validation-invalid-label" id="error_claimAmt"
-												style="display: none;">This field is required.</span>
-										</div>
-										</div>
-									
 
-						<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="lvngReson">Remark :  </label>
+
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="lvngReson">Remark
+											: </label>
 										<div class="col-lg-10">
 											<textarea rows="3" cols="3" class="form-control"
-												placeholder="Remark" onchange="trim(this)"
-												id="claimRemark" name="claimRemark"> </textarea>
-												</div>
+												placeholder="Remark" onchange="trim(this)" id="claimRemark"
+												name="claimRemark"> </textarea>
+										</div>
 									</div>
-										<input type="hidden" class="form-control numbersOnly" 
-												value="${editEmp.empId}" id="empId"
-												name="empId" autocomplete="off" readonly>
-										<input type="hidden"class="form-control numbersOnly" id="auth" value="${authorityInformation.claimInitialAuth}"
-										name="auth">
-									
+									<input type="hidden" id="isDelete" name="isDelete" value="0">
+									<input type="hidden" name="isEdit" id="isEdit" value="0">
+									<input type="hidden" name="index" id="index" value="0">
+
+									<div class="form-group row mb-0">
+										<div class="col-lg-10 ml-lg-auto">
+ 												<input type="button" value="Add" class="btn btn-primary"
+											style="align-content: center; width: 113px;" onclick="add()" />
+											 
+										</div>
+									</div>
+
+									<table
+										class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic  datatable-button-print-columns1"
+										id="printtable1">
+										<thead>
+											<tr class="bg-blue">
+												<th width="10%">Sr.no</th>
+												<th>Claim Type</th>
+ 												<th>Amount</th>
+												<th>Remark</th>
+												<th class="text-center" width="10%">Actions</th>
+											</tr>
+										</thead>
+										<tbody>
+									</table>
+
+
+
+
+									<!-- 		Final Submit		 -->
+									<input type="hidden" class="form-control numbersOnly"
+										value="${editEmp.empId}" id="empId" name="empId"
+										autocomplete="off" readonly> <input type="hidden"
+										class="form-control numbersOnly" id="auth"
+										value="${authorityInformation.claimInitialAuth}" name="auth">
+
 									<div class="form-group row mb-0">
 										<div class="col-lg-10 ml-lg-auto">
 
@@ -243,9 +301,13 @@
 												id="submtbtn">
 												Submit <i class="icon-paperplane ml-2"></i>
 											</button>
-											
-											<a href="${pageContext.request.contextPath}/showApplyForClaim"><button
-										type="button" class="btn btn-primary"><i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp; Cancel</button></a>
+
+											<a
+												href="${pageContext.request.contextPath}/showApplyForClaim"><button
+													type="button" class="btn btn-primary">
+													<i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp;
+													Cancel
+												</button></a>
 										</div>
 									</div>
 								</form>
@@ -269,7 +331,170 @@
 
 	</div>
 	<!-- /page content -->
-	
+
+
+	<script type="text/javascript">
+		function add() {
+		alert("hii");
+			var claimTypeId = document.getElementById("claimTypeId").value;
+			var claimAmt = document.getElementById("claimAmt").value;
+			var claimRemark = document.getElementById("claimRemark").value;
+ 			
+			var el = document.getElementById('claimTypeId');
+			var lvTypeName = el.options[el.selectedIndex].innerHTML;
+			alert("lvTypeName  "+lvTypeName);
+			
+			var daterange = document.getElementById("claimDate").value;
+			var res = daterange.split(" to ");
+
+			 
+
+			var isEdit = document.getElementById("isEdit").value;
+			var isDelete = document.getElementById("isDelete").value;
+			var index = document.getElementById("index").value;
+
+			alert("Inside add ajax"+claimTypeId+claimAmt);
+			$
+					.getJSON(
+							'${addClaimDetailProcess}',
+							{
+
+								isDelete : isDelete,
+								isEdit : isEdit,
+								index : index,
+								claimAmt : claimAmt,
+								claimRemark : claimRemark,
+ 								lvTypeName:lvTypeName,
+								claimTypeId:claimTypeId,
+								ajax : 'true',
+
+							},
+
+							function(data) {
+								//alert("in hii");
+								var dataTable = $('#printtable1')
+										.DataTable();
+								dataTable.clear().draw();
+
+								$
+										.each(
+												data,
+												function(i, v) {
+
+													var str = '<a href="#" class="action_btn" onclick="callEdit('
+															+ v.claimDetailId
+															+ ','
+															+ i
+															+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
+															+ v.claimDetailId
+															+ ','
+															+ i
+															+ ')" style="color:black"><i class="fa fa-trash"></i></a>'
+
+													dataTable.row.add(
+															[ i + 1,
+																	v.lvTypeName,
+ 																	v.claimAmount,
+																	v.remark,
+																	str ])
+															.draw();
+												});
+
+							});
+			document.getElementById("claimRemark").value = "";
+			document.getElementById("claimAmt").value = 0;
+			
+ 			document.getElementById("claimTypeId").value = "";
+ 
+			document.getElementById("isDelete").value = 0;
+			document.getElementById("isEdit").value = 0;
+			document.getElementById("index").value = 0;
+
+		}
+
+		function callEdit(claimDetailId, index) {
+
+			document.getElementById("isEdit").value = "1";
+			$.getJSON('${getClaimForEdit}', {
+				claimDetailId : claimDetailId,
+				index : index,
+				ajax : 'true',
+
+			}, function(data) {
+
+				 
+				document.getElementById("index").value = index;
+				
+				document.getElementById("claimRemark").value = data.remark;
+				document.getElementById("claimAmt").value = data.claimAmount;
+				
+	 			document.getElementById("claimTypeId").value =data.lvTypeName;
+ 	 			
+  
+			});
+
+		}
+
+		function callDelete(termDetailId, index) {
+
+			//alert("hii");
+			//document.getElementById("isEdit").value = 0;
+			//alert("index" + index);
+			$
+					.getJSON(
+							'${addClaimDetailProcess}',
+							{
+								isDelete : 1,
+								isEdit : 0,
+								key : index,
+								ajax : 'true',
+
+							},
+
+							function(data) {
+								//alert("in hii");
+								var dataTable = $('#printtable1')
+										.DataTable();
+								dataTable.clear().draw();
+
+								$
+										.each(
+												data,
+												function(i, v) {
+
+													var str = '<a href="#" class="action_btn" onclick="callEdit('
+															+ v.claimDetailId
+															+ ','
+															+ i
+															+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
+															+ v.claimDetailId
+															+ ','
+															+ i
+															+ ')" style="color:black"><i class="fa fa-trash"></i></a>'
+
+													dataTable.row.add(
+															[ i + 1,
+																	v.lvTypeName,
+ 																	v.claimAmount,
+																	v.remark,
+																	str ])
+															.draw();
+												});
+
+							});
+
+		}
+		function validate(s) {
+			var rgx = /^[0-9]*\.?[0-9]*$/;
+			return s.match(rgx);
+		}
+		function callAlert(msg) {
+			alert(msg);
+		}
+	</script>
+
+
+
 	<script type="text/javascript">
 		// Single picker
 		$('.datepickerclass').daterangepicker({
@@ -302,12 +527,11 @@
 			return;
 		}
 
-		
 		$(document)
 				.ready(
 						function($) {
 
-							$("#submitInsertLeave")
+							$("#submitInsertLeave1")
 									.submit(
 											function(e) {
 												var isError = false;
@@ -317,10 +541,12 @@
 
 													isError = true;
 
-													$("#error_claimTypeId").show()
+													$("#error_claimTypeId")
+															.show()
 													//return false;
 												} else {
-													$("#error_claimTypeId").hide()
+													$("#error_claimTypeId")
+															.hide()
 												}
 
 												if (!$("#projectTypeId").val()) {
@@ -339,10 +565,12 @@
 
 													isError = true;
 
-													$("#error_claimDate").show()
+													$("#error_claimDate")
+															.show()
 
 												} else {
-													$("#error_claimDate").hide()
+													$("#error_claimDate")
+															.hide()
 												}
 
 												if (!$("#claimAmt").val()) {
@@ -355,73 +583,70 @@
 													$("#error_claimAmt").hide()
 												}
 
-												
 												if (!isError) {
 													var option = $(
-													"#claimTypeId option:selected")
-													.attr(
-															"data-clstrname");
- 											$('#clType').html(option);
-											
-											var option1 = $(
-											"#projectTypeId option:selected")
-											.attr(
-													"data-prostrname");
+															"#claimTypeId option:selected")
+															.attr(
+																	"data-clstrname");
+													$('#clType').html(option);
 
-									$('#proName').html(option1)
-											
-											$('#claimAmt1')
-													.html(
-															document
-																	.getElementById("claimAmt").value);
-											$('#empCode1')
-													.html(
-															document
-																	.getElementById("empCode").value);
-											$('#empName1')
-													.html(
-															document
-																	.getElementById("empName").value);
-											
-											$('#claimDate1')
-											.html(
-													document
-															.getElementById("claimDate").value);
-											$('#remark1')
-											.html(
-													document
-															.getElementById("claimRemark").value);
-									
-											$('#modal_scrollable')
-													.modal('show');
- 													
+													var option1 = $(
+															"#projectTypeId option:selected")
+															.attr(
+																	"data-prostrname");
+
+													$('#proName').html(option1)
+
+													$('#claimAmt1')
+															.html(
+																	document
+																			.getElementById("claimAmt").value);
+													$('#empCode1')
+															.html(
+																	document
+																			.getElementById("empCode").value);
+													$('#empName1')
+															.html(
+																	document
+																			.getElementById("empName").value);
+
+													$('#claimDate1')
+															.html(
+																	document
+																			.getElementById("claimDate").value);
+													$('#remark1')
+															.html(
+																	document
+																			.getElementById("claimRemark").value);
+
+													$('#modal_scrollable')
+															.modal('show');
+
 													//end ajax send this to php page
 												}
 												return false;
 											});
 						});
-		
 	</script>
 
 
 
-<script type="text/javascript">
-function chkAssign(){
-		
-		var auth=document.getElementById("auth").value;
-		
-		//alert("hii"+auth);
-		if(auth==0){
-			document.getElementById("submtbtn").disabled = true;
-			
-			$("#error_assign").show()
+	<script type="text/javascript">
+		function chkAssign() {
+
+			var auth = document.getElementById("auth").value;
+
+			//alert("hii"+auth);
+			if (auth == 0) {
+				document.getElementById("submtbtn").disabled = true;
+
+				$("#error_assign").show()
+			} else {
+				document.getElementById("submtbtn").disabled = false;
+			}
 		}
-		else{
-			document.getElementById("submtbtn").disabled =false ;
-		}
-	}
 	</script>
-<script>
+	<script>
 		function submitForm() {
 			$('#modal_scrollable').modal('hide');
 			document.getElementById("submtbtn").disabled = true;
@@ -440,7 +665,8 @@ function chkAssign(){
 				</div>
 
 				<div class="modal-body py-0">
-					<h5 class="modal-title">Claim Details</h5><br>
+					<h5 class="modal-title">Claim Details</h5>
+					<br>
 
 					<div class="form-group row">
 						<label class="col-form-label col-lg-3" for="empCode1">
@@ -461,29 +687,29 @@ function chkAssign(){
 
 					</div>
 					<div class="form-group row">
-						<label class="col-form-label col-lg-3" for="proName"> Project 
-							Name : </label> <label class="col-form-label col-lg-6" id="proName"
-							for="proName"> </label>
+						<label class="col-form-label col-lg-3" for="proName">
+							Project Name : </label> <label class="col-form-label col-lg-6"
+							id="proName" for="proName"> </label>
 
 					</div>
 
-				
+
 					<div class="form-group row">
-						<label class="col-form-label col-lg-3" for="noOfDays"> Claim Amount
-							 : </label> <label class="col-form-label col-lg-3" id="claimAmt1"
-							for="claimAmt1"> </label>
+						<label class="col-form-label col-lg-3" for="noOfDays">
+							Claim Amount : </label> <label class="col-form-label col-lg-3"
+							id="claimAmt1" for="claimAmt1"> </label>
 
 					</div>
 					<div class="form-group row">
-						<label class="col-form-label col-lg-3" for="claimDate1"> Claim Date
-							 : </label> <label class="col-form-label col-lg-3" id="claimDate1"
-							for="claimDate1"> </label>
+						<label class="col-form-label col-lg-3" for="claimDate1">
+							Claim Date : </label> <label class="col-form-label col-lg-3"
+							id="claimDate1" for="claimDate1"> </label>
 
 					</div>
 					<div class="form-group row">
-						<label class="col-form-label col-lg-3" for="remark1"> Claim Remark
-							 : </label> <label class="col-form-label col-lg-3" id="remark1"
-							for="remark1"> </label>
+						<label class="col-form-label col-lg-3" for="remark1">
+							Claim Remark : </label> <label class="col-form-label col-lg-3"
+							id="remark1" for="remark1"> </label>
 
 					</div>
 				</div>

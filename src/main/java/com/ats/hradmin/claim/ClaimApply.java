@@ -1,220 +1,164 @@
 package com.ats.hradmin.claim;
+ 
 
-
-
- public class ClaimApply {
+public class ClaimApply {
 
 	 
- 	private int claimId;
+	 private int claimId;
+	 
+		private int claimTypeId;
 
- 	private int empId;
+		private float claimAmount;
 
- 	private int projectId;
+		private String claimRemarks;
+	 
+		private int delStatus;
 
- 	private int claimTypeId;
+		private int isActive;
 
- 	private String claimDate;
+		private int makerUserId;
 
- 	private float claimAmount;
+		private String makerEnterDatetime;
 
- 	private String claimRemarks;
+		private int exInt1;
 
- 	private int claimFinalStatus;
+		private int exInt2;
 
- 	private String circulatedTo;
+		private int exInt3;
 
- 	private int delStatus;
+		private String exVar1;
 
- 	private int isActive;
+		private String exVar2;
 
- 	private int makerUserId;
+		private String exVar3;
 
- 	private String makerEnterDatetime;
+		public int getClaimId() {
+			return claimId;
+		}
 
- 	private int exInt1;
+		public void setClaimId(int claimId) {
+			this.claimId = claimId;
+		}
 
- 	private int exInt2;
+		public int getClaimTypeId() {
+			return claimTypeId;
+		}
 
- 	private int exInt3;
+		public void setClaimTypeId(int claimTypeId) {
+			this.claimTypeId = claimTypeId;
+		}
 
- 	private String exVar1;
+		public float getClaimAmount() {
+			return claimAmount;
+		}
 
- 	private String exVar2;
+		public void setClaimAmount(float claimAmount) {
+			this.claimAmount = claimAmount;
+		}
 
- 	private String exVar3;
- 	
- 	private boolean error;
+		public String getClaimRemarks() {
+			return claimRemarks;
+		}
 
+		public void setClaimRemarks(String claimRemarks) {
+			this.claimRemarks = claimRemarks;
+		}
 
-	public boolean isError() {
-		return error;
-	}
+		public int getDelStatus() {
+			return delStatus;
+		}
 
-	public void setError(boolean error) {
-		this.error = error;
-	}
+		public void setDelStatus(int delStatus) {
+			this.delStatus = delStatus;
+		}
 
+		public int getIsActive() {
+			return isActive;
+		}
 
-	public int getClaimId() {
-		return claimId;
-	}
+		public void setIsActive(int isActive) {
+			this.isActive = isActive;
+		}
 
-	public void setClaimId(int claimId) {
-		this.claimId = claimId;
-	}
+		public int getMakerUserId() {
+			return makerUserId;
+		}
 
-	public int getEmpId() {
-		return empId;
-	}
+		public void setMakerUserId(int makerUserId) {
+			this.makerUserId = makerUserId;
+		}
 
-	public void setEmpId(int empId) {
-		this.empId = empId;
-	}
+		public String getMakerEnterDatetime() {
+			return makerEnterDatetime;
+		}
 
-	public int getProjectId() {
-		return projectId;
-	}
+		public void setMakerEnterDatetime(String makerEnterDatetime) {
+			this.makerEnterDatetime = makerEnterDatetime;
+		}
 
-	public void setProjectId(int projectId) {
-		this.projectId = projectId;
-	}
+		public int getExInt1() {
+			return exInt1;
+		}
 
-	public int getClaimTypeId() {
-		return claimTypeId;
-	}
+		public void setExInt1(int exInt1) {
+			this.exInt1 = exInt1;
+		}
 
-	public void setClaimTypeId(int claimTypeId) {
-		this.claimTypeId = claimTypeId;
-	}
+		public int getExInt2() {
+			return exInt2;
+		}
 
-	public String getClaimDate() {
-		return claimDate;
-	}
+		public void setExInt2(int exInt2) {
+			this.exInt2 = exInt2;
+		}
 
-	public void setClaimDate(String claimDate) {
-		this.claimDate = claimDate;
-	}
+		public int getExInt3() {
+			return exInt3;
+		}
 
-	public float getClaimAmount() {
-		return claimAmount;
-	}
+		public void setExInt3(int exInt3) {
+			this.exInt3 = exInt3;
+		}
 
-	public void setClaimAmount(float claimAmount) {
-		this.claimAmount = claimAmount;
-	}
+		public String getExVar1() {
+			return exVar1;
+		}
 
-	public String getClaimRemarks() {
-		return claimRemarks;
-	}
+		public void setExVar1(String exVar1) {
+			this.exVar1 = exVar1;
+		}
 
-	public void setClaimRemarks(String claimRemarks) {
-		this.claimRemarks = claimRemarks;
-	}
+		public String getExVar2() {
+			return exVar2;
+		}
 
-	public int getClaimFinalStatus() {
-		return claimFinalStatus;
-	}
+		public void setExVar2(String exVar2) {
+			this.exVar2 = exVar2;
+		}
 
-	public void setClaimFinalStatus(int claimFinalStatus) {
-		this.claimFinalStatus = claimFinalStatus;
-	}
+		public String getExVar3() {
+			return exVar3;
+		}
 
-	public String getCirculatedTo() {
-		return circulatedTo;
-	}
+		public void setExVar3(String exVar3) {
+			this.exVar3 = exVar3;
+		}
 
-	public void setCirculatedTo(String circulatedTo) {
-		this.circulatedTo = circulatedTo;
-	}
-
-	public int getDelStatus() {
-		return delStatus;
-	}
-
-	public void setDelStatus(int delStatus) {
-		this.delStatus = delStatus;
-	}
-
-	public int getIsActive() {
-		return isActive;
-	}
-
-	public void setIsActive(int isActive) {
-		this.isActive = isActive;
-	}
-
-	public int getMakerUserId() {
-		return makerUserId;
-	}
-
-	public void setMakerUserId(int makerUserId) {
-		this.makerUserId = makerUserId;
-	}
-
-	public String getMakerEnterDatetime() {
-		return makerEnterDatetime;
-	}
-
-	public void setMakerEnterDatetime(String makerEnterDatetime) {
-		this.makerEnterDatetime = makerEnterDatetime;
-	}
-
-	public int getExInt1() {
-		return exInt1;
-	}
-
-	public void setExInt1(int exInt1) {
-		this.exInt1 = exInt1;
-	}
-
-	public int getExInt2() {
-		return exInt2;
-	}
-
-	public void setExInt2(int exInt2) {
-		this.exInt2 = exInt2;
-	}
-
-	public int getExInt3() {
-		return exInt3;
-	}
-
-	public void setExInt3(int exInt3) {
-		this.exInt3 = exInt3;
-	}
-
-	public String getExVar1() {
-		return exVar1;
-	}
-
-	public void setExVar1(String exVar1) {
-		this.exVar1 = exVar1;
-	}
-
-	public String getExVar2() {
-		return exVar2;
-	}
-
-	public void setExVar2(String exVar2) {
-		this.exVar2 = exVar2;
-	}
-
-	public String getExVar3() {
-		return exVar3;
-	}
-
-	public void setExVar3(String exVar3) {
-		this.exVar3 = exVar3;
-	}
-
-	@Override
-	public String toString() {
-		return "ClaimAuthority [claimId=" + claimId + ", empId=" + empId + ", projectId=" + projectId + ", claimTypeId="
-				+ claimTypeId + ", claimDate=" + claimDate + ", claimAmount=" + claimAmount + ", claimRemarks="
-				+ claimRemarks + ", claimFinalStatus=" + claimFinalStatus + ", circulatedTo=" + circulatedTo
-				+ ", delStatus=" + delStatus + ", isActive=" + isActive + ", makerUserId=" + makerUserId
-				+ ", makerEnterDatetime=" + makerEnterDatetime + ", exInt1=" + exInt1 + ", exInt2=" + exInt2
-				+ ", exInt3=" + exInt3 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3 + "]";
-	}
-
+		@Override
+		public String toString() {
+			return "ClaimApply [claimId=" + claimId + ", claimTypeId=" + claimTypeId + ", claimAmount=" + claimAmount
+					+ ", claimRemarks=" + claimRemarks + ", delStatus=" + delStatus + ", isActive=" + isActive
+					+ ", makerUserId=" + makerUserId + ", makerEnterDatetime=" + makerEnterDatetime + ", exInt1=" + exInt1
+					+ ", exInt2=" + exInt2 + ", exInt3=" + exInt3 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2
+					+ ", exVar3=" + exVar3 + ", getClaimId()=" + getClaimId() + ", getClaimTypeId()=" + getClaimTypeId()
+					+ ", getClaimAmount()=" + getClaimAmount() + ", getClaimRemarks()=" + getClaimRemarks()
+					+ ", getDelStatus()=" + getDelStatus() + ", getIsActive()=" + getIsActive() + ", getMakerUserId()="
+					+ getMakerUserId() + ", getMakerEnterDatetime()=" + getMakerEnterDatetime() + ", getExInt1()="
+					+ getExInt1() + ", getExInt2()=" + getExInt2() + ", getExInt3()=" + getExInt3() + ", getExVar1()="
+					+ getExVar1() + ", getExVar2()=" + getExVar2() + ", getExVar3()=" + getExVar3() + ", getClass()="
+					+ getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+		}
+	 
+	 
+ 
 }
