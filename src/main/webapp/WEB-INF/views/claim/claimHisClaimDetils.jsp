@@ -66,7 +66,7 @@
 				<!-- Highlighting rows and columns -->
 				<div class="card">
 					<div class="card-header header-elements-inline">
-						<h5 class="card-title">Employee Claim List</h5>
+						<h5 class="card-title">Employee Claim Details List</h5>
 						<!-- <div class="header-elements">
 							<div class="list-icons">
 								<a class="list-icons-item" data-action="collapse"></a>
@@ -117,15 +117,10 @@
 							<thead>
 								<tr class="bg-blue">
 									<th width="10%">Sr.no</th>
-									<th>Claim Title</th>
-									<th>Project</th>
-									<th>From Date</th>
-									<th>To Date</th>
-									<th>Total Amount</th>
-									<th>Status</th>
+									<th>Claim Type</th>
+									<th>Amount</th>
+									<th>Remark</th>
 
-
-									<th class="text-center" width="10%">Actions</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -135,46 +130,11 @@
 									varStatus="count">
 									<tr>
 										<td>${count.index+1}</td>
-										<td>${lvTypeList.claimTitle}</td>
-										<td>${lvTypeList.projectTitle}</td>
-										<td>${lvTypeList.claimFromDate}</td>
-										<td>${lvTypeList.claimToDate}</td>
+										<td>${lvTypeList.claimTypeTitle}</td>
 										<td>${lvTypeList.claimAmount}</td>
-										<c:if test="${lvTypeList.claimFinalStatus==1}">
-											<td><span class="badge badge-info">Initial
-													Pending</span></td>
-										</c:if>
-										<c:if test="${lvTypeList.claimFinalStatus==2}">
-											<td><span class="badge badge-secondary">Final
-													Pending</span></td>
-										</c:if>
-										<c:if test="${lvTypeList.claimFinalStatus==3}">
-											<td><span class="badge badge-success">Final
-													Approved</span></td>
-										</c:if>
-										<c:if test="${lvTypeList.claimFinalStatus==7}">
-											<td><span class="badge badge-danger">Leave
-													Cancelled</span></td>
-										</c:if>
-										<c:if test="${lvTypeList.claimFinalStatus==8}">
-											<td><span class="badge badge-danger">Initial
-													Rejected</span></td>
-										</c:if>
-										<c:if test="${lvTypeList.claimFinalStatus==9}">
-											<td><span class="badge badge-danger">Final Reject</span></td>
-										</c:if>
+										<td>${lvTypeList.claimRemarks}</td>
 
 
-										<td class="text-center"><a
-											href="${pageContext.request.contextPath}/showClaimProofAgain?claimId=${lvTypeList.exVar1}"
-											title="Upload Document"><i class="icon-file-upload"
-												style="color: black;"></i></a> <a
-											href="${pageContext.request.contextPath}/showClaimHistDetailList?claimId=${lvTypeList.exVar1}"
-											title="History"><i class="icon-history"
-												style="color: black;"></i></a> <a
-											href="${pageContext.request.contextPath}/showClaimDetailList?claimId=${lvTypeList.exVar1}"
-											title="Claim Detail"><i class="icon-list"
-												style="color: black;"></i></a></td>
 									</tr>
 								</c:forEach>
 

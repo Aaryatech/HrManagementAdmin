@@ -178,9 +178,7 @@
 									<th>Date</th>
 									<th>Action By</th>
 									<th>Claim Status</th>
-									
-
-								</tr>
+ 								</tr>
 							</thead>
 							<tbody>
 

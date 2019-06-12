@@ -3,7 +3,7 @@ package com.ats.hradmin.claim;
  
 
  
- public class GetClaimApplyAuthwise {
+public class GetClaimApplyAuthwise {
 	
 	 private int claimId;
 		

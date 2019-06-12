@@ -1,6 +1,6 @@
 package com.ats.hradmin.controller;
 
- import java.text.SimpleDateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -28,6 +28,7 @@ import com.ats.hradmin.claim.ClaimTemp;
 import com.ats.hradmin.claim.ClaimTrail;
 import com.ats.hradmin.claim.ClaimType;
 import com.ats.hradmin.claim.GetClaimApplyAuthwise;
+import com.ats.hradmin.claim.GetClaimHead;
 import com.ats.hradmin.claim.GetClaimTrailStatus;
 import com.ats.hradmin.claim.TempClaimDetail;
 import com.ats.hradmin.common.Constants;
@@ -48,7 +49,7 @@ import com.ats.hradmin.model.ProjectHeader;
 @Scope("session")
 public class ClaimApplicationController {
 
-	double tot_amt=0.0;
+	double tot_amt = 0.0;
 	ClaimTemp ct = new ClaimTemp();
 	ArrayList<String> a = new ArrayList<String>();
 	List<MultipartFile> imgList = new ArrayList<MultipartFile>();
@@ -502,8 +503,43 @@ public class ClaimApplicationController {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("empId", empId);
 
+			GetClaimHead[] employeeDoc1 = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getClaimHeadListByEmpId", map, GetClaimHead[].class);
+
+			List<GetClaimHead> claimList1 = new ArrayList<GetClaimHead>(Arrays.asList(employeeDoc1));
+			System.err.println("claim list" + claimList1.toString());
+
+			for (int i = 0; i < claimList1.size(); i++) {
+
+				claimList1.get(i)
+						.setExVar1(FormValidation.Encrypt(String.valueOf(claimList1.get(i).getCaHeadId())));
+				claimList1.get(i).setClaimFromDate(DateConvertor.convertToDMY(claimList1.get(i).getClaimFromDate()));
+				claimList1.get(i).setClaimToDate(DateConvertor.convertToDMY(claimList1.get(i).getClaimToDate()));
+
+			}
+
+			model.addObject("claimList1", claimList1);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+
+	}
+	
+	@RequestMapping(value = "/showClaimDetailList", method = RequestMethod.GET)
+	public ModelAndView showClaimDetailList(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("claim/claimHisClaimDetils");
+		try {
+
+			int claimId = Integer.parseInt(FormValidation.DecodeKey(request.getParameter("claimId")));
+			System.err.println("claimId idis " + claimId);
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("claimId", claimId);
+
 			ClaimDetail[] employeeDoc1 = Constants.getRestTemplate()
-					.postForObject(Constants.url + "/getClaimListByEmpId", map, ClaimDetail[].class);
+					.postForObject(Constants.url + "/getClaimDetailListByEmpId", map, ClaimDetail[].class);
 
 			List<ClaimDetail> claimList1 = new ArrayList<ClaimDetail>(Arrays.asList(employeeDoc1));
 			System.err.println("claim list" + claimList1.toString());
@@ -511,9 +547,8 @@ public class ClaimApplicationController {
 			for (int i = 0; i < claimList1.size(); i++) {
 
 				claimList1.get(i)
-						.setCirculatedTo(FormValidation.Encrypt(String.valueOf(claimList1.get(i).getClaimId())));
-				claimList1.get(i).setClaimDate(DateConvertor.convertToDMY(claimList1.get(i).getClaimDate()));
-
+						.setExVar1(FormValidation.Encrypt(String.valueOf(claimList1.get(i).getClaimId())));
+				  
 			}
 
 			model.addObject("claimList1", claimList1);
@@ -613,7 +648,10 @@ public class ClaimApplicationController {
 			int empId = Integer.parseInt(request.getParameter("empId"));
 			String claim_title = request.getParameter("claim_title");
 			String leaveDateRange = request.getParameter("claimDate");
- 			String[] arrOfStr = leaveDateRange.split("to", 2);
+
+			String[] arrOfStr = leaveDateRange.split("to", 2);
+			System.err.println("date1 is " + arrOfStr[0].toString().trim());
+			System.err.println("date2 is " + arrOfStr[1].toString().trim());
 
 			docHead.setCirculatedTo("1");
 			docHead.setCafromDt(DateConvertor.convertToYMD(arrOfStr[0].toString().trim()));
@@ -655,15 +693,15 @@ public class ClaimApplicationController {
 				dDetail.setMakerEnterDatetime(sf.format(date));
 
 				docDetailList.add(dDetail);
-				
-				tot_amt=tot_amt+tempDocList.get(i).getClaimAmount();
+
+				tot_amt = tot_amt + tempDocList.get(i).getClaimAmount();
 
 			}
 			docHead.setClaimAmount((float) tot_amt);
 			docHead.setDetailList(docDetailList);
 
-			System.err.println("temp List "+tempDocList.toString());
-			System.err.println("head List "+docHead.toString());
+			System.err.println("temp List " + tempDocList.toString());
+			System.err.println("head List " + docHead.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

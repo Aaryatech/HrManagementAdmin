@@ -381,11 +381,12 @@
 												data,
 												function(i, v) {
 
-													var str = '<a href="#" class="action_btn" onclick="callEdit('
+													var str = /* '<a href="#" class="action_btn" onclick="callEdit('
 															+ v.claimDetailId
 															+ ','
 															+ i
-															+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
+															+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp; */
+															'<a href="#" class="action_btn" onclick="callDelete('
 															+ v.claimDetailId
 															+ ','
 															+ i
@@ -462,15 +463,16 @@
 												data,
 												function(i, v) {
 
-													var str = '<a href="#" class="action_btn" onclick="callEdit('
-															+ v.claimDetailId
-															+ ','
-															+ i
-															+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
-															+ v.claimDetailId
-															+ ','
-															+ i
-															+ ')" style="color:black"><i class="fa fa-trash"></i></a>'
+													var str = /* '<a href="#" class="action_btn" onclick="callEdit('
+														+ v.claimDetailId
+														+ ','
+														+ i
+														+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp; */
+														'<a href="#" class="action_btn" onclick="callDelete('
+														+ v.claimDetailId
+														+ ','
+														+ i
+														+ ')" style="color:black"><i class="fa fa-trash"></i></a>'
 
 													dataTable.row.add(
 															[ i + 1,

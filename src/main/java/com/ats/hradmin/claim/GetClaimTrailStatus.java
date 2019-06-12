@@ -2,29 +2,48 @@ package com.ats.hradmin.claim;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class GetClaimTrailStatus {
-	
-private int claimTrailPkey;
-	
-	private int claimId ;
-	
+	private int claimTrailPkey;
+
+	private int claimId;
+
 	private int empId;
-	
+
 	private String empRemarks;
-	
+
 	private int claimStatus;
-	
+
+	private int claimTitle;
+
+	private int claimAmount;
+
 	private String userName;
-	
-	private String makerEnterDatetime;
-	
+
+	private Date makerEnterDatetime;
+
 	private String empFname;
-	
+
 	private String empMname;
-	
+
 	private String empSname;
-	
-	private String empPhoto;
+
+	public int getClaimTitle() {
+		return claimTitle;
+	}
+
+	public void setClaimTitle(int claimTitle) {
+		this.claimTitle = claimTitle;
+	}
+
+	public int getClaimAmount() {
+		return claimAmount;
+	}
+
+	public void setClaimAmount(int claimAmount) {
+		this.claimAmount = claimAmount;
+	}
 
 	public int getClaimTrailPkey() {
 		return claimTrailPkey;
@@ -66,11 +85,20 @@ private int claimTrailPkey;
 		this.claimStatus = claimStatus;
 	}
 
-	public String getMakerEnterDatetime() {
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	@JsonFormat(locale = "Locale.ENGLISH", timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy hh:mm:ss a") //
+	public Date getMakerEnterDatetime() {
 		return makerEnterDatetime;
 	}
 
-	public void setMakerEnterDatetime(String makerEnterDatetime) {
+	public void setMakerEnterDatetime(Date makerEnterDatetime) {
 		this.makerEnterDatetime = makerEnterDatetime;
 	}
 
@@ -98,30 +126,19 @@ private int claimTrailPkey;
 		this.empSname = empSname;
 	}
 
-	public String getEmpPhoto() {
-		return empPhoto;
-	}
-
-	public void setEmpPhoto(String empPhoto) {
-		this.empPhoto = empPhoto;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
 	@Override
 	public String toString() {
 		return "GetClaimTrailStatus [claimTrailPkey=" + claimTrailPkey + ", claimId=" + claimId + ", empId=" + empId
-				+ ", empRemarks=" + empRemarks + ", claimStatus=" + claimStatus + ", userName=" + userName
-				+ ", makerEnterDatetime=" + makerEnterDatetime + ", empFname=" + empFname + ", empMname=" + empMname
-				+ ", empSname=" + empSname + ", empPhoto=" + empPhoto + "]";
+				+ ", empRemarks=" + empRemarks + ", claimStatus=" + claimStatus + ", claimTitle=" + claimTitle
+				+ ", claimAmount=" + claimAmount + ", userName=" + userName + ", makerEnterDatetime="
+				+ makerEnterDatetime + ", empFname=" + empFname + ", empMname=" + empMname + ", empSname=" + empSname
+				+ ", getClaimTitle()=" + getClaimTitle() + ", getClaimAmount()=" + getClaimAmount()
+				+ ", getClaimTrailPkey()=" + getClaimTrailPkey() + ", getClaimId()=" + getClaimId() + ", getEmpId()="
+				+ getEmpId() + ", getEmpRemarks()=" + getEmpRemarks() + ", getClaimStatus()=" + getClaimStatus()
+				+ ", getUserName()=" + getUserName() + ", getMakerEnterDatetime()=" + getMakerEnterDatetime()
+				+ ", getEmpFname()=" + getEmpFname() + ", getEmpMname()=" + getEmpMname() + ", getEmpSname()="
+				+ getEmpSname() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
+				+ super.toString() + "]";
 	}
 
-
-	
 }
