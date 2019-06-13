@@ -347,8 +347,8 @@ public class ProjectAllotmentController {
 				save.setEmpId(freelist.get(em).getEmpId());
 				save.setPallotFromdt(fromDate);
 				save.setPallotTodt(toDate);
-				if (hours >= 9) {
-					save.setPallotDailyHrs(9);
+				if (hours >= 8) {
+					save.setPallotDailyHrs(8);
 					save.setExInt1(2);
 				} else {
 					save.setPallotDailyHrs(hours);

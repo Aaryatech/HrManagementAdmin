@@ -129,8 +129,9 @@
 											<th width="10%">Sr.no</th>
 											<th>Employee Code</th>
 											<th>Employee Name</th>
-											<th>Type</th>
-											<th>Claim Date</th>
+											<th>Claim Title</th>
+											<th>From Date</th>
+											<th>To Date</th>
 											<th>Claim Amount</th>
 											<th>Project</th>
 											<th>Status</th>
@@ -148,18 +149,19 @@
 												<td>${count.index+1}</td>
 												<td>${claimList.empCode}</td>
 												<td>${claimList.empName}</td>
-												<td>${claimList.claimTypeName}</td>
-												<td>${claimList.claimDate}</td>
+												<td>${claimList.claimTitle}</td>
+												<td>${claimList.caFromDt}</td>
+												<td>${claimList.caToDt}</td>
 												<td>${claimList.claimAmount}</td>
 												<td>${claimList.projectTitle}</td>
 
 
 												<c:choose>
-													<c:when test="${claimList.exInt1==1}">
+													<c:when test="${claimList.claimStatus==1}">
 														<td><span class="badge badge-info">Initial Pending
 																</span></td>
 													</c:when>
-													<c:when test="${claimList.exInt1==2}">
+													<c:when test="${claimList.claimStatus==2}">
 														<td><span class="badge badge-secondary">Final Pending
 																</span></td>
 													</c:when>
@@ -170,18 +172,18 @@
 														<c:when test="${claimList.caFinAuthEmpId==empIdOrig}">
 
 															<a
-																href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList.claimRemarks}&claimId=${claimList.circulatedTo}&stat=3"
+																href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList.exVar1}&claimId=${claimList.circulatedTo}&stat=3"
 																title="Approve"><i class="icon-checkmark4 "
 																style="color: black;"></i></a>
 
 															<a
-																href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList.claimRemarks}&claimId=${claimList.circulatedTo}&stat=9"
+																href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList.exVar1}&claimId=${claimList.circulatedTo}&stat=9"
 																title="Reject"><i class="icon-x"
 																style="color: black;"></i></a>
 
 															<c:if test="${leaveList.empId==empIdOrig}">
 																<a
-																	href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList.claimRemarks}&claimId=${claimList.circulatedTo}&stat=7"
+																	href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList.exVar1}&claimId=${claimList.circulatedTo}&stat=7"
 																	title="Cancel"><i class="icon-cancel-squareed65"
 																	style="color: black;"></i></a>
 															</c:if>
@@ -191,25 +193,25 @@
 														<c:when test="${claimList.caIniAuthEmpId==empIdOrig}">
 
 															<a
-																href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList.claimRemarks}&claimId=${claimList.circulatedTo}&stat=2"
+																href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList.exVar1}&claimId=${claimList.circulatedTo}&stat=2"
 																title="Approve"><i class="icon-checkmark4 "
 																style="color: black;"></i></a>
 
 															<a
-																href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList.claimRemarks}&claimId=${claimList.circulatedTo}&stat=8"
+																href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList.exVar1}&claimId=${claimList.circulatedTo}&stat=8"
 																title="Reject"><i class="icon-x"
 																style="color: black;"></i></a>
 															<c:if test="${leaveList.empId==empIdOrig}">
 
 																<a
-																	href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList.claimRemarks}&claimId=${claimList.circulatedTo}&stat=7"
+																	href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList.exVar1}&claimId=${claimList.circulatedTo}&stat=7"
 																	title="Cancel"><i class="icon-cancel-squareed65"
 																	style="color: black;"></i></a>
 															</c:if>
 														</c:when>
 
 													</c:choose> <a
-													href="${pageContext.request.contextPath}/claimDetailHistory?&claimId=${claimList.circulatedTo}"
+													href="${pageContext.request.contextPath}/claimDetailHistory?empId=${claimList.exVar1}&claimId=${claimList.circulatedTo}"
 													style="color: black"><i class="icon-list-unordered"></i></a></td>
 											</tr>
 										</c:forEach>
@@ -223,12 +225,13 @@
 									class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic  datatable-button-print-columns1"
 									id="printtable1">
 									<thead>
-										<tr class="bg-blue">
+									<tr class="bg-blue">
 											<th width="10%">Sr.no</th>
 											<th>Employee Code</th>
 											<th>Employee Name</th>
-											<th>Type</th>
-											<th>Claim Date</th>
+											<th>Claim Title</th>
+											<th>From Date</th>
+											<th>To Date</th>
 											<th>Claim Amount</th>
 											<th>Project</th>
 											<th>Status</th>
@@ -246,31 +249,33 @@
 												<td>${count.index+1}</td>
 												<td>${claimList1.empCode}</td>
 												<td>${claimList1.empName}</td>
-												<td>${claimList1.claimTypeName}</td>
-												<td>${claimList1.claimDate}</td>
+												<td>${claimList1.claimTitle}</td>
+												<td>${claimList1.caFromDt}</td>
+												<td>${claimList1.caToDt}</td>
 												<td>${claimList1.claimAmount}</td>
 												<td>${claimList1.projectTitle}</td>
-												<c:if test="${claimList1.exInt1==1}">
+
+												<c:if test="${claimList1.claimStatus==1}">
 													<td><span class="badge badge-info">Initial Pending & Final Pending
 															</span></td>
 												</c:if>
-												<c:if test="${claimList1.exInt1==2}">
+												<c:if test="${claimList1.claimStatus==2}">
 													<td><span class="badge badge-secondary">Final Pending
 														</span></td>
 												</c:if>
-												<c:if test="${claimList1.exInt1==3}">
+												<c:if test="${claimList1.claimStatus==3}">
 													<td><span class="badge badge-success">Final Approved
 															</span></td>
 												</c:if>
-												<c:if test="${claimList1.exInt1==7}">
+												<c:if test="${claimList1.claimStatus==7}">
 													<td><span class="badge badge-danger">Leave Cancelled
 															</span></td>
 												</c:if>
-												<c:if test="${claimList1.exInt1==8}">
+												<c:if test="${claimList1.claimStatus==8}">
 													<td><span class="badge badge-danger">Initial Rejected
 															</span></td>
 												</c:if>
-												<c:if test="${claimList1.exInt1==9}">
+												<c:if test="${claimList1.claimStatus==9}">
 													<td><span class="badge badge-danger">Final Rejected
 															</span></td>
 												</c:if>
@@ -278,12 +283,12 @@
 														<c:when test="${claimList1.caFinAuthEmpId==empIdOrig}">
 
 															<a
-																href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList1.claimRemarks}&claimId=${claimList1.circulatedTo}&stat=3"
+																href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList1.exVar1}&claimId=${claimList1.circulatedTo}&stat=3"
 																title="Approve"><i class="icon-checkmark4 "
 																style="color: black;"></i></a>
 
 															<a
-																href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList1.claimRemarks}&claimId=${claimList1.circulatedTo}&stat=9"
+																href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList1.exVar1}&claimId=${claimList1.circulatedTo}&stat=9"
 																title="Reject"><i class="icon-x"
 																style="color: black;"></i></a>
 														</c:when>
@@ -308,7 +313,7 @@
 													</c:choose> <c:if test="${claimList1.empId==empIdOrig}">
 
 														<a
-															href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList1.claimRemarks}&claimId=${claimList1.circulatedTo}&stat=7"
+															href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList1.exVar1}&claimId=${claimList1.circulatedTo}&stat=7"
 															title="Cancel"><i class="icon-cancel-square"
 															style="color: black;"></i></a>
 

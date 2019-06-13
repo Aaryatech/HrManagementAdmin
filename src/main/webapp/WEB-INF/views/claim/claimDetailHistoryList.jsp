@@ -126,7 +126,18 @@
 											: </label>
 										<div class="col-lg-6">
 											<input type="text" class="form-control"
-												 Value="${lvEmp.empName}"
+												 Value="${lvEmp.empFname} ${lvEmp.empSname}"
+												name="compName" autocomplete="off" readonly>
+											
+										</div>
+									</div>
+									
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="compName">Claim Title
+											: </label>
+										<div class="col-lg-6">
+											<input type="text" class="form-control"
+												 Value="${lvEmp.claimTitle}"
 												name="compName" autocomplete="off" readonly>
 											
 										</div>
@@ -136,7 +147,7 @@
 											: </label>
 										<div class="col-lg-6">
 											<input type="text" class="form-control"
-												  Value="${lvEmp.claimDate}"
+												  Value="${lvEmp.caFromDt} to ${lvEmp.caToDt} "
 												name="compName" autocomplete="off" readonly>
 											
 										</div>

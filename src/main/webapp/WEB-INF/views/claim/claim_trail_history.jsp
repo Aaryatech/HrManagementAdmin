@@ -126,7 +126,18 @@
 											: </label>
 										<div class="col-lg-6">
 											<input type="text" class="form-control"
-												 Value="${lvEmp.empName}"
+												 Value="${lvEmp.empFname} ${lvEmp.empSname}"
+												name="compName" autocomplete="off" readonly>
+											
+										</div>
+									</div>
+									
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="compName">Claim Title
+											: </label>
+										<div class="col-lg-6">
+											<input type="text" class="form-control"
+												 Value="${lvEmp.claimTitle}"
 												name="compName" autocomplete="off" readonly>
 											
 										</div>
@@ -136,7 +147,7 @@
 											: </label>
 										<div class="col-lg-6">
 											<input type="text" class="form-control"
-												  Value="${lvEmp.claimDate}"
+												  Value="${lvEmp.caFromDt} to ${lvEmp.caToDt} "
 												name="compName" autocomplete="off" readonly>
 											
 										</div>
@@ -164,8 +175,41 @@
 											
 										</div>
 									</div>
+							
+						<h6 class="card-title">Claim Detail</h6>	
 						<table
-							class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic  datatable-button-print-columns1"
+							class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic1  datatable-button-print-columns1"
+							id="printtable1">
+							<thead>
+								<tr class="bg-blue">
+									<th width="10%">Sr.no</th>
+									<th>Claim Type</th>
+									<th>Amount</th>
+									<th>Remark</th>
+
+								</tr>
+							</thead>
+							<tbody>
+
+
+								<c:forEach items="${claimDetList}" var="lvTypeList"
+									varStatus="count">
+									<tr>
+										<td>${count.index+1}</td>
+										<td>${lvTypeList.claimTypeTitle}</td>
+										<td>${lvTypeList.claimAmount}</td>
+										<td>${lvTypeList.claimRemarks}</td>
+
+
+									</tr>
+								</c:forEach>
+
+							</tbody>
+						</table>
+					<h6 class="card-title">Claim Trail History</h6>
+								
+<table
+							class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic1  datatable-button-print-columns1"
 							id="printtable1">
 							<thead>
 								<tr class="bg-blue">
@@ -175,7 +219,7 @@
 									<th>Date</th>
 									<th>Action By</th>
 									<th>Claim Status</th>
-								</tr>
+ 								</tr>
 							</thead>
 							<tbody>
 
@@ -183,7 +227,7 @@
 								<c:forEach items="${employeeList}" var="empTrailList" varStatus="count">
 									<tr>
 										<td>${count.index+1}</td>
-										<td>${empTrailList.empSname} ${empTrailList.empFname} </td>
+										<td>${empTrailList.empSname} ${empTrailList.empFname}</td>
 									
 										
 										<c:choose>
@@ -212,38 +256,16 @@
 										<td><span class="badge badge-danger">Initial Rejected</span></td>
 										</c:if>
 											<c:if test="${empTrailList.claimStatus==9}">
-										<td><span class="badge badge-danger">Final Rejected</span></td>
+										<td><span class="badge badge-danger">Final Reject</span></td>
 										</c:if>
 	
-	
-									<%-- 	<td class="text-center">
-											<div class="list-icons">
-												<div class="dropdown">
-													<a href="#" class="list-icons-item" data-toggle="dropdown">
-														<i class="icon-menu9"></i>
-													</a>
-
-													<div class="dropdown-menu dropdown-menu-right">
-														<a
-															href="${pageContext.request.contextPath}/editEmp?typeId=${lvTypeList.exVar1}"
-															class="dropdown-item"><i class="icon-pencil7"></i>Edit</a>
-														<a
-															href="${pageContext.request.contextPath}/deleteEmployee?typeId=${lvTypeList.exVar1}"
-															class="dropdown-item"><i class="icon-trash"></i>
-															Delete</a> <a
-															href="${pageContext.request.contextPath}/uploadDocument?empId=${lvTypeList.exVar1}"
-															class="dropdown-item"><i class="icon-file-upload"></i> 
-															Document upload</a>
-
-													</div>
-												</div>
-											</div>
-										</td> --%>
+									
 									</tr>
 								</c:forEach>
 
 							</tbody>
 						</table>
+						
 					</div>
 
 				</div>

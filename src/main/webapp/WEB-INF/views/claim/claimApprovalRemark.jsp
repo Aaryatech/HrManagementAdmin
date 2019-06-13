@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-		<%@ taglib
-	uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -67,7 +66,7 @@
 						<div class="card">
 							<div class="card-header header-elements-inline">
 								<h6 class="card-title"></h6>
-							<!-- 	<div class="header-elements">
+								<!-- 	<div class="header-elements">
 									<div class="list-icons">
 										<a class="list-icons-item" data-action="collapse"></a>
 									</div>
@@ -111,147 +110,172 @@
 									session.removeAttribute("successMsg");
 									}
 								%>
-<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="compName">Employee Code
-											: </label>
-										<div class="col-lg-6">
-											<input type="text" class="form-control"
-												 Value="${lvEmp.empCode}"
-												name="empCode" id="empCode" autocomplete="off" readonly>
-											
-										</div>
-									</div>
-									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="compName">Employee Name
-											: </label>
-										<div class="col-lg-6">
-											<input type="text" class="form-control"
-												 Value="${lvEmp.empName}"
-												name="empName" id="empName" autocomplete="off" readonly>
-											
-										</div>
-									</div>
-									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="compName">Claim Type
-											: </label>
-										<div class="col-lg-6">
-											<input type="text" class="form-control"
-												 Value="${lvEmp.claimTypeName}"
-												name="clmType" id="clmType" autocomplete="off" readonly>
-											
-										</div>
-									</div>
-									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="compName">Claim Date
-											: </label>
-										<div class="col-lg-6">
-											<input type="text" class="form-control"
-												  Value="${lvEmp.claimDate}"
-												name="claimDate" id="claimDate" autocomplete="off" readonly>
-											
-										</div>
-									</div>
-									
-						
-						<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="compName">Claim Amount
-											: </label>
-										<div class="col-lg-6">
-											<input type="text" class="form-control"
-												 Value="${lvEmp.claimAmount}"
-												name="clmAmt" id="clmAmt" autocomplete="off" readonly>
-											
-										</div>
-									</div>
-									
-									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="compName">Project Title
-											: </label>
-										<div class="col-lg-6">
-											<input type="text" class="form-control"
-												 Value="${lvEmp.projectTitle}"
-												name="proTitle" id="proTitle" autocomplete="off" readonly>
-											
-										</div>
-									</div>
-							
-									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="compName">Claim Remark 
-											: </label>
-										<div class="col-lg-6">
-											<input type="text" class="form-control"
-												 Value="${lvEmp.claimRemarks}"
-												name="proTitle" id="proTitle" autocomplete="off" readonly>
-											
-										</div>
-									</div>
-						
-					<h6 class="card-title">Claim Trail History</h6>
-								
-<table
-							class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic1  datatable-button-print-columns1"
-							id="printtable1">
-							<thead>
-								<tr class="bg-blue">
-									<th width="10%">Sr.no</th>
-									<th>Name</th>								
-									<th>Remark</th>
-									<th>Date</th>
-									<th>Action By</th>
-									<th>Claim Status</th>
-									
+								<div class="form-group row">
+									<label class="col-form-label col-lg-2" for="compName">Employee
+										Code : </label>
+									<div class="col-lg-6">
+										<input type="text" class="form-control"
+											Value="${lvEmp.empCode}" id="empCode" name="compName"
+											autocomplete="off" readonly>
 
-								</tr>
-							</thead>
-							<tbody>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-form-label col-lg-2" for="compName">Employee
+										Name : </label>
+									<div class="col-lg-6">
+										<input type="text" class="form-control"
+											Value="${lvEmp.empFname} ${lvEmp.empSname}" id="empName"
+											name="compName" autocomplete="off" readonly>
+
+									</div>
+								</div>
+
+								<div class="form-group row">
+									<label class="col-form-label col-lg-2" for="compName">Claim
+										Title : </label>
+									<div class="col-lg-6">
+										<input type="text" class="form-control"
+											Value="${lvEmp.claimTitle}" id="clName" name="compName"
+											autocomplete="off" readonly>
+
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-form-label col-lg-2" for="compName">Claim
+										Date : </label>
+									<div class="col-lg-6">
+										<input type="text" class="form-control"
+											Value="${lvEmp.caFromDt} to ${lvEmp.caToDt} " id="cldate"
+											name="compName" autocomplete="off" readonly>
+
+									</div>
+								</div>
 
 
-								<c:forEach items="${employeeList}" var="empTrailList" varStatus="count">
-									<tr>
-										<td>${count.index+1}</td>
-										<td>${empTrailList.empSname} ${empTrailList.empFname}</td>
-									
-										
-										<c:choose>
-										<c:when test="${empTrailList.empRemarks=='null' || empty empTrailList.empRemarks}">
-											<td>-</td>
-										</c:when>
-										<c:otherwise>
-										<td>${empTrailList.empRemarks}</td>
-										</c:otherwise>
-										</c:choose>									
-										<td>${empTrailList.makerEnterDatetime}</td>
-										<td>${empTrailList.userName}</td>
-										<c:if test="${empTrailList.claimStatus==1}">
-										<td><span class="badge badge-info">Initial Pending</span></td>
-										</c:if>
-										<c:if test="${empTrailList.claimStatus==2}">
-										<td><span class="badge badge-secondary">Final Pending</span></td>
-										</c:if>
-											<c:if test="${empTrailList.claimStatus==3}">
-										<td><span class="badge badge-success">Final Approved</span></td>
-										</c:if>
-											<c:if test="${empTrailList.claimStatus==7}">
-										<td><span class="badge badge-danger">Leave Cancelled</span></td>
-										</c:if>
-											<c:if test="${empTrailList.claimStatus==8}">
-										<td><span class="badge badge-danger">Initial Rejected</span></td>
-										</c:if>
-											<c:if test="${empTrailList.claimStatus==9}">
-										<td><span class="badge badge-danger">Final Rejected</span></td>
-										</c:if>
-	
-									
-									</tr>
-								</c:forEach>
+								<div class="form-group row">
+									<label class="col-form-label col-lg-2" for="compName">Claim
+										Amount : </label>
+									<div class="col-lg-6">
+										<input type="text" class="form-control"
+											Value="${lvEmp.claimAmount}" id="claimAmt" name="compName"
+											autocomplete="off" readonly>
 
-							</tbody>
-						</table>
-						
+									</div>
+								</div>
+
+								<div class="form-group row">
+									<label class="col-form-label col-lg-2" for="compName">Project
+										Title : </label>
+									<div class="col-lg-6">
+										<input type="text" class="form-control"
+											Value="${lvEmp.projectTitle}" id="proTitle" name="compName"
+											autocomplete="off" readonly>
+
+									</div>
+								</div>
+
+								<h6 class="card-title">Claim Detail</h6>
+								<table
+									class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic1  datatable-button-print-columns1"
+									id="printtable1">
+									<thead>
+										<tr class="bg-blue">
+											<th width="10%">Sr.no</th>
+											<th>Claim Type</th>
+											<th>Amount</th>
+											<th>Remark</th>
+
+										</tr>
+									</thead>
+									<tbody>
+
+
+										<c:forEach items="${claimDetList}" var="lvTypeList"
+											varStatus="count">
+											<tr>
+												<td>${count.index+1}</td>
+												<td>${lvTypeList.claimTypeTitle}</td>
+												<td>${lvTypeList.claimAmount}</td>
+												<td>${lvTypeList.claimRemarks}</td>
+
+
+											</tr>
+										</c:forEach>
+
+									</tbody>
+								</table>
+								<h6 class="card-title">Claim Trail History</h6>
+
+								<table
+									class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic1  datatable-button-print-columns1"
+									id="printtable1">
+									<thead>
+										<tr class="bg-blue">
+											<th width="10%">Sr.no</th>
+											<th>Name</th>
+											<th>Remark</th>
+											<th>Date</th>
+											<th>Action By</th>
+											<th>Claim Status</th>
+										</tr>
+									</thead>
+									<tbody>
+
+
+										<c:forEach items="${employeeList}" var="empTrailList"
+											varStatus="count">
+											<tr>
+												<td>${count.index+1}</td>
+												<td>${empTrailList.empSname}${empTrailList.empFname}</td>
+
+
+												<c:choose>
+													<c:when
+														test="${empTrailList.empRemarks=='null' || empty empTrailList.empRemarks}">
+														<td>-</td>
+													</c:when>
+													<c:otherwise>
+														<td>${empTrailList.empRemarks}</td>
+													</c:otherwise>
+												</c:choose>
+												<td>${empTrailList.makerEnterDatetime}</td>
+												<td>${empTrailList.userName}</td>
+												<c:if test="${empTrailList.claimStatus==1}">
+													<td><span class="badge badge-info">Initial
+															Pending</span></td>
+												</c:if>
+												<c:if test="${empTrailList.claimStatus==2}">
+													<td><span class="badge badge-secondary">Final
+															Pending</span></td>
+												</c:if>
+												<c:if test="${empTrailList.claimStatus==3}">
+													<td><span class="badge badge-success">Final
+															Approved</span></td>
+												</c:if>
+												<c:if test="${empTrailList.claimStatus==7}">
+													<td><span class="badge badge-danger">Leave
+															Cancelled</span></td>
+												</c:if>
+												<c:if test="${empTrailList.claimStatus==8}">
+													<td><span class="badge badge-danger">Initial
+															Rejected</span></td>
+												</c:if>
+												<c:if test="${empTrailList.claimStatus==9}">
+													<td><span class="badge badge-danger">Final
+															Reject</span></td>
+												</c:if>
+
+
+											</tr>
+										</c:forEach>
+
+									</tbody>
+								</table>
+
 								<form
 									action="${pageContext.request.contextPath}/approveClaimByAuth1"
-									id="submitInsertCompany" method="post"
-									>
+									id="submitInsertCompany" method="post">
 
 
 									<div class="form-group row">
@@ -261,22 +285,21 @@
 											<textarea rows="3" cols="3" class="form-control"
 												placeholder="Any Remark" onchange="trim(this)" id="remark"
 												name="remark"></textarea>
-													<span class="validation-invalid-label" id="error_remark"
+											<span class="validation-invalid-label" id="error_remark"
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
 
 									<input type="hidden" id="empId" name="empId" value="${empId}">
-									<input type="hidden" id="leaveId" name="claimId" value="${claimId}">
-									<input type="hidden" id="stat" name="stat" value="${stat}">
-
-
-
+									<input type="hidden" id="leaveId" name="claimId"
+										value="${claimId}"> <input type="hidden" id="stat"
+										name="stat" value="${stat}">
 
 									<div class="form-group row mb-0">
 										<div class="col-lg-10 ml-lg-auto">
-<!-- 											<button type="reset" class="btn btn-light legitRipple">Reset</button>
- -->											<button type="submit" class="btn bg-blue ml-3 legitRipple"
+											<!-- 											<button type="reset" class="btn btn-light legitRipple">Reset</button>
+ -->
+											<button type="submit" class="btn bg-blue ml-3 legitRipple"
 												id="submtbtn">
 												Submit <i class="icon-paperplane ml-2"></i>
 											</button>
@@ -337,68 +360,75 @@
 			return true;
 
 		}
-		$(document).ready(function($) {
+		$(document)
+				.ready(
+						function($) {
 
-			$("#submitInsertCompany").submit(function(e) {
-				var isError = false;
-				var errMsg = "";
-				if ($("#stat").val()==7 || $("#stat").val()==8 || $("#stat").val()==9) {
-					if(!$("#remark").val()){
+							$("#submitInsertCompany")
+									.submit(
+											function(e) {
+												var isError = false;
+												var errMsg = "";
+												if ($("#stat").val() == 7
+														|| $("#stat").val() == 8
+														|| $("#stat").val() == 9) {
+													if (!$("#remark").val()) {
 
-					isError = true;
+														isError = true;
 
-					$("#error_remark").show()
+														$("#error_remark")
+																.show()
 
-				} else {
-					$("#error_remark").hide()
-				}
-				
-			}
+													} else {
+														$("#error_remark")
+																.hide()
+													}
 
-				//alert("asdf");
-				if (!isError) {
+												}
 
-					 $('#clType')
-					.html(
-							document
-									.getElementById("clmType").value);
-					 $('#proName')
-					.html(
-							document
-									.getElementById("proTitle").value);
-					 $('#claimAmt1')
-					.html(
-							document
-									.getElementById("clmAmt").value);
-					 $('#empCode1')
-					.html(
-							document
-									.getElementById("empCode").value);
-					 $('#empName1')
-					.html(
-							document
-									.getElementById("empName").value);
-			
-					 $('#claimDate1')
-			.html(
-					document
-							.getElementById("claimDate").value);  
-					 $('#remark1')
-						.html(
-								document
-										.getElementById("remark").value);
-	
-			$('#modal_scrollable')
-			.modal('show');
-			 
-			//end ajax send this to php page
-		}
-		return false;
-			});
-		});
+											
+ 			
+												 
+												if (!isError) {
+													 
+													  $('#clTitle1')
+															.html(
+																	document
+																			.getElementById("clName").value);
+														//alert("asdf");
+													$('#claimAmt1')
+															.html(
+																	document
+																			.getElementById("claimAmt").value);
+													$('#empCode1')
+															.html(
+																	document
+																			.getElementById("empCode").value);
+													$('#empName1')
+															.html(
+																	document
+																			.getElementById("empName").value);
+													$('#proName')
+															.html(
+																	document
+																			.getElementById("proTitle").value);  
+
+													$('#claimDate1')
+															.html(
+																	document
+																			.getElementById("cldate").value); 
+
+													$('#modal_scrollable')
+															.modal('show');
+
+													//end ajax send this to php page
+												}
+												return false;
+											});
+						});
 		//
 	</script>
-<script>
+	<script>
 		function submitForm() {
 			$('#modal_scrollable').modal('hide');
 			document.getElementById("submtbtn").disabled = true;
@@ -406,6 +436,8 @@
 
 		}
 	</script>
+
+
 	<!-- Scrollable modal -->
 	<div id="modal_scrollable" class="modal fade" data-backdrop="false"
 		tabindex="-1">
@@ -417,8 +449,8 @@
 				</div>
 
 				<div class="modal-body py-0">
-					<h5 class="modal-title">Claim Details</h5><br>
-
+					<h5 class="modal-title">Claim Details</h5>
+					<br>
 					<div class="form-group row">
 						<label class="col-form-label col-lg-3" for="empCode1">
 							Employee Code : </label> <label class="col-form-label col-lg-2"
@@ -433,36 +465,32 @@
 					</div>
 					<div class="form-group row">
 						<label class="col-form-label col-lg-3" for="clType"> Claim
-							Type : </label> <label class="col-form-label col-lg-6" id="clType"
-							for="clType"> </label>
+							Title : </label> <label class="col-form-label col-lg-6" id="clTitle1"
+							for="clTitle1"> </label>
 
 					</div>
 					<div class="form-group row">
-						<label class="col-form-label col-lg-3" for="proName"> Project 
-							Name : </label> <label class="col-form-label col-lg-6" id="proName"
-							for="proName"> </label>
+						<label class="col-form-label col-lg-3" for="proName">
+							Project Name : </label> <label class="col-form-label col-lg-6"
+							id="proName" for="proName"> </label>
 
 					</div>
 
-				
-					<div class="form-group row">
-						<label class="col-form-label col-lg-3" for="noOfDays"> Claim Amount
-							 : </label> <label class="col-form-label col-lg-3" id="claimAmt1"
-							for="claimAmt1"> </label>
 
-					</div>
 					<div class="form-group row">
-						<label class="col-form-label col-lg-3" for="claimDate1"> Claim Date
-							 : </label> <label class="col-form-label col-lg-3" id="claimDate1"
-							for="claimDate1"> </label>
+						<label class="col-form-label col-lg-3" for="noOfDays">
+							Claim Amount : </label> <label class="col-form-label col-lg-3"
+							id="claimAmt1" for="claimAmt1"> </label>
 
 					</div>
 					<div class="form-group row">
-						<label class="col-form-label col-lg-3" for="claimDate1"> Remark
-							 : </label> <label class="col-form-label col-lg-9" id="remark1"
-							for="remark1"> </label>
+						<label class="col-form-label col-lg-3" for="claimDate1">
+							  Date : </label> <label class="col-form-label col-lg-7"
+							id="claimDate1" for="claimDate1"> </label>
 
 					</div>
+					 
+
 				</div>
 
 				<div class="modal-footer pt-3">

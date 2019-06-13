@@ -1,196 +1,191 @@
 package com.ats.hradmin.claim;
 
- 
+import java.util.Date;
 
- 
 public class GetClaimApplyAuthwise {
 	
-	 private int claimId;
-		
-		private int empId;
-		
-		private String empCode;
-		
-		private String empName;
-		
-		private int projectId;
-		
-		private String projectTitle;
-		
-		private int claimTypeId;
-		
-		private String claimTypeName;
+	private int caHeadId;
 
-		private float claimAmount;
+	private int empId;
 
-		private String claimRemarks;
+	private String empCode;
 
-		private String claimDate;
-		
-		private String circulatedTo ;
-		
-		private int exInt1;
-		
-		private int caIniAuthEmpId;
+	private String empName;
 
-		private int caFinAuthEmpId;
-		
-		
-		private String empPhoto;
+	private int projId;
 
-		
+	private String claimTitle;
 
-		public String getEmpPhoto() {
-			return empPhoto;
-		}
+	private String projectTitle;
 
-		public void setEmpPhoto(String empPhoto) {
-			this.empPhoto = empPhoto;
-		}
+	private String caFromDt;
 
-		public int getClaimId() {
-			return claimId;
-		}
+	private String caToDt;
 
-		public void setClaimId(int claimId) {
-			this.claimId = claimId;
-		}
+	private int claimStatus;
 
-		public int getEmpId() {
-			return empId;
-		}
+	private float claimAmount;
 
-		public void setEmpId(int empId) {
-			this.empId = empId;
-		}
+	private String circulatedTo;
 
-		public String getEmpCode() {
-			return empCode;
-		}
+	private String  exVar1;
 
-		public void setEmpCode(String empCode) {
-			this.empCode = empCode;
-		}
+	private int caIniAuthEmpId;
 
-		public String getEmpName() {
-			return empName;
-		}
+	private int caFinAuthEmpId;
 
-		public void setEmpName(String empName) {
-			this.empName = empName;
-		}
+	private String empPhoto;
 
-		public int getProjectId() {
-			return projectId;
-		}
-
-		public void setProjectId(int projectId) {
-			this.projectId = projectId;
-		}
-
-		public String getProjectTitle() {
-			return projectTitle;
-		}
-
-		public void setProjectTitle(String projectTitle) {
-			this.projectTitle = projectTitle;
-		}
-
-		public int getClaimTypeId() {
-			return claimTypeId;
-		}
-
-		public void setClaimTypeId(int claimTypeId) {
-			this.claimTypeId = claimTypeId;
-		}
-
-		public String getClaimTypeName() {
-			return claimTypeName;
-		}
-
-		public void setClaimTypeName(String claimTypeName) {
-			this.claimTypeName = claimTypeName;
-		}
-
-		public float getClaimAmount() {
-			return claimAmount;
-		}
-
-		public void setClaimAmount(float claimAmount) {
-			this.claimAmount = claimAmount;
-		}
-
-		public String getClaimRemarks() {
-			return claimRemarks;
-		}
-
-		public void setClaimRemarks(String claimRemarks) {
-			this.claimRemarks = claimRemarks;
-		}
-
-		public String getClaimDate() {
-			return claimDate;
-		}
-
-		public void setClaimDate(String claimDate) {
-			this.claimDate = claimDate;
-		}
-
-		public int getExInt1() {
-			return exInt1;
-		}
-
-		public void setExInt1(int exInt1) {
-			this.exInt1 = exInt1;
-		}
-
-		
-		
-		public String getCirculatedTo() {
-			return circulatedTo;
-		}
-
-		public void setCirculatedTo(String circulatedTo) {
-			this.circulatedTo = circulatedTo;
-		}
-
-		public int getCaIniAuthEmpId() {
-			return caIniAuthEmpId;
-		}
-
-		public void setCaIniAuthEmpId(int caIniAuthEmpId) {
-			this.caIniAuthEmpId = caIniAuthEmpId;
-		}
-
-		public int getCaFinAuthEmpId() {
-			return caFinAuthEmpId;
-		}
-
-		public void setCaFinAuthEmpId(int caFinAuthEmpId) {
-			this.caFinAuthEmpId = caFinAuthEmpId;
-		}
-
-		@Override
-		public String toString() {
-			return "GetClaimApplyAuthwise [claimId=" + claimId + ", empId=" + empId + ", empCode=" + empCode + ", empName="
-					+ empName + ", projectId=" + projectId + ", projectTitle=" + projectTitle + ", claimTypeId="
-					+ claimTypeId + ", claimTypeName=" + claimTypeName + ", claimAmount=" + claimAmount + ", claimRemarks="
-					+ claimRemarks + ", claimDate=" + claimDate + ", circulatedTo=" + circulatedTo + ", exInt1=" + exInt1
-					+ ", caIniAuthEmpId=" + caIniAuthEmpId + ", caFinAuthEmpId=" + caFinAuthEmpId + ", getClaimId()="
-					+ getClaimId() + ", getEmpId()=" + getEmpId() + ", getEmpCode()=" + getEmpCode() + ", getEmpName()="
-					+ getEmpName() + ", getProjectId()=" + getProjectId() + ", getProjectTitle()=" + getProjectTitle()
-					+ ", getClaimTypeId()=" + getClaimTypeId() + ", getClaimTypeName()=" + getClaimTypeName()
-					+ ", getClaimAmount()=" + getClaimAmount() + ", getClaimRemarks()=" + getClaimRemarks()
-					+ ", getClaimDate()=" + getClaimDate() + ", getExInt1()=" + getExInt1() + ", getCirculatedTo()="
-					+ getCirculatedTo() + ", getCaIniAuthEmpId()=" + getCaIniAuthEmpId() + ", getCaFinAuthEmpId()="
-					+ getCaFinAuthEmpId() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
-					+ super.toString() + "]";
-		}
-
-		
-		
-		
-		
-		
-
+	public int getCaHeadId() {
+		return caHeadId;
 	}
+
+	public void setCaHeadId(int caHeadId) {
+		this.caHeadId = caHeadId;
+	}
+
+	public int getEmpId() {
+		return empId;
+	}
+
+	public void setEmpId(int empId) {
+		this.empId = empId;
+	}
+
+	public String getEmpCode() {
+		return empCode;
+	}
+
+	public void setEmpCode(String empCode) {
+		this.empCode = empCode;
+	}
+
+	public String getEmpName() {
+		return empName;
+	}
+
+	public void setEmpName(String empName) {
+		this.empName = empName;
+	}
+
+	public int getProjId() {
+		return projId;
+	}
+
+	public void setProjId(int projId) {
+		this.projId = projId;
+	}
+
+	public String getClaimTitle() {
+		return claimTitle;
+	}
+
+	public void setClaimTitle(String claimTitle) {
+		this.claimTitle = claimTitle;
+	}
+
+	public String getProjectTitle() {
+		return projectTitle;
+	}
+
+	public void setProjectTitle(String projectTitle) {
+		this.projectTitle = projectTitle;
+	}
+
+ 
+	 
+	public String getCaFromDt() {
+		return caFromDt;
+	}
+
+	public void setCaFromDt(String caFromDt) {
+		this.caFromDt = caFromDt;
+	}
+
+	public String getCaToDt() {
+		return caToDt;
+	}
+
+	public void setCaToDt(String caToDt) {
+		this.caToDt = caToDt;
+	}
+
+	public int getClaimStatus() {
+		return claimStatus;
+	}
+
+	public void setClaimStatus(int claimStatus) {
+		this.claimStatus = claimStatus;
+	}
+
+	public float getClaimAmount() {
+		return claimAmount;
+	}
+
+	public void setClaimAmount(float claimAmount) {
+		this.claimAmount = claimAmount;
+	}
+
+	public String getCirculatedTo() {
+		return circulatedTo;
+	}
+
+	public void setCirculatedTo(String circulatedTo) {
+		this.circulatedTo = circulatedTo;
+	}
+
+ 
+
+	public String getExVar1() {
+		return exVar1;
+	}
+
+	public void setExVar1(String exVar1) {
+		this.exVar1 = exVar1;
+	}
+
+	public int getCaIniAuthEmpId() {
+		return caIniAuthEmpId;
+	}
+
+	public void setCaIniAuthEmpId(int caIniAuthEmpId) {
+		this.caIniAuthEmpId = caIniAuthEmpId;
+	}
+
+	public int getCaFinAuthEmpId() {
+		return caFinAuthEmpId;
+	}
+
+	public void setCaFinAuthEmpId(int caFinAuthEmpId) {
+		this.caFinAuthEmpId = caFinAuthEmpId;
+	}
+
+	public String getEmpPhoto() {
+		return empPhoto;
+	}
+
+	public void setEmpPhoto(String empPhoto) {
+		this.empPhoto = empPhoto;
+	}
+
+	@Override
+	public String toString() {
+		return "GetClaimApplyAuthwise [caHeadId=" + caHeadId + ", empId=" + empId + ", empCode=" + empCode
+				+ ", empName=" + empName + ", projId=" + projId + ", claimTitle=" + claimTitle + ", projectTitle="
+				+ projectTitle + ", caFromDt=" + caFromDt + ", caToDt=" + caToDt + ", claimStatus=" + claimStatus
+				+ ", claimAmount=" + claimAmount + ", circulatedTo=" + circulatedTo + ", exVar1=" + exVar1
+				+ ", caIniAuthEmpId=" + caIniAuthEmpId + ", caFinAuthEmpId=" + caFinAuthEmpId + ", empPhoto=" + empPhoto
+				+ ", getCaHeadId()=" + getCaHeadId() + ", getEmpId()=" + getEmpId() + ", getEmpCode()=" + getEmpCode()
+				+ ", getEmpName()=" + getEmpName() + ", getProjId()=" + getProjId() + ", getClaimTitle()="
+				+ getClaimTitle() + ", getProjectTitle()=" + getProjectTitle() + ", getCaFromDt()=" + getCaFromDt()
+				+ ", getCaToDt()=" + getCaToDt() + ", getClaimStatus()=" + getClaimStatus() + ", getClaimAmount()="
+				+ getClaimAmount() + ", getCirculatedTo()=" + getCirculatedTo() + ", getExVar1()=" + getExVar1()
+				+ ", getCaIniAuthEmpId()=" + getCaIniAuthEmpId() + ", getCaFinAuthEmpId()=" + getCaFinAuthEmpId()
+				+ ", getEmpPhoto()=" + getEmpPhoto() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
+	}
+
+	 
+	
+ 
+}

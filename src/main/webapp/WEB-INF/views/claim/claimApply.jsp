@@ -6,9 +6,9 @@
 <head>
 
 
- <c:url var="addClaimDetailProcess" value="/addClaimDetailProcess" />
- 
- <c:url var="getClaimForEdit" value="/getClaimForEdit" />
+<c:url var="addClaimDetailProcess" value="/addClaimDetailProcess" />
+
+<c:url var="getClaimForEdit" value="/getClaimForEdit" />
 
 <c:url var="getLeaveStructureForEdit" value="/getLeaveStructureForEdit" />
 <c:url var="addStrDetail" value="/addStrDetail" />
@@ -180,20 +180,20 @@
 										</div>
 
 									</div>
-									
-									<div class="form-group row">
-									<label class="col-form-label col-lg-2" for="lvsName">
-									Claim Title <span style="color: red">* </span>:
-									</label>
-									<div class="col-lg-10">
-										<input type="text" class="form-control"
-											placeholder="Enter Claim Title" id="claim_title"
-										  name="claim_title" autocomplete="off"
-											onchange="trim(this)"  >
 
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="lvsName">
+											Claim Title <span style="color: red">* </span>:
+										</label>
+										<div class="col-lg-10">
+											<input type="text" class="form-control"
+												placeholder="Enter Claim Title" id="claim_title"
+												name="claim_title" autocomplete="off" onchange="trim(this)">
+											<span class="validation-invalid-label" id="error_claim_title"
+												style="display: none;">This field is required.</span>
+										</div>
 									</div>
-								</div>
-								
+
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2">Date Range<span
 											style="color: red">* </span>:
@@ -207,7 +207,7 @@
 
 										</div>
 									</div>
-								
+
 									<hr>
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="claimTypeId">Select
@@ -233,7 +233,7 @@
 									</div>
 
 
-								
+
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="claimAmt">
 											Claim Amount <span style="color: red">* </span>:
@@ -263,9 +263,9 @@
 
 									<div class="form-group row mb-0">
 										<div class="col-lg-10 ml-lg-auto">
- 												<input type="button" value="Add" class="btn btn-primary"
-											style="align-content: center; width: 113px;" onclick="add()" />
-											 
+											<input type="button" value="Add" class="btn btn-primary"
+												style="align-content: center; width: 113px;" onclick="add()" />
+
 										</div>
 									</div>
 
@@ -276,7 +276,7 @@
 											<tr class="bg-blue">
 												<th width="10%">Sr.no</th>
 												<th>Claim Type</th>
- 												<th>Amount</th>
+												<th>Amount</th>
 												<th>Remark</th>
 												<th class="text-center" width="10%">Actions</th>
 											</tr>
@@ -293,6 +293,11 @@
 										autocomplete="off" readonly> <input type="hidden"
 										class="form-control numbersOnly" id="auth"
 										value="${authorityInformation.claimInitialAuth}" name="auth">
+									<input type="hidden" class="form-control numbersOnly"
+										id="tempAmt" name="tempAmt" value="0" autocomplete="off"
+										readonly> <span class="validation-invalid-label"
+										id="error_tbl" style="display: none;">Please Select
+										Leave Type</span>
 
 									<div class="form-group row mb-0">
 										<div class="col-lg-10 ml-lg-auto">
@@ -335,25 +340,31 @@
 
 	<script type="text/javascript">
 		function add() {
-		alert("hii");
+			alert("hii");
+
 			var claimTypeId = document.getElementById("claimTypeId").value;
 			var claimAmt = document.getElementById("claimAmt").value;
-			var claimRemark = document.getElementById("claimRemark").value;
- 			
+			var claimRemark1 = document.getElementById("claimRemark").value;
+			var claimRemark;
+			if(claimRemark1==null){
+				claimRemark="-";
+			}
+
 			var el = document.getElementById('claimTypeId');
 			var lvTypeName = el.options[el.selectedIndex].innerHTML;
-			alert("lvTypeName  "+lvTypeName);
-			
+			alert("lvTypeName  " + lvTypeName);
+
 			var daterange = document.getElementById("claimDate").value;
 			var res = daterange.split(" to ");
-
-			 
 
 			var isEdit = document.getElementById("isEdit").value;
 			var isDelete = document.getElementById("isDelete").value;
 			var index = document.getElementById("index").value;
+			var x = document.getElementById("tempAmt").value;
+			var y = parseInt(x) + parseInt(claimAmt);
+			document.getElementById("tempAmt").value = y;
 
-			alert("Inside add ajax"+claimTypeId+claimAmt);
+			alert("Inside add ajax" + claimTypeId + claimAmt);
 			$
 					.getJSON(
 							'${addClaimDetailProcess}',
@@ -364,16 +375,15 @@
 								index : index,
 								claimAmt : claimAmt,
 								claimRemark : claimRemark,
- 								lvTypeName:lvTypeName,
-								claimTypeId:claimTypeId,
+								lvTypeName : lvTypeName,
+								claimTypeId : claimTypeId,
 								ajax : 'true',
 
 							},
 
 							function(data) {
 								//alert("in hii");
-								var dataTable = $('#printtable1')
-										.DataTable();
+								var dataTable = $('#printtable1').DataTable();
 								dataTable.clear().draw();
 
 								$
@@ -382,31 +392,33 @@
 												function(i, v) {
 
 													var str = /* '<a href="#" class="action_btn" onclick="callEdit('
-															+ v.claimDetailId
-															+ ','
-															+ i
-															+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp; */
-															'<a href="#" class="action_btn" onclick="callDelete('
+																																																			+ v.claimDetailId
+																																																			+ ','
+																																																			+ i
+																																																			+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp; */
+													'<a href="#" class="action_btn" onclick="callDelete('
 															+ v.claimDetailId
 															+ ','
 															+ i
 															+ ')" style="color:black"><i class="fa fa-trash"></i></a>'
 
-													dataTable.row.add(
-															[ i + 1,
-																	v.lvTypeName,
- 																	v.claimAmount,
-																	v.remark,
-																	str ])
+													dataTable.row
+															.add(
+																	[
+																			i + 1,
+																			v.lvTypeName,
+																			v.claimAmount,
+																			v.remark,
+																			str ])
 															.draw();
 												});
 
 							});
 			document.getElementById("claimRemark").value = "";
 			document.getElementById("claimAmt").value = 0;
-			
- 			document.getElementById("claimTypeId").value = "";
- 
+
+			//document.getElementById("claimTypeId").value = "";
+
 			document.getElementById("isDelete").value = 0;
 			document.getElementById("isEdit").value = 0;
 			document.getElementById("index").value = 0;
@@ -423,15 +435,13 @@
 
 			}, function(data) {
 
-				 
 				document.getElementById("index").value = index;
-				
+
 				document.getElementById("claimRemark").value = data.remark;
 				document.getElementById("claimAmt").value = data.claimAmount;
-				
-	 			document.getElementById("claimTypeId").value =data.lvTypeName;
- 	 			
-  
+
+				document.getElementById("claimTypeId").value = data.lvTypeName;
+
 			});
 
 		}
@@ -454,8 +464,7 @@
 
 							function(data) {
 								//alert("in hii");
-								var dataTable = $('#printtable1')
-										.DataTable();
+								var dataTable = $('#printtable1').DataTable();
 								dataTable.clear().draw();
 
 								$
@@ -464,22 +473,24 @@
 												function(i, v) {
 
 													var str = /* '<a href="#" class="action_btn" onclick="callEdit('
-														+ v.claimDetailId
-														+ ','
-														+ i
-														+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp; */
-														'<a href="#" class="action_btn" onclick="callDelete('
-														+ v.claimDetailId
-														+ ','
-														+ i
-														+ ')" style="color:black"><i class="fa fa-trash"></i></a>'
+																																																		+ v.claimDetailId
+																																																		+ ','
+																																																		+ i
+																																																		+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp; */
+													'<a href="#" class="action_btn" onclick="callDelete('
+															+ v.claimDetailId
+															+ ','
+															+ i
+															+ ')" style="color:black"><i class="fa fa-trash"></i></a>'
 
-													dataTable.row.add(
-															[ i + 1,
-																	v.lvTypeName,
- 																	v.claimAmount,
-																	v.remark,
-																	str ])
+													dataTable.row
+															.add(
+																	[
+																			i + 1,
+																			v.lvTypeName,
+																			v.claimAmount,
+																			v.remark,
+																			str ])
 															.draw();
 												});
 
@@ -533,23 +544,11 @@
 				.ready(
 						function($) {
 
-							$("#submitInsertLeave1")
+							$("#submitInsertLeave")
 									.submit(
 											function(e) {
 												var isError = false;
 												var errMsg = "";
-
-												if (!$("#claimTypeId").val()) {
-
-													isError = true;
-
-													$("#error_claimTypeId")
-															.show()
-													//return false;
-												} else {
-													$("#error_claimTypeId")
-															.hide()
-												}
 
 												if (!$("#projectTypeId").val()) {
 
@@ -567,30 +566,33 @@
 
 													isError = true;
 
-													$("#error_claimDate")
-															.show()
+													$("#error_Range").show()
 
 												} else {
-													$("#error_claimDate")
-															.hide()
+													$("#error_Range").hide()
 												}
 
-												if (!$("#claimAmt").val()) {
+												if (!$("#claim_title").val()) {
 
 													isError = true;
 
-													$("#error_claimAmt").show()
+													$("#error_claim_title")
+															.show()
 
 												} else {
-													$("#error_claimAmt").hide()
+													$("#error_claim_title")
+															.hide()
 												}
 
+												var x = document
+														.getElementById("printtable1").rows.length;
+											 
+												if (x == 0) {
+													$("#error_tbl").show()
+												} else {
+													$("#error_tbl").hide()
+												}
 												if (!isError) {
-													var option = $(
-															"#claimTypeId option:selected")
-															.attr(
-																	"data-clstrname");
-													$('#clType').html(option);
 
 													var option1 = $(
 															"#projectTypeId option:selected")
@@ -602,7 +604,7 @@
 													$('#claimAmt1')
 															.html(
 																	document
-																			.getElementById("claimAmt").value);
+																			.getElementById("tempAmt").value);
 													$('#empCode1')
 															.html(
 																	document
@@ -616,10 +618,6 @@
 															.html(
 																	document
 																			.getElementById("claimDate").value);
-													$('#remark1')
-															.html(
-																	document
-																			.getElementById("claimRemark").value);
 
 													$('#modal_scrollable')
 															.modal('show');
@@ -682,12 +680,7 @@
 							id="empName1" for="empName1"> </label>
 
 					</div>
-					<div class="form-group row">
-						<label class="col-form-label col-lg-3" for="clType"> Claim
-							Type : </label> <label class="col-form-label col-lg-2" id="clType"
-							for="clType"> </label>
 
-					</div>
 					<div class="form-group row">
 						<label class="col-form-label col-lg-3" for="proName">
 							Project Name : </label> <label class="col-form-label col-lg-6"
@@ -704,16 +697,11 @@
 					</div>
 					<div class="form-group row">
 						<label class="col-form-label col-lg-3" for="claimDate1">
-							Claim Date : </label> <label class="col-form-label col-lg-3"
+							Claim Date : </label> <label class="col-form-label col-lg-7"
 							id="claimDate1" for="claimDate1"> </label>
 
 					</div>
-					<div class="form-group row">
-						<label class="col-form-label col-lg-3" for="remark1">
-							Claim Remark : </label> <label class="col-form-label col-lg-3"
-							id="remark1" for="remark1"> </label>
 
-					</div>
 				</div>
 
 				<div class="modal-footer pt-3">
