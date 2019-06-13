@@ -451,7 +451,7 @@
 
 
 										<label class="col-form-label col-lg-2" for="emgContNo1">Emergency
-											Contact No 1 : </label>
+											Contact No 1 <span style="color: red">* </span>: </label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
 												placeholder="Emergency Contact No." id="emgContNo1"
@@ -475,7 +475,7 @@
 										</div>
 
 										<label class="col-form-label col-lg-2" for="emgContNo2">Emergency
-											Contact No 2 <span style="color: red">* </span>:
+											Contact No 2 :
 										</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"

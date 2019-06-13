@@ -2090,8 +2090,17 @@ try {
 			String email = request.getParameter("email");
 			String emgContPrsn1 = request.getParameter("emgContPrsn1");
 			String emgContNo1 = request.getParameter("emgContNo1");
-			String emgContPrsn2 = request.getParameter("emgContPrsn2");
-			String emgContNo2 = request.getParameter("emgContNo2");
+			 String emgContPrsn2=null;
+			 String emgContNo2=null;
+		 try {
+			   emgContPrsn2 = request.getParameter("emgContPrsn2");
+				  emgContNo2 = request.getParameter("emgContNo2");
+		 }catch(Exception e) {
+			   emgContPrsn2=null;
+			   emgContNo2=null;
+			 
+		 }
+			
 			int ratePerHr = Integer.parseInt(request.getParameter("ratePerHr"));
 			String joiningDate = request.getParameter("joiningDate");
 			int prevsExpYr = Integer.parseInt(request.getParameter("prevsExpYr"));
@@ -2209,16 +2218,7 @@ try {
 				ret = true;
 				System.out.println("add" + ret);
 			}
-			if (FormValidation.Validaton(request.getParameter("emgContPrsn2"), "") == true) {
-
-				ret = true;
-				System.out.println("add" + ret);
-			}
-			if (FormValidation.Validaton(request.getParameter("emgContNo2"), "") == true) {
-
-				ret = true;
-				System.out.println("add" + ret);
-			}
+			 
 
 			if (FormValidation.Validaton(request.getParameter("ratePerHr"), "") == true) {
 
