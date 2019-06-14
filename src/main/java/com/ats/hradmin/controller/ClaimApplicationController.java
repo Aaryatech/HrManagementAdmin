@@ -893,7 +893,7 @@ public class ClaimApplicationController {
 			e.printStackTrace();
 		}
 
-		return "redirect:/showClaimList?empId=" + FormValidation.Encrypt(String.valueOf(ct.getEmpId()));
+		return "redirect:/showClaimList?empId=" + FormValidation.Encrypt(String.valueOf(docHead.getEmpId()));
 	}
 
 	@RequestMapping(value = "/showClaimProofAgain", method = RequestMethod.GET)

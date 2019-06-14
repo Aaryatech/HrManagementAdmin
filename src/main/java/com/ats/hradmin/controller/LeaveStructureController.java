@@ -899,7 +899,7 @@ public class LeaveStructureController {
 			e.printStackTrace();
 		}
 
-		return "redirect:/leaveStructureAllotment";
+		return "redirect:/leaveStructureAllotmentForProbationary";
 	}
 
 	/*

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +15,7 @@
 <c:url var="addStrDetail" value="/addStrDetail" />
 <jsp:include page="/WEB-INF/views/include/metacssjs.jsp"></jsp:include>
 </head>
-
+ 
 <body onload="chkAssign()">
 
 	<!-- Main navbar -->
@@ -231,8 +232,7 @@
 												field is required.</span>
 										</div>
 									</div>
-
-
+ 
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="claimAmt">
@@ -346,13 +346,16 @@
 			var claimAmt = document.getElementById("claimAmt").value;
 			var claimRemark1 = document.getElementById("claimRemark").value;
 			var claimRemark;
-			if(claimRemark1==null){
-				claimRemark="-";
+			if (claimRemark1 == null) {
+				claimRemark = "-";
+			}
+			else{
+				claimRemark=claimRemark1;
 			}
 
 			var el = document.getElementById('claimTypeId');
 			var lvTypeName = el.options[el.selectedIndex].innerHTML;
-			alert("lvTypeName  " + lvTypeName);
+			//alert("lvTypeName  " + lvTypeName);
 
 			var daterange = document.getElementById("claimDate").value;
 			var res = daterange.split(" to ");
@@ -382,7 +385,13 @@
 							},
 
 							function(data) {
-								//alert("in hii");
+								/* alert("in hii" + data.tempDocList.length);
+
+								if (data.tempDocList.length > 0) {
+									document.getElementById("submtbtn").disabled = false
+								} else {
+									document.getElementById("submtbtn").disabled = true
+								} */
 								var dataTable = $('#printtable1').DataTable();
 								dataTable.clear().draw();
 
@@ -392,10 +401,10 @@
 												function(i, v) {
 
 													var str = /* '<a href="#" class="action_btn" onclick="callEdit('
-																																																			+ v.claimDetailId
-																																																			+ ','
-																																																			+ i
-																																																			+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp; */
+																																																															+ v.claimDetailId
+																																																															+ ','
+																																																															+ i
+																																																															+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp; */
 													'<a href="#" class="action_btn" onclick="callDelete('
 															+ v.claimDetailId
 															+ ','
@@ -463,7 +472,7 @@
 							},
 
 							function(data) {
-								//alert("in hii");
+
 								var dataTable = $('#printtable1').DataTable();
 								dataTable.clear().draw();
 
@@ -473,10 +482,10 @@
 												function(i, v) {
 
 													var str = /* '<a href="#" class="action_btn" onclick="callEdit('
-																																																		+ v.claimDetailId
-																																																		+ ','
-																																																		+ i
-																																																		+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp; */
+																																																														+ v.claimDetailId
+																																																														+ ','
+																																																														+ i
+																																																														+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp; */
 													'<a href="#" class="action_btn" onclick="callDelete('
 															+ v.claimDetailId
 															+ ','
@@ -586,7 +595,7 @@
 
 												var x = document
 														.getElementById("printtable1").rows.length;
-											 
+
 												if (x == 0) {
 													$("#error_tbl").show()
 												} else {
