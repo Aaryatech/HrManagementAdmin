@@ -311,13 +311,17 @@
 									<input type="hidden" class="form-control numbersOnly"
 										id="empId" value="${empId}" name="empId"> <input
 										type="hidden" class="form-control numbersOnly" id="tempNoDays"
-										name="tempNoDays"> <input type="hidden"
+										name="tempNoDays">
+										
+										 <input type="hidden"
 										class="form-control numbersOnly" id="lvsId" value="${lvsId}"
 										name="lvsId">
-									<%-- <input type="text"	class="form-control numbersOnly" id="lvsInfoId" value="${lvsInfoId}"
-										name="lvsInfoId"> --%>
+										
+								 
 									<input type="hidden" class="form-control numbersOnly" id="auth"
-										value="${authorityInformation.leaveInitialAuth}" name="auth">
+										value="${authId}" name="auth">
+										
+										
 									<input type="hidden" id="leaveLimit" value="${setlimit.value}">
 									<input type="hidden" id="yearFinalDate"
 										value="${currYr.calYrToDate}">
@@ -421,16 +425,18 @@
 			var auth = document.getElementById("auth").value;
 			var lvsId = document.getElementById("lvsId").value;
 			//alert("auth"+auth);
-			//alert("lvsId"+lvsId);
+			///alert("lvsId"+lvsId);
 
 			if (auth == 0 || lvsId == 0) {
-				//alert("in if");
+				alert("in if");
 				//document.getElementById("submtbtn").disabled = true;
 				$("#error_assign").show();
 				document.getElementById("submtbtn").disabled = true;
 
 			} else {
 				//alert("in else");
+				
+					$("#error_assign").hide();
 				document.getElementById("submtbtn").disabled = false;
 			}
 		}

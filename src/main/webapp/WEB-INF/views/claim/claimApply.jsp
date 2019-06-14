@@ -15,7 +15,7 @@
 <c:url var="addStrDetail" value="/addStrDetail" />
 <jsp:include page="/WEB-INF/views/include/metacssjs.jsp"></jsp:include>
 </head>
- 
+
 <body onload="chkAssign()">
 
 	<!-- Main navbar -->
@@ -232,7 +232,7 @@
 												field is required.</span>
 										</div>
 									</div>
- 
+
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="claimAmt">
@@ -242,7 +242,7 @@
 											<input type="text" class="form-control numbersOnly"
 												placeholder="Amount of Claim in Rs. " id="claimAmt"
 												name="claimAmt" autocomplete="off"> <span
-												class="validation-invalid-label" id="error_claimAmt"
+												class="validation-invalid-label" id="error_claim_amt"
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
@@ -288,7 +288,10 @@
 
 
 									<!-- 		Final Submit		 -->
+
 									<input type="hidden" class="form-control numbersOnly"
+										id="dataLen" value="0" name="dataLen"> <input
+										type="hidden" class="form-control numbersOnly"
 										value="${editEmp.empId}" id="empId" name="empId"
 										autocomplete="off" readonly> <input type="hidden"
 										class="form-control numbersOnly" id="auth"
@@ -296,8 +299,9 @@
 									<input type="hidden" class="form-control numbersOnly"
 										id="tempAmt" name="tempAmt" value="0" autocomplete="off"
 										readonly> <span class="validation-invalid-label"
-										id="error_tbl" style="display: none;">Please Select
-										Leave Type</span>
+										id="error_tbl" style="display: none;">Please  Fill Claim Details Properly.
+										</span>
+
 
 									<div class="form-group row mb-0">
 										<div class="col-lg-10 ml-lg-auto">
@@ -342,15 +346,41 @@
 		function add() {
 			//alert("hii");
 
+			var valid = true;
 			var claimTypeId = document.getElementById("claimTypeId").value;
+
 			var claimAmt = document.getElementById("claimAmt").value;
+			//alert("hii"+claimTypeId+claimAmt);
+
+			if (claimTypeId == "") {
+
+				$("#error_claimTypeId").show()
+
+			} else {
+				$("#error_claimTypeId").hide()
+
+			}
+			if (claimAmt == 0) {
+
+				$("#error_claim_amt").show()
+
+			} else {
+				$("#error_claim_amt").hide()
+
+			}
+
+			if (claimTypeId == "" || claimAmt == 0) {
+				valid = false;
+
+			} else {
+				valid = true;
+			}
 			var claimRemark1 = document.getElementById("claimRemark").value;
 			var claimRemark;
 			if (claimRemark1 == null) {
 				claimRemark = "-";
-			}
-			else{
-				claimRemark=claimRemark1;
+			} else {
+				claimRemark = claimRemark1;
 			}
 
 			var el = document.getElementById('claimTypeId');
@@ -368,61 +398,62 @@
 			document.getElementById("tempAmt").value = y;
 
 			//alert("Inside add ajax" + claimTypeId + claimAmt);
-			$
-					.getJSON(
-							'${addClaimDetailProcess}',
-							{
 
-								isDelete : isDelete,
-								isEdit : isEdit,
-								index : index,
-								claimAmt : claimAmt,
-								claimRemark : claimRemark,
-								lvTypeName : lvTypeName,
-								claimTypeId : claimTypeId,
-								ajax : 'true',
+			if (valid == true) {
 
-							},
+				$
+						.getJSON(
+								'${addClaimDetailProcess}',
+								{
 
-							function(data) {
-								/* alert("in hii" + data.tempDocList.length);
+									isDelete : isDelete,
+									isEdit : isEdit,
+									index : index,
+									claimAmt : claimAmt,
+									claimRemark : claimRemark,
+									lvTypeName : lvTypeName,
+									claimTypeId : claimTypeId,
+									ajax : 'true',
 
-								if (data.tempDocList.length > 0) {
-									document.getElementById("submtbtn").disabled = false
-								} else {
-									document.getElementById("submtbtn").disabled = true
-								} */
-								var dataTable = $('#printtable1').DataTable();
-								dataTable.clear().draw();
+								},
 
-								$
-										.each(
-												data,
-												function(i, v) {
+								function(data) {
+									//alert(data.length);
+									document.getElementById("dataLen").value = data.length;
 
-													var str = /* '<a href="#" class="action_btn" onclick="callEdit('
-																																																															+ v.claimDetailId
-																																																															+ ','
-																																																															+ i
-																																																															+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp; */
-													'<a href="#" class="action_btn" onclick="callDelete('
-															+ v.claimDetailId
-															+ ','
-															+ i
-															+ ')" style="color:black"><i class="fa fa-trash"></i></a>'
+									var dataTable = $('#printtable1')
+											.DataTable();
+									dataTable.clear().draw();
 
-													dataTable.row
-															.add(
-																	[
-																			i + 1,
-																			v.lvTypeName,
-																			v.claimAmount,
-																			v.remark,
-																			str ])
-															.draw();
-												});
+									$
+											.each(
+													data,
+													function(i, v) {
 
-							});
+														var str = /* '<a href="#" class="action_btn" onclick="callEdit('
+																																																																												+ v.claimDetailId
+																																																																												+ ','
+																																																																												+ i
+																																																																												+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp; */
+														'<a href="#" class="action_btn" onclick="callDelete('
+																+ v.claimDetailId
+																+ ','
+																+ i
+																+ ')" style="color:black"><i class="fa fa-trash"></i></a>'
+
+														dataTable.row
+																.add(
+																		[
+																				i + 1,
+																				v.lvTypeName,
+																				v.claimAmount,
+																				v.remark,
+																				str ])
+																.draw();
+													});
+
+								});
+			}
 			document.getElementById("claimRemark").value = "";
 			document.getElementById("claimAmt").value = 0;
 
@@ -482,10 +513,10 @@
 												function(i, v) {
 
 													var str = /* '<a href="#" class="action_btn" onclick="callEdit('
-																																																														+ v.claimDetailId
-																																																														+ ','
-																																																														+ i
-																																																														+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp; */
+																																																																										+ v.claimDetailId
+																																																																										+ ','
+																																																																										+ i
+																																																																										+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp; */
 													'<a href="#" class="action_btn" onclick="callDelete('
 															+ v.claimDetailId
 															+ ','
@@ -593,10 +624,8 @@
 															.hide()
 												}
 
-												var x = document
-														.getElementById("printtable1").rows.length;
-
-												if (x == 0) {
+												if ($("#dataLen").val() == 0) {
+													isError = true;
 													$("#error_tbl").show()
 												} else {
 													$("#error_tbl").hide()

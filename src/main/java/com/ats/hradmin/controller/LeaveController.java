@@ -529,6 +529,8 @@ public class LeaveController {
 	@RequestMapping(value = "/leaveApply", method = RequestMethod.GET)
 	public ModelAndView showApplyLeave(HttpServletRequest request, HttpServletResponse response) {
 
+		
+		float temp_round=0;
 		ModelAndView model = new ModelAndView("leave/leaveApplication");
 		HttpSession session = request.getSession();
 		Date date = new Date();
@@ -543,15 +545,7 @@ public class LeaveController {
 					EmployeeInfo.class);
 			model.addObject("editEmp", editEmp);
 
-			/*
-			 * LeaveType[] leaveArray = Constants.getRestTemplate()
-			 * .getForObject(Constants.url + "/getLeaveTypeListIsStructure",
-			 * LeaveType[].class);
-			 * 
-			 * List<LeaveType> leaveTypeList = new ArrayList<>(Arrays.asList(leaveArray));
-			 * 
-			 * model.addObject("leaveTypeList", leaveTypeList);
-			 */
+			 
 			model.addObject("empId", empId);
 
 			map = new LinkedMultiValueMap<>();
@@ -562,20 +556,31 @@ public class LeaveController {
 					.postForObject(Constants.url + "/getLeaveHistoryList", map, LeaveHistory[].class);
 
 			leaveHistoryList = new ArrayList<LeaveHistory>(Arrays.asList(leaveHistory));
-			
+			System.err.println("leaveHistoryList**********"+leaveHistoryList.toString());
 			 
 			if (leaveHistoryList.isEmpty()) {
 				model.addObject("lvsId", 0);
 			} else {
 				model.addObject("lvsId", leaveHistoryList.get(0).getLvsId());
 			}
-
+//authinfo
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("empId", empId);
 
 			AuthorityInformation authorityInformation = Constants.getRestTemplate()
 					.postForObject(Constants.url + "/getAuthorityInfoByEmpId", map, AuthorityInformation.class);
 			model.addObject("authorityInformation", authorityInformation);
+			
+			System.err.println("authorityInformation**********"+authorityInformation.toString());
+			if (authorityInformation.equals(null)) {
+				model.addObject("authId", 0);
+			} else {
+				model.addObject("authId", 1);
+			}
+			
+			//
+			
+			
 			map = new LinkedMultiValueMap<>();
 			map.add("limitKey", "LEAVELIMIT");
 			Setting setlimit = Constants.getRestTemplate().postForObject(Constants.url + "/getSettingByKey", map,
@@ -614,7 +619,10 @@ public class LeaveController {
 						
 						float leavePerMonth =leaveHistoryList.get(i).getLvsAllotedLeaves()/12;
 						float minusLeave= leavePerMonth*(diffMonth + 1);
-						leaveHistoryList.get(i).setLvsAllotedLeaves(leaveHistoryList.get(i).getLvsAllotedLeaves()-minusLeave);
+						
+						temp_round=leaveHistoryList.get(i).getLvsAllotedLeaves()-minusLeave;
+					    float valueRounded = Math.round(temp_round );
+						leaveHistoryList.get(i).setLvsAllotedLeaves( (valueRounded));
 
 					}
 				}
