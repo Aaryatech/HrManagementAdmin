@@ -340,7 +340,7 @@
 
 	<script type="text/javascript">
 		function add() {
-			alert("hii");
+			//alert("hii");
 
 			var claimTypeId = document.getElementById("claimTypeId").value;
 			var claimAmt = document.getElementById("claimAmt").value;
@@ -364,7 +364,7 @@
 			var y = parseInt(x) + parseInt(claimAmt);
 			document.getElementById("tempAmt").value = y;
 
-			alert("Inside add ajax" + claimTypeId + claimAmt);
+			//alert("Inside add ajax" + claimTypeId + claimAmt);
 			$
 					.getJSON(
 							'${addClaimDetailProcess}',
