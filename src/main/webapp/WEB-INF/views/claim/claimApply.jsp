@@ -268,9 +268,10 @@
 
 										</div>
 									</div>
+									<br />
 
 									<table
-										class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic  datatable-button-print-columns1"
+										class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic1  datatable-button-print-columns1"
 										id="printtable1">
 										<thead>
 											<tr class="bg-blue">
@@ -284,7 +285,7 @@
 										<tbody>
 									</table>
 
-
+									<br />
 
 
 									<!-- 		Final Submit		 -->
@@ -299,8 +300,8 @@
 									<input type="hidden" class="form-control numbersOnly"
 										id="tempAmt" name="tempAmt" value="0" autocomplete="off"
 										readonly> <span class="validation-invalid-label"
-										id="error_tbl" style="display: none;">Please  Fill Claim Details Properly.
-										</span>
+										id="error_tbl" style="display: none;">Please Fill Claim
+										Details Properly. </span>
 
 
 									<div class="form-group row mb-0">
@@ -351,6 +352,11 @@
 
 			var claimAmt = document.getElementById("claimAmt").value;
 			//alert("hii"+claimTypeId+claimAmt);
+			 
+			var x = document.getElementById("tempAmt").value;
+			var y = parseInt(x) + parseInt(claimAmt);
+			document.getElementById("tempAmt").value = y;
+			//alert("final amt::"+y);
 
 			if (claimTypeId == "") {
 
@@ -393,9 +399,8 @@
 			var isEdit = document.getElementById("isEdit").value;
 			var isDelete = document.getElementById("isDelete").value;
 			var index = document.getElementById("index").value;
-			var x = document.getElementById("tempAmt").value;
-			var y = parseInt(x) + parseInt(claimAmt);
-			document.getElementById("tempAmt").value = y;
+			
+		
 
 			//alert("Inside add ajax" + claimTypeId + claimAmt);
 
@@ -431,10 +436,10 @@
 													function(i, v) {
 
 														var str = /* '<a href="#" class="action_btn" onclick="callEdit('
-																																																																												+ v.claimDetailId
-																																																																												+ ','
-																																																																												+ i
-																																																																												+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp; */
+																																																																																									+ v.claimDetailId
+																																																																																									+ ','
+																																																																																									+ i
+																																																																																									+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp; */
 														'<a href="#" class="action_btn" onclick="callDelete('
 																+ v.claimDetailId
 																+ ','
@@ -513,10 +518,10 @@
 												function(i, v) {
 
 													var str = /* '<a href="#" class="action_btn" onclick="callEdit('
-																																																																										+ v.claimDetailId
-																																																																										+ ','
-																																																																										+ i
-																																																																										+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp; */
+																																																																																						+ v.claimDetailId
+																																																																																						+ ','
+																																																																																						+ i
+																																																																																						+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp; */
 													'<a href="#" class="action_btn" onclick="callDelete('
 															+ v.claimDetailId
 															+ ','

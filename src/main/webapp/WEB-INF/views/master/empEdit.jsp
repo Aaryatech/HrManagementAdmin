@@ -504,13 +504,16 @@
 										</div>
 
 										<label class="col-form-label col-lg-2" for="mobile2">Alternate
-											Contact No <span style="color: red">* </span>:
+											Contact No:
 										</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control"
 												placeholder="Alternate Contact No." id="mobile2"
 												value="${editEmp.empMobile2}" name="mobile2"
-												autocomplete="off" onchange="trim(this)" f maxlength="10">
+												autocomplete="off" onchange="trim(this)"  maxlength="10">
+											<span
+												class="validation-invalid-label" id="error_emgContNo2_alt"
+												style="display: none;">This field is required.</span>
 										</div>
 									</div>
 
@@ -1187,6 +1190,21 @@
 													$("#error_emgContNo2")
 															.hide()
 												}
+												
+												if ($("#mobile2").val() != ""
+													&& !validateMobile($(
+															"#mobile2")
+															.val())) {
+												isError = true;
+												document
+														.getElementById("error_emgContNo2_alt").innerHTML = "Enter valid Mobile No.";
+												$("#error_emgContNo2_alt")
+														.show()
+											} else {
+												$("#error_emgContNo2_alt")
+														.hide()
+											}
+												
 
 												/* if (!$("#emgContNo2").val()
 														|| !validateMobile($(

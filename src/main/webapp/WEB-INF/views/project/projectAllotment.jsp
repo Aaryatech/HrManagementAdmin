@@ -572,7 +572,7 @@
 
 			if (selectWorkType == 1) {
 
-				if (isNaN(hours)) {
+				if (isNaN(hours) || hours > 8) {
 
 					flag = 1;
 					$("#error_hours").show();
@@ -580,7 +580,7 @@
 				}
 
 			} else {
-				hours = 9;
+				hours = 8;
 			}
 
 			/* if (selectWorkType == 2 && worktime == 1) {

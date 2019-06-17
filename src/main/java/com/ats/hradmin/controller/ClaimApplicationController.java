@@ -574,6 +574,28 @@ public class ClaimApplicationController {
 			}
 
 			model.addObject("claimList1", claimList1);
+			
+			
+			 map = new LinkedMultiValueMap<>();
+				map.add("claimId", claimId);
+				GetClaimTrailStatus[] employeeDoc = Constants.getRestTemplate().postForObject(
+						Constants.url + "/getEmpClaimInfoListByTrailEmpId", map, GetClaimTrailStatus[].class);
+
+				List<GetClaimTrailStatus> employeeList = new ArrayList<GetClaimTrailStatus>(Arrays.asList(employeeDoc));
+
+				model.addObject("employeeList", employeeList);
+				System.out.println("trail *******"+employeeList.toString());
+				
+
+				GetClaimTrailStatus trailHead=new GetClaimTrailStatus();
+				
+				trailHead=employeeList.get(0);
+				trailHead.setCaFromDt(DateConvertor.convertToDMY(trailHead.getCaFromDt()));
+				trailHead.setCaToDt(DateConvertor.convertToDMY(trailHead.getCaToDt()));
+				System.out.println("trailHead*******"+trailHead.toString());
+				
+				model.addObject("lvEmp", trailHead);
+				
 
 		} catch (Exception e) {
 			e.printStackTrace();

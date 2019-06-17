@@ -400,6 +400,9 @@
 												placeholder="Alternate Contact No." id="mobile2"
 												name="mobile2" autocomplete="off" onchange="trim(this)"
 												maxlength="10">
+												<span
+												class="validation-invalid-label" id="error_emgContNo2_alt"
+												style="display: none;">This field is required.</span>
 										</div>
 									</div>
 
@@ -1002,29 +1005,25 @@
 													$("#error_emgContNo2")
 															.hide()
 												}
-												/* if (!$("#emgContNo2").val()
-														|| !validateMobile($(
-																"#emgContNo2")
+												
+										//for alternate contact no.
+										
+										
+											if ($("#mobile2").val() != ""
+														&& !validateMobile($(
+																"#mobile2")
 																.val())) {
-
 													isError = true;
-
-													if (!$("#emgContNo2").val()) {
-														document
-																.getElementById("error_emgContNo2").innerHTML = "This field is required.";
-													} else {
-														document
-																.getElementById("error_emgContNo2").innerHTML = "Enter valid Mobile No.";
-													}
-
-													$("#error_emgContNo2")
+													document
+															.getElementById("error_emgContNo2_alt").innerHTML = "Enter valid Mobile No.";
+													$("#error_emgContNo2_alt")
 															.show()
-
 												} else {
-													$("#error_emgContNo2")
+													$("#error_emgContNo2_alt")
 															.hide()
-												} */
-
+												}
+													
+												 
 												if (!$("#email").val()
 														|| !validateEmail($(
 																"#email").val())) {

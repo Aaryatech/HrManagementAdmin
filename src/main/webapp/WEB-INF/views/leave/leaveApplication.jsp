@@ -428,7 +428,7 @@
 			///alert("lvsId"+lvsId);
 
 			if (auth == 0 || lvsId == 0) {
-				alert("in if");
+				//alert("in if");
 				//document.getElementById("submtbtn").disabled = true;
 				$("#error_assign").show();
 				document.getElementById("submtbtn").disabled = true;
@@ -920,7 +920,7 @@
 								document.getElementById("noOfDays").value = diff
 										- totalSundays;
 								document.getElementById("noOfDaysExclude").value = totalSundays;
-								alert(totalSundays);
+								//alert(totalSundays);
 
 							});
 			/* }else{

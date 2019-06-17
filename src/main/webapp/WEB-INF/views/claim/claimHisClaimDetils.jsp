@@ -111,8 +111,72 @@
 							session.removeAttribute("successMsg");
 							}
 						%>
+						<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="compName">Employee Code
+											: </label>
+										<div class="col-lg-6">
+											<input type="text" class="form-control"
+												 Value="${lvEmp.empCode}"
+												name="compName" autocomplete="off" readonly>
+											
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="compName">Employee Name
+											: </label>
+										<div class="col-lg-6">
+											<input type="text" class="form-control"
+												 Value="${lvEmp.empFname} ${lvEmp.empSname}"
+												name="compName" autocomplete="off" readonly>
+											
+										</div>
+									</div>
+									
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="compName">Claim Title
+											: </label>
+										<div class="col-lg-6">
+											<input type="text" class="form-control"
+												 Value="${lvEmp.claimTitle}"
+												name="compName" autocomplete="off" readonly>
+											
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="compName">Claim Date
+											: </label>
+										<div class="col-lg-6">
+											<input type="text" class="form-control"
+												  Value="${lvEmp.caFromDt} to ${lvEmp.caToDt} "
+												name="compName" autocomplete="off" readonly>
+											
+										</div>
+									</div>
+									
+						
+						<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="compName">Claim Amount
+											: </label>
+										<div class="col-lg-6">
+											<input type="text" class="form-control"
+												 Value="${lvEmp.claimAmount}"
+												name="compName" autocomplete="off" readonly>
+											
+										</div>
+									</div>
+									
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="compName">Project Title
+											: </label>
+										<div class="col-lg-6">
+											<input type="text" class="form-control"
+												 Value="${lvEmp.projectTitle}"
+												name="compName" autocomplete="off" readonly>
+											
+										</div>
+									</div>
 						<table
-							class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic  datatable-button-print-columns1"
+							class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic1  datatable-button-print-columns1"
 							id="printtable1">
 							<thead>
 								<tr class="bg-blue">

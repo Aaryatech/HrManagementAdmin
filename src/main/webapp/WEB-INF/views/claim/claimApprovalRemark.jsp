@@ -205,6 +205,8 @@
 
 									</tbody>
 								</table>
+								
+								<br/>
 								<h6 class="card-title">Claim Trail History</h6>
 
 								<table
