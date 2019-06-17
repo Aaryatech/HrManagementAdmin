@@ -828,6 +828,8 @@ public class LeaveStructureController {
 	public String submitStructureListForProb(HttpServletRequest request, HttpServletResponse response) {
 
 		try {
+			
+			Info info1=new Info();
 			HttpSession session = request.getSession();
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 			int lvsId = Integer.parseInt(request.getParameter("lvsId"));
@@ -881,12 +883,22 @@ public class LeaveStructureController {
 									map.add("lvTypeId", LeaveBalanceCalList.get(q).getLvTypeId());
 									map.add("empId", arrOfStr[i]);
 									map.add("noDays",probLeaveStructList.get(p).getLvsAllotedLeaves());
-									Info info1 = Constants.getRestTemplate().postForObject(
+									  info1 = Constants.getRestTemplate().postForObject(
 											Constants.url + "/updateLeaveBalCal", map, Info.class);
 
 								}
 
 							}
+						}
+						
+						if(info.isError() == false) {
+							System.err.println("curr date is *****"+curDate);
+							map = new LinkedMultiValueMap<>();
+ 							map.add("empId", arrOfStr[i]);
+							map.add("joinDate", curDate);
+							Info info2 = Constants.getRestTemplate()
+									.postForObject(Constants.url + "/updateEmployeeJoiningDate", map, Info.class);
+							
 						}
 
 					}
