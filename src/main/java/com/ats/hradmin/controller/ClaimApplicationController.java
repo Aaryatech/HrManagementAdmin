@@ -610,8 +610,7 @@ public class ClaimApplicationController {
 	@RequestMapping(value = "/addClaimDetailProcess", method = RequestMethod.GET)
 	public @ResponseBody List<TempClaimDetail> addClaimDetail(HttpServletRequest request,
 			HttpServletResponse response) {
-		System.err.println("in addClaimDetail******** ");
-
+ 
 		try {
 
 			int isDelete = Integer.parseInt(request.getParameter("isDelete"));
@@ -619,8 +618,7 @@ public class ClaimApplicationController {
 			int isEdit = Integer.parseInt(request.getParameter("isEdit"));
 			System.err.println("in addClaimDetail******** " + isEdit + isDelete);
 			if (isDelete == 1) {
-				System.out.println("IsDelete" + isDelete);
-				int key = Integer.parseInt(request.getParameter("key"));
+ 				int key = Integer.parseInt(request.getParameter("key"));
 
 				tempDocList.remove(key);
 
@@ -639,8 +637,7 @@ public class ClaimApplicationController {
 			}
 
 			else {
-				System.err.println("date from ajax");
-
+ 
 				float claimAmt = Float.parseFloat(request.getParameter("claimAmt"));
 				String claimRemark = request.getParameter("claimRemark");
 				int claimTypeId = Integer.parseInt(request.getParameter("claimTypeId"));
