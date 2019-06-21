@@ -421,7 +421,7 @@
 										</div>
 
 
-										<label class="col-form-label col-lg-2" for="gender">gender
+										<label class="col-form-label col-lg-2" for="gender">Gender
 											<span style="color: red">* </span>:
 										</label>
 										<div class="form-check form-check-inline">
@@ -589,7 +589,7 @@
 										<h6 class="card-title">Add User</h6>
 										<div class="header-elements">
 											<div class="list-icons">
-												<a class="list-icons-item" data-action="collapse"></a>
+												 
 											</div>
 										</div>
 									</div>

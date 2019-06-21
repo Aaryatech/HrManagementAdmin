@@ -529,7 +529,7 @@
 												style="display: none;">This field is required.</span>
 										</div>
 
-										<label class="col-form-label col-lg-2" for="gender">gender
+										<label class="col-form-label col-lg-2" for="gender">Gender
 											<span style="color: red">* </span>:
 										</label>
 										<div class="form-check form-check-inline">
