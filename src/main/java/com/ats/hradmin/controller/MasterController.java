@@ -1937,7 +1937,7 @@ try {
 			String emgContNo1 = request.getParameter("emgContNo1");
 			String emgContPrsn2 = request.getParameter("emgContPrsn2");
 			String emgContNo2 = request.getParameter("emgContNo2");
-			int ratePerHr = Integer.parseInt(request.getParameter("ratePerHr"));
+			 float ratePerHr = Float.parseFloat(request.getParameter("ratePerHr"));
 			String joiningDate = request.getParameter("joiningDate");
 			int prevsExpYr = Integer.parseInt(request.getParameter("prevsExpYr"));
 			int prevsExpMn = Integer.parseInt(request.getParameter("prevsExpMn"));
@@ -2101,7 +2101,7 @@ try {
 			 
 		 }
 			
-			int ratePerHr = Integer.parseInt(request.getParameter("ratePerHr"));
+		 float ratePerHr = Float.parseFloat(request.getParameter("ratePerHr"));
 			String joiningDate = request.getParameter("joiningDate");
 			int prevsExpYr = Integer.parseInt(request.getParameter("prevsExpYr"));
 			int prevsExpMn = Integer.parseInt(request.getParameter("prevsExpMn"));

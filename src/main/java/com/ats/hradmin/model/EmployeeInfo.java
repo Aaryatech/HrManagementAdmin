@@ -44,7 +44,7 @@ public class EmployeeInfo {
 	
 	private String empEmergencyNo2;
 	
-	private int empRatePerhr;
+	private float empRatePerhr;
 	
 	private String empJoiningDate;
 	
@@ -256,11 +256,11 @@ public class EmployeeInfo {
 		this.empEmergencyNo2 = empEmergencyNo2;
 	}
 
-	public int getEmpRatePerhr() {
+	public float getEmpRatePerhr() {
 		return empRatePerhr;
 	}
 
-	public void setEmpRatePerhr(int empRatePerhr) {
+	public void setEmpRatePerhr(float empRatePerhr) {
 		this.empRatePerhr = empRatePerhr;
 	}
 

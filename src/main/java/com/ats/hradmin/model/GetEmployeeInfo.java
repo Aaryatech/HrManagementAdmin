@@ -43,7 +43,7 @@ public class GetEmployeeInfo {
 	
 	private int empPrevExpYrs;
 	
-	private int empRatePerhr;
+	private float empRatePerhr;
 	
 	
 	private String exVar1 ;
@@ -202,11 +202,11 @@ public class GetEmployeeInfo {
 		this.empPrevExpYrs = empPrevExpYrs;
 	}
 
-	public int getEmpRatePerhr() {
+	public float getEmpRatePerhr() {
 		return empRatePerhr;
 	}
 
-	public void setEmpRatePerhr(int empRatePerhr) {
+	public void setEmpRatePerhr(float empRatePerhr) {
 		this.empRatePerhr = empRatePerhr;
 	}
 	
