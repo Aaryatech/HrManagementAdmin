@@ -311,20 +311,13 @@
 									<input type="hidden" class="form-control numbersOnly"
 										id="empId" value="${empId}" name="empId"> <input
 										type="hidden" class="form-control numbersOnly" id="tempNoDays"
-										name="tempNoDays">
-										
-										 <input type="hidden"
+										name="tempNoDays"> <input type="hidden"
 										class="form-control numbersOnly" id="lvsId" value="${lvsId}"
-										name="lvsId">
-										
-								 
-									<input type="hidden" class="form-control numbersOnly" id="auth"
-										value="${authId}" name="auth">
-										
-										
-									<input type="hidden" id="leaveLimit" value="${setlimit.value}">
-									<input type="hidden" id="yearFinalDate"
-										value="${currYr.calYrToDate}">
+										name="lvsId"> <input type="hidden"
+										class="form-control numbersOnly" id="auth" value="${authId}"
+										name="auth"> <input type="hidden" id="leaveLimit"
+										value="${setlimit.value}"> <input type="hidden"
+										id="yearFinalDate" value="${currYr.calYrToDate}">
 
 
 
@@ -435,8 +428,8 @@
 
 			} else {
 				//alert("in else");
-				
-					$("#error_assign").hide();
+
+				$("#error_assign").hide();
 				document.getElementById("submtbtn").disabled = false;
 			}
 		}
@@ -1018,7 +1011,7 @@
 			}
 		});
 
-		var today = new Date();
+		/* var today = new Date();
 		var last = new Date(today.getTime() - (7 * 24 * 60 * 60 * 1000));
 
 		var daterange = document.getElementById("yearFinalDate").value;
@@ -1031,6 +1024,15 @@
 			applyClass : 'bg-slate-600',
 			minDate : last,
 			maxDate : lastdate,
+			cancelClass : 'btn-light',
+			locale : {
+				format : 'DD-MM-YYYY',
+				separator : ' to '
+			}
+		}); */
+
+		$('.daterange-basic_new').daterangepicker({
+			applyClass : 'bg-slate-600',
 			cancelClass : 'btn-light',
 			locale : {
 				format : 'DD-MM-YYYY',

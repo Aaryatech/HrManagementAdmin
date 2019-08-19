@@ -243,7 +243,7 @@
 										type="button" class="btn btn-primary">
 										<i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp;
 										Cancel
-									</button></a> <input type="text" name="intialChecked"
+									</button></a> <input type="hidden" name="intialChecked"
 									id="intialChecked" 
 									value="0" />
 							</div>
