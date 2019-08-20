@@ -243,7 +243,7 @@ public class MasterEmpController {
 			  map.add("empId",empId);
 			  map.add("calYrId",calYrId);
 			   
-			  LeaveDetail[] employeeInfo = Constants.getRestTemplate().postForObject(Constants.url + "/getLeaveListByLocIdAndEmp",map,
+			  LeaveDetail[] employeeInfo = Constants.getRestTemplate().postForObject(Constants.url + "/getLeaveListByLocIdAndEmpId",map,
 					  LeaveDetail[].class);
 			   
 			  employeeInfoList = new ArrayList<LeaveDetail>(Arrays.asList(employeeInfo));

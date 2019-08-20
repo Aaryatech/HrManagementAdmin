@@ -239,7 +239,7 @@ public class LeaveApprovalController {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("empId", empId);
 
-			LeaveDetail[] employeeInfo = Constants.getRestTemplate().postForObject(Constants.url + "/getLeaveListByEmp",
+			LeaveDetail[] employeeInfo = Constants.getRestTemplate().postForObject(Constants.url + "/getLeaveListByEmpId",
 					map, LeaveDetail[].class);
 
 			employeeInfoList = new ArrayList<LeaveDetail>(Arrays.asList(employeeInfo));
