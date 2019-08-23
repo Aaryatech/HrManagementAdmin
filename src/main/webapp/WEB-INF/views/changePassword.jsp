@@ -148,7 +148,7 @@
 													style="display: none;">This field is required.</span>
 											</div>
 											<div class="col-lg-6">
-											<span class="form-text text-muted">contain minimum 6 letter,one capital letter,one small letter, one digit, one special character</span>
+											<span class="form-text text-muted">contain minimum 8 letter,one capital letter,one small letter, one digit, one special character</span>
 											</div>
 										</div>
 										
@@ -250,7 +250,7 @@
 				if (allowPass==0) {
 
 					isError = true;
-					$("#error_password").html("password should be strong or medium.");
+					$("#error_password").html("password should be strong.");
 					$("#error_password").show();
 					//return false;
 				}
@@ -294,7 +294,7 @@
 
 			if (password.length > 0) {
 
-				$.getJSON('${checkPass}', {
+				$.post('${checkPass}', {
 					empId : empId,
 					password : password,
 					ajax : 'true',
@@ -303,7 +303,7 @@
 					//alert(data.error);
 					if (data.error == false) {
 
-						document.getElementById("currPass").disabled = true;
+						document.getElementById("currPass").readOnly = true;
 						document.getElementById("abc").style.display = "block";
 						$("#error_currPass").hide();
 						$("#error_password").hide();
@@ -323,7 +323,7 @@
 
 	<script>
 		function passwordChanged() {
-			var strength = document.getElementById("strength");
+			/* var strength = document.getElementById("strength");
 			$("#error_password").hide();
 			var strongRegex = new RegExp(
 					"^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\\W).*$",
@@ -345,7 +345,34 @@
 				document.getElementById("allowPass").value=1;
 			} else if (mediumRegex.test(pwd)) {
 				document.getElementById("strength").innerHTML = "<span style='color:orange'>Medium!</span>";
+				document.getElementById("allowPass").value=0;
+			} else {
+				document.getElementById("strength").innerHTML = "<span style='color:red'>Weak!</span>";
+				document.getElementById("allowPass").value=0;
+			} */
+			
+			var strength = document.getElementById("strength");
+			$("#error_password").hide();
+			 
+			
+			var strongRegex = /^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\W).*$/;
+			var mediumRegex = /^(?=.{6,})(((?=.*[A-Z])(?=.*[a-z]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9]))).*$/;
+			var enoughRegex = /(?=.{6,}).*/;
+			
+			var pwd = document.getElementById("password").value;
+
+			if (pwd.length == 0) {
+				document.getElementById("strength").innerHTML = "Type Password";
+				document.getElementById("allowPass").value=0;
+			} else if (false == enoughRegex.test(pwd)) {
+				document.getElementById("strength").innerHTML = "More Characters";
+				document.getElementById("allowPass").value=0;
+			} else if (strongRegex.test(pwd)) {
+				document.getElementById("strength").innerHTML = "<span style='color:green'>Strong!</span>";
 				document.getElementById("allowPass").value=1;
+			} else if (mediumRegex.test(pwd)) {
+				document.getElementById("strength").innerHTML = "<span style='color:orange'>Medium!</span>";
+				document.getElementById("allowPass").value=0;
 			} else {
 				document.getElementById("strength").innerHTML = "<span style='color:red'>Weak!</span>";
 				document.getElementById("allowPass").value=0;

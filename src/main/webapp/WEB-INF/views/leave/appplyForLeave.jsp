@@ -123,8 +123,6 @@
 									<th>Email</th>
 									<th>Mobile</th>
 
-									<th>Rate Per Hour</th>
-
 									<th class="text-center" width="10%">Actions</th>
 								</tr>
 							</thead>
@@ -137,7 +135,6 @@
 
 									<td>${tempList.empEmail}</td>
 									<td>${tempList.empMobile1}</td>
-									<td>${tempList.empRatePerhr}</td>
 
 									<td class="text-center"><a
 										href="${pageContext.request.contextPath}/leaveApply?empId=${tempList.exVar1}"
@@ -150,7 +147,7 @@
 								</tr>
 								<c:set var="index" value="2"></c:set>
 								<c:forEach items="${empList}" var="lvTypeList">
- 									<tr>
+									<tr>
 										<td>${index}</td>
 										<c:set var="index" value="${index+1}"></c:set>
 										<td>${lvTypeList.empSname}&nbsp;${lvTypeList.empFname}</td>
@@ -160,9 +157,6 @@
 
 										<td>${lvTypeList.empEmail}</td>
 										<td>${lvTypeList.empMobile1}</td>
-
-										<td>${lvTypeList.empRatePerhr}</td>
-
 
 										<td class="text-center"><a
 											href="${pageContext.request.contextPath}/leaveApply?empId=${lvTypeList.exVar1}"

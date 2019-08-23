@@ -9,6 +9,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -49,7 +51,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Controller
 public class HomeController {
 
-	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
 	/**
@@ -95,7 +96,6 @@ public class HomeController {
 
 		return mav;
 	}
-	
 
 	@RequestMapping(value = "/changePass", method = RequestMethod.GET)
 	public ModelAndView changePass(HttpServletRequest request, HttpServletResponse res) {
@@ -107,7 +107,7 @@ public class HomeController {
 		return mav;
 	}
 
-	@RequestMapping(value = "/checkPass", method = RequestMethod.GET)
+	@RequestMapping(value = "/checkPass", method = RequestMethod.POST)
 	public @ResponseBody User updateLeaveLimit(HttpServletRequest request, HttpServletResponse response) {
 
 		User user1 = new User();
@@ -143,17 +143,33 @@ public class HomeController {
 			 */
 			String empId = request.getParameter("empId");
 			String password = request.getParameter("password");
+			String currPass = request.getParameter("currPass");
+			HttpSession session = request.getSession();
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
-			Boolean ret = false;
+			 
+			Pattern p = Pattern.compile("^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\\W).*$");
+			Matcher m = p.matcher(password);
+			
+			 
+			if (currPass.equals(userObj.getUserPwd()) && m.matches()) {
 
-			if (ret == false) {
-
+				System.out.println("in if password "+ password +" currPass " + currPass + " m.find() " + m.matches());
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-				map.add("empId", empId);
+				map.add("empId", userObj.getUserId());
 				map.add("password", password);
 				Info info = Constants.getRestTemplate().postForObject(Constants.url + "/updateUserPass", map,
 						Info.class);
 
+				if (info.isError() == false) {
+					session.setAttribute("successMsg", "password change successfully.");
+				} else {
+					session.setAttribute("errorMsg", "something wrong while changing password.");
+				}
+			} else {
+
+				System.out.println("in else password "+ password +" currPass " + currPass + " m.find() " + m.matches());
+				session.setAttribute("errorMsg", "something wrong while changing password.");
 			}
 
 		} catch (Exception e) {
@@ -203,13 +219,13 @@ public class HomeController {
 	}
 
 	@RequestMapping("/loginProcess")
-	public ModelAndView helloWorld(HttpServletRequest request, HttpServletResponse res) throws IOException {
-		ModelAndView mav = new ModelAndView();
+	public String helloWorld(HttpServletRequest request, HttpServletResponse res, Model model) throws IOException {
+		String mav = new String();
 		try {
 			String name = request.getParameter("username");
 			String password = request.getParameter("password");
 
-			mav = new ModelAndView("login");
+			mav = "login";
 			res.setContentType("text/html");
 			PrintWriter pw = res.getWriter();
 			HttpSession session = request.getSession();
@@ -218,7 +234,7 @@ public class HomeController {
 
 			if (name.equalsIgnoreCase("") || password.equalsIgnoreCase("") || name == null || password == null) {
 
-				mav = new ModelAndView("login");
+				mav = "login";
 			} else {
 
 				RestTemplate restTemplate = new RestTemplate();
@@ -235,7 +251,7 @@ public class HomeController {
 
 				if (userObj.isError() == false) {
 
-					mav = new ModelAndView("welcome");
+					mav = "redirect:/dashboard";
 					session.setAttribute("UserDetail", userObj);
 					CalenderYear currYr = Constants.getRestTemplate()
 							.getForObject(Constants.url + "getCalculateYearListIsCurrent", CalenderYear.class);
@@ -260,21 +276,18 @@ public class HomeController {
 
 					session.setAttribute("moduleJsonList", moduleJsonList);
 
-					loginResponseMessage = "Login Successful";
-					mav.addObject("loginResponseMessage", loginResponseMessage);
-
 					map = new LinkedMultiValueMap<>();
 					map.add("empId", userObj.getEmpId());
 
 					AuthorityInformation authorityInformation = Constants.getRestTemplate()
 							.postForObject(Constants.url + "/getAuthorityInfoByEmpId", map, AuthorityInformation.class);
-					mav.addObject("authorityInformation", authorityInformation);
+					model.addAttribute("authorityInformation", authorityInformation);
 
 					return mav;
 
 				} else {
 					session.setAttribute("errorMsg", "Login Failed");
-					mav = new ModelAndView("login");
+					mav = "login";
 					System.out.println("Invalid login credentials");
 
 				}
@@ -373,8 +386,6 @@ public class HomeController {
 
 	}
 
-
-	
 	@RequestMapping(value = "/checkUserPassword", method = RequestMethod.POST)
 	public String submitInsertKra(HttpServletRequest request, HttpServletResponse response) {
 		String c = null;
@@ -389,23 +400,22 @@ public class HomeController {
 
 			String inputValue = request.getParameter("username");
 			System.err.println("Info inputValue  " + inputValue);
-			 
+
 			map.add("inputValue", inputValue);
- 			user = Constants.getRestTemplate().postForObject(Constants.url + "checkUserName", map, GetUserData.class);
+			user = Constants.getRestTemplate().postForObject(Constants.url + "checkUserName", map, GetUserData.class);
 			System.err.println("get GetUserData" + user.toString());
 
 			if (user.isError() == true) {
-				//model = new ModelAndView("forgotPassword");
-				 c="redirect:/showForgotPass";
-				//model.addObject("msg", "Invalid User Name");
-				 session.setAttribute("errorPassMsg", "Invalid User Name");
-
+				// model = new ModelAndView("forgotPassword");
+				c = "redirect:/showForgotPass";
+				// model.addObject("msg", "Invalid User Name");
+				session.setAttribute("errorPassMsg", "Invalid User Name");
 
 			} else {
-			//	model = new ModelAndView("login");
-				 c="redirect:/";
-				 session.setAttribute("errorPassMsg", "Password has been sent to your email");
-				//model.addObject("msg", "Password has been sent to your email");
+				// model = new ModelAndView("login");
+				c = "redirect:/";
+				session.setAttribute("errorPassMsg", "Password has been sent to your email");
+				// model.addObject("msg", "Password has been sent to your email");
 				model.addObject("user", user);
 			}
 
@@ -415,8 +425,7 @@ public class HomeController {
 		}
 
 		return c;
-	 
+
 	}
-	
 
 }

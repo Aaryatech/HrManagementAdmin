@@ -211,19 +211,14 @@
 
 													</c:when>
 													<c:otherwise>
-														<tr>
-
-
+														<tr> 
 															<td><input type="checkbox" class="chk" name="empIds"
 																id="empIds${structure.empId}" value="${structure.empId}" data-empcode="${structure.empCode}" data-name="${structure.empSname} ${structure.empFname}"  data-depname="${structure.empDeptName}"  /></td>
 															<td>${index+1}</td>
 															<c:set var="index" value="${index+1}"></c:set>
 															<td >${structure.empCode}</td>
 															<td>${structure.empSname} ${structure.empFname}</td>
-															<td>${structure.empDeptName}</td>
-
-
-
+															<td>${structure.empDeptName}</td> 
 														</tr>
 													</c:otherwise>
 												</c:choose>
