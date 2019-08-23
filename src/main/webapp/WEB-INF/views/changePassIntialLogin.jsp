@@ -1,0 +1,266 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%><%@ taglib
+	uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>HR Management</title>
+<link rel="shortcut icon"
+	href="${pageContext.request.contextPath}/resources/global_assets/images/companylogo.png"
+	type="image/x-icon" />
+<!-- Global stylesheets -->
+<link
+	href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900"
+	rel="stylesheet" type="text/css">
+<link
+	href="${pageContext.request.contextPath}/resources/global_assets/css/icons/icomoon/styles.min.css"
+	rel="stylesheet" type="text/css">
+<link
+	href="${pageContext.request.contextPath}/resources/assets/css/bootstrap.min.css"
+	rel="stylesheet" type="text/css">
+<link
+	href="${pageContext.request.contextPath}/resources/assets/css/bootstrap_limitless.min.css"
+	rel="stylesheet" type="text/css">
+<link
+	href="${pageContext.request.contextPath}/resources/assets/css/layout.min.css"
+	rel="stylesheet" type="text/css">
+<link
+	href="${pageContext.request.contextPath}/resources/assets/css/components.min.css"
+	rel="stylesheet" type="text/css">
+<link
+	href="${pageContext.request.contextPath}/resources/assets/css/colors.min.css"
+	rel="stylesheet" type="text/css">
+<!-- /global stylesheets -->
+
+<!-- Core JS files -->
+<script
+	src="${pageContext.request.contextPath}/resources/global_assets/js/main/jquery.min.js"></script>
+<script
+	src="${pageContext.request.contextPath}/resources/global_assets/js/main/bootstrap.bundle.min.js"></script>
+<script
+	src="${pageContext.request.contextPath}/resources/global_assets/js/plugins/loaders/blockui.min.js"></script>
+<script
+	src="${pageContext.request.contextPath}/resources/global_assets/js/plugins/ui/ripple.min.js"></script>
+<!-- /core JS files -->
+
+<!-- Theme JS files -->
+<script
+	src="${pageContext.request.contextPath}/resources/assets/js/app.js"></script>
+<!-- /theme JS files -->
+
+</head>
+<style>
+body {
+	background-image:
+		url("${pageContext.request.contextPath}/resources/global_assets/images/bg3.jpeg");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	position: relative;
+}
+
+.no-background {
+	background-image:
+		url("${pageContext.request.contextPath}/resources/global_assets/images/bg2.jpg");
+}
+</style>
+<body>
+
+	<!-- Main navbar -->
+	<div
+		class="navbar navbar-expand-md navbar-dark bg-indigo navbar-static">
+		<div class="navbar-brand">
+			<%-- <a href="index.html" class="d-inline-block">  <img
+				src="${pageContext.request.contextPath}/resources/global_assets/images/logo_light.png"
+				alt="">
+			</a> --%>
+			<img
+				src="${pageContext.request.contextPath}/resources/global_assets/images/companylogo.png"
+				alt="" style="height: 80px; width: 150px;">
+		</div>
+
+		<div class="d-md-none">
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbar-mobile">
+				<i class="icon-tree5"></i>
+			</button>
+		</div>
+
+		<div class="collapse navbar-collapse" id="navbar-mobile">
+			<ul class="navbar-nav">
+			</ul>
+
+
+
+		</div>
+	</div>
+	<!-- /main navbar -->
+
+
+	<!-- Page content -->
+	<div class="page-content">
+
+		<!-- Main content -->
+		<div class="content-wrapper">
+
+			<!-- Content area -->
+			<div class="content d-flex justify-content-center align-items-center">
+
+				<!-- Login form -->
+				<form class="login-form"
+					action="${pageContext.request.contextPath}/submitPassword"
+					id="submitPassword" method="post">
+					<div class="card mb-0">
+						<div class="card-body">
+							<div class="text-center mb-3">
+								<i
+									class="icon-reading icon-2x text-slate-300 border-slate-300 border-3 rounded-round p-3 mb-3 mt-1"></i>
+								<h5 class="mb-0">Welcome, Change Your Password</h5>
+							</div>
+
+							<div
+								class="form-group form-group-feedback form-group-feedback-left">
+								<input type="password" id="password" name="password"
+									class="form-control" placeholder="New Password"
+									onkeyup="return passwordChanged();"> <%-- <input
+									type="hidden" id="eIdkey" name="eIdkey"
+									value="${sessionScope.eIdkey}"> --%>
+								<div class="form-control-feedback">
+									<i class="icon-lock2 text-muted"></i>
+								</div>
+								<span id="strength">Type password</span> <input type="hidden"
+									id="allowPass" name="allowPass" value="0"> <span
+									class="validation-invalid-label" id="error_password"
+									style="display: none;">This field is required.</span>
+							</div>
+							<c:if test="${sessionScope.errorPassMsg!=null}">
+								<span style="color: Blue;">${sessionScope.errorPassMsg}</span>
+								<%
+									session.removeAttribute("errorPassMsg");
+								%>
+							</c:if>
+
+							<div class="form-group">
+								<button type="submit" class="btn btn-primary btn-block">
+									Submit<i class="icon-circle-right2 ml-2"></i>
+								</button>
+							</div>
+
+
+							<div class="form-group">
+								<a href="${pageContext.request.contextPath}/logout"><button
+										type="button" class="btn btn-block">Cancel</button></a>
+							</div>
+
+
+						</div>
+					</div>
+				</form>
+				<!-- /login form -->
+
+			</div>
+			<!-- /content area -->
+
+
+			<!-- Footer -->
+			<div class="navbar navbar-expand-lg navbar-light">
+				<!-- <div class="text-center d-lg-none w-100">
+					<button type="button" class="navbar-toggler dropdown-toggle"
+						data-toggle="collapse" data-target="#navbar-footer">
+						<i class="icon-unfold mr-2"></i> Footer
+					</button>
+				</div> -->
+
+				<div class="navbar-collapse1 collapse1 text-center w-100"
+					id="navbar-footer">
+					<span class="navbar-text"> &copy; 2019 - 2022. <a href="#">Powered
+					</a> by <a href="http://aaryatechindia.in/atsuc/" target="_blank">AARYA
+							TECH SOLUTIONS</a>
+					</span>&nbsp; <img
+						src="${pageContext.request.contextPath}/resources/global_assets/images/powerdBy.png"
+						width="60" height="50" alt="">
+
+
+				</div>
+			</div>
+			<!-- /footer -->
+
+		</div>
+		<!-- /main content -->
+
+	</div>
+	<!-- /page content -->
+	<script>
+		$(document).ready(function($) {
+
+			$("#submitPassword").submit(function(e) {
+				var isError = false;
+				var errMsg = "";
+				var allowPass = document.getElementById("allowPass").value;
+				$("#error_password").hide();
+
+				if (!$("#password").val()) {
+
+					isError = true;
+
+					$("#error_password").show();
+					//return false;
+				}
+
+				if (allowPass == 0) {
+
+					isError = true;
+					$("#error_password").html("password should be strong.");
+					$("#error_password").show();
+					//return false;
+				}
+
+				//return false;
+				if (!isError) {
+
+					var x = true;
+					if (x == true) {
+
+						document.getElementById("submtbtn").disabled = true;
+						return true;
+					}
+					//end ajax send this to php page
+				}
+				return false;
+			});
+		});
+
+		function passwordChanged() {
+
+			var strength = document.getElementById("strength");
+
+			var strongRegex = /^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\W).*$/;
+			var mediumRegex = /^(?=.{6,})(((?=.*[A-Z])(?=.*[a-z]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9]))).*$/;
+			var enoughRegex = /(?=.{6,}).*/;
+
+			var pwd = document.getElementById("password").value;
+
+			if (pwd.length == 0) {
+				document.getElementById("strength").innerHTML = "Type Password";
+				document.getElementById("allowPass").value = 0;
+			} else if (false == enoughRegex.test(pwd)) {
+				document.getElementById("strength").innerHTML = "More Characters";
+				document.getElementById("allowPass").value = 0;
+			} else if (strongRegex.test(pwd)) {
+				document.getElementById("strength").innerHTML = "<span style='color:green'>Strong!</span>";
+				document.getElementById("allowPass").value = 1;
+			} else if (mediumRegex.test(pwd)) {
+				document.getElementById("strength").innerHTML = "<span style='color:orange'>Medium!</span>";
+				document.getElementById("allowPass").value = 0;
+			} else {
+				document.getElementById("strength").innerHTML = "<span style='color:red'>Weak!</span>";
+				document.getElementById("allowPass").value = 0;
+			}
+		}
+	</script>
+</body>
+</html>

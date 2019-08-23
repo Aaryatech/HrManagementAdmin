@@ -147,14 +147,12 @@ public class HomeController {
 			HttpSession session = request.getSession();
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
-			 
 			Pattern p = Pattern.compile("^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\\W).*$");
 			Matcher m = p.matcher(password);
-			
-			 
+
 			if (currPass.equals(userObj.getUserPwd()) && m.matches()) {
 
-				System.out.println("in if password "+ password +" currPass " + currPass + " m.find() " + m.matches());
+				System.out.println("in if password " + password + " currPass " + currPass + " m.find() " + m.matches());
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 				map.add("empId", userObj.getUserId());
 				map.add("password", password);
@@ -168,7 +166,8 @@ public class HomeController {
 				}
 			} else {
 
-				System.out.println("in else password "+ password +" currPass " + currPass + " m.find() " + m.matches());
+				System.out
+						.println("in else password " + password + " currPass " + currPass + " m.find() " + m.matches());
 				session.setAttribute("errorMsg", "something wrong while changing password.");
 			}
 
@@ -249,7 +248,7 @@ public class HomeController {
 				System.out.println("JSON Response Objet " + userObj.toString());
 				String loginResponseMessage = "";
 
-				if (userObj.isError() == false) {
+				if (userObj.isError() == false && userObj.getIsVisit() == 0) {
 
 					mav = "redirect:/dashboard";
 					session.setAttribute("UserDetail", userObj);
@@ -285,10 +284,15 @@ public class HomeController {
 
 					return mav;
 
+				}
+				if (userObj.isError() == false && userObj.getIsVisit() == 1) {
+
+					mav = "redirect:/changePassIntialLogin";
+					session.setAttribute("eIdkey", FormValidation.Encrypt(String.valueOf(userObj.getUserId())));
+
 				} else {
 					session.setAttribute("errorMsg", "Login Failed");
 					mav = "login";
-					System.out.println("Invalid login credentials");
 
 				}
 
@@ -425,6 +429,77 @@ public class HomeController {
 		}
 
 		return c;
+
+	}
+
+	@RequestMapping(value = "/changePassIntialLogin", method = RequestMethod.GET)
+	public String changePassIntialLogin(HttpServletRequest request, HttpServletResponse response, Model model) {
+
+		String mav = new String();
+		try {
+			HttpSession session = request.getSession();
+			String empId = (String) session.getAttribute("eIdkey");
+
+			if (!empId.equals(null) || !empId.equals(null)) {
+				mav = "changePassIntialLogin";
+			} else {
+				mav = "redirect:/";
+			}
+
+		} catch (Exception e) {
+
+			mav = "redirect:/";
+			e.printStackTrace();
+
+		}
+
+		return mav;
+
+	}
+
+	@RequestMapping(value = "/submitPassword", method = RequestMethod.POST)
+	public String submitPassword(HttpServletRequest request, HttpServletResponse response, Model model) {
+
+		String mav = new String();
+		try {
+			HttpSession session = request.getSession();
+			String empId = (String) session.getAttribute("eIdkey");
+
+			String password = request.getParameter("password");
+
+			Pattern p = Pattern.compile("^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\\W).*$");
+			Matcher m = p.matcher(password);
+
+			if (m.matches()) {
+
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+				map.add("empId", FormValidation.DecodeKey(empId));
+				map.add("password", password);
+				 
+				Info info = Constants.getRestTemplate().postForObject(Constants.url + "/updateIsVistStatus", map,
+						Info.class);
+
+				if (info.isError() == false) {
+					session.setAttribute("successMsg", "password change successfully.");
+					mav = "redirect:/logout";
+				} else {
+					session.setAttribute("errorMsg", "something wrong while changing password.");
+					mav = "redirect:/changePassIntialLogin";
+				}
+			} else {
+
+				session.setAttribute("errorMsg", "something wrong while changing password.");
+				mav = "redirect:/changePassIntialLogin";
+			}
+
+		} catch (Exception e) {
+
+			mav = "redirect:/changePassIntialLogin";
+			e.printStackTrace();
+
+		}
+
+		return mav;
 
 	}
 
