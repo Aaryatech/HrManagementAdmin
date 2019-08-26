@@ -123,7 +123,7 @@
 									<th>Email</th>
 									<th>Mobile</th>
 
-									<th>Rate Per Hour</th>
+									<!-- <th>Rate Per Hour</th> -->
 
 
 									<th class="text-center" width="10%">Actions</th>
@@ -140,7 +140,7 @@
 
 										<td>${tempList.empEmail}</td>
 										<td>${tempList.empMobile1}</td>
-										<td>${tempList.empRatePerhr}</td>
+										<%-- <td>${tempList.empRatePerhr}</td> --%>
 										
 										
 										<td class="text-center">
@@ -168,7 +168,7 @@
 
 										<td>${lvTypeList.empEmail}</td>
 										<td>${lvTypeList.empMobile1}</td>
-										<td>${lvTypeList.empRatePerhr}</td>
+										<%-- <td>${lvTypeList.empRatePerhr}</td> --%>
 										
 
 										<td class="text-center">
