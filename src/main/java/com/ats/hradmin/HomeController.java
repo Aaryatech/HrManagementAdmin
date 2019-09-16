@@ -288,7 +288,7 @@ public class HomeController {
 				if (userObj.isError() == false && userObj.getIsVisit() == 1) {
 
 					mav = "redirect:/changePassIntialLogin";
-					session.setAttribute("eIdkey", FormValidation.Encrypt(String.valueOf(userObj.getUserId())));
+					session.setAttribute("eIdkey", FormValidation.Encrypt(String.valueOf(userObj.getEmpId())));
 
 				} else {
 					session.setAttribute("errorMsg", "Login Failed");
