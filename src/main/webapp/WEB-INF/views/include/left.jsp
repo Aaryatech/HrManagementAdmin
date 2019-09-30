@@ -24,12 +24,12 @@
 			<div class="sidebar-user-material-body">
 				<div class="card-body text-center">
 					<c:choose>
-						<c:when test="${not empty sessionScope.UserDetail.empPhoto}">
+						<c:when test="${not empty sessionScope.profilePic}">
 
 							<a
 								href="${sessionScope.logoUrl}${sessionScope.profilePic}"
 								target="_blank"> <img
-								src="${sessionScope.logoUrl}${sessionScope.UserDetail.empPhoto}"
+								src="${sessionScope.logoUrl}${sessionScope.profilePic}"
 								class="img-fluid rounded-circle shadow-1 mb-3" width="80"
 								height="80" alt="">
 							</a>
