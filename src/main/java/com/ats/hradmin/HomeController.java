@@ -130,58 +130,54 @@ public class HomeController {
 	public String submitProfPic(@RequestParam("profilePic") List<MultipartFile> profilePic, HttpServletRequest request,
 			HttpServletResponse response) {
 		try {
-			
+
 			HttpSession session = request.getSession();
 			VpsImageUpload upload = new VpsImageUpload();
 			Date date = new Date();
 			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 			String empId = request.getParameter("empId");
-		Boolean ret = false;
+			Boolean ret = false;
 
-		if (ret == false) {
-			System.err.println("in  checkPass is "+profilePic);
-			if (profilePic.get(0).getOriginalFilename() != "") {
-				String imageName = new String();
-				imageName = dateTimeInGMT.format(date) + "_" + profilePic.get(0).getOriginalFilename();
+			if (ret == false) {
+				System.err.println("in  checkPass is " + profilePic);
+				if (profilePic.get(0).getOriginalFilename() != "") {
+					String imageName = new String();
+					imageName = dateTimeInGMT.format(date) + "_" + profilePic.get(0).getOriginalFilename();
 
-				try {
-					upload.saveUploadedImge(profilePic.get(0), Constants.imageSaveUrl, imageName, Constants.values,
-							0, 0, 0, 0, 0);
-					System.err.println("in  checkPass is "+imageName);			
+					try {
+						upload.saveUploadedImge(profilePic.get(0), Constants.imageSaveUrl, imageName, Constants.values,
+								0, 0, 0, 0, 0);
+						System.err.println("in  checkPass is " + imageName);
 
-					
-					System.err.println("imageName "+imageName);
-					
-					MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-					map.add("empId", empId);
-					map.add("imageName", imageName);
-					Info info = Constants.getRestTemplate().postForObject(Constants.url + "/updateEmpProfPic", map,
-							Info.class);
-					System.err.println("updateEmpProfPic ");
-					if (info.isError() == false) {
-						session.setAttribute("successMsg", "Record Updated Successfully");
-					} else {
-						session.setAttribute("errorMsg", "Failed to Update");
+						System.err.println("imageName " + imageName);
+
+						MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+						map.add("empId", empId);
+						map.add("imageName", imageName);
+						Info info = Constants.getRestTemplate().postForObject(Constants.url + "/updateEmpProfPic", map,
+								Info.class);
+						System.err.println("updateEmpProfPic ");
+						if (info.isError() == false) {
+							session.setAttribute("successMsg", "Record Updated Successfully");
+							session.setAttribute("profilePic",imageName);
+
+						} else {
+							session.setAttribute("errorMsg", "Failed to Update");
+						}
+
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
 					}
-				
-				} catch (Exception e) {
-					System.out.println(e.getMessage());
+
 				}
-				
-				
-				
-				
 			}
-		}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		
-		
-		 return "redirect:/changeProf";
-		
+
+		return "redirect:/changeProf";
+
 	}
 
 	@RequestMapping(value = "/checkPass", method = RequestMethod.POST)
@@ -334,7 +330,8 @@ public class HomeController {
 					System.out.println("currYr.getCalYrId():" + currYr.getCalYrId());
 					session.setAttribute("currYearId", currYr.getCalYrId());
 					session.setAttribute("logoUrl", Constants.getImageSaveUrl);
-
+					session.setAttribute("profilePic",userObj.getEmpPhoto());
+					
 					List<AccessRightModule> moduleJsonList = new ArrayList<AccessRightModule>();
 
 					try {

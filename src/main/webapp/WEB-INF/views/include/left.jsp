@@ -27,7 +27,7 @@
 						<c:when test="${not empty sessionScope.UserDetail.empPhoto}">
 
 							<a
-								href="${sessionScope.logoUrl}${sessionScope.UserDetail.empPhoto}"
+								href="${sessionScope.logoUrl}${sessionScope.profilePic}"
 								target="_blank"> <img
 								src="${sessionScope.logoUrl}${sessionScope.UserDetail.empPhoto}"
 								class="img-fluid rounded-circle shadow-1 mb-3" width="80"
