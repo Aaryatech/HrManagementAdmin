@@ -1155,7 +1155,7 @@ public class LeaveController {
 				document.add(name);
 				document.add(new Paragraph("\n"));
 				document.add(new Paragraph("Employee Name:" +progList.get(0).getEmpName() + "" + "    "));
-				document.add(new Paragraph("Year:" +cal_yr + "" + "    "));
+				document.add(new Paragraph("Year:" +cal_yr));
 				document.add(new Paragraph("\n"));
 
 				DateFormat DF = new SimpleDateFormat("dd-MM-yyyy");

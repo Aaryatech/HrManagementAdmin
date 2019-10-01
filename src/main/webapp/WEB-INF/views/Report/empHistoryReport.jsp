@@ -247,7 +247,7 @@
 	<script type="text/javascript">
 		function show() {
 
-			alert("Hi View Orders  ");
+			//alert("Hi View Orders  ");
 
 			var empId = document.getElementById("empId").value;
 			var calYrId = document.getElementById("calYrId").value;
@@ -288,18 +288,19 @@
 
 					$.each(data, function(i, v) {
 
+						var str=v.balLeave + v.lvsAllotedLeaves
+						- v.sactionLeave
+						- v.aplliedLeaeve ;
 						dataTable.row.add(
 								[
 										i + 1,
-										v.empName,
 										v.lvTitle,
-										v.balLeave,
-										v.lvsAllotedLeaves,
-										v.sactionLeave,
-										v.aplliedLeaeve,
-										v.balLeave + v.lvsAllotedLeaves
-												- v.sactionLeave
-												- v.aplliedLeaeve ]).draw();
+										v.balLeave.toFixed([2]),
+										v.lvsAllotedLeaves.toFixed([2]),
+										v.sactionLeave.toFixed([2]),
+										v.aplliedLeaeve.toFixed([2]),
+										str.toFixed([2])
+										]).draw();
 					});
 					$("#loader").hide();
 
