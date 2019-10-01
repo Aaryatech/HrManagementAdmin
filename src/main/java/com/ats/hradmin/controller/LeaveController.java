@@ -2,6 +2,7 @@ package com.ats.hradmin.controller;
 
 import java.text.SimpleDateFormat;
 
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -13,8 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,8 +29,12 @@ import com.ats.hradmin.claim.ClaimDetail;
 import com.ats.hradmin.common.AcessController;
 import com.ats.hradmin.common.Constants;
 import com.ats.hradmin.common.DateConvertor;
+import com.ats.hradmin.common.ExceUtil;
+import com.ats.hradmin.common.ExportToExcel;
 import com.ats.hradmin.common.FormValidation;
+import com.ats.hradmin.common.ReportCostants;
 import com.ats.hradmin.leave.model.CalenderYear;
+import com.ats.hradmin.leave.model.EmpLeaveHistoryRep;
 import com.ats.hradmin.leave.model.GetAuthorityIds;
 import com.ats.hradmin.leave.model.GetHoliday;
 import com.ats.hradmin.leave.model.GetLeaveStatus;
@@ -50,6 +57,34 @@ import com.ats.hradmin.model.LeaveType;
 import com.ats.hradmin.model.LoginResponse;
 import com.ats.hradmin.model.Setting;
 import com.ats.hradmin.model.WeeklyOff;
+import com.ats.hradmin.util.ItextPageEvent;
+
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLConnection;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Font.FontFamily;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 
 @Controller
 @Scope("session")
@@ -885,6 +920,363 @@ public class LeaveController {
 		}
 
 		return balance;
+	}
+	
+	//****************************Leave History Report**********************************
+	
+	@RequestMapping(value = "/empInfoHistoryReport", method = RequestMethod.GET)
+	public ModelAndView empInfoHistory(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("Report/empHistoryReport");
+		
+		try {
+			HttpSession session = request.getSession();
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+			
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("locationId", userObj.getLocationIds());
+			CalenderYear[] calenderYear = Constants.getRestTemplate().getForObject(Constants.url + "/getCalculateYearList",
+					CalenderYear[].class);
+			  List<CalenderYear> calYearList = new ArrayList<CalenderYear>(Arrays.asList(calenderYear));
+
+			  
+			  EmployeeInfo[] employeeInfo = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpInfoByLocId",map,
+					  EmployeeInfo[].class);
+			  
+			  List<EmployeeInfo> employeeInfoList = new ArrayList<EmployeeInfo>(Arrays.asList(employeeInfo));
+			  model.addObject("calYearList",calYearList);
+			  model.addObject("employeeInfoList",employeeInfoList);
+			  
+			 
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+	}
+	
+	
+	@RequestMapping(value = "/empInfoHistoryReportList", method = RequestMethod.GET)
+	public @ResponseBody List<EmpLeaveHistoryRep> empInfoHistoryReportList(HttpServletRequest request, HttpServletResponse response) {
+
+		  List<EmpLeaveHistoryRep> employeeInfoList=new ArrayList<EmpLeaveHistoryRep>();
+		try {
+			
+		
+			int empId=Integer.parseInt(request.getParameter("empId"));
+			int calYrId=Integer.parseInt(request.getParameter("calYrId"));
+			
+			  MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			  map.add("empId",empId);
+			  map.add("calYrId",calYrId);
+			   
+			  EmpLeaveHistoryRep[] employeeInfo = Constants.getRestTemplate().postForObject(Constants.url + "/getLeaveHistoryRep",map,
+					  EmpLeaveHistoryRep[].class);
+			   
+			  employeeInfoList = new ArrayList<EmpLeaveHistoryRep>(Arrays.asList(employeeInfo));
+			  System.out.println("employeeInfoList"+employeeInfoList.toString());
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return employeeInfoList;
+	}
+
+	
+	@RequestMapping(value = "/showEmpLeaveHistoryRep", method = RequestMethod.POST)
+	public void showEmpLeaveHistoryRep(HttpServletRequest request, HttpServletResponse response) {
+		List<EmpLeaveHistoryRep> progList=new ArrayList<EmpLeaveHistoryRep>();
+		String reportName = "Employee Leave History Report";
+		try {
+
+			HttpSession session = request.getSession();
+			int empId=Integer.parseInt(request.getParameter("empId"));
+			int calYrId=Integer.parseInt(request.getParameter("calYrId"));
+			String cal_yr=request.getParameter("cal_yr");
+			
+		 
+			  MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			  map.add("empId",empId);
+			  map.add("calYrId",calYrId);
+			   
+			  EmpLeaveHistoryRep[] employeeInfo = Constants.getRestTemplate().postForObject(Constants.url + "/getLeaveHistoryRep",map,
+					  EmpLeaveHistoryRep[].class);
+			   
+			  progList = new ArrayList<EmpLeaveHistoryRep>(Arrays.asList(employeeInfo));
+
+			Document document = new Document(PageSize.A4);
+			document.setMargins(50, 45, 50, 60);
+			document.setMarginMirroring(false);
+
+			String FILE_PATH = Constants.REPORT_SAVE;
+			File file = new File(FILE_PATH);
+
+			PdfWriter writer = null;
+
+			FileOutputStream out = new FileOutputStream(FILE_PATH);
+			try {
+				writer = PdfWriter.getInstance(document, out);
+			} catch (DocumentException e) {
+
+				e.printStackTrace();
+			}
+
+			String header = "";
+			String title = "                 ";
+
+			DateFormat DF2 = new SimpleDateFormat("dd-MM-yyyy");
+			String repDate = DF2.format(new Date());
+
+			ItextPageEvent event = new ItextPageEvent(header, title, "", "");
+
+			writer.setPageEvent(event);
+			// writer.add(new Paragraph("Curricular Aspects"));
+
+			PdfPTable table = new PdfPTable(7);
+
+			table.setHeaderRows(1);
+
+			try {
+				table.setWidthPercentage(100);
+				table.setWidths(new float[] { 4.3f, 4.3f, 4.3f, 4.3f, 4.3f, 4.3f, 4.3f});
+				Font headFontData = ReportCostants.headFontData;// new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL,
+				// BaseColor.BLACK);
+				Font tableHeaderFont = ReportCostants.tableHeaderFont; // new Font(FontFamily.HELVETICA, 12, Font.BOLD,
+																		// BaseColor.BLACK);
+				tableHeaderFont.setColor(ReportCostants.tableHeaderFontBaseColor);
+
+				PdfPCell hcell = new PdfPCell();
+				hcell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+
+				hcell = new PdfPCell(new Phrase("Sr.No.", tableHeaderFont));
+				hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell.setBackgroundColor(ReportCostants.baseColorTableHeader);
+
+				table.addCell(hcell);
+
+				hcell = new PdfPCell(new Phrase("Leave Type", tableHeaderFont));
+				hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell.setBackgroundColor(ReportCostants.baseColorTableHeader);
+
+				table.addCell(hcell);
+
+				hcell = new PdfPCell(new Phrase("Carry Forward", tableHeaderFont));
+				hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell.setBackgroundColor(ReportCostants.baseColorTableHeader);
+
+				table.addCell(hcell);
+
+				hcell = new PdfPCell(new Phrase("Earned", tableHeaderFont));
+				hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell.setBackgroundColor(ReportCostants.baseColorTableHeader);
+
+				table.addCell(hcell);
+
+				hcell = new PdfPCell(new Phrase("Approved", tableHeaderFont));
+				hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell.setBackgroundColor(ReportCostants.baseColorTableHeader);
+
+				table.addCell(hcell);
+
+				hcell = new PdfPCell(new Phrase("Applied", tableHeaderFont));
+				hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell.setBackgroundColor(ReportCostants.baseColorTableHeader);
+
+				table.addCell(hcell);
+
+				hcell = new PdfPCell(new Phrase("Balanced", tableHeaderFont));
+				hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell.setBackgroundColor(ReportCostants.baseColorTableHeader);
+
+				table.addCell(hcell);
+
+				 
+				int index = 0;
+				for (int i = 0; i < progList.size(); i++) {
+					// System.err.println("I " + i);
+					EmpLeaveHistoryRep prog = progList.get(i);
+
+					index++;
+					PdfPCell cell;
+					cell = new PdfPCell(new Phrase(String.valueOf(index), headFontData));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+
+					table.addCell(cell);
+					
+					cell = new PdfPCell(new Phrase("" + prog.getLvTitle(), headFontData));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+
+					table.addCell(cell);
+
+					cell = new PdfPCell(new Phrase("" + prog.getBalLeave(), headFontData));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+
+					table.addCell(cell);
+
+					cell = new PdfPCell(new Phrase("" + prog.getLvsAllotedLeaves(), headFontData));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+
+					table.addCell(cell);
+
+					cell = new PdfPCell(new Phrase("" + prog.getSactionLeave(), headFontData));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+
+					table.addCell(cell);
+
+					cell = new PdfPCell(new Phrase("" + prog.getAplliedLeaeve(), headFontData));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+
+					table.addCell(cell);
+
+					float x= prog.getBalLeave() + prog.getLvsAllotedLeaves()
+							- prog.getSactionLeave()-prog.getAplliedLeaeve();
+							
+					cell = new PdfPCell(new Phrase("" + x, headFontData));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+
+					table.addCell(cell);
+
+					 
+
+				}
+
+				document.open();
+				Font hf = new Font(FontFamily.TIMES_ROMAN, 12.0f, Font.UNDERLINE, BaseColor.BLACK);
+
+				Paragraph name = new Paragraph(reportName, hf);
+				name.setAlignment(Element.ALIGN_CENTER);
+				document.add(name);
+				document.add(new Paragraph("\n"));
+				document.add(new Paragraph("Employee Name:" +progList.get(0).getEmpName() + "" + "    "));
+				document.add(new Paragraph("Year:" +cal_yr + "" + "    "));
+				document.add(new Paragraph("\n"));
+
+				DateFormat DF = new SimpleDateFormat("dd-MM-yyyy");
+
+				document.add(table);
+
+				int totalPages = writer.getPageNumber();
+
+				// System.out.println("Page no " + totalPages);
+
+				document.close();
+				int p = Integer.parseInt(request.getParameter("p"));
+				// System.err.println("p " + p);
+
+				if (p == 1) {
+
+					if (file != null) {
+
+						String mimeType = URLConnection.guessContentTypeFromName(file.getName());
+
+						if (mimeType == null) {
+
+							mimeType = "application/pdf";
+
+						}
+
+						response.setContentType(mimeType);
+
+						response.addHeader("content-disposition",
+								String.format("inline; filename=\"%s\"", file.getName()));
+
+						response.setContentLength((int) file.length());
+
+						InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
+
+						try {
+							FileCopyUtils.copy(inputStream, response.getOutputStream());
+						} catch (IOException e) {
+							// System.out.println("Excep in Opening a Pdf File");
+							e.printStackTrace();
+						}
+					}
+				} else {
+
+					List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+
+					ExportToExcel expoExcel = new ExportToExcel();
+					List<String> rowData = new ArrayList<String>();
+
+					rowData.add("Sr. No");
+					rowData.add("Leave Type");
+					rowData.add("Carry Forward");
+					rowData.add("Earned");
+					rowData.add("Approved");
+					rowData.add("Applied");
+					rowData.add("Balanced");
+					expoExcel.setRowData(rowData);
+
+					
+					exportToExcelList.add(expoExcel);
+					int cnt = 1;
+					for (int i = 0; i < progList.size(); i++) {
+						expoExcel = new ExportToExcel();
+						rowData = new ArrayList<String>();
+						cnt = cnt + i;
+						
+						rowData.add("" + (i + 1));
+						
+						rowData.add("" + progList.get(i).getLvTitle());
+						rowData.add("" + progList.get(i).getBalLeave());
+						rowData.add("" + progList.get(i).getLvsAllotedLeaves());
+						rowData.add("" + progList.get(i).getSactionLeave());
+						rowData.add("" + progList.get(i).getAplliedLeaeve());
+						float a = progList.get(i).getBalLeave()+progList.get(i).getLvsAllotedLeaves()-progList.get(i).getSactionLeave()-progList.get(i).getAplliedLeaeve();
+					
+						rowData.add("" + a);
+
+						expoExcel.setRowData(rowData);
+						exportToExcelList.add(expoExcel);
+
+					}
+
+					XSSFWorkbook wb = null;
+					try {
+						System.out.println("exportToExcelList"+exportToExcelList.toString());
+
+						wb = ExceUtil.createWorkbook(exportToExcelList, "", reportName,
+								"Employee Name:" + 0 + "    Date:" + cal_yr + "", "", 'G');
+
+						ExceUtil.autoSizeColumns(wb, 3);
+						response.setContentType("application/vnd.ms-excel");
+						String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+						response.setHeader("Content-disposition",
+								"attachment; filename=" + reportName + "-" + date + ".xlsx");
+						wb.write(response.getOutputStream());
+
+					} catch (IOException ioe) {
+						throw new RuntimeException("Error writing spreadsheet to output stream");
+					} finally {
+						if (wb != null) {
+							wb.close();
+						}
+					}
+
+				}
+
+			} catch (DocumentException ex) {
+
+				// System.out.println("Pdf Generation Error: " + ex.getMessage());
+
+				ex.printStackTrace();
+
+			}
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in showProgReport " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
 	}
 
 }
