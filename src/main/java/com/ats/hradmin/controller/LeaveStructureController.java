@@ -19,19 +19,23 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.hradmin.common.AcessController;
 import com.ats.hradmin.common.Constants;
 import com.ats.hradmin.common.FormValidation;
+import com.ats.hradmin.leave.model.CalenderYear;
 import com.ats.hradmin.leave.model.GetLeaveAuthority;
 import com.ats.hradmin.leave.model.GetStructureAllotment;
 import com.ats.hradmin.leave.model.LeaveAuthority;
 import com.ats.hradmin.leave.model.LeaveBalanceCal;
+import com.ats.hradmin.leave.model.LeaveHistory;
 import com.ats.hradmin.leave.model.LeaveStructureDetails;
 import com.ats.hradmin.leave.model.LeaveStructureHeader;
 import com.ats.hradmin.leave.model.LeavesAllotment;
 import com.ats.hradmin.model.AccessRightModule;
+import com.ats.hradmin.model.EmployeeInfo;
 import com.ats.hradmin.model.GetEmployeeInfo;
 import com.ats.hradmin.model.Info;
 import com.ats.hradmin.model.LeaveType;
@@ -828,8 +832,8 @@ public class LeaveStructureController {
 	public String submitStructureListForProb(HttpServletRequest request, HttpServletResponse response) {
 
 		try {
-			
-			Info info1=new Info();
+
+			Info info1 = new Info();
 			HttpSession session = request.getSession();
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 			int lvsId = Integer.parseInt(request.getParameter("lvsId"));
@@ -876,29 +880,29 @@ public class LeaveStructureController {
 
 						for (int p = 0; p < probLeaveStructList.size(); p++) {
 							for (int q = 0; q < LeaveBalanceCalList.size(); q++) {
-								if (probLeaveStructList.get(p).getLvTypeId() == LeaveBalanceCalList.get(q).getLvTypeId()
-									) {
+								if (probLeaveStructList.get(p).getLvTypeId() == LeaveBalanceCalList.get(q)
+										.getLvTypeId()) {
 
 									map = new LinkedMultiValueMap<>();
 									map.add("lvTypeId", LeaveBalanceCalList.get(q).getLvTypeId());
 									map.add("empId", arrOfStr[i]);
-									map.add("noDays",probLeaveStructList.get(p).getLvsAllotedLeaves());
-									  info1 = Constants.getRestTemplate().postForObject(
-											Constants.url + "/updateLeaveBalCal", map, Info.class);
+									map.add("noDays", probLeaveStructList.get(p).getLvsAllotedLeaves());
+									info1 = Constants.getRestTemplate()
+											.postForObject(Constants.url + "/updateLeaveBalCal", map, Info.class);
 
 								}
 
 							}
 						}
-						
-						if(info.isError() == false) {
-							System.err.println("curr date is *****"+curDate);
+
+						if (info.isError() == false) {
+							System.err.println("curr date is *****" + curDate);
 							map = new LinkedMultiValueMap<>();
- 							map.add("empId", arrOfStr[i]);
+							map.add("empId", arrOfStr[i]);
 							map.add("joinDate", curDate);
 							Info info2 = Constants.getRestTemplate()
 									.postForObject(Constants.url + "/updateEmployeeJoiningDate", map, Info.class);
-							
+
 						}
 
 					}
@@ -912,6 +916,142 @@ public class LeaveStructureController {
 		}
 
 		return "redirect:/leaveStructureAllotmentForProbationary";
+	}
+
+	@RequestMapping(value = "/leaveYearEnd", method = RequestMethod.GET)
+	public ModelAndView leaveYearEnd(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("leave/leaveYearEnd");
+
+		try {
+
+			HttpSession session = request.getSession();
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("leaveYearEnd", "leaveYearEnd", 1, 0, 0, 0, newModuleList);
+
+			if (view.isError() == true) {
+
+				model = new ModelAndView("accessDenied");
+
+			} else {
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+				map.add("locationId", userObj.getLocationIds());
+
+				EmployeeInfo[] employeeInfo = Constants.getRestTemplate()
+						.postForObject(Constants.url + "/getemplistwhichisnotyearend", map, EmployeeInfo[].class);
+
+				List<EmployeeInfo> employeeInfoList = new ArrayList<EmployeeInfo>(Arrays.asList(employeeInfo));
+				model.addObject("employeeInfoList", employeeInfoList);
+
+				map = new LinkedMultiValueMap<>();
+				map.add("companyId", userObj.getCompanyId());
+				LeaveStructureHeader[] lvStrSummery = Constants.getRestTemplate()
+						.postForObject(Constants.url + "/getStructureList", map, LeaveStructureHeader[].class);
+				List<LeaveStructureHeader> lSummarylist = new ArrayList<>(Arrays.asList(lvStrSummery));
+				model.addObject("lStrList", lSummarylist);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+	}
+
+	List<LeaveHistory> previousleavehistorylist = new ArrayList<>();
+	int empId = 0;
+
+	@RequestMapping(value = "/getPreviousYearHistory", method = RequestMethod.GET)
+	@ResponseBody
+	public List<LeaveHistory> getPreviousYearHistory(HttpServletRequest request, HttpServletResponse response) {
+
+		// ModelAndView model = new ModelAndView("leave/leaveYearEnd");
+		previousleavehistorylist = new ArrayList<>();
+
+		try {
+			empId = Integer.parseInt(request.getParameter("empId"));
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("empId", empId);
+
+			LeaveHistory[] employeeInfo = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getPreviousleaveHistory", map, LeaveHistory[].class);
+			previousleavehistorylist = new ArrayList<>(Arrays.asList(employeeInfo));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return previousleavehistorylist;
+	}
+
+	@RequestMapping(value = "/submitYearEndAndAssignNewStructure", method = RequestMethod.POST)
+	public String submitYearEndAndAssignNewStructure(HttpServletRequest request, HttpServletResponse response) {
+
+		try {
+			HttpSession session = request.getSession();
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+
+			empId = Integer.parseInt(request.getParameter("empId"));
+			int structId = Integer.parseInt(request.getParameter("structId"));
+
+			if (previousleavehistorylist.size() > 0) {
+
+				LeavesAllotment leavesAllotment = new LeavesAllotment();
+				leavesAllotment.setCalYrId((int) session.getAttribute("currYearId"));
+				leavesAllotment.setDelStatus(1);
+				leavesAllotment.setEmpId(empId);
+				leavesAllotment.setExVar1("NA");
+				leavesAllotment.setExVar2("NA");
+				leavesAllotment.setExVar3("NA");
+				leavesAllotment.setIsActive(1);
+				leavesAllotment.setMakerUserId(userObj.getUserId());
+				leavesAllotment.setMakerEnterDatetime(dateTime);
+				leavesAllotment.setLvsId(structId);
+
+				List<LeaveBalanceCal> leavBalList = new ArrayList<>();
+
+				for (int i = 0; i < previousleavehistorylist.size(); i++) {
+					LeaveBalanceCal leaveBalanceCal = new LeaveBalanceCal();
+					leaveBalanceCal.setCalYrId(leavesAllotment.getCalYrId());
+					leaveBalanceCal.setDelStatus(1);
+					leaveBalanceCal.setEmpId(empId);
+					leaveBalanceCal.setIsActive(1);
+					leaveBalanceCal.setLvAlloted(0);
+					leaveBalanceCal.setLvbalId(0);
+					leaveBalanceCal.setLvCarryFwd(Float.parseFloat(
+							request.getParameter("carryfrwd" + previousleavehistorylist.get(i).getLvTypeId())));
+					leaveBalanceCal.setLvCarryFwdRemarks("Null");
+					leaveBalanceCal.setLvEncash(Float.parseFloat(
+							request.getParameter("inchashLv" + previousleavehistorylist.get(i).getLvTypeId())));
+					leaveBalanceCal.setOpBal(Float.parseFloat(
+							request.getParameter("carryfrwd" + previousleavehistorylist.get(i).getLvTypeId())));
+					leaveBalanceCal.setMakerUserId(1);
+					leaveBalanceCal.setMakerEnterDatetime(dateTime);
+					leaveBalanceCal.setLvEncashRemarks("Null");
+					leaveBalanceCal.setLvTypeId(previousleavehistorylist.get(i).getLvTypeId());
+					leavBalList.add(leaveBalanceCal);
+				}
+
+				LeavesAllotment res = Constants.getRestTemplate().postForObject(
+						Constants.url + "/saveNewLeaveAllotment", leavesAllotment, LeavesAllotment.class);
+				LeaveBalanceCal[] leaveBalanceCalres = Constants.getRestTemplate()
+						.postForObject(Constants.url + "/saveNewBalRecord", leavBalList, LeaveBalanceCal[].class);
+				if (res != null) {
+					session.setAttribute("successMsg", "Record Inserted Successfully");
+				} else {
+					session.setAttribute("errorMsg", "Failed to Insert Record");
+				}
+			} else {
+
+				session.setAttribute("errorMsg", "Failed to Assign");
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:/leaveYearEnd";
 	}
 
 	/*
