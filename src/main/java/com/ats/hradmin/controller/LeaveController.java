@@ -2,7 +2,6 @@ package com.ats.hradmin.controller;
 
 import java.text.SimpleDateFormat;
 
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -40,6 +39,7 @@ import com.ats.hradmin.leave.model.GetHoliday;
 import com.ats.hradmin.leave.model.GetLeaveStatus;
 import com.ats.hradmin.leave.model.Holiday;
 import com.ats.hradmin.leave.model.LeaveDetail;
+import com.ats.hradmin.leave.model.LeaveHistTemp;
 import com.ats.hradmin.leave.model.LeaveHistory;
 import com.ats.hradmin.leave.model.LeavesAllotment;
 import com.ats.hradmin.model.AccessRightModule;
@@ -564,8 +564,7 @@ public class LeaveController {
 	@RequestMapping(value = "/leaveApply", method = RequestMethod.GET)
 	public ModelAndView showApplyLeave(HttpServletRequest request, HttpServletResponse response) {
 
-		
-		float temp_round=0;
+		float temp_round = 0;
 		ModelAndView model = new ModelAndView("leave/leaveApplication");
 		HttpSession session = request.getSession();
 		Date date = new Date();
@@ -580,7 +579,6 @@ public class LeaveController {
 					EmployeeInfo.class);
 			model.addObject("editEmp", editEmp);
 
-			 
 			model.addObject("empId", empId);
 
 			map = new LinkedMultiValueMap<>();
@@ -591,8 +589,8 @@ public class LeaveController {
 					.postForObject(Constants.url + "/getLeaveHistoryList", map, LeaveHistory[].class);
 
 			leaveHistoryList = new ArrayList<LeaveHistory>(Arrays.asList(leaveHistory));
-			System.err.println("leaveHistoryList**********"+leaveHistoryList.toString());
-			 
+			System.err.println("leaveHistoryList**********" + leaveHistoryList.toString());
+
 			if (leaveHistoryList.isEmpty()) {
 				model.addObject("lvsId", 0);
 			} else {
@@ -605,17 +603,16 @@ public class LeaveController {
 			AuthorityInformation authorityInformation = Constants.getRestTemplate()
 					.postForObject(Constants.url + "/getAuthorityInfoByEmpId", map, AuthorityInformation.class);
 			model.addObject("authorityInformation", authorityInformation);
-			
-			System.err.println("authorityInformation**********"+authorityInformation.toString());
+
+			System.err.println("authorityInformation**********" + authorityInformation.toString());
 			if (authorityInformation.equals(null)) {
 				model.addObject("authId", 0);
 			} else {
 				model.addObject("authId", 1);
 			}
-			
+
 			//
-			
-			
+
 			map = new LinkedMultiValueMap<>();
 			map.add("limitKey", "LEAVELIMIT");
 			Setting setlimit = Constants.getRestTemplate().postForObject(Constants.url + "/getSettingByKey", map,
@@ -625,7 +622,6 @@ public class LeaveController {
 			CalenderYear currYr = Constants.getRestTemplate().getForObject(Constants.url + "getcurrentyear",
 					CalenderYear.class);
 
-			 
 			SimpleDateFormat yy = new SimpleDateFormat("yyyy-MM-dd");
 			Date fromDate = yy.parse(currYr.getCalYrFromDate());
 			Date toDate = yy.parse(currYr.getCalYrToDate());
@@ -635,8 +631,7 @@ public class LeaveController {
 			map.add("limitKey", "casualleave");
 			Setting casualLeaveId = Constants.getRestTemplate().postForObject(Constants.url + "/getSettingByKey", map,
 					Setting.class);
-			 
-			
+
 			if (joiningDate.compareTo(fromDate) > 0 && joiningDate.compareTo(toDate) < 0) {
 
 				Calendar startCalendar = new GregorianCalendar();
@@ -651,21 +646,21 @@ public class LeaveController {
 
 				for (int i = 0; i < leaveHistoryList.size(); i++) {
 					if (leaveHistoryList.get(i).getLvTypeId() == Integer.parseInt(casualLeaveId.getValue())) {
-						
-						float leavePerMonth =leaveHistoryList.get(i).getLvsAllotedLeaves()/12;
-						float minusLeave= leavePerMonth*(diffMonth + 1);
-						
-						temp_round=leaveHistoryList.get(i).getLvsAllotedLeaves()-minusLeave;
-					    float valueRounded = Math.round(temp_round );
-						leaveHistoryList.get(i).setLvsAllotedLeaves( (valueRounded));
+
+						float leavePerMonth = leaveHistoryList.get(i).getLvsAllotedLeaves() / 12;
+						float minusLeave = leavePerMonth * (diffMonth + 1);
+
+						temp_round = leaveHistoryList.get(i).getLvsAllotedLeaves() - minusLeave;
+						float valueRounded = Math.round(temp_round);
+						leaveHistoryList.get(i).setLvsAllotedLeaves((valueRounded));
 
 					}
 				}
 
 			}
-			model.addObject("leaveHistoryList", leaveHistoryList); 
+			model.addObject("leaveHistoryList", leaveHistoryList);
 			model.addObject("currYr", currYr);
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -921,91 +916,143 @@ public class LeaveController {
 
 		return balance;
 	}
-	
-	//****************************Leave History Report**********************************
-	
+
+	// ****************************Leave History
+	// Report**********************************
+
 	@RequestMapping(value = "/empInfoHistoryReport", method = RequestMethod.GET)
 	public ModelAndView empInfoHistory(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("Report/empHistoryReport");
-		
+
 		try {
 			HttpSession session = request.getSession();
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
-			
+
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("locationId", userObj.getLocationIds());
-			CalenderYear[] calenderYear = Constants.getRestTemplate().getForObject(Constants.url + "/getCalculateYearList",
-					CalenderYear[].class);
-			  List<CalenderYear> calYearList = new ArrayList<CalenderYear>(Arrays.asList(calenderYear));
+			CalenderYear[] calenderYear = Constants.getRestTemplate()
+					.getForObject(Constants.url + "/getCalculateYearList", CalenderYear[].class);
+			List<CalenderYear> calYearList = new ArrayList<CalenderYear>(Arrays.asList(calenderYear));
 
-			  
-			  EmployeeInfo[] employeeInfo = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpInfoByLocId",map,
-					  EmployeeInfo[].class);
-			  
-			  List<EmployeeInfo> employeeInfoList = new ArrayList<EmployeeInfo>(Arrays.asList(employeeInfo));
-			  model.addObject("calYearList",calYearList);
-			  model.addObject("employeeInfoList",employeeInfoList);
-			  
-			 
-			
+			EmployeeInfo[] employeeInfo = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getEmpInfoByLocId", map, EmployeeInfo[].class);
+
+			List<EmployeeInfo> employeeInfoList = new ArrayList<EmployeeInfo>(Arrays.asList(employeeInfo));
+			model.addObject("calYearList", calYearList);
+			model.addObject("employeeInfoList", employeeInfoList);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return model;
 	}
-	
-	
-	@RequestMapping(value = "/empInfoHistoryReportList", method = RequestMethod.GET)
-	public @ResponseBody List<EmpLeaveHistoryRep> empInfoHistoryReportList(HttpServletRequest request, HttpServletResponse response) {
 
-		  List<EmpLeaveHistoryRep> employeeInfoList=new ArrayList<EmpLeaveHistoryRep>();
+	@RequestMapping(value = "/empInfoHistoryReportList", method = RequestMethod.GET)
+	public @ResponseBody List<EmpLeaveHistoryRep> empInfoHistoryReportList(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		List<EmpLeaveHistoryRep> employeeInfoList = new ArrayList<EmpLeaveHistoryRep>();
+		HttpSession session = request.getSession();
+		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+
 		try {
-			
-		
-			int empId=Integer.parseInt(request.getParameter("empId"));
-			int calYrId=Integer.parseInt(request.getParameter("calYrId"));
-			
-			  MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			  map.add("empId",empId);
-			  map.add("calYrId",calYrId);
-			   
-			  EmpLeaveHistoryRep[] employeeInfo = Constants.getRestTemplate().postForObject(Constants.url + "/getLeaveHistoryRep",map,
-					  EmpLeaveHistoryRep[].class);
-			   
-			  employeeInfoList = new ArrayList<EmpLeaveHistoryRep>(Arrays.asList(employeeInfo));
-			  System.out.println("employeeInfoList"+employeeInfoList.toString());
-			
+
+			int empId = Integer.parseInt(request.getParameter("empId"));
+			int calYrId = Integer.parseInt(request.getParameter("calYrId"));
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("empId", empId);
+			map.add("calYrId", calYrId);
+
+			EmpLeaveHistoryRep[] employeeInfo = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getLeaveHistoryRep", map, EmpLeaveHistoryRep[].class);
+
+			employeeInfoList = new ArrayList<EmpLeaveHistoryRep>(Arrays.asList(employeeInfo));
+			System.out.println("employeeInfoList" + employeeInfoList.toString());
+
+			map = new LinkedMultiValueMap<>();
+			map.add("locationId", userObj.getLocationIds());
+			EmployeeInfo[] emp = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpInfoByLocId", map,
+					EmployeeInfo[].class);
+
+			List<EmployeeInfo> empList1 = new ArrayList<EmployeeInfo>(Arrays.asList(emp));
+
+			List<LeaveHistTemp> finalList = new ArrayList<LeaveHistTemp>();
+
+			for (int i = 0; i < empList1.size(); i++) {
+				LeaveHistTemp fin = new LeaveHistTemp();
+				fin.setEmpName(empList1.get(i).getEmpFname().concat(" ").concat(empList1.get(i).getEmpSname()));
+
+				List<EmpLeaveHistoryRep> subList = new ArrayList<EmpLeaveHistoryRep>();
+				for (int j = 0; j < employeeInfoList.size(); j++) {
+
+					if (empList1.get(i).getEmpId() == employeeInfoList.get(j).getEmpId()) {
+						subList.add(employeeInfoList.get(j));
+					}
+
+				}
+				fin.setRec(subList);
+				finalList.add(fin);
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return employeeInfoList;
 	}
 
-	
 	@RequestMapping(value = "/showEmpLeaveHistoryRep", method = RequestMethod.POST)
 	public void showEmpLeaveHistoryRep(HttpServletRequest request, HttpServletResponse response) {
-		List<EmpLeaveHistoryRep> progList=new ArrayList<EmpLeaveHistoryRep>();
+		List<EmpLeaveHistoryRep> progList = new ArrayList<EmpLeaveHistoryRep>();
 		String reportName = "Employee Leave History Report";
+		List<EmpLeaveHistoryRep> employeeInfoList = new ArrayList<EmpLeaveHistoryRep>();
+		HttpSession session = request.getSession();
+		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 		try {
 
-			HttpSession session = request.getSession();
-			int empId=Integer.parseInt(request.getParameter("empId"));
-			int calYrId=Integer.parseInt(request.getParameter("calYrId"));
-			String cal_yr=request.getParameter("cal_yr");
-			
-		 
-			  MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			  map.add("empId",empId);
-			  map.add("calYrId",calYrId);
-			   
-			  EmpLeaveHistoryRep[] employeeInfo = Constants.getRestTemplate().postForObject(Constants.url + "/getLeaveHistoryRep",map,
-					  EmpLeaveHistoryRep[].class);
-			   
-			  progList = new ArrayList<EmpLeaveHistoryRep>(Arrays.asList(employeeInfo));
+			int empId = Integer.parseInt(request.getParameter("empId"));
+			int calYrId = Integer.parseInt(request.getParameter("calYrId"));
+			String cal_yr = request.getParameter("cal_yr");
 
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("empId", empId);
+			map.add("calYrId", calYrId);
+
+			EmpLeaveHistoryRep[] employeeInfo = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getLeaveHistoryRep", map, EmpLeaveHistoryRep[].class);
+
+			employeeInfoList = new ArrayList<EmpLeaveHistoryRep>(Arrays.asList(employeeInfo));
+			System.out.println("employeeInfoList" + employeeInfoList.toString());
+
+			map = new LinkedMultiValueMap<>();
+			map.add("locationId", userObj.getLocationIds());
+			EmployeeInfo[] emp = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpInfoByLocId", map,
+					EmployeeInfo[].class);
+
+			List<EmployeeInfo> empList1 = new ArrayList<EmployeeInfo>(Arrays.asList(emp));
+
+			List<LeaveHistTemp> finalList = new ArrayList<LeaveHistTemp>();
+
+			for (int i = 0; i < empList1.size(); i++) {
+				LeaveHistTemp fin = new LeaveHistTemp();
+				fin.setEmpName(empList1.get(i).getEmpFname().concat(" ").concat(empList1.get(i).getEmpSname()));
+
+				List<EmpLeaveHistoryRep> subList = new ArrayList<EmpLeaveHistoryRep>();
+				for (int j = 0; j < employeeInfoList.size(); j++) {
+
+					if (empList1.get(i).getEmpId() == employeeInfoList.get(j).getEmpId()) {
+						subList.add(employeeInfoList.get(j));
+					}
+
+				}
+				fin.setRec(subList);
+				finalList.add(fin);
+			}
+
+			System.out.println("final ****" + finalList.toString());
 			Document document = new Document(PageSize.A4);
-			document.setMargins(50, 45, 50, 60);
+			document.setMargins(5, 5, 0, 0);
 			document.setMarginMirroring(false);
 
 			String FILE_PATH = Constants.REPORT_SAVE;
@@ -1032,13 +1079,13 @@ public class LeaveController {
 			writer.setPageEvent(event);
 			// writer.add(new Paragraph("Curricular Aspects"));
 
-			PdfPTable table = new PdfPTable(7);
+			PdfPTable table = new PdfPTable(8);
 
 			table.setHeaderRows(1);
 
 			try {
 				table.setWidthPercentage(100);
-				table.setWidths(new float[] { 4.3f, 4.3f, 4.3f, 4.3f, 4.3f, 4.3f, 4.3f});
+				table.setWidths(new float[] { 2.0f, 5.0f, 4.5f, 4.5f, 4.5f, 4.5f, 4.5f, 4.5f });
 				Font headFontData = ReportCostants.headFontData;// new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL,
 				// BaseColor.BLACK);
 				Font tableHeaderFont = ReportCostants.tableHeaderFont; // new Font(FontFamily.HELVETICA, 12, Font.BOLD,
@@ -1049,6 +1096,12 @@ public class LeaveController {
 				hcell.setBackgroundColor(BaseColor.LIGHT_GRAY);
 
 				hcell = new PdfPCell(new Phrase("Sr.No.", tableHeaderFont));
+				hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell.setBackgroundColor(ReportCostants.baseColorTableHeader);
+
+				table.addCell(hcell);
+
+				hcell = new PdfPCell(new Phrase("Employee Name", tableHeaderFont));
 				hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				hcell.setBackgroundColor(ReportCostants.baseColorTableHeader);
 
@@ -1090,60 +1143,74 @@ public class LeaveController {
 
 				table.addCell(hcell);
 
-				 
 				int index = 0;
-				for (int i = 0; i < progList.size(); i++) {
+				for (int i = 0; i < finalList.size(); i++) {
 					// System.err.println("I " + i);
-					EmpLeaveHistoryRep prog = progList.get(i);
+					LeaveHistTemp prog = finalList.get(i);
 
-					index++;
-					PdfPCell cell;
-					cell = new PdfPCell(new Phrase(String.valueOf(index), headFontData));
-					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					for (int j = 0; j < prog.getRec().size(); j++) {
+						index++;
+						PdfPCell cell;
+						cell = new PdfPCell(new Phrase(String.valueOf(index), headFontData));
+						cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+						cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 
-					table.addCell(cell);
-					
-					cell = new PdfPCell(new Phrase("" + prog.getLvTitle(), headFontData));
-					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-					cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+						table.addCell(cell);
 
-					table.addCell(cell);
+						if (j == 0) {
+							cell = new PdfPCell(new Phrase("" + prog.getEmpName(), headFontData));
+							cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+							cell.setHorizontalAlignment(Element.ALIGN_LEFT);
 
-					cell = new PdfPCell(new Phrase("" + prog.getBalLeave(), headFontData));
-					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-					cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+							table.addCell(cell);
+						} else {
+							cell = new PdfPCell(new Phrase("", headFontData));
+							cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+							cell.setHorizontalAlignment(Element.ALIGN_LEFT);
 
-					table.addCell(cell);
+							table.addCell(cell);
+						}
 
-					cell = new PdfPCell(new Phrase("" + prog.getLvsAllotedLeaves(), headFontData));
-					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-					cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+						cell = new PdfPCell(new Phrase("" + prog.getRec().get(j).getLvTitle(), headFontData));
+						cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+						cell.setHorizontalAlignment(Element.ALIGN_LEFT);
 
-					table.addCell(cell);
+						table.addCell(cell);
 
-					cell = new PdfPCell(new Phrase("" + prog.getSactionLeave(), headFontData));
-					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-					cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+						cell = new PdfPCell(new Phrase("" + prog.getRec().get(j).getBalLeave(), headFontData));
+						cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+						cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 
-					table.addCell(cell);
+						table.addCell(cell);
 
-					cell = new PdfPCell(new Phrase("" + prog.getAplliedLeaeve(), headFontData));
-					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-					cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+						cell = new PdfPCell(new Phrase("" + prog.getRec().get(j).getLvsAllotedLeaves(), headFontData));
+						cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+						cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 
-					table.addCell(cell);
+						table.addCell(cell);
 
-					float x= prog.getBalLeave() + prog.getLvsAllotedLeaves()
-							- prog.getSactionLeave()-prog.getAplliedLeaeve();
-							
-					cell = new PdfPCell(new Phrase("" + x, headFontData));
-					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-					cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+						cell = new PdfPCell(new Phrase("" + prog.getRec().get(j).getSactionLeave(), headFontData));
+						cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+						cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 
-					table.addCell(cell);
+						table.addCell(cell);
 
-					 
+						cell = new PdfPCell(new Phrase("" + prog.getRec().get(j).getAplliedLeaeve(), headFontData));
+						cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+						cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+
+						table.addCell(cell);
+
+						float x = prog.getRec().get(j).getBalLeave() + prog.getRec().get(j).getLvsAllotedLeaves()
+								- prog.getRec().get(j).getSactionLeave() - prog.getRec().get(j).getAplliedLeaeve();
+
+						cell = new PdfPCell(new Phrase("" + x, headFontData));
+						cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+						cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+
+						table.addCell(cell);
+
+					}
 
 				}
 
@@ -1154,8 +1221,8 @@ public class LeaveController {
 				name.setAlignment(Element.ALIGN_CENTER);
 				document.add(name);
 				document.add(new Paragraph("\n"));
-				document.add(new Paragraph("Employee Name:" +progList.get(0).getEmpName() + "" + "    "));
-				document.add(new Paragraph("Year:" +cal_yr));
+
+				document.add(new Paragraph("Year:" + cal_yr));
 				document.add(new Paragraph("\n"));
 
 				DateFormat DF = new SimpleDateFormat("dd-MM-yyyy");
@@ -1206,6 +1273,7 @@ public class LeaveController {
 					List<String> rowData = new ArrayList<String>();
 
 					rowData.add("Sr. No");
+					rowData.add("Employee Name");
 					rowData.add("Leave Type");
 					rowData.add("Carry Forward");
 					rowData.add("Earned");
@@ -1214,36 +1282,48 @@ public class LeaveController {
 					rowData.add("Balanced");
 					expoExcel.setRowData(rowData);
 
-					
 					exportToExcelList.add(expoExcel);
 					int cnt = 1;
-					for (int i = 0; i < progList.size(); i++) {
-						expoExcel = new ExportToExcel();
-						rowData = new ArrayList<String>();
-						cnt = cnt + i;
-						
-						rowData.add("" + (i + 1));
-						
-						rowData.add("" + progList.get(i).getLvTitle());
-						rowData.add("" + progList.get(i).getBalLeave());
-						rowData.add("" + progList.get(i).getLvsAllotedLeaves());
-						rowData.add("" + progList.get(i).getSactionLeave());
-						rowData.add("" + progList.get(i).getAplliedLeaeve());
-						float a = progList.get(i).getBalLeave()+progList.get(i).getLvsAllotedLeaves()-progList.get(i).getSactionLeave()-progList.get(i).getAplliedLeaeve();
-					
-						rowData.add("" + a);
+					for (int i = 0; i < finalList.size(); i++) {
 
-						expoExcel.setRowData(rowData);
-						exportToExcelList.add(expoExcel);
+						for (int j = 0; j < finalList.get(i).getRec().size(); j++) {
+							expoExcel = new ExportToExcel();
+							rowData = new ArrayList<String>();
+							
+
+							rowData.add("" + (cnt));
+							if (j == 0) {
+								rowData.add("" + finalList.get(i).getEmpName());
+
+							} else {
+								rowData.add("");
+							}
+
+							rowData.add("" + finalList.get(i).getRec().get(j).getLvTitle());
+							rowData.add("" + finalList.get(i).getRec().get(j).getBalLeave());
+							rowData.add("" + finalList.get(i).getRec().get(j).getLvsAllotedLeaves());
+							rowData.add("" + finalList.get(i).getRec().get(j).getSactionLeave());
+							rowData.add("" + finalList.get(i).getRec().get(j).getAplliedLeaeve());
+							float a = finalList.get(i).getRec().get(j).getBalLeave()
+									+ finalList.get(i).getRec().get(j).getLvsAllotedLeaves()
+									- finalList.get(i).getRec().get(j).getSactionLeave()
+									- finalList.get(i).getRec().get(j).getAplliedLeaeve();
+
+							rowData.add("" + a);
+
+							expoExcel.setRowData(rowData);
+							cnt=cnt+1;
+							exportToExcelList.add(expoExcel);
+						}
 
 					}
 
 					XSSFWorkbook wb = null;
 					try {
-						System.out.println("exportToExcelList"+exportToExcelList.toString());
+						System.out.println("exportToExcelList" + exportToExcelList.toString());
 
-						wb = ExceUtil.createWorkbook(exportToExcelList, "", reportName,
-								"Employee Name:" + 0 + "    Date:" + cal_yr + "", "", 'G');
+						wb = ExceUtil.createWorkbook(exportToExcelList, "", reportName, " Date:" + cal_yr + "", "",
+								'H');
 
 						ExceUtil.autoSizeColumns(wb, 3);
 						response.setContentType("application/vnd.ms-excel");

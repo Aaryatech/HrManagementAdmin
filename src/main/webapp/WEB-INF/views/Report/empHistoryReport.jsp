@@ -125,6 +125,7 @@
 										class="form-control form-control-select2 select2-hidden-accessible"
 										tabindex="-1" aria-hidden="true">
 										<option value="">Select Employee</option>
+												<option value="-1">All</option>
 										<c:forEach items="${employeeInfoList}" var="empInfo">
 											<option value="${empInfo.empId}">${empInfo.empSname}
 												${empInfo.empFname} ${empInfo.empMname}</option>
@@ -154,11 +155,25 @@
 
 
 
-								<button type="button" class="btn bg-blue ml-3 legitRipple"
+								<!-- <button type="button" class="btn bg-blue ml-3 legitRipple"
 									id="submtbtn" onclick="show()">
 									Submit <i class="icon-paperplane ml-2"></i>
 								</button>
+								
+								
+ -->
+ 
+ <button type="button" class="btn bg-blue ml-3 legitRipple"
+								id="submtbtn"
+								onclick="getProgReport(1,'showEmpLeaveHistoryRep')">
+								PDF <i class="icon-paperplane ml-2"></i>
+							</button>
 
+							<button type="button" class="btn bg-blue ml-3 legitRipple"
+								id="submtbtn"
+								onclick="getProgReport(0,'showEmpLeaveHistoryRep')">
+								Excel <i class="icon-paperplane ml-2"></i>
+							</button>
 							</div>
 							<div id='loader' style='display: none;'>
 								<img
@@ -166,7 +181,7 @@
 									width="150px" height="150px"
 									style="display: block; margin-left: auto; margin-right: auto">
 							</div>
-							<table
+							<!-- <table
 								class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic  datatable-button-print-columns1"
 								id="bootstrap-data-table">
 								<thead>
@@ -182,21 +197,11 @@
 
 									</tr>
 								</thead>
-							</table>
+							</table> -->
 							<input type="hidden" id="p" name="p" value="0"> <input
 								type="hidden" id="cal_yr" name="cal_yr" value="0">
 
-							<button type="button" class="btn bg-blue ml-3 legitRipple"
-								id="submtbtn"
-								onclick="getProgReport(1,'showEmpLeaveHistoryRep')">
-								PDF <i class="icon-paperplane ml-2"></i>
-							</button>
-
-							<button type="button" class="btn bg-blue ml-3 legitRipple"
-								id="submtbtn"
-								onclick="getProgReport(0,'showEmpLeaveHistoryRep')">
-								Excel <i class="icon-paperplane ml-2"></i>
-							</button>
+							
 
 						</form>
 					</div>
@@ -244,7 +249,7 @@
 			document.getElementById("p").value = "0";
 		}
 	</script>
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		function show() {
 
 			//alert("Hi View Orders  ");
@@ -287,7 +292,8 @@
 					dataTable.clear().draw();
 
 					$.each(data, function(i, v) {
-
+						
+					 
 						var str=v.balLeave + v.lvsAllotedLeaves
 						- v.sactionLeave
 						- v.aplliedLeaeve ;
@@ -309,7 +315,7 @@
 			}//end of if valid ==true
 
 		}
-	</script>
+	</script> -->
 	<script>
 		function trim(el) {
 			el.value = el.value.replace(/(^\s*)|(\s*$)/gi, ""). // removes leading and trailing spaces
