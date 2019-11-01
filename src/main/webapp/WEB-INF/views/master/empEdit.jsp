@@ -422,7 +422,7 @@
 											Same As Permanent Address : </label>
 										<div class="form-check form-check-inline">
 											<input type="checkbox" id="checkSameAdd"
-												${editEmp.empAddressTemp == editEmp.empAddressPerm ? 'checked' : 'checked'}
+												${editEmp.empAddressTemp == editEmp.empAddressPerm ? 'checked' : 'unchecked'}
 												name="checkSameAdd" onclick="checkAdd()">
 
 										</div>
