@@ -737,13 +737,24 @@ public class ClaimApplicationController {
 				tot_amt = tot_amt + tempDocList.get(i).getClaimAmount();
 
 			}
-			docHead.setClaimAmount((float) tot_amt);
+			 
+			
 			docHead.setDetailList(docDetailList);
+			
+			float amt = 0;
+			
+			for (int i = 0; i < docHead.getDetailList().size(); i++) {
 
+				 
+				amt = amt + docHead.getDetailList().get(i).getClaimAmount();
+
+			}
+			docHead.setClaimAmount((float) amt);
 			System.err.println("temp List " + tempDocList.toString());
 			System.err.println("head List " + docHead.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
+			docHead.setClaimAmount(0);
 		}
 		return model;
 	}
