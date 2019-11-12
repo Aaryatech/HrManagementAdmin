@@ -277,12 +277,15 @@ public class HomeController {
 
 		try {
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-			map.add("empId", userObj.getEmpId());
-
-			AuthorityInformation authorityInformation = Constants.getRestTemplate()
-					.postForObject(Constants.url + "/getAuthorityInfoByEmpId", map, AuthorityInformation.class);
-			mav.addObject("authorityInformation", authorityInformation);
+			/*
+			 * MultiValueMap<String, Object> map = new LinkedMultiValueMap<String,
+			 * Object>(); map.add("empId", userObj.getEmpId());
+			 * 
+			 * AuthorityInformation authorityInformation = Constants.getRestTemplate()
+			 * .postForObject(Constants.url + "/getAuthorityInfoByEmpId", map,
+			 * AuthorityInformation.class); mav.addObject("authorityInformation",
+			 * authorityInformation);
+			 */
 
 		} catch (Exception e) {
 			e.printStackTrace();

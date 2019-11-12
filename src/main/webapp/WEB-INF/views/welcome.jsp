@@ -27,7 +27,7 @@
 		<div class="content-wrapper">
 
 			<!-- Page header -->
-			<div class="page-header page-header-light">
+			<!-- <div class="page-header page-header-light">
 
 
 				<div
@@ -51,7 +51,7 @@
 
 
 				</div>
-			</div>
+			</div> -->
 			<!-- /page header -->
 
 
@@ -77,7 +77,7 @@
 								</div>
 							</div> --%>
 						  
-						<c:if test="${authorityInformation.leaveInitialAuth != '0'}">
+						<%-- <c:if test="${authorityInformation.leaveInitialAuth != '0'}">
 							<h6 class="card-title">Leave Authority</h6>
 
 							<div class="form-group row">
@@ -125,7 +125,7 @@
 
 								</div>
 							</div>
-						</c:if>
+						</c:if> --%>
 						<%
 							if (session.getAttribute("errorMsg") != null) {
 						%>
