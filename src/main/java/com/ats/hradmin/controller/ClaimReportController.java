@@ -38,6 +38,7 @@ import com.ats.hradmin.common.ReportCostants;
 import com.ats.hradmin.leave.model.CalenderYear;
 import com.ats.hradmin.leave.model.EmpLeaveHistoryRep;
 import com.ats.hradmin.leave.model.LeaveHistTemp;
+import com.ats.hradmin.model.ClientWiseClaimReport;
 import com.ats.hradmin.model.DocList;
 import com.ats.hradmin.model.EmployeeInfo;
 import com.ats.hradmin.model.EmployeeWithClaim;
@@ -67,7 +68,7 @@ public class ClaimReportController {
 	String date1;
 	List<EmployeeWithClaim> projectWiseList = new ArrayList<>();
 	List<GetProjectHeader> projectHeaderList = new ArrayList<GetProjectHeader>();
-	
+
 	@RequestMapping(value = "/emptypewisereport", method = RequestMethod.GET)
 	public String emptypewisereport(HttpServletRequest request, HttpServletResponse response, Model model) {
 
@@ -110,8 +111,6 @@ public class ClaimReportController {
 		}
 		return mav;
 	}
-	
-	
 
 	@RequestMapping(value = "/exelForEmployeeTypeWiseClaim", method = RequestMethod.GET)
 	public void exelForEmployeeTypeWiseClaim(HttpServletRequest request, HttpServletResponse response) {
@@ -137,9 +136,9 @@ public class ClaimReportController {
 			exportToExcelList.add(expoExcel);
 
 			int cnt = 1;
-			float total=0;
+			float total = 0;
 			char alphabet = 'C';
-			
+
 			for (int i = 0; i < list.size(); i++) {
 
 				float empTotal = 0;
@@ -155,7 +154,7 @@ public class ClaimReportController {
 
 						if (list.get(i).getList().get(j).getTypeId() == claimTypelist.get(k).getClaimTypeId()) {
 							rowData.add("" + list.get(i).getList().get(j).getAmt());
-							empTotal = empTotal + list.get(i).getList().get(j).getAmt(); 
+							empTotal = empTotal + list.get(i).getList().get(j).getAmt();
 							break;
 						}
 					}
@@ -164,7 +163,7 @@ public class ClaimReportController {
 				rowData.add("" + empTotal);
 				expoExcel.setRowData(rowData);
 				exportToExcelList.add(expoExcel);
-				total=total+empTotal;
+				total = total + empTotal;
 				cnt = cnt + 1;
 			}
 
@@ -189,10 +188,10 @@ public class ClaimReportController {
 					}
 
 				}
-				
-				rowData.add("" +typeTotal);
+
+				rowData.add("" + typeTotal);
 			}
-			rowData.add(""+total);
+			rowData.add("" + total);
 
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
@@ -225,8 +224,7 @@ public class ClaimReportController {
 		}
 
 	}
-	
-	
+
 	@RequestMapping(value = "/empProjectwisereport", method = RequestMethod.GET)
 	public String empProjectwisereport(HttpServletRequest request, HttpServletResponse response, Model model) {
 
@@ -240,15 +238,14 @@ public class ClaimReportController {
 
 			if (date1 != null) {
 
-				 
 				String[] dates = date1.split(" to ");
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 				map.add("locationId", userObj.getLocationIds());
 				map.add("fromDate", DateConvertor.convertToYMD(dates[0]));
 				map.add("toDate", DateConvertor.convertToYMD(dates[1]));
 
-				EmployeeWithClaim[] employeeWithClaim = Constants.getRestTemplate()
-						.postForObject(Constants.url + "/employeeProjectWiseClaimReport", map, EmployeeWithClaim[].class);
+				EmployeeWithClaim[] employeeWithClaim = Constants.getRestTemplate().postForObject(
+						Constants.url + "/employeeProjectWiseClaimReport", map, EmployeeWithClaim[].class);
 
 				projectWiseList = new ArrayList<>(Arrays.asList(employeeWithClaim));
 
@@ -269,8 +266,7 @@ public class ClaimReportController {
 		}
 		return mav;
 	}
-	
-	
+
 	@RequestMapping(value = "/exelForEmployeeProjectWiseClaim", method = RequestMethod.GET)
 	public void exelForEmployeeProjectWiseClaim(HttpServletRequest request, HttpServletResponse response) {
 
@@ -295,9 +291,9 @@ public class ClaimReportController {
 			exportToExcelList.add(expoExcel);
 
 			int cnt = 1;
-			float total=0;
+			float total = 0;
 			char alphabet = 'C';
-			
+
 			for (int i = 0; i < projectWiseList.size(); i++) {
 
 				float empTotal = 0;
@@ -311,9 +307,10 @@ public class ClaimReportController {
 
 					for (int k = 0; k < projectHeaderList.size(); k++) {
 
-						if (projectWiseList.get(i).getList().get(j).getTypeId() == projectHeaderList.get(k).getProjectId()) {
+						if (projectWiseList.get(i).getList().get(j).getTypeId() == projectHeaderList.get(k)
+								.getProjectId()) {
 							rowData.add("" + projectWiseList.get(i).getList().get(j).getAmt());
-							empTotal = empTotal + projectWiseList.get(i).getList().get(j).getAmt(); 
+							empTotal = empTotal + projectWiseList.get(i).getList().get(j).getAmt();
 							break;
 						}
 					}
@@ -322,7 +319,7 @@ public class ClaimReportController {
 				rowData.add("" + empTotal);
 				expoExcel.setRowData(rowData);
 				exportToExcelList.add(expoExcel);
-				total=total+empTotal;
+				total = total + empTotal;
 				cnt = cnt + 1;
 			}
 
@@ -340,17 +337,18 @@ public class ClaimReportController {
 				for (int j = 0; j < projectWiseList.size(); j++) {
 					for (int k = 0; k < projectWiseList.get(j).getList().size(); k++) {
 
-						if (projectWiseList.get(j).getList().get(k).getTypeId() == projectHeaderList.get(i).getProjectId()) {
+						if (projectWiseList.get(j).getList().get(k).getTypeId() == projectHeaderList.get(i)
+								.getProjectId()) {
 							typeTotal = typeTotal + projectWiseList.get(j).getList().get(k).getAmt();
 							break;
 						}
 					}
 
 				}
-				
-				rowData.add("" +typeTotal);
+
+				rowData.add("" + typeTotal);
 			}
-			rowData.add(""+total);
+			rowData.add("" + total);
 
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
@@ -360,6 +358,114 @@ public class ClaimReportController {
 				System.out.println("exportToExcelList" + exportToExcelList.toString());
 
 				wb = ExceUtil.createWorkbook(exportToExcelList, "", reportName, " Date:" + date1 + "", "", alphabet);
+
+				ExceUtil.autoSizeColumns(wb, 3);
+				response.setContentType("application/vnd.ms-excel");
+				String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+				response.setHeader("Content-disposition", "attachment; filename=" + reportName + "-" + date + ".xlsx");
+				wb.write(response.getOutputStream());
+
+			} catch (IOException ioe) {
+				throw new RuntimeException("Error writing spreadsheet to output stream");
+			} finally {
+				if (wb != null) {
+					wb.close();
+				}
+			}
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in showProgReport " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+	}
+
+	String date3;
+	List<ClientWiseClaimReport> clientwisereportlist = new ArrayList<>();
+
+	@RequestMapping(value = "/clientWiseClaimReport", method = RequestMethod.GET)
+	public String clientWiseClaimReport(HttpServletRequest request, HttpServletResponse response, Model model) {
+
+		String mav = "claimreport/clientWiseClaimReport";
+
+		try {
+
+			date3 = request.getParameter("date");
+
+			if (date3 != null) {
+
+				String[] dates = date3.split(" to ");
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+				map.add("fromDate", DateConvertor.convertToYMD(dates[0]));
+				map.add("toDate", DateConvertor.convertToYMD(dates[1]));
+				ClientWiseClaimReport[] employeeWithClaim = Constants.getRestTemplate()
+						.postForObject(Constants.url + "/clientWiseClaimReport", map, ClientWiseClaimReport[].class);
+
+				clientwisereportlist = new ArrayList<>(Arrays.asList(employeeWithClaim));
+
+				model.addAttribute("date", date3);
+				model.addAttribute("clientwisereportlist", clientwisereportlist);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mav;
+	}
+
+	@RequestMapping(value = "/exelForClientWiseClaim", method = RequestMethod.GET)
+	public void exelForClientWiseClaim(HttpServletRequest request, HttpServletResponse response) {
+
+		String reportName = "Client Wise Claim Report";
+
+		try {
+
+			List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+
+			ExportToExcel expoExcel = new ExportToExcel();
+			List<String> rowData = new ArrayList<String>();
+
+			rowData.add("Sr. No");
+			rowData.add("Client Name");
+			rowData.add("Total");
+
+			expoExcel.setRowData(rowData);
+			exportToExcelList.add(expoExcel);
+
+			int cnt = 1;
+			float empTotal = 0;
+			
+			for (int i = 0; i < clientwisereportlist.size(); i++) {
+ 
+				expoExcel = new ExportToExcel();
+				rowData = new ArrayList<String>();
+				rowData.add("" + cnt);
+				rowData.add("" + clientwisereportlist.get(i).getCustName());
+				rowData.add("" + clientwisereportlist.get(i).getClaimAmount());
+				expoExcel.setRowData(rowData);
+				exportToExcelList.add(expoExcel);
+
+				empTotal = empTotal + clientwisereportlist.get(i).getClaimAmount();
+				cnt = cnt + 1;
+			}
+
+			expoExcel = new ExportToExcel();
+			rowData = new ArrayList<String>();
+
+			rowData.add("-");
+			rowData.add("Total");  
+			rowData.add("" + empTotal);
+
+			expoExcel.setRowData(rowData);
+			exportToExcelList.add(expoExcel);
+
+			XSSFWorkbook wb = null;
+			try {
+				System.out.println("exportToExcelList" + exportToExcelList.toString());
+
+				wb = ExceUtil.createWorkbook(exportToExcelList, "", reportName, " Date:" + date3 + "", "", 'C');
 
 				ExceUtil.autoSizeColumns(wb, 3);
 				response.setContentType("application/vnd.ms-excel");
