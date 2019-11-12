@@ -30,6 +30,7 @@ import com.ats.hradmin.claim.ClaimType;
 import com.ats.hradmin.claim.GetClaimApplyAuthwise;
 import com.ats.hradmin.claim.GetClaimHead;
 import com.ats.hradmin.claim.GetClaimTrailStatus;
+import com.ats.hradmin.claim.GetEmployeeClaimStrudt;
 import com.ats.hradmin.claim.TempClaimDetail;
 import com.ats.hradmin.common.Constants;
 import com.ats.hradmin.common.DateConvertor;
@@ -147,18 +148,23 @@ public class ClaimApplicationController {
 		try {
 			HttpSession session = request.getSession();
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			map.add("companyId", userObj.getCompanyId());
-
-			ClaimType[] employeeDoc = Constants.getRestTemplate()
-					.postForObject(Constants.url + "/getClaimListByCompanyId", map, ClaimType[].class);
-
-			List<ClaimType> claimTypeList = new ArrayList<ClaimType>(Arrays.asList(employeeDoc));
-			System.out.println("claimTypeList list " + claimTypeList.toString());
-			model.addObject("claimTypeList", claimTypeList);
-
+			
 			String base64encodedString = request.getParameter("empId");
 			String empId = FormValidation.DecodeKey(base64encodedString);
+			
+			
+			//neew claim types 
+			
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("empId", empId);
+
+			GetEmployeeClaimStrudt[] employeeDoc = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getEmpClaimStructure", map, GetEmployeeClaimStrudt[].class);
+
+			List<GetEmployeeClaimStrudt> claimTypeList = new ArrayList<GetEmployeeClaimStrudt>(Arrays.asList(employeeDoc));
+			System.out.println("claimTypeList list " + claimTypeList.toString());
+			model.addObject("claimTypeList", claimTypeList);
+ 
 			map = new LinkedMultiValueMap<>();
 			map.add("empId", empId);
 

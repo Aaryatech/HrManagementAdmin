@@ -184,7 +184,7 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="lvsName">
-											Claim Title <span style="color: red">* </span>:
+											Claim Remark <span style="color: red">* </span>:
 										</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
@@ -222,7 +222,7 @@
 												<option></option>
 												<c:forEach items="${claimTypeList}" var="claimTypeList">
 
-													<option value="${claimTypeList.claimTypeId}"
+													<option value="${claimTypeList.clmTypeId}"
 														data-clstrname="${claimTypeList.claimTypeTitle}">${claimTypeList.claimTypeTitle}</option>
 
 
