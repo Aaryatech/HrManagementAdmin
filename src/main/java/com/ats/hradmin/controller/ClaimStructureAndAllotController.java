@@ -19,14 +19,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ats.hradmin.claim.ClaimStructureAllotment;
 import com.ats.hradmin.claim.ClaimStructureDetail;
 import com.ats.hradmin.claim.ClaimStructureHeader;
 import com.ats.hradmin.claim.ClaimType;
+import com.ats.hradmin.claim.GetClaimStructureAllotment;
 import com.ats.hradmin.common.AcessController;
 import com.ats.hradmin.common.Constants;
 import com.ats.hradmin.common.FormValidation;
+import com.ats.hradmin.leave.model.GetStructureAllotment;
 import com.ats.hradmin.leave.model.LeaveStructureDetails;
 import com.ats.hradmin.leave.model.LeaveStructureHeader;
+import com.ats.hradmin.leave.model.LeavesAllotment;
 import com.ats.hradmin.model.AccessRightModule;
 import com.ats.hradmin.model.Info;
 import com.ats.hradmin.model.LeaveType;
@@ -358,5 +362,104 @@ public class ClaimStructureAndAllotController {
 		}
 		return a;
 	}
+	
+	
+	//***********************Allot***************************************
+	
+	@RequestMapping(value = "/claimStructureAllotment", method = RequestMethod.GET)
+	public ModelAndView leaveStructureAllotment(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("claim/claim_structure_allot_list");
+
+		try {
+
+			HttpSession session = request.getSession();
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("companyId", userObj.getCompanyId());
+			ClaimStructureHeader[] lvStrSummery = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getClaimStructHeadList", map, ClaimStructureHeader[].class);
+
+			List<ClaimStructureHeader> lSummarylist = new ArrayList<>(Arrays.asList(lvStrSummery));
+			model.addObject("lStrList", lSummarylist);
+
+			map = new LinkedMultiValueMap<>();
+			map.add("companyId", userObj.getCompanyId());
+			map.add("locIdList", userObj.getLocationIds());
+ 
+			GetClaimStructureAllotment[] summary = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getClaimStructureAllotmentList", map, GetClaimStructureAllotment[].class);
+
+			List<GetClaimStructureAllotment> leaveSummarylist = new ArrayList<>(Arrays.asList(summary));
+			 
+			model.addObject("lvStructureList", leaveSummarylist);
+
+			 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+	}
+	
+	@RequestMapping(value = "/submitClaimStructureList", method = RequestMethod.POST)
+	public String submitClaimStructureList(HttpServletRequest request, HttpServletResponse response) {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date now = new Date();
+		String curDate = dateFormat.format(new Date());
+		String dateTime = dateFormat.format(now);
+		
+		List<Integer> empList=null;
+		try {
+			HttpSession session = request.getSession();
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+			int lvsId = Integer.parseInt(request.getParameter("lvsId"));
+
+			String[] empIds = request.getParameterValues("empIds");
+
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < empIds.length; i++) {
+				sb = sb.append(empIds[i] + ",");
+ 			}
+			String items = sb.toString();
+			items = items.substring(0, items.length() - 1);
+
+			String[] arrOfStr = items.split(",");
+
+			Boolean ret = false;
+
+			if (ret == false) {
+ 
+					MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+ 				 
+						map = new LinkedMultiValueMap<>();
+						map.add("empList", items);
+						map.add("userId", userObj.getUserId());
+						map.add("dateTime", dateTime);
+ 						map.add("lvsId", lvsId);
+					  
+						Info res1 = Constants.getRestTemplate()
+						.postForObject(Constants.url + "/saveAllotmet", map,Info.class);
+					 
+					 
+						if (res1 != null) {
+							session.setAttribute("successMsg", "Record Inserted Successfully");
+						} else {
+							session.setAttribute("errorMsg", "Failed to Insert Record");
+						}
+					
+					}
+
+				 
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:/claimStructureAllotment";
+	}
+
+
 
 }
