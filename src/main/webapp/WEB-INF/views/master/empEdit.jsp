@@ -893,8 +893,9 @@
 
 			if (document.getElementById("checkSameAdd").checked == true) {
 
-				document.getElementById("permntAdd").value = document
-						.getElementById("tempAdd").value;
+				document.getElementById("permntAdd").value = document.getElementById("tempAdd").value;
+				
+						
 
 			} else {
 

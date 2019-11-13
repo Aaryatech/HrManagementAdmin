@@ -54,7 +54,7 @@
 
 			<!-- Page header -->
 			<div class="page-header page-header-light">
-
+<!-- 
 
 				<div
 					class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
@@ -70,7 +70,7 @@
 					</div>
 
 
-				</div>
+				</div> -->
 			</div>
 			<!-- /page header -->
 
