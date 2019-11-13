@@ -29,6 +29,8 @@
 		<div class="content-wrapper">
 
 
+			<!-- /page header -->
+
 
 			<!-- Content area -->
 			<div class="content">
@@ -39,7 +41,7 @@
 
 
 					<div class="card-header header-elements-inline">
-						<h5 class="card-title">Claim List</h5>
+						<h5 class="card-title">Manager Claim List</h5>
 						<!-- <div class="header-elements">
 							<div class="list-icons">
 								<a class="list-icons-item" data-action="collapse"></a>
@@ -186,10 +188,10 @@
 														</c:when>
 
 													</c:choose> --%> <a
-													href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList.exVar1}&claimId=${claimList.circulatedTo}&stat=3&retun=1"
+													href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList.exVar1}&claimId=${claimList.circulatedTo}&stat=3&retun=0"
 													title="Approve"><i class="icon-checkmark4 "
 														style="color: black;"></i></a> <a
-													href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList.exVar1}&claimId=${claimList.circulatedTo}&stat=9&retun=1"
+													href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList.exVar1}&claimId=${claimList.circulatedTo}&stat=9&retun=0"
 													title="Reject"><i class="icon-x" style="color: black;"></i></a><a
 													href="${pageContext.request.contextPath}/claimDetailHistory?empId=${claimList.exVar1}&claimId=${claimList.circulatedTo}"
 													style="color: black"><i class="icon-list-unordered"></i></a>

@@ -32,6 +32,7 @@ import com.ats.hradmin.claim.GetClaimHead;
 import com.ats.hradmin.claim.GetClaimTrailStatus;
 import com.ats.hradmin.claim.GetEmployeeClaimStrudt;
 import com.ats.hradmin.claim.TempClaimDetail;
+import com.ats.hradmin.common.AcessController;
 import com.ats.hradmin.common.Constants;
 import com.ats.hradmin.common.DateConvertor;
 import com.ats.hradmin.common.FormValidation;
@@ -39,6 +40,7 @@ import com.ats.hradmin.common.VpsImageUpload;
 import com.ats.hradmin.leave.model.GetAuthorityIds;
 import com.ats.hradmin.leave.model.GetLeaveApplyAuthwise;
 import com.ats.hradmin.leave.model.GetLeaveStatus;
+import com.ats.hradmin.model.AccessRightModule;
 import com.ats.hradmin.model.AuthorityInformation;
 import com.ats.hradmin.model.EmployeeInfo;
 import com.ats.hradmin.model.GetEmployeeInfo;
@@ -148,23 +150,23 @@ public class ClaimApplicationController {
 		try {
 			HttpSession session = request.getSession();
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
-			
+
 			String base64encodedString = request.getParameter("empId");
 			String empId = FormValidation.DecodeKey(base64encodedString);
-			
-			
-			//neew claim types 
-			
+
+			// neew claim types
+
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("empId", empId);
 
 			GetEmployeeClaimStrudt[] employeeDoc = Constants.getRestTemplate()
 					.postForObject(Constants.url + "/getEmpClaimStructure", map, GetEmployeeClaimStrudt[].class);
 
-			List<GetEmployeeClaimStrudt> claimTypeList = new ArrayList<GetEmployeeClaimStrudt>(Arrays.asList(employeeDoc));
+			List<GetEmployeeClaimStrudt> claimTypeList = new ArrayList<GetEmployeeClaimStrudt>(
+					Arrays.asList(employeeDoc));
 			System.out.println("claimTypeList list " + claimTypeList.toString());
 			model.addObject("claimTypeList", claimTypeList);
- 			map = new LinkedMultiValueMap<>();
+			map = new LinkedMultiValueMap<>();
 			map.add("empId", empId);
 
 			EmployeeInfo editEmp = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpInfoById", map,
@@ -196,26 +198,20 @@ public class ClaimApplicationController {
 		return model;
 	}
 
-	
-	
-
 	@RequestMapping(value = "/getClaimTypeById", method = RequestMethod.GET)
-	public @ResponseBody  GetEmployeeClaimStrudt  getClaimTypeById(HttpServletRequest request,
+	public @ResponseBody GetEmployeeClaimStrudt getClaimTypeById(HttpServletRequest request,
 			HttpServletResponse response) {
-		GetEmployeeClaimStrudt tempDocList =new GetEmployeeClaimStrudt();
+		GetEmployeeClaimStrudt tempDocList = new GetEmployeeClaimStrudt();
 		try {
-			 String empId =  request.getParameter("empId");
-			 String claimTypeId =  request.getParameter("claimTypeId");
-					
-			MultiValueMap<String, Object> map  = new LinkedMultiValueMap<>();
-			map.add("empId",empId );
-			map.add("typeId",claimTypeId);
+			String empId = request.getParameter("empId");
+			String claimTypeId = request.getParameter("claimTypeId");
 
-			tempDocList = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpClaimStructureByClaimType", map,
-					GetEmployeeClaimStrudt.class);
-		 
-			
-			
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("empId", empId);
+			map.add("typeId", claimTypeId);
+
+			tempDocList = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpClaimStructureByClaimType",
+					map, GetEmployeeClaimStrudt.class);
 
 		} catch (Exception e) {
 			System.err.println("Exce In atempDocList  temp List " + e.getMessage());
@@ -226,8 +222,7 @@ public class ClaimApplicationController {
 		return tempDocList;
 
 	}
-	
-	
+
 	/*
 	 * @RequestMapping(value = "/insertSubmitClaim", method = RequestMethod.POST)
 	 * public String submitInsertLeave(HttpServletRequest request,
@@ -349,50 +344,71 @@ public class ClaimApplicationController {
 		try {
 			HttpSession session = request.getSession();
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			map.add("empId", userObj.getEmpId());
 
-			GetClaimApplyAuthwise[] employeeDoc = Constants.getRestTemplate()
-					.postForObject(Constants.url + "/getClaimApplyListForPendingForManager", map, GetClaimApplyAuthwise[].class);
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("showClaimApprovalByAuthority", "showClaimApprovalByAuthority", 1,
+					0, 0, 0, newModuleList);
 
-			List<GetClaimApplyAuthwise> claimList = new ArrayList<GetClaimApplyAuthwise>(Arrays.asList(employeeDoc));
+			if (view.isError() == true) {
 
-			for (int i = 0; i < claimList.size(); i++) {
+				model = new ModelAndView("accessDenied");
 
-				claimList.get(i).setCirculatedTo(FormValidation.Encrypt(String.valueOf(claimList.get(i).getCaHeadId())));
-				claimList.get(i).setExVar1(FormValidation.Encrypt(String.valueOf(claimList.get(i).getEmpId())));
-				claimList.get(i).setCaFromDt(DateConvertor.convertToDMY(claimList.get(i).getCaFromDt()));
-				claimList.get(i).setCaToDt(DateConvertor.convertToDMY(claimList.get(i).getCaToDt()));
+			} else {
 
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+				map.add("empId", userObj.getEmpId());
+
+				GetClaimApplyAuthwise[] employeeDoc = Constants.getRestTemplate().postForObject(
+						Constants.url + "/getClaimApplyListForPendingForManager", map, GetClaimApplyAuthwise[].class);
+
+				List<GetClaimApplyAuthwise> claimList = new ArrayList<GetClaimApplyAuthwise>(
+						Arrays.asList(employeeDoc));
+
+				for (int i = 0; i < claimList.size(); i++) {
+
+					claimList.get(i)
+							.setCirculatedTo(FormValidation.Encrypt(String.valueOf(claimList.get(i).getCaHeadId())));
+					claimList.get(i).setExVar1(FormValidation.Encrypt(String.valueOf(claimList.get(i).getEmpId())));
+					claimList.get(i).setCaFromDt(DateConvertor.convertToDMY(claimList.get(i).getCaFromDt()));
+					claimList.get(i).setCaToDt(DateConvertor.convertToDMY(claimList.get(i).getCaToDt()));
+
+				}
+				model.addObject("claimListForApproval", claimList);
+				model.addObject("list1Count", claimList.size());
 			}
-			model.addObject("claimListForApproval", claimList);
-			model.addObject("list1Count", claimList.size());
-			//System.out.println("lv claimList list pending " + claimList.toString());
+			// System.out.println("lv claimList list pending " + claimList.toString());
 
 			// for Info
 
-			/*model.addObject("empIdOrig", userObj.getEmpId());
-
-			map = new LinkedMultiValueMap<>();
-			map.add("empId", userObj.getEmpId());
-
-			GetClaimApplyAuthwise[] employeeDoc1 = Constants.getRestTemplate().postForObject(
-					Constants.url + "/getClaimApplyListForInformation", map, GetClaimApplyAuthwise[].class);
-
-			List<GetClaimApplyAuthwise> claimList1 = new ArrayList<GetClaimApplyAuthwise>(Arrays.asList(employeeDoc1));
-
-			for (int i = 0; i < claimList1.size(); i++) {
-
-				claimList1.get(i).setCirculatedTo(FormValidation.Encrypt(String.valueOf(claimList1.get(i).getCaHeadId())));
-				claimList1.get(i).setExVar1(FormValidation.Encrypt(String.valueOf(claimList1.get(i).getEmpId())));
-				claimList1.get(i).setCaFromDt(DateConvertor.convertToDMY(claimList1.get(i).getCaFromDt()));
-				claimList1.get(i).setCaToDt(DateConvertor.convertToDMY(claimList1.get(i).getCaToDt()));
-			
-			}
-
-			model.addObject("list2Count", claimList1.size());
-			model.addObject("claimListForApproval1", claimList1);
-			System.out.println("lv leaveList list1 info " + claimList1.toString());*/
+			/*
+			 * model.addObject("empIdOrig", userObj.getEmpId());
+			 * 
+			 * map = new LinkedMultiValueMap<>(); map.add("empId", userObj.getEmpId());
+			 * 
+			 * GetClaimApplyAuthwise[] employeeDoc1 =
+			 * Constants.getRestTemplate().postForObject( Constants.url +
+			 * "/getClaimApplyListForInformation", map, GetClaimApplyAuthwise[].class);
+			 * 
+			 * List<GetClaimApplyAuthwise> claimList1 = new
+			 * ArrayList<GetClaimApplyAuthwise>(Arrays.asList(employeeDoc1));
+			 * 
+			 * for (int i = 0; i < claimList1.size(); i++) {
+			 * 
+			 * claimList1.get(i).setCirculatedTo(FormValidation.Encrypt(String.valueOf(
+			 * claimList1.get(i).getCaHeadId())));
+			 * claimList1.get(i).setExVar1(FormValidation.Encrypt(String.valueOf(claimList1.
+			 * get(i).getEmpId())));
+			 * claimList1.get(i).setCaFromDt(DateConvertor.convertToDMY(claimList1.get(i).
+			 * getCaFromDt()));
+			 * claimList1.get(i).setCaToDt(DateConvertor.convertToDMY(claimList1.get(i).
+			 * getCaToDt()));
+			 * 
+			 * }
+			 * 
+			 * model.addObject("list2Count", claimList1.size());
+			 * model.addObject("claimListForApproval1", claimList1);
+			 * System.out.println("lv leaveList list1 info " + claimList1.toString());
+			 */
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -409,7 +425,7 @@ public class ClaimApplicationController {
 			int empId = Integer.parseInt(FormValidation.DecodeKey(request.getParameter("empId")));
 			int claimId = Integer.parseInt(FormValidation.DecodeKey(request.getParameter("claimId")));
 			String stat = request.getParameter("stat");
-
+			int retun = Integer.parseInt(request.getParameter("retun"));
 			model.addObject("empId", empId);
 			model.addObject("claimId", claimId);
 			model.addObject("stat", stat);
@@ -423,16 +439,15 @@ public class ClaimApplicationController {
 			List<GetClaimTrailStatus> employeeList = new ArrayList<GetClaimTrailStatus>(Arrays.asList(employeeDoc));
 
 			model.addObject("employeeList", employeeList);
-			System.out.println("trail *******"+employeeList.toString());
-			
+			System.out.println("trail *******" + employeeList.toString());
 
-			GetClaimTrailStatus trailHead=new GetClaimTrailStatus();
-			
-			trailHead=employeeList.get(0);
+			GetClaimTrailStatus trailHead = new GetClaimTrailStatus();
+
+			trailHead = employeeList.get(0);
 			trailHead.setCaFromDt(DateConvertor.convertToDMY(trailHead.getCaFromDt()));
 			trailHead.setCaToDt(DateConvertor.convertToDMY(trailHead.getCaToDt()));
-			System.out.println("trailHead*******"+trailHead.toString());
-			
+			System.out.println("trailHead*******" + trailHead.toString());
+
 			model.addObject("lvEmp", trailHead);
 			map = new LinkedMultiValueMap<>();
 			map.add("claimId", claimId);
@@ -445,12 +460,12 @@ public class ClaimApplicationController {
 
 			for (int i = 0; i < claimDetList.size(); i++) {
 
-				claimDetList.get(i)
-						.setExVar1(FormValidation.Encrypt(String.valueOf(claimDetList.get(i).getClaimId())));
-				  
+				claimDetList.get(i).setExVar1(FormValidation.Encrypt(String.valueOf(claimDetList.get(i).getClaimId())));
+
 			}
 
 			model.addObject("claimDetList", claimDetList);
+			model.addObject("retun", retun);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -461,6 +476,7 @@ public class ClaimApplicationController {
 	@RequestMapping(value = "/approveClaimByAuth1", method = RequestMethod.POST)
 	public String insertLeave(HttpServletRequest request, HttpServletResponse response) {
 
+		int retun = Integer.parseInt((request.getParameter("retun")));
 		try {
 			HttpSession session = request.getSession();
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
@@ -537,14 +553,17 @@ public class ClaimApplicationController {
 			}
 
 			else {
-				session.setAttribute("errorMsg", "Failed to Insert Record");
+				session.setAttribute("errorMsg", "Failed Transaction");
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		return "redirect:/showClaimApprovalByAuthority";
+		if (retun == 0) {
+			return "redirect:/showClaimApprovalByAdmin";
+		} else {
+			return "redirect:/showClaimApprovalByAuthority";
+		}
 
 	}
 
@@ -570,8 +589,7 @@ public class ClaimApplicationController {
 
 			for (int i = 0; i < claimList1.size(); i++) {
 
-				claimList1.get(i)
-						.setExVar1(FormValidation.Encrypt(String.valueOf(claimList1.get(i).getCaHeadId())));
+				claimList1.get(i).setExVar1(FormValidation.Encrypt(String.valueOf(claimList1.get(i).getCaHeadId())));
 				claimList1.get(i).setClaimFromDate(DateConvertor.convertToDMY(claimList1.get(i).getClaimFromDate()));
 				claimList1.get(i).setClaimToDate(DateConvertor.convertToDMY(claimList1.get(i).getClaimToDate()));
 
@@ -585,7 +603,7 @@ public class ClaimApplicationController {
 		return model;
 
 	}
-	
+
 	@RequestMapping(value = "/showClaimDetailList", method = RequestMethod.GET)
 	public ModelAndView showClaimDetailList(HttpServletRequest request, HttpServletResponse response) {
 
@@ -605,34 +623,30 @@ public class ClaimApplicationController {
 
 			for (int i = 0; i < claimList1.size(); i++) {
 
-				claimList1.get(i)
-						.setExVar1(FormValidation.Encrypt(String.valueOf(claimList1.get(i).getClaimId())));
-				  
+				claimList1.get(i).setExVar1(FormValidation.Encrypt(String.valueOf(claimList1.get(i).getClaimId())));
+
 			}
 
 			model.addObject("claimList1", claimList1);
-			
-			
-			 map = new LinkedMultiValueMap<>();
-				map.add("claimId", claimId);
-				GetClaimTrailStatus[] employeeDoc = Constants.getRestTemplate().postForObject(
-						Constants.url + "/getEmpClaimInfoListByTrailEmpId", map, GetClaimTrailStatus[].class);
 
-				List<GetClaimTrailStatus> employeeList = new ArrayList<GetClaimTrailStatus>(Arrays.asList(employeeDoc));
+			map = new LinkedMultiValueMap<>();
+			map.add("claimId", claimId);
+			GetClaimTrailStatus[] employeeDoc = Constants.getRestTemplate().postForObject(
+					Constants.url + "/getEmpClaimInfoListByTrailEmpId", map, GetClaimTrailStatus[].class);
 
-				model.addObject("employeeList", employeeList);
-				System.out.println("trail *******"+employeeList.toString());
-				
+			List<GetClaimTrailStatus> employeeList = new ArrayList<GetClaimTrailStatus>(Arrays.asList(employeeDoc));
 
-				GetClaimTrailStatus trailHead=new GetClaimTrailStatus();
-				
-				trailHead=employeeList.get(0);
-				trailHead.setCaFromDt(DateConvertor.convertToDMY(trailHead.getCaFromDt()));
-				trailHead.setCaToDt(DateConvertor.convertToDMY(trailHead.getCaToDt()));
-				System.out.println("trailHead*******"+trailHead.toString());
-				
-				model.addObject("lvEmp", trailHead);
-				
+			model.addObject("employeeList", employeeList);
+			System.out.println("trail *******" + employeeList.toString());
+
+			GetClaimTrailStatus trailHead = new GetClaimTrailStatus();
+
+			trailHead = employeeList.get(0);
+			trailHead.setCaFromDt(DateConvertor.convertToDMY(trailHead.getCaFromDt()));
+			trailHead.setCaToDt(DateConvertor.convertToDMY(trailHead.getCaToDt()));
+			System.out.println("trailHead*******" + trailHead.toString());
+
+			model.addObject("lvEmp", trailHead);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -643,11 +657,10 @@ public class ClaimApplicationController {
 	// ************************************claim new
 	// process************************************
 
-
 	@RequestMapping(value = "/addClaimDetailProcess", method = RequestMethod.GET)
 	public @ResponseBody List<TempClaimDetail> addClaimDetail(HttpServletRequest request,
 			HttpServletResponse response) {
- 
+
 		try {
 
 			int isDelete = Integer.parseInt(request.getParameter("isDelete"));
@@ -655,7 +668,7 @@ public class ClaimApplicationController {
 			int isEdit = Integer.parseInt(request.getParameter("isEdit"));
 			System.err.println("in addClaimDetail******** " + isEdit + isDelete);
 			if (isDelete == 1) {
- 				int key = Integer.parseInt(request.getParameter("key"));
+				int key = Integer.parseInt(request.getParameter("key"));
 
 				tempDocList.remove(key);
 
@@ -674,7 +687,7 @@ public class ClaimApplicationController {
 			}
 
 			else {
- 
+
 				float claimAmt = Float.parseFloat(request.getParameter("claimAmt"));
 				String claimRemark = request.getParameter("claimRemark");
 				int claimTypeId = Integer.parseInt(request.getParameter("claimTypeId"));
@@ -774,15 +787,13 @@ public class ClaimApplicationController {
 				tot_amt = tot_amt + tempDocList.get(i).getClaimAmount();
 
 			}
-			 
-			
+
 			docHead.setDetailList(docDetailList);
-			
+
 			float amt = 0;
-			
+
 			for (int i = 0; i < docHead.getDetailList().size(); i++) {
 
-				 
 				amt = amt + docHead.getDetailList().get(i).getClaimAmount();
 
 			}
@@ -1096,7 +1107,7 @@ public class ClaimApplicationController {
 			String claimId = FormValidation.DecodeKey(base64encodedString);
 
 			System.out.println("ID: " + claimId);
- 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("claimId", claimId);
 			GetClaimTrailStatus[] employeeDoc = Constants.getRestTemplate().postForObject(
 					Constants.url + "/getEmpClaimInfoListByTrailEmpId", map, GetClaimTrailStatus[].class);
@@ -1104,19 +1115,17 @@ public class ClaimApplicationController {
 			List<GetClaimTrailStatus> employeeList = new ArrayList<GetClaimTrailStatus>(Arrays.asList(employeeDoc));
 
 			model.addObject("employeeList", employeeList);
-			System.out.println("trail *******"+employeeList.toString());
-			
+			System.out.println("trail *******" + employeeList.toString());
 
-			GetClaimTrailStatus trailHead=new GetClaimTrailStatus();
-			
-			trailHead=employeeList.get(0);
+			GetClaimTrailStatus trailHead = new GetClaimTrailStatus();
+
+			trailHead = employeeList.get(0);
 			trailHead.setCaFromDt(DateConvertor.convertToDMY(trailHead.getCaFromDt()));
 			trailHead.setCaToDt(DateConvertor.convertToDMY(trailHead.getCaToDt()));
-			System.out.println("trailHead*******"+trailHead.toString());
-			
+			System.out.println("trailHead*******" + trailHead.toString());
+
 			model.addObject("lvEmp", trailHead);
-			
- 			
+
 			map = new LinkedMultiValueMap<>();
 			map.add("claimId", claimId);
 
@@ -1128,9 +1137,8 @@ public class ClaimApplicationController {
 
 			for (int i = 0; i < claimDetList.size(); i++) {
 
-				claimDetList.get(i)
-						.setExVar1(FormValidation.Encrypt(String.valueOf(claimDetList.get(i).getClaimId())));
-				  
+				claimDetList.get(i).setExVar1(FormValidation.Encrypt(String.valueOf(claimDetList.get(i).getClaimId())));
+
 			}
 
 			model.addObject("claimDetList", claimDetList);
@@ -1158,17 +1166,62 @@ public class ClaimApplicationController {
 			List<GetClaimTrailStatus> employeeList = new ArrayList<GetClaimTrailStatus>(Arrays.asList(employeeDoc));
 
 			model.addObject("employeeList", employeeList);
-			System.out.println("trail *******"+employeeList.toString());
-			
+			System.out.println("trail *******" + employeeList.toString());
 
-			GetClaimTrailStatus trailHead=new GetClaimTrailStatus();
-			
-			trailHead=employeeList.get(0);
+			GetClaimTrailStatus trailHead = new GetClaimTrailStatus();
+
+			trailHead = employeeList.get(0);
 			trailHead.setCaFromDt(DateConvertor.convertToDMY(trailHead.getCaFromDt()));
 			trailHead.setCaToDt(DateConvertor.convertToDMY(trailHead.getCaToDt()));
-			System.out.println("trailHead*******"+trailHead.toString());
-			
+			System.out.println("trailHead*******" + trailHead.toString());
+
 			model.addObject("lvEmp", trailHead);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+	}
+
+	@RequestMapping(value = "/showClaimApprovalByAdmin", method = RequestMethod.GET)
+	public ModelAndView showClaimApprovalByAdmin(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("claim/showClaimApprovalByAdmin");
+
+		// for pending
+		try {
+			HttpSession session = request.getSession();
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("showClaimApprovalByAdmin", "showClaimApprovalByAdmin", 1, 0, 0, 0,
+					newModuleList);
+
+			/*
+			 * if (view.isError() == true) {
+			 * 
+			 * model = new ModelAndView("accessDenied");
+			 * 
+			 * } else {
+			 */
+
+			GetClaimApplyAuthwise[] employeeDoc = Constants.getRestTemplate().getForObject(
+					Constants.url + "/getClaimApplyListForPendingForAdmin", GetClaimApplyAuthwise[].class);
+
+			List<GetClaimApplyAuthwise> claimList = new ArrayList<GetClaimApplyAuthwise>(Arrays.asList(employeeDoc));
+
+			for (int i = 0; i < claimList.size(); i++) {
+
+				claimList.get(i)
+						.setCirculatedTo(FormValidation.Encrypt(String.valueOf(claimList.get(i).getCaHeadId())));
+				claimList.get(i).setExVar1(FormValidation.Encrypt(String.valueOf(claimList.get(i).getEmpId())));
+				claimList.get(i).setCaFromDt(DateConvertor.convertToDMY(claimList.get(i).getCaFromDt()));
+				claimList.get(i).setCaToDt(DateConvertor.convertToDMY(claimList.get(i).getCaToDt()));
+
+			}
+			model.addObject("claimListForApproval", claimList);
+			model.addObject("list1Count", claimList.size());
+			// }
 
 		} catch (Exception e) {
 			e.printStackTrace();

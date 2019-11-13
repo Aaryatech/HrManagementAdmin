@@ -196,10 +196,10 @@
 									<thead>
 										<tr class="bg-blue">
 											<th width="10%">Sr.no</th>
-											<th>Name</th>
+											<!-- <th>Name</th> -->
+											<th>Action By</th>
 											<th>Remark</th>
 											<th>Date</th>
-											<th>Action By</th>
 											<th>Claim Status</th>
 										</tr>
 									</thead>
@@ -210,9 +210,9 @@
 											varStatus="count">
 											<tr>
 												<td>${count.index+1}</td>
-												<td>${empTrailList.empSname}${empTrailList.empFname}</td>
+												<%-- <td>${empTrailList.empSname}&nbsp;${empTrailList.empFname}</td> --%>
 
-
+												<td>${empTrailList.userName}</td>
 												<c:choose>
 													<c:when
 														test="${empTrailList.empRemarks=='null' || empty empTrailList.empRemarks}">
@@ -223,14 +223,12 @@
 													</c:otherwise>
 												</c:choose>
 												<td>${empTrailList.makerEnterDatetime}</td>
-												<td>${empTrailList.userName}</td>
+
 												<c:if test="${empTrailList.claimStatus==1}">
-													<td><span class="badge badge-info">Initial
-															Pending</span></td>
+													<td><span class="badge badge-info">Applied</span></td>
 												</c:if>
 												<c:if test="${empTrailList.claimStatus==2}">
-													<td><span class="badge badge-secondary">Final
-															Pending</span></td>
+													<td><span class="badge badge-secondary">Applied</span></td>
 												</c:if>
 												<c:if test="${empTrailList.claimStatus==3}">
 													<td><span class="badge badge-success">Final
@@ -241,12 +239,10 @@
 															Cancelled</span></td>
 												</c:if>
 												<c:if test="${empTrailList.claimStatus==8}">
-													<td><span class="badge badge-danger">Initial
-															Rejected</span></td>
+													<td><span class="badge badge-danger"> Rejected</span></td>
 												</c:if>
 												<c:if test="${empTrailList.claimStatus==9}">
-													<td><span class="badge badge-danger">Final
-															Reject</span></td>
+													<td><span class="badge badge-danger"> Rejected</span></td>
 												</c:if>
 
 
@@ -272,7 +268,7 @@
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
-
+									<input type="hidden" id="retun" name="retun" value="${retun}">
 									<input type="hidden" id="empId" name="empId" value="${empId}">
 									<input type="hidden" id="leaveId" name="claimId"
 										value="${claimId}"> <input type="hidden" id="stat"
@@ -286,13 +282,25 @@
 												id="submtbtn">
 												Submit <i class="icon-paperplane ml-2"></i>
 											</button>
+											<c:choose>
+												<c:when test="${retun==0}">
+													<a
+														href="${pageContext.request.contextPath}/showClaimApprovalByAdmin"><button
+															type="button" class="btn bg-blue ml-3 legitRipple"
+															id="cancel">
+															Cancel<i class="icon-paperplane ml-2"></i>
+														</button></a>
+												</c:when>
+												<c:otherwise>
+													<a
+														href="${pageContext.request.contextPath}/showClaimApprovalByAuthority"><button
+															type="button" class="btn bg-blue ml-3 legitRipple"
+															id="cancel">
+															Cancel<i class="icon-paperplane ml-2"></i>
+														</button></a>
+												</c:otherwise>
+											</c:choose>
 
-											<a
-												href="${pageContext.request.contextPath}/showClaimApprovalByAuthority"><button
-													type="button" class="btn bg-blue ml-3 legitRipple"
-													id="cancel">
-													Cancel<i class="icon-paperplane ml-2"></i>
-												</button></a>
 
 										</div>
 									</div>
