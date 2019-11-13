@@ -388,15 +388,15 @@
 
 	<script type="text/javascript">
 		function add() {
-		 
+
 			var valid = true;
 			var claimTypeId = document.getElementById("claimTypeId").value;
 
 			var claimAmt = document.getElementById("claimAmt").value;
 			var claimRemark = document.getElementById("claimRemark").value;
-			//alert("hii"+claimTypeId+claimAmt);
+		//	alert("hii" + claimTypeId + claimAmt);
 
-			//alert("final amt::"+y);
+		//	alert("final amt::" + y);
 
 			if (claimTypeId == "") {
 
@@ -468,47 +468,40 @@
 									//alert(data.length);
 									document.getElementById("dataLen").value = data.length;
 
-									var dataTable = $('#printtable1')
-											.DataTable();
-									dataTable.clear().draw();
+									$("#printtable1 tbody").empty();
+									$("#loader").hide();
 
-									$
-											.each(
-													data,
-													function(i, v) {
+									for (var i = 0; i < data.length; i++) {
 
-														var str = /* '<a href="#" class="action_btn" onclick="callEdit('
-																																																																																																																																+ v.claimDetailId
-																																																																																																																																+ ','
-																																																																																																																																+ i
-																																																																																																																																+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp; */
-														'<a href="#" class="action_btn" onclick="callDelete('
-																+ v.claimDetailId
-																+ ','
-																+ i
-																+ ')" style="color:black"><i class="fa fa-trash"></i></a>'
+										var str = '<a href="#" class="action_btn" onclick="callDelete('
+												+ data[i].claimDetailId
+												+ ','
+												+ i
+												+ ')" style="color:black"><i class="fa fa-trash"></i></a>'
+										var tr_data = '<tr>' + '<td>' + (i + 1)
+												+ '</td>' + '<td>'
+												+ data[i].lvTypeName + '</td>'
+												+ '<td>' + data[i].claimAmount
+												+ '</td>' + '<td>'
+												+ data[i].remark
+												+ '</td><td>' + str + '</td>'
+												+ '</tr>';
+										$('#printtable1' + ' tbody').append(
+												tr_data);
 
-														dataTable.row
-																.add(
-																		[
-																				i + 1,
-																				v.lvTypeName,
-																				v.claimAmount,
-																				v.remark,
-																				str ])
-																.draw();
-													});
+									}
 
+									
 								});
+
+				
 				document.getElementById("claimRemark").value = "";
 				document.getElementById("claimAmt").value = 0;
-	 
+
 				document.getElementById("isDelete").value = 0;
 				document.getElementById("isEdit").value = 0;
 				document.getElementById("index").value = 0;
-
 			}
-			
 		}
 	</script>
 
@@ -533,8 +526,8 @@
 			});
 
 		}
-		</script>
-		<script type="text/javascript">
+	</script>
+	<script type="text/javascript">
 		function callDelete(termDetailId, index) {
 
 			//alert("hii");
@@ -551,44 +544,40 @@
 
 							},
 
+
 							function(data) {
+								 
 
-								var dataTable = $('#printtable1').DataTable();
-								dataTable.clear().draw();
+								$("#printtable1 tbody").empty();
+								$("#loader").hide();
 
-								$
-										.each(
-												data,
-												function(i, v) {
+								for (var i = 0; i < data.length; i++) {
 
-													var str = /* '<a href="#" class="action_btn" onclick="callEdit('
-																																																																																																																										+ v.claimDetailId
-																																																																																																																										+ ','
-																																																																																																																										+ i
-																																																																																																																										+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp; */
-													'<a href="#" class="action_btn" onclick="callDelete('
-															+ v.claimDetailId
-															+ ','
-															+ i
-															+ ')" style="color:black"><i class="fa fa-trash"></i></a>'
+									var str = '<a href="#" class="action_btn" onclick="callDelete('
+											+ data[i].claimDetailId
+											+ ','
+											+ i
+											+ ')" style="color:black"><i class="fa fa-trash"></i></a>'
+									var tr_data = '<tr>' + '<td>' + (i + 1)
+											+ '</td>' + '<td>'
+											+ data[i].lvTypeName + '</td>'
+											+ '<td>' + data[i].claimAmount
+											+ '</td>' + '<td>'
+											+ data[i].remark
+											+ '</td><td>' + str + '</td>'
+											+ '</tr>';
+									$('#printtable1' + ' tbody').append(
+											tr_data);
 
-													dataTable.row
-															.add(
-																	[
-																			i + 1,
-																			v.lvTypeName,
-																			v.claimAmount,
-																			v.remark,
-																			str ])
-															.draw();
-												});
+								}
 
+								
 							});
-
+ 
 		}
-		</script>
-		
-		<script type="text/javascript">
+	</script>
+
+	<script type="text/javascript">
 		function validate(s) {
 			var rgx = /^[0-9]*\.?[0-9]*$/;
 			return s.match(rgx);

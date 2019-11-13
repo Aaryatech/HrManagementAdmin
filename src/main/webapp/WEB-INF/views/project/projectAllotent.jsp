@@ -69,12 +69,12 @@
  						<table width="100%">
 							<tr width="100%">
 								<td width="60%"><h5 class="card-title">Project List</h5></td>
-								<td width="40%" align="right">
+								<%-- <td width="40%" align="right">
 								 <a
 									href="${pageContext.request.contextPath}/addProjectHeader"
 									class="breadcrumb-elements-item">
 										<button type="button" class="btn btn-primary">Add Project  </button>
-								</a> </td>
+								</a> </td> --%>
 							</tr>
 						</table>
 					</div>
@@ -123,7 +123,7 @@
 								<tr class="bg-blue">
 
 									<th width="3%">Sr. No.</th>
-									<th width="15%"> Project Title</th>
+									<th width="15%">Project Title</th>
 									<th>Project Description</th>
 									<th>Project Type Title</th>
 									<th>Project Manager</th>
@@ -151,42 +151,28 @@
 										<td>${project.custName}</td>
 										<td>${project.projectCompletion}</td>
 										<c:if test="${project.projectStatus=='0'}">
-										<td><span class="badge badge-success">Created</span></td>
+											<td><span class="badge badge-success">Created</span></td>
 										</c:if>
-										
-                                        <c:if test="${project.projectStatus eq '1'}">
-										<td><span class="badge badge-info">Work in Progress</span></td>
+
+										<c:if test="${project.projectStatus eq '1'}">
+											<td><span class="badge badge-info">Work in
+													Progress</span></td>
 										</c:if>
 										<c:if test="${project.projectStatus eq '2'}">
-										<td><span class="badge badge-secondary">Completed</span></td>
+											<td><span class="badge badge-secondary">Completed</span></td>
 										</c:if>
-											<c:if test="${project.projectStatus eq '3'}">
-										<td><span class="badge badge-danger">Cancelled</span></td>
+										<c:if test="${project.projectStatus eq '3'}">
+											<td><span class="badge badge-danger">Cancelled</span></td>
 										</c:if>
-											<c:if test="${project.projectStatus eq '4'}">
-										<td><span class="badge badge-danger">On Hold</span></td>
+										<c:if test="${project.projectStatus eq '4'}">
+											<td><span class="badge badge-danger">On Hold</span></td>
 										</c:if>
-											
 
-										<td class="text-center"><c:if test="${editAccess == 0}">
-												<a
-													href="${pageContext.request.contextPath}/editProject?projectId=${project.exVar1}"
-													title="Edit"><i class="icon-pencil7"
-													style="color: black;"></i></a>
-											</c:if> <c:if test="${deleteAccess == 0}">
-												<a
-													href="${pageContext.request.contextPath}/deleteProject?projectId=${project.exVar1}"
-													onClick="return confirm('Are you sure want to delete this record');"
-													title="Delete"><i class="icon-trash"
-													style="color: black;"></i> </a>
-													<a
-											href="${pageContext.request.contextPath}/upDateProjectStatus?projectId=${project.exVar1}"
-											title="Update Project Staus"> <i class="icon-cogs "
-												style="color: black;"></i></a>
-											</c:if>  
-												
-												
-												 </td>
+
+										<td class="text-center"><a
+											href="${pageContext.request.contextPath}/projectAllotment?projectId=${project.exVar1}"
+											title="Project Team"> <i class="fas fa-user-friends "
+												style="color: black;"></i></a></td>
 									</tr>
 								</c:forEach>
 

@@ -64,6 +64,11 @@ public class GetProjectHeader {
 	private String empSname;
 	private String projectTypeTitle;
 	private String projectTypeTitleShort;
+	
+
+	private String poDate;
+
+	private String poNumber;
 
 	public int getProjectId() {
 		return projectId;
@@ -345,6 +350,24 @@ public class GetProjectHeader {
 		this.projectTypeTitleShort = projectTypeTitleShort;
 	}
 
+	
+	
+	public String getPoDate() {
+		return poDate;
+	}
+
+	public void setPoDate(String poDate) {
+		this.poDate = poDate;
+	}
+
+	public String getPoNumber() {
+		return poNumber;
+	}
+
+	public void setPoNumber(String poNumber) {
+		this.poNumber = poNumber;
+	}
+
 	@Override
 	public String toString() {
 		return "GetProjectHeader [projectId=" + projectId + ", companyId=" + companyId + ", locId=" + locId
@@ -359,7 +382,8 @@ public class GetProjectHeader {
 				+ ", projectManagerEmpId=" + projectManagerEmpId + ", empCode=" + empCode + ", locName=" + locName
 				+ ", custName=" + custName + ", empFname=" + empFname + ", empMname=" + empMname + ", empSname="
 				+ empSname + ", projectTypeTitle=" + projectTypeTitle + ", projectTypeTitleShort="
-				+ projectTypeTitleShort + "]";
+				+ projectTypeTitleShort + ", poDate=" + poDate + ", poNumber=" + poNumber + "]";
 	}
 
+	 
 }

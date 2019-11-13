@@ -46,15 +46,15 @@ public class ProjectController {
 	String dateTime = dateFormat.format(now);
 
 	ProjectType editproType = new ProjectType();
-	ProjectHeader  updateProjectHeader =new ProjectHeader();
+	ProjectHeader updateProjectHeader = new ProjectHeader();
 
 	ProjectHeader editProjectHeader = new ProjectHeader();
-	
+
 //***************************************Project Type***************************************************************
-	
+
 	@RequestMapping(value = "/projectTypeAdd", method = RequestMethod.GET)
 	public ModelAndView projectTypeAdd(HttpServletRequest request, HttpServletResponse response) {
-	
+
 		HttpSession session = request.getSession();
 		ModelAndView model = null;
 		try {
@@ -156,7 +156,8 @@ public class ProjectController {
 			HttpSession session = request.getSession();
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
-			Info view = AcessController.checkAccess("showProjectTypeList", "showProjectTypeList", 1, 0, 0, 0, newModuleList);
+			Info view = AcessController.checkAccess("showProjectTypeList", "showProjectTypeList", 1, 0, 0, 0,
+					newModuleList);
 
 			if (view.isError() == true) {
 
@@ -165,42 +166,45 @@ public class ProjectController {
 			} else {
 
 				model = new ModelAndView("project/project_type_list");
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			map.add("companyId", userObj.getCompanyId());
-			System.out.println(userObj.getCompanyId());
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+				map.add("companyId", userObj.getCompanyId());
+				System.out.println(userObj.getCompanyId());
 
-			ProjectType[] projectTypeListArray = Constants.getRestTemplate()
-					.postForObject(Constants.url + "/getProjectListByCompanyId", map, ProjectType[].class);
+				ProjectType[] projectTypeListArray = Constants.getRestTemplate()
+						.postForObject(Constants.url + "/getProjectListByCompanyId", map, ProjectType[].class);
 
-			List<ProjectType> projectTypelist = new ArrayList<ProjectType>(Arrays.asList(projectTypeListArray));
-			System.out.println(projectTypelist.toString());
+				List<ProjectType> projectTypelist = new ArrayList<ProjectType>(Arrays.asList(projectTypeListArray));
+				System.out.println(projectTypelist.toString());
 
-			for (int i = 0; i < projectTypelist.size(); i++) {
+				for (int i = 0; i < projectTypelist.size(); i++) {
 
-				projectTypelist.get(i)
-						.setExVar1(FormValidation.Encrypt(String.valueOf(projectTypelist.get(i).getProjectTypeId())));
-			}
+					projectTypelist.get(i).setExVar1(
+							FormValidation.Encrypt(String.valueOf(projectTypelist.get(i).getProjectTypeId())));
+				}
 
-			model.addObject("projectTypelist", projectTypelist);
+				model.addObject("projectTypelist", projectTypelist);
 
-			Info add = AcessController.checkAccess("showProjectTypeList", "showProjectTypeList", 0, 1, 0, 0, newModuleList);
-			Info edit = AcessController.checkAccess("showProjectTypeList", "showProjectTypeList", 0, 0, 1, 0, newModuleList);
-			Info delete = AcessController.checkAccess("showProjectTypeList", "showProjectTypeList", 0, 0, 0, 1, newModuleList);
+				Info add = AcessController.checkAccess("showProjectTypeList", "showProjectTypeList", 0, 1, 0, 0,
+						newModuleList);
+				Info edit = AcessController.checkAccess("showProjectTypeList", "showProjectTypeList", 0, 0, 1, 0,
+						newModuleList);
+				Info delete = AcessController.checkAccess("showProjectTypeList", "showProjectTypeList", 0, 0, 0, 1,
+						newModuleList);
 
-			if (add.isError() == false) {
-				System.out.println(" add   Accessable ");
-				model.addObject("addAccess", 0);
+				if (add.isError() == false) {
+					System.out.println(" add   Accessable ");
+					model.addObject("addAccess", 0);
 
-			}
-			if (edit.isError() == false) {
-				System.out.println(" edit   Accessable ");
-				model.addObject("editAccess", 0);
-			}
-			if (delete.isError() == false) {
-				System.out.println(" delete   Accessable ");
-				model.addObject("deleteAccess", 0);
+				}
+				if (edit.isError() == false) {
+					System.out.println(" edit   Accessable ");
+					model.addObject("editAccess", 0);
+				}
+				if (delete.isError() == false) {
+					System.out.println(" delete   Accessable ");
+					model.addObject("deleteAccess", 0);
 
-			}
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -216,7 +220,8 @@ public class ProjectController {
 		try {
 
 			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
-			Info view = AcessController.checkAccess("editProjectType", "showProjectTypeList", 0, 0, 1, 0, newModuleList);
+			Info view = AcessController.checkAccess("editProjectType", "showProjectTypeList", 0, 0, 1, 0,
+					newModuleList);
 
 			if (view.isError() == true) {
 
@@ -224,15 +229,15 @@ public class ProjectController {
 
 			} else {
 				model = new ModelAndView("project/project_type_edit");
-			String base64encodedString = request.getParameter("projectTypeId");
-			String projectTypeId = FormValidation.DecodeKey(base64encodedString);
-			// System.out.println("claimTypeId" + claimTypeId);
+				String base64encodedString = request.getParameter("projectTypeId");
+				String projectTypeId = FormValidation.DecodeKey(base64encodedString);
+				// System.out.println("claimTypeId" + claimTypeId);
 
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			map.add("projectTypeId", projectTypeId);
-			editproType = Constants.getRestTemplate().postForObject(Constants.url + "/getProjectById", map,
-					ProjectType.class);
-			model.addObject("editproType", editproType);
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+				map.add("projectTypeId", projectTypeId);
+				editproType = Constants.getRestTemplate().postForObject(Constants.url + "/getProjectById", map,
+						ProjectType.class);
+				model.addObject("editproType", editproType);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -322,19 +327,19 @@ public class ProjectController {
 
 			else {
 				a = "redirect:/showProjectTypeList";
-			String base64encodedString = request.getParameter("projectTypeId");
-			String projectTypeId = FormValidation.DecodeKey(base64encodedString);
+				String base64encodedString = request.getParameter("projectTypeId");
+				String projectTypeId = FormValidation.DecodeKey(base64encodedString);
 
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			map.add("projectTypeId", projectTypeId);
-			Info info = Constants.getRestTemplate().postForObject(Constants.url + "/deleteProjectType", map,
-					Info.class);
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+				map.add("projectTypeId", projectTypeId);
+				Info info = Constants.getRestTemplate().postForObject(Constants.url + "/deleteProjectType", map,
+						Info.class);
 
-			if (info.isError() == false) {
-				session.setAttribute("successMsg", "Deleted Successfully");
-			} else {
-				session.setAttribute("errorMsg", "Failed to Delete");
-			}
+				if (info.isError() == false) {
+					session.setAttribute("successMsg", "Deleted Successfully");
+				} else {
+					session.setAttribute("errorMsg", "Failed to Delete");
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -343,14 +348,12 @@ public class ProjectController {
 		return a;
 	}
 
-	
-	
-	//***********************************************Project Header*********************************************
-	
+	// ***********************************************Project
+	// Header*********************************************
+
 	@RequestMapping(value = "/addProjectHeader", method = RequestMethod.GET)
 	public ModelAndView addProjectHeader(HttpServletRequest request, HttpServletResponse response) {
 
-	
 		HttpSession session = request.getSession();
 
 		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
@@ -359,7 +362,8 @@ public class ProjectController {
 		try {
 
 			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
-			Info view = AcessController.checkAccess("addProjectHeader", "showProjectHeaderList", 0, 1, 0, 0, newModuleList);
+			Info view = AcessController.checkAccess("addProjectHeader", "showProjectHeaderList", 0, 1, 0, 0,
+					newModuleList);
 
 			if (view.isError() == true) {
 
@@ -428,10 +432,14 @@ public class ProjectController {
 			String toDate = request.getParameter("toDate");
 			String billing_type = request.getParameter("billingType");
 			String project_revenue = request.getParameter("project_revenue");
+			String poDate = request.getParameter("poDate");
+			String poNum = request.getParameter("poNum");
+			
+ 			 
 
 			int project_est_manhrs = Integer.parseInt(request.getParameter("project_est_manhrs"));
 			int project_est_budget = Integer.parseInt(request.getParameter("project_est_budget"));
-System.out.println("billing_type:project_revenue"+billing_type+ project_revenue);
+			System.out.println("billing_type:project_revenue" + billing_type + project_revenue);
 			// String[] arrOfStr = dateRange.split("to", 2);
 
 			String remark = null;
@@ -486,13 +494,15 @@ System.out.println("billing_type:project_revenue"+billing_type+ project_revenue)
 				 * trim()));
 				 */
 
-				save.setProjectEstStartdt( fromDate );
-				save.setProjectEstEnddt( toDate );
+				save.setProjectEstStartdt(fromDate);
+				save.setProjectEstEnddt(toDate);
 				save.setProjectStatus("0");
 				save.setProjectTypeId(projectTypeId);
 				save.setProjectManagerEmpId(empId);
 				save.setExInt1(Integer.parseInt(billing_type));
 				save.setExVar1(project_revenue);
+				save.setPoNumber(poNum);
+				save.setPoDate(poDate);
 
 				save.setProjectTitle(projectTitle);
 
@@ -538,53 +548,56 @@ System.out.println("billing_type:project_revenue"+billing_type+ project_revenue)
 			HttpSession session = request.getSession();
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
-			Info view = AcessController.checkAccess("showProjectHeaderList", "showProjectHeaderList", 1, 0, 0, 0, newModuleList);
+			Info view = AcessController.checkAccess("showProjectHeaderList", "showProjectHeaderList", 1, 0, 0, 0,
+					newModuleList);
 
 			if (view.isError() == true) {
 
 				model = new ModelAndView("accessDenied");
 
 			} else {
-				 model = new ModelAndView("project/project_header_list");
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			map.add("companyId", userObj.getCompanyId());
+				model = new ModelAndView("project/project_header_list");
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+				map.add("companyId", userObj.getCompanyId());
 
-			GetProjectHeader[] proHeaderArray = Constants.getRestTemplate()
-					.postForObject(Constants.url + "/getProjectAllListByCompanyId", map, GetProjectHeader[].class);
-			List<GetProjectHeader> projectHeaderList = new ArrayList<GetProjectHeader>(Arrays.asList(proHeaderArray));
+				GetProjectHeader[] proHeaderArray = Constants.getRestTemplate()
+						.postForObject(Constants.url + "/getProjectAllListByCompanyId", map, GetProjectHeader[].class);
+				List<GetProjectHeader> projectHeaderList = new ArrayList<GetProjectHeader>(
+						Arrays.asList(proHeaderArray));
 
-			for (int i = 0; i < projectHeaderList.size(); i++) {
+				for (int i = 0; i < projectHeaderList.size(); i++) {
 
-				projectHeaderList.get(i)
-						.setExVar1(FormValidation.Encrypt(String.valueOf(projectHeaderList.get(i).getProjectId())));
-				projectHeaderList.get(i)
-				.setProjectEstStartdt(DateConvertor.convertToDMY(projectHeaderList.get(i).getProjectEstStartdt()));
-				projectHeaderList.get(i)
-				.setProjectEstEnddt(DateConvertor.convertToDMY(projectHeaderList.get(i).getProjectEstEnddt()));
-				
-				
-				
-			}
-System.out.println("project list is"+projectHeaderList.toString());
-			model.addObject("projectHeaderList", projectHeaderList);
-			Info add = AcessController.checkAccess("showProjectHeaderList", "showProjectHeaderList", 0, 1, 0, 0, newModuleList);
-			Info edit = AcessController.checkAccess("showProjectHeaderList", "showProjectHeaderList", 0, 0, 1, 0, newModuleList);
-			Info delete = AcessController.checkAccess("showProjectHeaderList", "showProjectHeaderList", 0, 0, 0, 1, newModuleList);
+					projectHeaderList.get(i)
+							.setExVar1(FormValidation.Encrypt(String.valueOf(projectHeaderList.get(i).getProjectId())));
+					projectHeaderList.get(i).setProjectEstStartdt(
+							DateConvertor.convertToDMY(projectHeaderList.get(i).getProjectEstStartdt()));
+					projectHeaderList.get(i).setProjectEstEnddt(
+							DateConvertor.convertToDMY(projectHeaderList.get(i).getProjectEstEnddt()));
 
-			if (add.isError() == false) {
-				System.out.println(" add   Accessable ");
-				model.addObject("addAccess", 0);
+				}
+				System.out.println("project list is" + projectHeaderList.toString());
+				model.addObject("projectHeaderList", projectHeaderList);
+				Info add = AcessController.checkAccess("showProjectHeaderList", "showProjectHeaderList", 0, 1, 0, 0,
+						newModuleList);
+				Info edit = AcessController.checkAccess("showProjectHeaderList", "showProjectHeaderList", 0, 0, 1, 0,
+						newModuleList);
+				Info delete = AcessController.checkAccess("showProjectHeaderList", "showProjectHeaderList", 0, 0, 0, 1,
+						newModuleList);
 
-			}
-			if (edit.isError() == false) {
-				System.out.println(" edit   Accessable ");
-				model.addObject("editAccess", 0);
-			}
-			if (delete.isError() == false) {
-				System.out.println(" delete   Accessable ");
-				model.addObject("deleteAccess", 0);
+				if (add.isError() == false) {
+					System.out.println(" add   Accessable ");
+					model.addObject("addAccess", 0);
 
-			}
+				}
+				if (edit.isError() == false) {
+					System.out.println(" edit   Accessable ");
+					model.addObject("editAccess", 0);
+				}
+				if (delete.isError() == false) {
+					System.out.println(" delete   Accessable ");
+					model.addObject("deleteAccess", 0);
+
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -610,19 +623,19 @@ System.out.println("project list is"+projectHeaderList.toString());
 
 			else {
 				a = "redirect:/showProjectHeaderList";
-			String base64encodedString = request.getParameter("projectId");
-			String projectId = FormValidation.DecodeKey(base64encodedString);
+				String base64encodedString = request.getParameter("projectId");
+				String projectId = FormValidation.DecodeKey(base64encodedString);
 
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			map.add("projectId", projectId);
-			Info info = Constants.getRestTemplate().postForObject(Constants.url + "/deleteProjectHeader", map,
-					Info.class);
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+				map.add("projectId", projectId);
+				Info info = Constants.getRestTemplate().postForObject(Constants.url + "/deleteProjectHeader", map,
+						Info.class);
 
-			if (info.isError() == false) {
-				session.setAttribute("successMsg", "Deleted Successfully");
-			} else {
-				session.setAttribute("errorMsg", "Failed to Delete");
-			}
+				if (info.isError() == false) {
+					session.setAttribute("successMsg", "Deleted Successfully");
+				} else {
+					session.setAttribute("errorMsg", "Failed to Delete");
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -646,55 +659,54 @@ System.out.println("project list is"+projectHeaderList.toString());
 				model = new ModelAndView("accessDenied");
 
 			} else {
-				
+
 				model = new ModelAndView("project/project_header_edit");
-			String base64encodedString = request.getParameter("projectId");
-			String projectId = FormValidation.DecodeKey(base64encodedString);
-			// System.out.println("claimTypeId" + claimTypeId);
-			
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			map.add("projectId", projectId);
-			editProjectHeader = Constants.getRestTemplate()
-					.postForObject(Constants.url + "/getProjectHeaderByProjectId", map, ProjectHeader.class);
-			model.addObject("editProjectHeader", editProjectHeader);
+				String base64encodedString = request.getParameter("projectId");
+				String projectId = FormValidation.DecodeKey(base64encodedString);
+				// System.out.println("claimTypeId" + claimTypeId);
 
-			
-			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+				map.add("projectId", projectId);
+				editProjectHeader = Constants.getRestTemplate()
+						.postForObject(Constants.url + "/getProjectHeaderByProjectId", map, ProjectHeader.class);
+				model.addObject("editProjectHeader", editProjectHeader);
 
-			map = new LinkedMultiValueMap<>();
-			map.add("companyId", userObj.getCompanyId());
+				LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
-			ProjectType[] projectTypeListArray = Constants.getRestTemplate()
-					.postForObject(Constants.url + "/getProjectListByCompanyId", map, ProjectType[].class);
+				map = new LinkedMultiValueMap<>();
+				map.add("companyId", userObj.getCompanyId());
 
-			List<ProjectType> projectTypelist = new ArrayList<ProjectType>(Arrays.asList(projectTypeListArray));
+				ProjectType[] projectTypeListArray = Constants.getRestTemplate()
+						.postForObject(Constants.url + "/getProjectListByCompanyId", map, ProjectType[].class);
 
-			model.addObject("projectTypelist", projectTypelist);
+				List<ProjectType> projectTypelist = new ArrayList<ProjectType>(Arrays.asList(projectTypeListArray));
 
-			Customer[] custListArray = Constants.getRestTemplate()
-					.postForObject(Constants.url + "/getCustListByCompanyId", map, Customer[].class);
+				model.addObject("projectTypelist", projectTypelist);
 
-			List<Customer> custlist = new ArrayList<Customer>(Arrays.asList(custListArray));
+				Customer[] custListArray = Constants.getRestTemplate()
+						.postForObject(Constants.url + "/getCustListByCompanyId", map, Customer[].class);
 
-			model.addObject("custlist", custlist);
+				List<Customer> custlist = new ArrayList<Customer>(Arrays.asList(custListArray));
 
-			Location[] location = Constants.getRestTemplate().postForObject(Constants.url + "/getLocationList", map,
-					Location[].class);
+				model.addObject("custlist", custlist);
 
-			List<Location> locationList = new ArrayList<Location>(Arrays.asList(location));
-			model.addObject("locationList", locationList);
+				Location[] location = Constants.getRestTemplate().postForObject(Constants.url + "/getLocationList", map,
+						Location[].class);
 
-			map = new LinkedMultiValueMap<>();
-			map.add("companyId", userObj.getCompanyId());
-			map.add("locIdList", userObj.getLocationIds());
+				List<Location> locationList = new ArrayList<Location>(Arrays.asList(location));
+				model.addObject("locationList", locationList);
 
-			GetEmployeeInfo[] employeeDepartment = Constants.getRestTemplate()
-					.postForObject(Constants.url + "/getEmpInfoList", map, GetEmployeeInfo[].class);
+				map = new LinkedMultiValueMap<>();
+				map.add("companyId", userObj.getCompanyId());
+				map.add("locIdList", userObj.getLocationIds());
 
-			List<GetEmployeeInfo> employeeDepartmentlist = new ArrayList<GetEmployeeInfo>(
-					Arrays.asList(employeeDepartment));
+				GetEmployeeInfo[] employeeDepartment = Constants.getRestTemplate()
+						.postForObject(Constants.url + "/getEmpInfoList", map, GetEmployeeInfo[].class);
 
-			model.addObject("empList", employeeDepartmentlist);
+				List<GetEmployeeInfo> employeeDepartmentlist = new ArrayList<GetEmployeeInfo>(
+						Arrays.asList(employeeDepartment));
+
+				model.addObject("empList", employeeDepartmentlist);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -723,7 +735,8 @@ System.out.println("project list is"+projectHeaderList.toString());
 			String project_revenue = request.getParameter("project_revenue");
 			int project_est_manhrs = Integer.parseInt(request.getParameter("project_est_manhrs"));
 			int project_est_budget = Integer.parseInt(request.getParameter("project_est_budget"));
-
+			String poDate = request.getParameter("poDate");
+			String poNum = request.getParameter("poNum");
 			// String[] arrOfStr = dateRange.split("to", 2);
 
 			Boolean ret = false;
@@ -754,7 +767,7 @@ System.out.println("project list is"+projectHeaderList.toString());
 
 				editProjectHeader.setProjectCity(projectCity);
 
-				//editProjectHeader.setProjectCompletion(0);
+				// editProjectHeader.setProjectCompletion(0);
 				editProjectHeader.setProjectDesc(projectDesc);
 				editProjectHeader.setProjectEstBudget(project_est_budget);
 				editProjectHeader.setProjectEstManhrs(project_est_manhrs);
@@ -767,10 +780,11 @@ System.out.println("project list is"+projectHeaderList.toString());
 
 				editProjectHeader.setProjectEstStartdt(fromDate);
 				editProjectHeader.setProjectEstEnddt(toDate);
-				//editProjectHeader.setProjectStatus("aaa");
+				// editProjectHeader.setProjectStatus("aaa");
 				editProjectHeader.setProjectTypeId(projectTypeId);
 				editProjectHeader.setProjectManagerEmpId(empId);
-
+				editProjectHeader.setPoNumber(poNum);
+				editProjectHeader.setPoDate(poDate);
 				editProjectHeader.setProjectTitle(projectTitle);
 				editProjectHeader.setExInt1(Integer.parseInt(billing_type));
 				editProjectHeader.setExVar1(project_revenue);
@@ -794,7 +808,7 @@ System.out.println("project list is"+projectHeaderList.toString());
 		return "redirect:/showProjectHeaderList";
 
 	}
-	
+
 	@RequestMapping(value = "/upDateProjectStatus", method = RequestMethod.GET)
 	public ModelAndView upDateProjectStatus(HttpServletRequest request, HttpServletResponse response) {
 
@@ -802,46 +816,39 @@ System.out.println("project list is"+projectHeaderList.toString());
 		HttpSession session = request.getSession();
 		try {
 
-				model = new ModelAndView("project/project_status_update");
+			model = new ModelAndView("project/project_status_update");
 			String base64encodedString = request.getParameter("projectId");
 			String projectId = FormValidation.DecodeKey(base64encodedString);
- 			
+
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("projectId", projectId);
-			  updateProjectHeader = Constants.getRestTemplate()
+			updateProjectHeader = Constants.getRestTemplate()
 					.postForObject(Constants.url + "/getProjectHeaderByProjectId", map, ProjectHeader.class);
-			
 
-					 
-				  updateProjectHeader
+			updateProjectHeader
 					.setProjectEstStartdt(DateConvertor.convertToDMY(updateProjectHeader.getProjectEstStartdt()));
-				  updateProjectHeader.
-					setProjectEstEnddt(DateConvertor.convertToDMY(updateProjectHeader.getProjectEstEnddt()));
-					
-					
-					
-				
+			updateProjectHeader
+					.setProjectEstEnddt(DateConvertor.convertToDMY(updateProjectHeader.getProjectEstEnddt()));
+
 			model.addObject("updateProjectHeader", updateProjectHeader);
 
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return model;
 	}
 
-	
 	@RequestMapping(value = "/submitUpdateProStatus", method = RequestMethod.POST)
 	public String submitUpdateProStatus(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			HttpSession session = request.getSession();
 
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
- 
+
 			String status = (request.getParameter("status"));
 			int proComp = Integer.parseInt(request.getParameter("proComp"));
-			System.err.println("pro status  is :"+status);
-			
+			System.err.println("pro status  is :" + status);
+
 			// String[] arrOfStr = dateRange.split("to", 2);
 
 			String remark = null;
@@ -852,7 +859,7 @@ System.out.println("project list is"+projectHeaderList.toString());
 			}
 
 			Boolean ret = false;
- System.out.println("updateProjectHeader is :"+updateProjectHeader.toString());
+			System.out.println("updateProjectHeader is :" + updateProjectHeader.toString());
 			if (ret == false) {
 				/*
 				 * updateProjectHeader.setProjectCompletion(proComp);
@@ -860,7 +867,7 @@ System.out.println("project list is"+projectHeaderList.toString());
 				 * updateProjectHeader.setMakerEnterDatetime(dateTime);
 				 * updateProjectHeader.setMakerUserId(userObj.getUserId());
 				 */
-				System.out.println("updateProjectHeader is after :"+updateProjectHeader.toString());
+				System.out.println("updateProjectHeader is after :" + updateProjectHeader.toString());
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 				map.add("projectId", updateProjectHeader.getProjectId());
 				map.add("status", status);
@@ -869,8 +876,7 @@ System.out.println("project list is"+projectHeaderList.toString());
 				map.add("dateTime", dateTime);
 				Info info = Constants.getRestTemplate().postForObject(Constants.url + "/updateProjectHeader", map,
 						Info.class);
-				 
-				
+
 				if (info.isError() == false) {
 					session.setAttribute("successMsg", "Record Inserted Successfully");
 
@@ -900,6 +906,39 @@ System.out.println("project list is"+projectHeaderList.toString());
 
 		return "redirect:/showProjectHeaderList";
 
+	}
+
+	@RequestMapping(value = "/showProjAllotment", method = RequestMethod.GET)
+	public ModelAndView showProjAllotment(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+
+		try {
+			HttpSession session = request.getSession();
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+
+			model = new ModelAndView("project/projectAllotent");
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("companyId", userObj.getCompanyId());
+			map.add("mangId", userObj.getEmpId());
+			GetProjectHeader[] proHeaderArray = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getProjectAllListByCompanyIdForManager", map, GetProjectHeader[].class);
+			List<GetProjectHeader> projectHeaderList = new ArrayList<GetProjectHeader>(Arrays.asList(proHeaderArray));
+
+			for (int i = 0; i < projectHeaderList.size(); i++) {
+
+				projectHeaderList.get(i)
+						.setExVar1(FormValidation.Encrypt(String.valueOf(projectHeaderList.get(i).getProjectId())));
+				projectHeaderList.get(i).setProjectEstStartdt(
+						DateConvertor.convertToDMY(projectHeaderList.get(i).getProjectEstStartdt()));
+				projectHeaderList.get(i)
+						.setProjectEstEnddt(DateConvertor.convertToDMY(projectHeaderList.get(i).getProjectEstEnddt()));
+			}
+			model.addObject("projectHeaderList", projectHeaderList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
 	}
 
 }

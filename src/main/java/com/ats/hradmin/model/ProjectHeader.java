@@ -1,5 +1,6 @@
 package com.ats.hradmin.model;
 
+ 
 public class ProjectHeader {
 	private int projectId;
 
@@ -56,6 +57,10 @@ public class ProjectHeader {
 	private int projectManagerEmpId;
 
 	private boolean error;
+
+	private String poDate;
+
+	private String poNumber;
 
 	public int getProjectManagerEmpId() {
 		return projectManagerEmpId;
@@ -281,6 +286,24 @@ public class ProjectHeader {
 		this.error = error;
 	}
 
+	
+	
+	public String getPoDate() {
+		return poDate;
+	}
+
+	public void setPoDate(String poDate) {
+		this.poDate = poDate;
+	}
+
+	public String getPoNumber() {
+		return poNumber;
+	}
+
+	public void setPoNumber(String poNumber) {
+		this.poNumber = poNumber;
+	}
+
 	@Override
 	public String toString() {
 		return "ProjectHeader [projectId=" + projectId + ", companyId=" + companyId + ", locId=" + locId
@@ -291,8 +314,10 @@ public class ProjectHeader {
 				+ ", projectStatus=" + projectStatus + ", projectCompletion=" + projectCompletion + ", delStatus="
 				+ delStatus + ", isActive=" + isActive + ", makerUserId=" + makerUserId + ", makerEnterDatetime="
 				+ makerEnterDatetime + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exInt3=" + exInt3 + ", exVar1="
-				+ exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3 + ", projectCity=" + projectCity + ", error="
-				+ error + ", projectManagerEmpId=" + projectManagerEmpId + "]";
+				+ exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3 + ", projectCity=" + projectCity
+				+ ", projectManagerEmpId=" + projectManagerEmpId + ", error=" + error + ", poDate=" + poDate
+				+ ", poNumber=" + poNumber + "]";
 	}
 
+	 
 }
