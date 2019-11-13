@@ -164,8 +164,7 @@ public class ClaimApplicationController {
 			List<GetEmployeeClaimStrudt> claimTypeList = new ArrayList<GetEmployeeClaimStrudt>(Arrays.asList(employeeDoc));
 			System.out.println("claimTypeList list " + claimTypeList.toString());
 			model.addObject("claimTypeList", claimTypeList);
- 
-			map = new LinkedMultiValueMap<>();
+ 			map = new LinkedMultiValueMap<>();
 			map.add("empId", empId);
 
 			EmployeeInfo editEmp = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpInfoById", map,
@@ -197,6 +196,38 @@ public class ClaimApplicationController {
 		return model;
 	}
 
+	
+	
+
+	@RequestMapping(value = "/getClaimTypeById", method = RequestMethod.GET)
+	public @ResponseBody  GetEmployeeClaimStrudt  getClaimTypeById(HttpServletRequest request,
+			HttpServletResponse response) {
+		GetEmployeeClaimStrudt tempDocList =new GetEmployeeClaimStrudt();
+		try {
+			 String empId =  request.getParameter("empId");
+			 String claimTypeId =  request.getParameter("claimTypeId");
+					
+			MultiValueMap<String, Object> map  = new LinkedMultiValueMap<>();
+			map.add("empId",empId );
+			map.add("typeId",claimTypeId);
+
+			tempDocList = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpClaimStructureByClaimType", map,
+					GetEmployeeClaimStrudt.class);
+		 
+			
+			
+
+		} catch (Exception e) {
+			System.err.println("Exce In atempDocList  temp List " + e.getMessage());
+			e.printStackTrace();
+		}
+		System.err.println(" enq Item List " + tempDocList.toString());
+
+		return tempDocList;
+
+	}
+	
+	
 	/*
 	 * @RequestMapping(value = "/insertSubmitClaim", method = RequestMethod.POST)
 	 * public String submitInsertLeave(HttpServletRequest request,
@@ -856,25 +887,24 @@ public class ClaimApplicationController {
 
 			int empId = ct.getEmpId();
 
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			map.add("empId", docHead.getEmpId());
-			map.add("companyId", userObj.getCompanyId());
-
-			GetAuthorityIds editEmp = Constants.getRestTemplate().postForObject(Constants.url + "/getClaimAuthIds", map,
-					GetAuthorityIds.class);
-
-			int stat = 0;
-
-			if (editEmp.getFinAuthEmpId() == userObj.getEmpId()) {
-				stat = 3;
-			} else if (editEmp.getIniAuthEmpId() == userObj.getEmpId()) {
-				stat = 2;
-			} else {
-				stat = 1;
-			}
-
-			System.out.println("stat is " + stat);
-			docHead.setClaimStatus(stat);
+			/*
+			 * MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			 * map.add("empId", docHead.getEmpId()); map.add("companyId",
+			 * userObj.getCompanyId());
+			 * 
+			 * GetAuthorityIds editEmp =
+			 * Constants.getRestTemplate().postForObject(Constants.url + "/getClaimAuthIds",
+			 * map, GetAuthorityIds.class);
+			 * 
+			 * int stat = 0;
+			 * 
+			 * if (editEmp.getFinAuthEmpId() == userObj.getEmpId()) { stat = 3; } else if
+			 * (editEmp.getIniAuthEmpId() == userObj.getEmpId()) { stat = 2; } else { stat =
+			 * 1; }
+			 * 
+			 * System.out.println("stat is " + stat);
+			 */
+			docHead.setClaimStatus(1);
 
 			ClaimApplyHeader res = Constants.getRestTemplate()
 					.postForObject(Constants.url + "/saveClaimHeaderAndDetail", docHead, ClaimApplyHeader.class);
@@ -886,7 +916,7 @@ public class ClaimApplicationController {
 				lt.setEmpRemarks(remark);
 				;
 				lt.setClaimId(res.getCaHeadId());
-				lt.setClaimStatus(stat);
+				lt.setClaimStatus(1);
 				lt.setEmpId(docHead.getEmpId());
 				lt.setExInt1(1);
 				lt.setExInt2(1);
@@ -904,7 +934,7 @@ public class ClaimApplicationController {
 
 				if (res1.isError() == false) {
 					System.out.println("claim trail saved success");
-					map = new LinkedMultiValueMap<>();
+					MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 					map.add("claimId", res.getCaHeadId());
 					map.add("trailId", res1.getClaimTrailPkey());
 					Info info = Constants.getRestTemplate().postForObject(Constants.url + "/updateClaimTrailId", map,

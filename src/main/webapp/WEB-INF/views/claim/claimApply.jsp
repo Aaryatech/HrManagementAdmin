@@ -17,6 +17,7 @@
 </head>
 
 <body onload="chkAssign()">
+	<c:url value="/getClaimTypeById" var="getClaimTypeById"></c:url>
 
 	<!-- Main navbar -->
 	<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
@@ -187,10 +188,10 @@
 											Claim Remark <span style="color: red">* </span>:
 										</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control"
-												placeholder="Enter Claim Title" id="claim_title"
-												name="claim_title" autocomplete="off" onchange="trim(this)">
-											<span class="validation-invalid-label" id="error_claim_title"
+											<input type="text" class="form-control" placeholder="Remark"
+												id="claim_title" name="claim_title" autocomplete="off"
+												onchange="trim(this)"> <span
+												class="validation-invalid-label" id="error_claim_title"
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
@@ -218,14 +219,13 @@
 											<select name="claimTypeId"
 												data-placeholder="Select Claim Type" id="claimTypeId"
 												class="form-control form-control-select2 select2-hidden-accessible"
-												data-fouc="" aria-hidden="true">
+												data-fouc="" aria-hidden="true" onchange="setAmt()">
 												<option></option>
 												<c:forEach items="${claimTypeList}" var="claimTypeList">
 
 													<option value="${claimTypeList.clmTypeId}"
 														data-clstrname="${claimTypeList.claimTypeTitle}">${claimTypeList.claimTypeTitle}</option>
-
-
+													 
 												</c:forEach>
 											</select> <span class="validation-invalid-label"
 												id="error_claimTypeId" style="display: none;">This
@@ -239,7 +239,7 @@
 											Claim Amount <span style="color: red">* </span>:
 										</label>
 										<div class="col-lg-4">
-											<input type="text" class="form-control numbersOnly"
+											<input type="text" class="form-control numbersOnly" onchange="checkAmt()"
 												placeholder="Amount of Claim in Rs. " id="claimAmt"
 												name="claimAmt" autocomplete="off"> <span
 												class="validation-invalid-label" id="error_claim_amt"
@@ -250,17 +250,21 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="lvngReson">Remark
-											: </label>
+											<span style="color: red">* </span>: </label>
 										<div class="col-lg-10">
 											<textarea rows="3" cols="3" class="form-control"
 												placeholder="Remark" onchange="trim(this)" id="claimRemark"
-												name="claimRemark"> </textarea>
+												name="claimRemark"> </textarea><span class="validation-invalid-label"
+												id="error_claimRemark" style="display: none;">This
+												field is required.</span>
 										</div>
+										
 									</div>
 									<input type="hidden" id="isDelete" name="isDelete" value="0">
 									<input type="hidden" name="isEdit" id="isEdit" value="0">
 									<input type="hidden" name="index" id="index" value="0">
-
+									<input type="hidden" name="tempAmt" id="tempAmt" value="0">
+									 
 									<div class="form-group row mb-0">
 										<div class="col-lg-10 ml-lg-auto">
 											<input type="button" value="Add" class="btn btn-primary"
@@ -297,11 +301,10 @@
 										autocomplete="off" readonly> <input type="hidden"
 										class="form-control numbersOnly" id="auth"
 										value="${authorityInformation.claimInitialAuth}" name="auth">
-									<input type="hidden" class="form-control numbersOnly"
-										id="tempAmt" name="tempAmt" value="0" autocomplete="off"
-										readonly> <span class="validation-invalid-label"
-										id="error_tbl" style="display: none;">Please Fill Claim
-										Details Properly. </span>
+ 
+									<span class="validation-invalid-label" id="error_tbl"
+										style="display: none;">Please Fill Claim Details
+										Properly. </span>
 
 
 									<div class="form-group row mb-0">
@@ -342,7 +345,47 @@
 	</div>
 	<!-- /page content -->
 
+	<script type="text/javascript">
+		function setAmt() {
 
+			//alert("hii");
+			var claimTypeId = document.getElementById("claimTypeId").value;
+			var empId = document.getElementById("empId").value;
+			 
+			$.getJSON('${getClaimTypeById}', {
+				claimTypeId : claimTypeId,
+				empId : empId,
+				ajax : 'true',
+			},
+
+			function(data) {
+				  
+				 document.getElementById("tempAmt").value=data.clmAmt;
+				 
+				});
+ 
+ 
+		}
+	</script>
+
+
+<script type="text/javascript">
+		function checkAmt() {
+
+			//alert("hii");
+			var tempAmt = document.getElementById("tempAmt").value;
+			var claimAmt = document.getElementById("claimAmt").value;
+			
+			if(parseFloat(claimAmt) >parseFloat(tempAmt)){
+				
+				alert("Amonut Entered Exceeds the Limit Amount");
+				
+			} 
+			 
+ 
+		}
+	</script>
+ 
 	<script type="text/javascript">
 		function add() {
 			//alert("hii");
@@ -352,7 +395,7 @@
 
 			var claimAmt = document.getElementById("claimAmt").value;
 			//alert("hii"+claimTypeId+claimAmt);
-			 
+
 			var x = document.getElementById("tempAmt").value;
 			var y = parseInt(x) + parseInt(claimAmt);
 			document.getElementById("tempAmt").value = y;
@@ -373,6 +416,17 @@
 			} else {
 				$("#error_claim_amt").hide()
 
+			}
+			
+
+			if (!$("#claimRemark").val()) {
+
+				isError = true;
+
+				$("#error_claimRemark").show()
+
+			} else {
+				$("#error_claimRemark").hide()
 			}
 
 			if (claimTypeId == "" || claimAmt == 0) {
@@ -399,8 +453,6 @@
 			var isEdit = document.getElementById("isEdit").value;
 			var isDelete = document.getElementById("isDelete").value;
 			var index = document.getElementById("index").value;
-			
-		
 
 			//alert("Inside add ajax" + claimTypeId + claimAmt);
 
@@ -436,10 +488,10 @@
 													function(i, v) {
 
 														var str = /* '<a href="#" class="action_btn" onclick="callEdit('
-																																																																																									+ v.claimDetailId
-																																																																																									+ ','
-																																																																																									+ i
-																																																																																									+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp; */
+																																																																																																																			+ v.claimDetailId
+																																																																																																																			+ ','
+																																																																																																																			+ i
+																																																																																																																			+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp; */
 														'<a href="#" class="action_btn" onclick="callDelete('
 																+ v.claimDetailId
 																+ ','
@@ -518,10 +570,10 @@
 												function(i, v) {
 
 													var str = /* '<a href="#" class="action_btn" onclick="callEdit('
-																																																																																						+ v.claimDetailId
-																																																																																						+ ','
-																																																																																						+ i
-																																																																																						+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp; */
+																																																																																																														+ v.claimDetailId
+																																																																																																														+ ','
+																																																																																																														+ i
+																																																																																																														+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp; */
 													'<a href="#" class="action_btn" onclick="callDelete('
 															+ v.claimDetailId
 															+ ','
@@ -616,6 +668,8 @@
 												} else {
 													$("#error_Range").hide()
 												}
+												
+												
 
 												if (!$("#claim_title").val()) {
 

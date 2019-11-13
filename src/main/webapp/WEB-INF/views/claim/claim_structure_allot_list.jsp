@@ -200,12 +200,12 @@
 											<td><input type="checkbox" class="chk" name="empIds"
 												id="empIds${structure.empId}" value="${structure.empId}"
 												data-empcode="${structure.empCode}"
-												data-name="${structure.empSname} ${structure.empFname}"
+												data-name="${structure.empSname}&nbsp;&nbsp; ${structure.empFname}"
 												data-depname="${structure.empDeptName}" /></td>
 											<td>${index+1}</td>
 											<c:set var="index" value="${index+1}"></c:set>
 											<td>${structure.empCode}</td>
-											<td>${structure.empSname}${structure.empFname}</td>
+											<td>${structure.empSname}&nbsp;&nbsp;${structure.empFname}</td>
 
 											<c:if test="${structure.clmsName==null}">
 												<td>-</td>
