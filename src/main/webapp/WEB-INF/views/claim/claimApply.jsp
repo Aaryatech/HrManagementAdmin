@@ -370,21 +370,7 @@
 	</script>
 
 
-	<script type="text/javascript">
-		function checkAmt() {
-
-			//alert("hii");
-			var tempAmt = document.getElementById("tempAmtX").value;
-			var claimAmt = document.getElementById("claimAmt").value;
-
-			if (parseFloat(claimAmt) > parseFloat(tempAmt)) {
-
-				alert("Amonut Entered Exceeds the Limit Amount");
-
-			}
-
-		}
-	</script>
+	
 
 	<script type="text/javascript">
 		function add() {
@@ -733,6 +719,41 @@
 
 		}
 	</script>
+	<script type="text/javascript">
+		function checkAmt() {
+
+			//alert("hii");
+			var tempAmt = document.getElementById("tempAmtX").value;
+			var claimAmt = document.getElementById("claimAmt").value;
+
+			if (parseFloat(claimAmt) > parseFloat(tempAmt)) {
+
+			//	alert("Amonut Entered Exceeds the Limit Amount");
+				$('#modal_scrollable1')
+				.modal('show');
+			}
+
+		}
+	</script>
+	
+	<div id="modal_scrollable1" class="modal fade" data-backdrop="false"
+		tabindex="-1">
+		<div class="modal-dialog modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-header pb-3">
+ 					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+ 				<div class="modal-body py-0">
+					<h5 class="modal-title">Amount Entered Exceeds the Limit Amount</h5>
+ 				</div>
+ 				<div class="modal-footer pt-3">
+					<button type="button" class="btn btn-link" data-dismiss="modal">Ok</button>
+ 				</div>
+			</div>
+		</div>
+	</div>
+	
+	
 	<!-- Scrollable modal -->
 	<div id="modal_scrollable" class="modal fade" data-backdrop="false"
 		tabindex="-1">
