@@ -353,7 +353,7 @@ public class ClaimApplicationController {
 			map.add("empId", userObj.getEmpId());
 
 			GetClaimApplyAuthwise[] employeeDoc = Constants.getRestTemplate()
-					.postForObject(Constants.url + "/getClaimApplyListForPending", map, GetClaimApplyAuthwise[].class);
+					.postForObject(Constants.url + "/getClaimApplyListForPendingForManager", map, GetClaimApplyAuthwise[].class);
 
 			List<GetClaimApplyAuthwise> claimList = new ArrayList<GetClaimApplyAuthwise>(Arrays.asList(employeeDoc));
 
@@ -367,11 +367,11 @@ public class ClaimApplicationController {
 			}
 			model.addObject("claimListForApproval", claimList);
 			model.addObject("list1Count", claimList.size());
-			System.out.println("lv claimList list pending " + claimList.toString());
+			//System.out.println("lv claimList list pending " + claimList.toString());
 
 			// for Info
 
-			model.addObject("empIdOrig", userObj.getEmpId());
+			/*model.addObject("empIdOrig", userObj.getEmpId());
 
 			map = new LinkedMultiValueMap<>();
 			map.add("empId", userObj.getEmpId());
@@ -392,7 +392,7 @@ public class ClaimApplicationController {
 
 			model.addObject("list2Count", claimList1.size());
 			model.addObject("claimListForApproval1", claimList1);
-			System.out.println("lv leaveList list1 info " + claimList1.toString());
+			System.out.println("lv leaveList list1 info " + claimList1.toString());*/
 
 		} catch (Exception e) {
 			e.printStackTrace();

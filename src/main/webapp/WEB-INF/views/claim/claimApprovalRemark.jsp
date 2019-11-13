@@ -26,26 +26,7 @@
 		<!-- Main content -->
 		<div class="content-wrapper">
 
-			<!-- Page header -->
-			<div class="page-header page-header-light">
 
-
-				<div
-					class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
-					<div class="d-flex">
-						<div class="breadcrumb">
-							<a href="index.html" class="breadcrumb-item"><i
-								class="icon-home2 mr-2"></i> Home</a> <span
-								class="breadcrumb-item active">Dashboard</span>
-						</div>
-
-						<a href="#" class="header-elements-toggle text-default d-md-none"><i
-							class="icon-more"></i></a>
-					</div>
-
-
-				</div>
-			</div>
 			<!-- /page header -->
 
 
@@ -205,8 +186,8 @@
 
 									</tbody>
 								</table>
-								
-								<br/>
+
+								<br />
 								<h6 class="card-title">Claim Trail History</h6>
 
 								<table
@@ -305,6 +286,14 @@
 												id="submtbtn">
 												Submit <i class="icon-paperplane ml-2"></i>
 											</button>
+
+											<a
+												href="${pageContext.request.contextPath}/showClaimApprovalByAuthority"><button
+													type="button" class="btn bg-blue ml-3 legitRipple"
+													id="cancel">
+													Cancel<i class="icon-paperplane ml-2"></i>
+												</button></a>
+
 										</div>
 									</div>
 								</form>
@@ -388,16 +377,13 @@
 
 												}
 
-											
- 			
-												 
 												if (!isError) {
-													 
-													  $('#clTitle1')
+
+													$('#clTitle1')
 															.html(
 																	document
 																			.getElementById("clName").value);
-														//alert("asdf");
+													//alert("asdf");
 													$('#claimAmt1')
 															.html(
 																	document
@@ -413,12 +399,12 @@
 													$('#proName')
 															.html(
 																	document
-																			.getElementById("proTitle").value);  
+																			.getElementById("proTitle").value);
 
 													$('#claimDate1')
 															.html(
 																	document
-																			.getElementById("cldate").value); 
+																			.getElementById("cldate").value);
 
 													$('#modal_scrollable')
 															.modal('show');
@@ -487,11 +473,11 @@
 					</div>
 					<div class="form-group row">
 						<label class="col-form-label col-lg-3" for="claimDate1">
-							  Date : </label> <label class="col-form-label col-lg-7"
-							id="claimDate1" for="claimDate1"> </label>
+							Date : </label> <label class="col-form-label col-lg-7" id="claimDate1"
+							for="claimDate1"> </label>
 
 					</div>
-					 
+
 
 				</div>
 
