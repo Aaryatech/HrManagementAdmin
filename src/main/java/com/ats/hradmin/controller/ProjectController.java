@@ -486,8 +486,8 @@ System.out.println("billing_type:project_revenue"+billing_type+ project_revenue)
 				 * trim()));
 				 */
 
-				save.setProjectEstStartdt(DateConvertor.convertToYMD(fromDate));
-				save.setProjectEstEnddt(DateConvertor.convertToYMD(toDate));
+				save.setProjectEstStartdt( fromDate );
+				save.setProjectEstEnddt( toDate );
 				save.setProjectStatus("0");
 				save.setProjectTypeId(projectTypeId);
 				save.setProjectManagerEmpId(empId);
@@ -765,8 +765,8 @@ System.out.println("project list is"+projectHeaderList.toString());
 				 * trim()));
 				 */
 
-				editProjectHeader.setProjectEstStartdt(DateConvertor.convertToYMD(fromDate));
-				editProjectHeader.setProjectEstEnddt(DateConvertor.convertToYMD(toDate));
+				editProjectHeader.setProjectEstStartdt(fromDate);
+				editProjectHeader.setProjectEstEnddt(toDate);
 				//editProjectHeader.setProjectStatus("aaa");
 				editProjectHeader.setProjectTypeId(projectTypeId);
 				editProjectHeader.setProjectManagerEmpId(empId);
