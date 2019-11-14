@@ -179,7 +179,7 @@ public class ClaimApplicationController {
 			map.add("companyId", userObj.getCompanyId());
 			map.add("empId", empId);
 			ProjectHeader[] employeeDoc1 = Constants.getRestTemplate()
-					.postForObject(Constants.url + "/getProjectsListByCompanyIdAndEmpId", map, ProjectHeader[].class);
+					.postForObject(Constants.url + "/getProjectsListForApplyClaim", map, ProjectHeader[].class);
 
 			List<ProjectHeader> proTypeList = new ArrayList<ProjectHeader>(Arrays.asList(employeeDoc1));
 			System.out.println("proTypeList list " + proTypeList.toString());
