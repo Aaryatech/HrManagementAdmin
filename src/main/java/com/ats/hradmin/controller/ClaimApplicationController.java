@@ -24,6 +24,7 @@ import com.ats.hradmin.claim.ClaimApply;
 import com.ats.hradmin.claim.ClaimApplyHeader;
 import com.ats.hradmin.claim.ClaimDetail;
 import com.ats.hradmin.claim.ClaimProof;
+import com.ats.hradmin.claim.ClaimStructureDetail;
 import com.ats.hradmin.claim.ClaimTemp;
 import com.ats.hradmin.claim.ClaimTrail;
 import com.ats.hradmin.claim.ClaimType;
@@ -429,7 +430,7 @@ public class ClaimApplicationController {
 			model.addObject("empId", empId);
 			model.addObject("claimId", claimId);
 			model.addObject("stat", stat);
-			System.out.println("claimApprovalRemark clid is " + claimId);
+			System.out.println("empId" + empId);
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("claimId", claimId);
@@ -439,14 +440,14 @@ public class ClaimApplicationController {
 			List<GetClaimTrailStatus> employeeList = new ArrayList<GetClaimTrailStatus>(Arrays.asList(employeeDoc));
 
 			model.addObject("employeeList", employeeList);
-			System.out.println("trail *******" + employeeList.toString());
+			// System.out.println("trail *******" + employeeList.toString());
 
 			GetClaimTrailStatus trailHead = new GetClaimTrailStatus();
 
 			trailHead = employeeList.get(0);
 			trailHead.setCaFromDt(DateConvertor.convertToDMY(trailHead.getCaFromDt()));
 			trailHead.setCaToDt(DateConvertor.convertToDMY(trailHead.getCaToDt()));
-			System.out.println("trailHead*******" + trailHead.toString());
+			// System.out.println("trailHead*******" + trailHead.toString());
 
 			model.addObject("lvEmp", trailHead);
 			map = new LinkedMultiValueMap<>();
@@ -456,7 +457,7 @@ public class ClaimApplicationController {
 					.postForObject(Constants.url + "/getClaimDetailListByEmpId", map, ClaimDetail[].class);
 
 			List<ClaimDetail> claimDetList = new ArrayList<ClaimDetail>(Arrays.asList(employeeDoc1));
-			System.err.println("claim list" + claimDetList.toString());
+			// System.err.println("claim list" + claimDetList.toString());
 
 			for (int i = 0; i < claimDetList.size(); i++) {
 
@@ -466,6 +467,16 @@ public class ClaimApplicationController {
 
 			model.addObject("claimDetList", claimDetList);
 			model.addObject("retun", retun);
+
+			map = new LinkedMultiValueMap<>();
+			map.add("empId", empId);
+
+			ClaimStructureDetail[] claimStructureDetail = Constants.getRestTemplate().postForObject(
+					Constants.url + "/getClaimStructureDetailByEmpId", map, ClaimStructureDetail[].class);
+			List<ClaimStructureDetail> claimTypeList = new ArrayList<ClaimStructureDetail>(
+					Arrays.asList(claimStructureDetail));
+			model.addObject("claimTypeList", claimTypeList);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -1108,7 +1119,7 @@ public class ClaimApplicationController {
 
 			int retun = Integer.parseInt(request.getParameter("retun"));
 			model.addObject("retun", retun);
-			
+
 			System.out.println("ID: " + claimId);
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("claimId", claimId);

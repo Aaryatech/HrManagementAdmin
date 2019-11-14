@@ -155,7 +155,7 @@
 
 									</div>
 								</div>
-
+ 
 								<h6 class="card-title">Claim Detail</h6>
 								<table
 									class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic1  datatable-button-print-columns1"
@@ -166,7 +166,7 @@
 											<th>Claim Type</th>
 											<th>Amount</th>
 											<th>Remark</th>
-
+											<th>Limit</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -179,8 +179,12 @@
 												<td>${lvTypeList.claimTypeTitle}</td>
 												<td>${lvTypeList.claimAmount}</td>
 												<td>${lvTypeList.claimRemarks}</td>
-
-
+												<c:forEach items="${claimTypeList}" var="claimTypeList">
+													<c:if
+														test="${claimTypeList.clmTypeId==lvTypeList.claimTypeId}">
+														<td>${claimTypeList.clmAmt}</td>
+													</c:if>
+												</c:forEach>
 											</tr>
 										</c:forEach>
 
