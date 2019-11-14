@@ -10,7 +10,7 @@
 </head>
 
 <body>
-<c:url value="/checkUniqueLeaveType" var="checkUniqueLeaveType"></c:url>
+	<c:url value="/checkUniqueLeaveType" var="checkUniqueLeaveType"></c:url>
 	<!-- Main navbar -->
 	<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 	<!-- /main navbar -->
@@ -28,30 +28,7 @@
 		<div class="content-wrapper">
 
 			<!-- Page header -->
-			<div class="page-header page-header-light">
 
-
-				<div
-					class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
-					<div class="d-flex">
-						<div class="breadcrumb">
-							<a href="index.html" class="breadcrumb-item"><i
-								class="icon-home2 mr-2"></i> Home</a> <span
-								class="breadcrumb-item active">Dashboard</span>
-						</div>
-
-						<a href="#" class="header-elements-toggle text-default d-md-none"><i
-							class="icon-more"></i></a>	</div>
-								<div class="breadcrumb justify-content-center">
-						<a href="${pageContext.request.contextPath}/showLeaveTypeList"
-							class="breadcrumb-elements-item">  Leave Type List </a>
-
-			
-					</div>
-
-
-				</div>
-			</div>
 			<!-- /page header -->
 
 
@@ -70,13 +47,22 @@
 
 
 						<div class="card">
+
+
 							<div class="card-header header-elements-inline">
-								<h6 class="card-title">Edit Leave Type</h6>
-								<!-- <div class="header-elements">
-									<div class="list-icons">
-										<a class="list-icons-item" data-action="collapse"></a>
-									</div>
-								</div> -->
+								<table width="100%">
+									<tr width="100%">
+										<td width="60%"><h5 class="card-title">Edit Leave
+												Type</h5></td>
+										<td width="40%" align="right">
+											<%-- <a
+									href="${pageContext.request.contextPath}/showAddKra?empId=${editKra.exVar3}&finYrId=${editKra.exVar2}"
+									class="breadcrumb-elements-item">
+										<button type="button" class="btn btn-primary">KRA List </button>
+								</a>  --%>
+										</td>
+									</tr>
+								</table>
 							</div>
 
 							<div class="card-body">
@@ -124,7 +110,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="leaveTypeTitle">
-											Title <span style="color:red">* </span>:</label>
+											Title <span style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Enter Leave Type" id="leaveTypeTitle"
@@ -137,29 +124,29 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2"
-											for="leaveShortTypeTitle"> Short Title <span style="color:red">* </span>:</label>
+											for="leaveShortTypeTitle"> Short Title <span
+											style="color: red">* </span>:
+										</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
 												placeholder="Enter Leave Short Name "
 												id="leaveShortTypeTitle" value="${editCompany.lvTitleShort}"
 												name="leaveShortTypeTitle" autocomplete="off"
-												onchange="trim(this)" oninput="checkUniqueShortName(this.value)"> <span
+												onchange="trim(this)"
+												oninput="checkUniqueShortName(this.value)"> <span
 												class="validation-invalid-label" id="error_leaveScType"
-												style="display: none;">This field is required.</span>
-												<span
+												style="display: none;">This field is required.</span> <span
 												class="validation-invalid-label" id="error_shotname"
-												style="display: none;">This field is required.</span>
-												<span class="validation-invalid-label" id="error_leaveShortname"
-												style="display: none;">Already exist.</span>
-												<span
+												style="display: none;">This field is required.</span> <span
+												class="validation-invalid-label" id="error_leaveShortname"
+												style="display: none;">Already exist.</span> <span
 												class="validation-invalid-label" id="error_sameName"
-												style="display: none;">Leave Type Short Name Can Not be same as  Leave Type Name. </span>
+												style="display: none;">Leave Type Short Name Can Not
+												be same as Leave Type Name. </span>
 										</div>
 									</div>
-								<input type="hidden" class="form-control"
-												
-												id="shortname" value="${editCompany.lvTitleShort}"
-												name="shortname"> 
+									<input type="hidden" class="form-control" id="shortname"
+										value="${editCompany.lvTitleShort}" name="shortname">
 
 									<%-- <div class="form-group row">
 										<label class="col-form-label col-lg-2" for="leaveWorlHrs">Working
@@ -186,7 +173,8 @@
 									</div>
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="comoffallowed">Is
-											Structured <span style="color:red">* </span>:</label>
+											Structured <span style="color: red">* </span>:
+										</label>
 										<div class="form-check form-check-inline">
 											<label class="form-check-label"> <input type="radio"
 												${editCompany.isStructured==1 ? 'checked' : ''}
@@ -243,13 +231,17 @@
 
 									<div class="form-group row mb-0">
 										<div class="col-lg-10 ml-lg-auto">
-									
+
 											<button type="submit" class="btn bg-blue ml-3 legitRipple"
 												id="submtbtn">
 												Submit <i class="icon-paperplane ml-2"></i>
 											</button>
-											<a href="${pageContext.request.contextPath}/showLeaveTypeList"><button
-										type="button" class="btn btn-primary"><i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp; Cancel</button></a>
+											<a
+												href="${pageContext.request.contextPath}/showLeaveTypeList"><button
+													type="button" class="btn btn-primary">
+													<i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp;
+													Cancel
+												</button></a>
 										</div>
 									</div>
 								</form>
@@ -274,66 +266,64 @@
 	</div>
 	<!-- /page content -->
 	<script type="text/javascript">
-	function checkUniqueShortName(valueType) {
+		function checkUniqueShortName(valueType) {
 			//alert("leaveShortTypeTitle");
 
 			document.getElementById("submtbtn").disabled = false;
 			var shortname = document.getElementById("shortname").value;
-			
+
 			var valid = false;
-			
-			if (valueType!= '') {
-					valid = true;
-					
-			} else{ 
-					valid = false;
+
+			if (valueType != '') {
+				valid = true;
+
+			} else {
+				valid = false;
 			}
 			if (valid == true)
-			
+
 				$
 						.getJSON(
 								'${checkUniqueLeaveType}',
-								{								
+								{
 									valueType : valueType,
 									ajax : 'true',
 
 								},
 								function(data) {
 									//alert("data" + +JSON.stringify(data));
-										$("#error_leaveShortname").hide()
+									$("#error_leaveShortname").hide()
 									if (data.error == false) {
-										
-										if(shortname!=valueType){
+
+										if (shortname != valueType) {
 											//alert("Already exist") 
 											$("#error_leaveShortname").show()
-										document.getElementById("leaveShortTypeTitle").value = "";
+											document
+													.getElementById("leaveShortTypeTitle").value = "";
 										}
 									}
-									
+
 								});
-			
-		}
 
-	
+		}
 	</script>
-<script type="text/javascript">
+	<script type="text/javascript">
+		function checkSame() {
+			x = document.getElementById("leaveTypeTitle").value;
+			y = document.getElementById("leaveShortTypeTitle").value;
+			//alert(x);
 
-function checkSame(){
-	x=document.getElementById("leaveTypeTitle").value;
-	y=document.getElementById("leaveShortTypeTitle").value;
-	//alert(x);
-	
-	if(x!== '' && y!== ''){
-		if(x==y){
-			$("#error_sameName").show()
-			document.getElementById("leaveShortTypeTitle").value="";
+			if (x !== '' && y !== '') {
+				if (x == y) {
+					$("#error_sameName").show()
+					document.getElementById("leaveShortTypeTitle").value = "";
+				} else {
+					$("#error_sameName").hide()
+				}
+			}
+
 		}
-		else{
-			$("#error_sameName").hide()
-		}
-}
-	
-}</script>
+	</script>
 	<script>
 		function trim(el) {
 			el.value = el.value.replace(/(^\s*)|(\s*$)/gi, ""). // removes leading and trailing spaces
@@ -382,10 +372,7 @@ function checkSame(){
 					$("#error_leaveScType").hide()
 				}
 
-				 
-
 				if (!isError) {
-
 
 					var x = true;
 					if (x == true) {
@@ -400,17 +387,17 @@ function checkSame(){
 		});
 		//
 	</script>
-<script type="text/javascript">
+	<script type="text/javascript">
 		function checkUniqueLeave(inputValue, valueType) {
 			//alert("hi");
 
 			document.getElementById("submtbtn").disabled = false;
-			var isEdit=1;
+			var isEdit = 1;
 
 			var valid = false;
 			if (valueType == 1) {
 				//alert("Its Mob no");
-				if (inputValue!== '') {
+				if (inputValue !== '') {
 					valid = true;
 					//alert("Len 10")
 				} else {
@@ -419,7 +406,7 @@ function checkSame(){
 			} else if (valueType == 2) {
 				//alert("Its Email " );
 
-				if (inputValue!== '') {
+				if (inputValue !== '') {
 					valid = true;
 					//alert("Valid Email Id");
 				} else {
@@ -429,28 +416,20 @@ function checkSame(){
 			}
 			if (valid == true)
 
-				$
-						.getJSON(
-								'${checkUniqueLeaveType}',
-								{
-									inputValue : inputValue,
-									valueType : valueType,
-									isEdit:    isEdit,
-									ajax : 'true',
+				$.getJSON('${checkUniqueLeaveType}', {
+					inputValue : inputValue,
+					valueType : valueType,
+					isEdit : isEdit,
+					ajax : 'true',
 
-								},
-								function(data) {
-									//alert("data" + data);
+				}, function(data) {
+					//alert("data" + data);
 
-									//alert("Data  " +JSON.stringify(data));
+					//alert("Data  " +JSON.stringify(data));
 
-									
-
-								});
+				});
 			checkSame();
 		}
-
-	
 	</script>
 </body>
 </html>
