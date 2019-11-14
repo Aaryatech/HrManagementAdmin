@@ -248,7 +248,7 @@
 										</label>
 										<div class="col-lg-4">
 											<input type="text" class="form-control numbersOnly"
-												onchange="checkAmt()" placeholder="Amount of Claim in Rs. "
+												 placeholder="Amount of Claim in Rs. "
 												id="claimAmt" name="claimAmt" autocomplete="off"> <span
 												class="validation-invalid-label" id="error_claim_amt"
 												style="display: none;">This field is required.</span>
@@ -358,9 +358,11 @@
 	<script type="text/javascript">
 		function setAmt() {
 
-			//alert("hii");
+			
 			var claimTypeId = document.getElementById("claimTypeId").value;
+			
 			var empId = document.getElementById("empId").value;
+			//alert("hii"+claimTypeId+empId);
 
 			$.getJSON('${getClaimTypeById}', {
 				claimTypeId : claimTypeId,
@@ -375,7 +377,7 @@
 			});
 
 		}
-	</script>
+	</script>http://localhost:8088/hradmin/showClaimApply?empId=MQ==
 
 
 	
@@ -425,11 +427,122 @@
 				var x = document.getElementById("tempAmt").value;
 				var y = parseInt(x) + parseInt(claimAmt);
 				document.getElementById("tempAmt").value = y;
-			}
+				
+				
+				
+				var tempAmt = document.getElementById("tempAmtX").value;
+				var claimAmt = document.getElementById("claimAmt").value;
+			 
+				
+				$('#lmAmtNew')
+				.html(
+						document
+								.getElementById("tempAmtX").value);
+ 				if (parseFloat(claimAmt) > parseFloat(tempAmt)) {
 
+				//	alert("Amonut Entered Exceeds the Limit Amount");
+					$('#modal_scrollable1')
+					.modal('show');
+				}
+ 				
+ 				else{
+ 					
+ 					var valid = true;
+ 					
+ 				 
+ 					
+ 					var el = document.getElementById('claimTypeId');
+ 					var lvTypeName = el.options[el.selectedIndex].innerHTML;
+ 				//	alert("lvTypeName  " + lvTypeName);
+
+ 					var daterange = document.getElementById("claimDate").value;
+ 					var res = daterange.split(" to ");
+
+ 					var isEdit = document.getElementById("isEdit").value;
+ 					var isDelete = document.getElementById("isDelete").value;
+ 					var index = document.getElementById("index").value;
+ 					 if (valid == true) {
+ 						 
+ 						// alert("hii");
+
+ 						$
+ 								.getJSON(
+ 										'${addClaimDetailProcess}',
+ 										{
+
+ 											isDelete : isDelete,
+ 											isEdit : isEdit,
+ 											index : index,
+ 											claimAmt : claimAmt,
+ 											claimRemark : claimRemark,
+ 											lvTypeName : lvTypeName,
+ 											claimTypeId : claimTypeId,
+ 											ajax : 'true',
+
+ 										},
+
+ 										function(data) {
+ 											//alert(data.length);
+ 											document.getElementById("dataLen").value = data.length;
+
+ 											$("#printtable1 tbody").empty();
+ 											$("#loader").hide();
+
+ 											for (var i = 0; i < data.length; i++) {
+
+ 												var str = '<a href="#" class="action_btn" onclick="callDelete('
+ 														+ data[i].claimDetailId
+ 														+ ','
+ 														+ i
+ 														+ ')" style="color:black"><i class="fa fa-trash"></i></a>'
+ 												var tr_data = '<tr>' + '<td>' + (i + 1)
+ 														+ '</td>' + '<td>'
+ 														+ data[i].lvTypeName + '</td>'
+ 														+ '<td>' + data[i].claimAmount
+ 														+ '</td>' + '<td>'
+ 														+ data[i].remark
+ 														+ '</td><td>' + str + '</td>'
+ 														+ '</tr>';
+ 												$('#printtable1' + ' tbody').append(
+ 														tr_data);
+
+ 											}
+ 											$('#modal_scrollable1').modal('hide');
+ 											
+ 											
+ 										
+
+ 											
+ 										});
+
+ 						
+ 						document.getElementById("claimRemark").value = "";
+ 						document.getElementById("claimAmt").value = 0;
+
+ 						document.getElementById("isDelete").value = 0;
+ 						document.getElementById("isEdit").value = 0;
+ 						document.getElementById("index").value = 0;
+ 					} 
+ 					
+ 					 
+ 					
+ 				}
+			}
+ 
+		}
+		
+		
+		function finalAdd() {
+			var valid = true;
+			
+			var claimTypeId = document.getElementById("claimTypeId").value;
+
+			var claimAmt = document.getElementById("claimAmt").value;
+			var claimRemark = document.getElementById("claimRemark").value;
+			
 			var el = document.getElementById('claimTypeId');
 			var lvTypeName = el.options[el.selectedIndex].innerHTML;
-			//alert("lvTypeName  " + lvTypeName);
+		//	alert("lvTypeName  " + lvTypeName);
 
 			var daterange = document.getElementById("claimDate").value;
 			var res = daterange.split(" to ");
@@ -437,10 +550,9 @@
 			var isEdit = document.getElementById("isEdit").value;
 			var isDelete = document.getElementById("isDelete").value;
 			var index = document.getElementById("index").value;
-
-			//alert("Inside add ajax" + claimTypeId + claimAmt);
-
-			if (valid == true) {
+			 if (valid == true) {
+				 
+				// alert("hii");
 
 				$
 						.getJSON(
@@ -484,6 +596,10 @@
 												tr_data);
 
 									}
+									$('#modal_scrollable1').modal('hide');
+									
+									
+								
 
 									
 								});
@@ -495,8 +611,9 @@
 				document.getElementById("isDelete").value = 0;
 				document.getElementById("isEdit").value = 0;
 				document.getElementById("index").value = 0;
-			}
+			} 
 		}
+		
 	</script>
 
 	<script type="text/javascript">
@@ -564,6 +681,7 @@
 											tr_data);
 
 								}
+								
 
 								
 							});
@@ -731,16 +849,7 @@
 		function checkAmt() {
 
 			//alert("hii");
-			var tempAmt = document.getElementById("tempAmtX").value;
-			var claimAmt = document.getElementById("claimAmt").value;
-
-			if (parseFloat(claimAmt) > parseFloat(tempAmt)) {
-
-			//	alert("Amonut Entered Exceeds the Limit Amount");
-				$('#modal_scrollable1')
-				.modal('show');
-			}
-
+			
 		}
 	</script>
 	
@@ -752,10 +861,16 @@
  					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
  				<div class="modal-body py-0">
-					<h5 class="modal-title">Amount Entered Exceeds the Limit Amount</h5>
+					<h5 class="modal-title">Amount Entered Exceeds the Limit Amount </h5>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-3" for="asd">
+						Limit Amount : </label> <label class="col-form-label col-lg-2"
+							id="lmAmtNew" for="lmAmt"> </label>
+
+					</div>
  				</div>
  				<div class="modal-footer pt-3">
-					<button type="button" class="btn btn-link" data-dismiss="modal">Ok</button>
+					<button type="button" class="btn btn-link" onclick="finalAdd()">Ok</button>
  				</div>
 			</div>
 		</div>
