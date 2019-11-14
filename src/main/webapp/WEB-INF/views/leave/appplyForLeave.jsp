@@ -29,7 +29,7 @@
 			<!-- Page header -->
 			<div class="page-header page-header-light">
 
-
+<%-- 
 				<div
 					class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
 					<div class="d-flex">
@@ -47,14 +47,14 @@
 					</div>
 
 
-					<%-- 	<div class="breadcrumb justify-content-center">
+						<div class="breadcrumb justify-content-center">
 						<a href="${pageContext.request.contextPath}/employeeAdd"
 							class="breadcrumb-elements-item"> Add Employee </a>
 
 					</div>
- --%>
 
-				</div>
+
+				</div> --%>
 			</div>
 			<!-- /page header -->
 

@@ -31,7 +31,7 @@
 			<div class="page-header page-header-light">
 
 
-				<div
+				<%-- <div
 					class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
 					<div class="d-flex">
 						<div class="breadcrumb">
@@ -48,255 +48,256 @@
 							class="breadcrumb-elements-item"> Project Type List </a>
 
 					</div>
-				</div></div>
-				<!-- /page header -->
+				</div> --%>
+			</div>
+			<!-- /page header -->
 
 
-				<!-- Content area -->
-				<div class="content">
+			<!-- Content area -->
+			<div class="content">
 
-					<!-- Form validation -->
-					<div class="row">
-						<div class="col-md-12">
-							<!-- Title -->
-							<!-- <div class="mb-3">
+				<!-- Form validation -->
+				<div class="row">
+					<div class="col-md-12">
+						<!-- Title -->
+						<!-- <div class="mb-3">
 							<h6 class="mb-0 font-weight-semibold">Hidden labels</h6>
 							<span class="text-muted d-block">Inputs with empty values</span>
 						</div> -->
-							<!-- /title -->
+						<!-- /title -->
 
 
-							<div class="card">
-								<div class="card-header header-elements-inline">
-									<h6 class="card-title">Edit Project Type</h6>
-									<!-- <div class="header-elements">
-										<div class="list-icons">
-											<a class="list-icons-item" data-action="collapse"></a>
-										</div>
-									</div> -->
-								</div>
-
-								<div class="card-body">
-
-									<%
-										if (session.getAttribute("errorMsg") != null) {
-									%>
-									<div
-										class="alert bg-danger text-white alert-styled-left alert-dismissible">
-										<button type="button" class="close" data-dismiss="alert">
-											<span>×</span>
-										</button>
-										<span class="font-weight-semibold">Oh snap!</span>
-										<%
-											session.removeAttribute("errorMsg");
-										%>
-									</div>
-
-									<%
-										session.removeAttribute("errorMsg");
-										}
-									%>
-									<%
-										if (session.getAttribute("successMsg") != null) {
-									%>
-									<div
-										class="alert bg-success text-white alert-styled-left alert-dismissible">
-										<button type="button" class="close" data-dismiss="alert">
-											<span>×</span>
-										</button>
-										<span class="font-weight-semibold">Well done!</span>
-										<%
-											session.removeAttribute("successMsg");
-										%>
-									</div>
-									<%
-										session.removeAttribute("successMsg");
-										}
-									%>
-
-									<form
-										action="${pageContext.request.contextPath}/submitEditProjectType"
-										id="submitEditProjectType" method="post">
+						<div class="card">
 
 
-
-										<div class="form-group row">
-											<label class="col-form-label col-lg-2" for="proTypetitle">
-												Project Type Title <span style="color:red">* </span>:</label>
-											<div class="col-lg-10">
-												<input type="text" class="form-control"
-													placeholder="Enter Project Type Title" id="proTypetitle"
-													value="${editproType.projectTypeTitle}" name="proTypetitle"
-													autocomplete="off" onchange="trim(this)"> <span
-													class="validation-invalid-label" id="error_proTypetitle"
-													style="display: none;">This field is required.</span>
-											</div>
-										</div>
-
-										<div class="form-group row">
-											<label class="col-form-label col-lg-2"
-												for="proShortTypeTitle"> Project Type Short Title <span style="color:red">* </span>:</label>
-											<div class="col-lg-10">
-												<input type="text" class="form-control"
-													placeholder="Enter Project Short Title "
-													id="proShortTypeTitle" name="proShortTypeTitle"
-													value="${editproType.projectTypeTitleShort}"
-													autocomplete="off" onchange="trim(this)"> <span
-													class="validation-invalid-label"
-													id="error_proShortTypeTitle" style="display: none;">This
-													field is required.</span>
-													<span
-												class="validation-invalid-label" id="error_sameName"
-												style="display: none;">Project Short Name Can Not be same as Project Name. </span>
-											</div>
-										</div>
-
-										<div class="form-group row">
-											<label class="col-form-label col-lg-2">Project Type
-												Color :</label>
-											<div class="col-lg-10">
-												<input type="text" id="projectColor" name="projectColor"
-													class="form-control colorpicker-show-input"
-													value="${editproType.projectTypeColor}"
-													data-preferred-format="hex" value="#f75d1c" data-fouc>
-											</div>
-										</div>
-
-										<div class="form-group row">
-											<label class="col-form-label col-lg-2" for="remark">Any
-												Remark :</label>
-											<div class="col-lg-10">
-												<textarea rows="3" cols="3" class="form-control"
-													placeholder="Any Remark" onchange="trim(this)" id="remark"
-													name="remark">${editproType.projectTypeRemarks}</textarea>
-											</div>
-										</div>
-
-										<div class="form-group row mb-0">
-											<div class="col-lg-10 ml-lg-auto">
-
-												<button type="submit" class="btn bg-blue ml-3 legitRipple"
-													id="submtbtn">
-													Submit <i class="icon-paperplane ml-2"></i>
-												</button>
-												<a href="${pageContext.request.contextPath}/showProjectTypeList"><button
-										type="button" class="btn btn-primary"><i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp; Cancel</button></a>
-											</div>
-										</div>
-									</form>
-								</div>
+							<div class="card-header header-elements-inline">
+								<table width="100%">
+									<tr width="100%">
+										<td width="60%"><h5 class="card-title">Edit Project
+												Type</h5></td>
+										<td width="40%" align="right">
+											<%-- <a
+									href="${pageContext.request.contextPath}/showAddKra?empId=${editKra.exVar3}&finYrId=${editKra.exVar2}"
+									class="breadcrumb-elements-item">
+										<button type="button" class="btn btn-primary">KRA List </button>
+								</a>  --%>
+										</td>
+									</tr>
+								</table>
 							</div>
 
+							<div class="card-body">
 
+								<%
+									if (session.getAttribute("errorMsg") != null) {
+								%>
+								<div
+									class="alert bg-danger text-white alert-styled-left alert-dismissible">
+									<button type="button" class="close" data-dismiss="alert">
+										<span>×</span>
+									</button>
+									<span class="font-weight-semibold">Oh snap!</span>
+									<%
+										session.removeAttribute("errorMsg");
+									%>
+								</div>
+
+								<%
+									session.removeAttribute("errorMsg");
+									}
+								%>
+								<%
+									if (session.getAttribute("successMsg") != null) {
+								%>
+								<div
+									class="alert bg-success text-white alert-styled-left alert-dismissible">
+									<button type="button" class="close" data-dismiss="alert">
+										<span>×</span>
+									</button>
+									<span class="font-weight-semibold">Well done!</span>
+									<%
+										session.removeAttribute("successMsg");
+									%>
+								</div>
+								<%
+									session.removeAttribute("successMsg");
+									}
+								%>
+
+								<form
+									action="${pageContext.request.contextPath}/submitEditProjectType"
+									id="submitEditProjectType" method="post">
+
+
+
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="proTypetitle">
+											Project Type Title <span style="color: red">* </span>:
+										</label>
+										<div class="col-lg-10">
+											<input type="text" class="form-control"
+												placeholder="Enter Project Type Title" id="proTypetitle"
+												value="${editproType.projectTypeTitle}" name="proTypetitle"
+												autocomplete="off" onchange="trim(this)"> <span
+												class="validation-invalid-label" id="error_proTypetitle"
+												style="display: none;">This field is required.</span>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="proShortTypeTitle">
+											Project Type Short Title <span style="color: red">* </span>:
+										</label>
+										<div class="col-lg-10">
+											<input type="text" class="form-control"
+												placeholder="Enter Project Short Title "
+												id="proShortTypeTitle" name="proShortTypeTitle"
+												value="${editproType.projectTypeTitleShort}"
+												autocomplete="off" onchange="trim(this)"> <span
+												class="validation-invalid-label"
+												id="error_proShortTypeTitle" style="display: none;">This
+												field is required.</span> <span class="validation-invalid-label"
+												id="error_sameName" style="display: none;">Project
+												Short Name Can Not be same as Project Name. </span>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2">Project Type
+											Color :</label>
+										<div class="col-lg-10">
+											<input type="text" id="projectColor" name="projectColor"
+												class="form-control colorpicker-show-input"
+												value="${editproType.projectTypeColor}"
+												data-preferred-format="hex" value="#f75d1c" data-fouc>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-form-label col-lg-2" for="remark">Any
+											Remark :</label>
+										<div class="col-lg-10">
+											<textarea rows="3" cols="3" class="form-control"
+												placeholder="Any Remark" onchange="trim(this)" id="remark"
+												name="remark">${editproType.projectTypeRemarks}</textarea>
+										</div>
+									</div>
+
+									<div class="form-group row mb-0">
+										<div class="col-lg-10 ml-lg-auto">
+
+											<button type="submit" class="btn bg-blue ml-3 legitRipple"
+												id="submtbtn">
+												Submit <i class="icon-paperplane ml-2"></i>
+											</button>
+											<a
+												href="${pageContext.request.contextPath}/showProjectTypeList"><button
+													type="button" class="btn btn-primary">
+													<i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp;
+													Cancel
+												</button></a>
+										</div>
+									</div>
+								</form>
+							</div>
 						</div>
+
+
 					</div>
-
 				</div>
-				<!-- /content area -->
-
-
-				<!-- Footer -->
-				<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
-				<!-- /footer -->
 
 			</div>
-			<!-- /main content -->
+			<!-- /content area -->
+
+
+			<!-- Footer -->
+			<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
+			<!-- /footer -->
 
 		</div>
-		<!-- /page content -->
-<script type="text/javascript">
+		<!-- /main content -->
 
-function checkSame(){
-	x=document.getElementById("proShortTypeTitle").value;
-	y=document.getElementById("proTypetitle").value;
-	//alert(x);
-	
-	if(x!== '' && y!== ''){
-		if(x==y){
-			$("#error_sameName").show()
-			document.getElementById("proShortTypeTitle").value="";
-		}
-		else{
-			$("#error_sameName").hide()
-		}
-}
-	
-}</script>
-		<script>
-			function trim(el) {
-				el.value = el.value.replace(/(^\s*)|(\s*$)/gi, ""). // removes leading and trailing spaces
-				replace(/[ ]{2,}/gi, " "). // replaces multiple spaces with one space 
-				replace(/\n +/, "\n"); // Removes spaces after newlines
-				checkSame();
-				return;
-			}
+	</div>
+	<!-- /page content -->
+	<script type="text/javascript">
+		function checkSame() {
+			x = document.getElementById("proShortTypeTitle").value;
+			y = document.getElementById("proTypetitle").value;
+			//alert(x);
 
-			function numbersOnlyNotZero(id_number) {
-
-				var mob = /^[1-9][0-9]+$/;
-
-				if (mob.test($.trim(id_number)) == false) {
-
-					//alert("Please enter a valid email address .");
-					return false;
-
+			if (x !== '' && y !== '') {
+				if (x == y) {
+					$("#error_sameName").show()
+					document.getElementById("proShortTypeTitle").value = "";
+				} else {
+					$("#error_sameName").hide()
 				}
-				return true;
 			}
 
-			$(document)
-					.ready(
-							function($) {
+		}
+	</script>
+	<script>
+		function trim(el) {
+			el.value = el.value.replace(/(^\s*)|(\s*$)/gi, ""). // removes leading and trailing spaces
+			replace(/[ ]{2,}/gi, " "). // replaces multiple spaces with one space 
+			replace(/\n +/, "\n"); // Removes spaces after newlines
+			checkSame();
+			return;
+		}
 
-								$("#submitEditProjectType")
-										.submit(
-												function(e) {
-													var isError = false;
-													var errMsg = "";
+		function numbersOnlyNotZero(id_number) {
 
-													if (!$("#proTypetitle")
-															.val()) {
+			var mob = /^[1-9][0-9]+$/;
 
-														isError = true;
+			if (mob.test($.trim(id_number)) == false) {
 
-														$("#error_proTypetitle")
-																.show()
-														//return false;
-													} else {
-														$("#error_proTypetitle")
-																.hide()
-													}
+				//alert("Please enter a valid email address .");
+				return false;
 
-													if (!$("#proShortTypeTitle")
-															.val()) {
+			}
+			return true;
+		}
 
-														isError = true;
+		$(document).ready(function($) {
 
-														$(
-																"#error_proShortTypeTitle")
-																.show()
-														//return false;
-													} else {
-														$(
-																"#error_proShortTypeTitle")
-																.hide()
-													}
+			$("#submitEditProjectType").submit(function(e) {
+				var isError = false;
+				var errMsg = "";
 
-													if (!isError) {
+				if (!$("#proTypetitle").val()) {
 
-														var x = true;
-														if (x == true) {
+					isError = true;
 
-															document
-																	.getElementById("submtbtn").disabled = true;
-															return true;
-														}
-														//end ajax send this to php page
-													}
-													return false;
-												});
-							});
-			//
-		</script>
+					$("#error_proTypetitle").show()
+					//return false;
+				} else {
+					$("#error_proTypetitle").hide()
+				}
+
+				if (!$("#proShortTypeTitle").val()) {
+
+					isError = true;
+
+					$("#error_proShortTypeTitle").show()
+					//return false;
+				} else {
+					$("#error_proShortTypeTitle").hide()
+				}
+
+				if (!isError) {
+
+					var x = true;
+					if (x == true) {
+
+						document.getElementById("submtbtn").disabled = true;
+						return true;
+					}
+					//end ajax send this to php page
+				}
+				return false;
+			});
+		});
+		//
+	</script>
 </body>
 </html>

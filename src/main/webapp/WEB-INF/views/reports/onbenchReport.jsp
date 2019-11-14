@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%><%@ taglib
 	uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,35 +29,7 @@
 		<div class="content-wrapper">
 
 			<!-- Page header -->
-			<div class="page-header page-header-light">
-
-
-				<div
-					class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
-					<div class="d-flex">
-						<div class="breadcrumb">
-							<a href="index.html" class="breadcrumb-item"><i
-								class="icon-home2 mr-2"></i> Home</a> <span
-								class="breadcrumb-item active">Dashboard</span>
-						</div>
-
-						<a href="#" class="header-elements-toggle text-default d-md-none"><i
-							class="icon-more"></i></a>
-
-
-
-					</div>
-
-
-					<%-- <div class="breadcrumb justify-content-center">
-						<a href="${pageContext.request.contextPath}/employeeAdd"
-							class="breadcrumb-elements-item"> Add Employee </a>
-
-					</div> --%>
-
-
-				</div>
-			</div>
+			<div class="page-header page-header-light"></div>
 			<!-- /page header -->
 
 
@@ -67,13 +39,16 @@
 
 				<!-- Highlighting rows and columns -->
 				<div class="card">
+
 					<div class="card-header header-elements-inline">
-						<h5 class="card-title">On Bench Report</h5>
-						<!-- <div class="header-elements">
-							<div class="list-icons">
-								<a class="list-icons-item" data-action="collapse"></a>
-							</div> 
-						</div>-->
+						<table width="100%">
+							<tr width="100%">
+								<td width="60%">
+									<h5 class="card-title">On Bench Report</h5>
+								</td>
+								<td width="40%" align="right"></td>
+							</tr>
+						</table>
 					</div>
 
 					<div class="card-body">
@@ -114,17 +89,17 @@
 							}
 						%>
 
-						<form
-							action="${pageContext.request.contextPath}/onbenchReport"
+						<form action="${pageContext.request.contextPath}/onbenchReport"
 							id="onbenchReport" method="GET">
 
 							<div class="form-group row">
-							<div class="col-md-2"></div>
+								<div class="col-md-2"></div>
 								<label class="col-form-label col-lg-1" for="fromDate">From
 									Date :*</label>
 								<div class="col-md-2">
 									<input type="text" class="form-control datepickerclass "
-										name="fromDate" id="fromDate" value="${fromDate}" autocomplete="off"> <span
+										name="fromDate" id="fromDate" value="${fromDate}"
+										autocomplete="off"> <span
 										class="validation-invalid-label" id="error_fromDate"
 										style="display: none;">This field is required.</span>
 								</div>
@@ -134,16 +109,16 @@
 									Date :*</label>
 								<div class="col-md-2">
 									<input type="text" class="form-control datepickerclass "
-										name="toDate" id="toDate" autocomplete="off" value="${toDate}"> <span
-										class="validation-invalid-label" id="error_toDate"
+										name="toDate" id="toDate" autocomplete="off" value="${toDate}">
+									<span class="validation-invalid-label" id="error_toDate"
 										style="display: none;">This field is required.</span>
 								</div>
 
-								 
+
 							</div>
-							
+
 							<div class="co-md-12" style="text-align: center;">
-							<input type="submit" class="btn bg-blue ml-3 legitRipple"
+								<input type="submit" class="btn bg-blue ml-3 legitRipple"
 									id="submtbtn" value="Submit">
 							</div>
 						</form>
@@ -160,20 +135,19 @@
 								<tr class="bg-blue" style="text-align: center;">
 									<th width="10%">Sr.no</th>
 
-									<th>Employee Name </th>
-									<th>Activity</th> 
-									<th>CTC</th>  
+									<th>Employee Name</th>
+									<th>Activity</th>
+									<th>CTC</th>
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach items="${list}" var="list"
-									varStatus="count">
+								<c:forEach items="${list}" var="list" varStatus="count">
 									<tr>
-										<td>${count.index+1}</td> 
-										<td>${list.empSname}&nbsp;${list.empFname}</td> 
-										<td>${list.type}</td> 
+										<td>${count.index+1}</td>
+										<td>${list.empSname}&nbsp;${list.empFname}</td>
+										<td>${list.type}</td>
 										<td align="right">${list.ctc}</td>
-										
+
 									</tr>
 								</c:forEach>
 

@@ -37,32 +37,7 @@
 			<!-- Page header -->
 			<div class="page-header page-header-light">
 
-
-				<div
-					class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
-					<div class="d-flex">
-						<div class="breadcrumb">
-							<a href="index.html" class="breadcrumb-item"><i
-								class="icon-home2 mr-2"></i> Home</a> <span
-								class="breadcrumb-item active">Dashboard</span>
-						</div>
-
-						<a href="#" class="header-elements-toggle text-default d-md-none"><i
-							class="icon-more"></i></a>
-
-
-
-					</div>
-
-
-					<%-- <div class="breadcrumb justify-content-center">
-						<a href="${pageContext.request.contextPath}/employeeAdd"
-							class="breadcrumb-elements-item"> Add Employee </a>
-
-					</div> --%>
-
-
-				</div>
+ 
 			</div>
 			<!-- /page header -->
 
@@ -73,13 +48,16 @@
 
 				<!-- Highlighting rows and columns -->
 				<div class="card">
+					 
 					<div class="card-header header-elements-inline">
-						<h5 class="card-title">Employee Projectwise Report</h5>
-						<!-- <div class="header-elements">
-							<div class="list-icons">
-								<a class="list-icons-item" data-action="collapse"></a>
-							</div> 
-						</div>-->
+						<table width="100%">
+							<tr width="100%">
+								<td width="60%">
+									<h5 class="card-title">Employee Projectwise Report</h5>
+								</td>
+								<td width="40%" align="right"></td>
+							</tr>
+						</table>
 					</div>
 
 					<div class="card-body">

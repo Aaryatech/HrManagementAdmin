@@ -27,29 +27,7 @@
 
 			<!-- Page header -->
 			<div class="page-header page-header-light">
-
-
-				<div
-					class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
-					<div class="d-flex">
-						<div class="breadcrumb">
-							<a href="index.html" class="breadcrumb-item"><i
-								class="icon-home2 mr-2"></i> Home</a> <span
-								class="breadcrumb-item active">Dashboard</span>
-						</div>
-
-						<a href="#" class="header-elements-toggle text-default d-md-none"><i
-							class="icon-more"></i></a>
-					</div>
-
-					<div class="breadcrumb justify-content-center">
-						<a href="${pageContext.request.contextPath}/showEmpTypeList"
-							class="breadcrumb-elements-item"> Employee Document List</a>
-
-					</div>
-
-
-				</div>
+ 
 			</div>
 			<!-- /page header -->
 
@@ -69,15 +47,23 @@
 
 
 						<div class="card">
-							<div class="card-header header-elements-inline">
-								<h6 class="card-title">Add Employee Document</h6>
-							<!-- 	<div class="header-elements">
-									<div class="list-icons">
-										<a class="list-icons-item" data-action="collapse"></a>
-									</div>
-								</div> -->
-							</div>
+						 
 
+
+							<div class="card-header header-elements-inline">
+								<table width="100%">
+									<tr width="100%">
+										<td width="60%"><h5 class="card-title">Add Employee Document</h5></td>
+										<td width="40%" align="right">
+											<a
+									href="${pageContext.request.contextPath}/showEmpTypeList"
+									class="breadcrumb-elements-item">
+										<button type="button" class="btn btn-primary"> Employee Document List </button>
+								</a> 
+										</td>
+									</tr>
+								</table>
+							</div>
 							<div class="card-body">
 								<%
 									if (session.getAttribute("errorMsg") != null) {
@@ -118,22 +104,40 @@
 								<form
 									action="${pageContext.request.contextPath}/submitInsertEmpDoc"
 									id="submitInsertEmpType" method="post">
-									
-										<div class="form-group row">
-									<label class="col-form-label col-lg-3">Select Employee <span class="text-danger">*</span></label>
-									<div class="col-lg-9">
-										<select name="select2" data-placeholder="Select a State..." class="form-control form-control-select2 select2-hidden-accessible" required="" data-fouc="" tabindex="-1" aria-hidden="true">
-											<option></option>
-											<optgroup label="Alaskan/Hawaiian Time Zone">
-												<option value="AK">Alaska</option>
-												<option value="HI">Hawaii</option>
-											</optgroup>
-											
-											</optgroup>
-										</select><span class="select2 select2-container select2-container--default" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-select2-fy-container"><span class="select2-selection__rendered" id="select2-select2-fy-container"><span class="select2-selection__placeholder">Select a State...</span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
-									<label id="select2-error" class="validation-invalid-label" for="select2">This field is required.</label></div>
-								</div>
-									
+
+									<div class="form-group row">
+										<label class="col-form-label col-lg-3">Select Employee
+											<span class="text-danger">*</span>
+										</label>
+										<div class="col-lg-9">
+											<select name="select2" data-placeholder="Select a State..."
+												class="form-control form-control-select2 select2-hidden-accessible"
+												required="" data-fouc="" tabindex="-1" aria-hidden="true">
+												<option></option>
+												<optgroup label="Alaskan/Hawaiian Time Zone">
+													<option value="AK">Alaska</option>
+													<option value="HI">Hawaii</option>
+												</optgroup>
+
+												</optgroup>
+											</select><span
+												class="select2 select2-container select2-container--default"
+												dir="ltr" style="width: 100%;"><span
+												class="selection"><span
+													class="select2-selection select2-selection--single"
+													role="combobox" aria-haspopup="true" aria-expanded="false"
+													tabindex="0" aria-labelledby="select2-select2-fy-container"><span
+														class="select2-selection__rendered"
+														id="select2-select2-fy-container"><span
+															class="select2-selection__placeholder">Select a
+																State...</span></span><span class="select2-selection__arrow"
+														role="presentation"><b role="presentation"></b></span></span></span><span
+												class="dropdown-wrapper" aria-hidden="true"></span></span> <label
+												id="select2-error" class="validation-invalid-label"
+												for="select2">This field is required.</label>
+										</div>
+									</div>
+
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="empTypeName">Employee
 											Type Name : *</label>
@@ -197,7 +201,10 @@
 												Submit <i class="icon-paperplane ml-2"></i>
 											</button>
 											<a href="${pageContext.request.contextPath}/showEmpTypeList"><button
-										type="button" class="btn btn-primary"><i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp; Cancel</button></a>
+													type="button" class="btn btn-primary">
+													<i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp;
+													Cancel
+												</button></a>
 										</div>
 									</div>
 								</form>
@@ -255,7 +262,6 @@
 				} else {
 					$("#error_empShortName").hide()
 				}
- 
 
 				if (!isError) {
 

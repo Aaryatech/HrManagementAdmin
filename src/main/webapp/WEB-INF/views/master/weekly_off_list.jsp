@@ -29,31 +29,7 @@
 			<!-- Page header -->
 			<div class="page-header page-header-light">
 
-
-				<div
-					class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
-					<div class="d-flex">
-						<div class="breadcrumb">
-							<a href="index.html" class="breadcrumb-item"><i
-								class="icon-home2 mr-2"></i> Home</a> <span
-								class="breadcrumb-item active">Dashboard</span>
-
-						</div>
-
-
-						<a href="#" class="header-elements-toggle text-default d-md-none"><i
-							class="icon-more"></i></a>
-					</div>
-
-					<div class="breadcrumb justify-content-center">
-					<c:if test="${addAccess == 0}">
-						<a href="${pageContext.request.contextPath}/addWeeklyOff"
-							class="breadcrumb-elements-item"> Add Weekly Off </a></c:if>
-
-					</div>
-
-
-				</div>
+ 
 			</div>
 			<!-- /page header -->
 
@@ -64,13 +40,21 @@
 
 				<!-- Highlighting rows and columns -->
 				<div class="card">
-					<div class="card-header header-elements-inline">
-						<h5 class="card-title">Weekly Off List</h5>
-					<!-- 	<div class="header-elements">
-							<div class="list-icons">
-								<a class="list-icons-item" data-action="collapse"></a>
-							</div>
-						</div> -->
+					 
+					
+						<div class="card-header header-elements-inline">
+ 						<table width="100%">
+							<tr width="100%">
+								<td width="60%"><h5 class="card-title">Weekly Off List</h5></td>
+								<td width="40%" align="right">
+							  	<c:if test="${addAccess == 0}">
+								 <a
+									href="${pageContext.request.contextPath}/addWeeklyOff"
+									class="breadcrumb-elements-item">
+										<button type="button" class="btn btn-primary"> Add Weekly Off </button>
+								</a></c:if> </td>
+							</tr>
+						</table>
 					</div>
 
 					<div class="card-body">

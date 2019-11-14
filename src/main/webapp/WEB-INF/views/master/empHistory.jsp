@@ -31,7 +31,7 @@
 			<!-- Page header -->
 			<div class="page-header page-header-light">
 
-
+				<%-- 
 				<div
 					class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
 					<div class="d-flex">
@@ -49,14 +49,14 @@
 					</div>
 
 
-					<%-- <div class="breadcrumb justify-content-center">
+					<div class="breadcrumb justify-content-center">
 						<a href="${pageContext.request.contextPath}/employeeAdd"
 							class="breadcrumb-elements-item"> Add Employee </a>
 
-					</div> --%>
+					</div>
 
 
-				</div>
+				</div> --%>
 			</div>
 			<!-- /page header -->
 
@@ -67,15 +67,22 @@
 
 				<!-- Highlighting rows and columns -->
 				<div class="card">
-					<div class="card-header header-elements-inline">
-						<h5 class="card-title">Employee Leave History</h5>
-						<!-- <div class="header-elements">
-							<div class="list-icons">
-								<a class="list-icons-item" data-action="collapse"></a>
-							</div> 
-						</div>-->
-					</div>
 
+					<div class="card-header header-elements-inline">
+						<table width="100%">
+							<tr width="100%">
+								<td width="60%"><h5 class="card-title">Employee Leave
+										History</h5></td>
+								<td width="40%" align="right">
+									<%-- <a
+									href="${pageContext.request.contextPath}/showAddKra?empId=${editKra.exVar3}&finYrId=${editKra.exVar2}"
+									class="breadcrumb-elements-item">
+										<button type="button" class="btn btn-primary">KRA List </button>
+								</a>  --%>
+								</td>
+							</tr>
+						</table>
+					</div>
 					<div class="card-body">
 
 						<%
@@ -117,7 +124,8 @@
 
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2" for="select2">Select
-								Employee <span style="color:red">* </span> :</label>
+								Employee <span style="color: red">* </span> :
+							</label>
 							<div class="col-md-2">
 								<select name="empId" data-placeholder="Select Employee"
 									id="empId"
@@ -134,7 +142,8 @@
 
 
 							<label class="col-form-label col-lg-2" for="select2">Select
-								Year <span style="color:red">* </span> :</label>
+								Year <span style="color: red">* </span> :
+							</label>
 							<div class="col-md-2">
 								<select name="calYrId" data-placeholder="Select Year"
 									id="calYrId"
@@ -161,7 +170,8 @@
 						<div id='loader' style='display: none;'>
 							<img
 								src='${pageContext.request.contextPath}/resources/assets/images/giphy.gif'
-								width="150px" height="150px" style="display: block; margin-left: auto; margin-right: auto">
+								width="150px" height="150px"
+								style="display: block; margin-left: auto; margin-right: auto">
 						</div>
 						<table
 							class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic  datatable-button-print-columns1"
@@ -172,11 +182,11 @@
 									<th>Name</th>
 									<th>Department Name</th>
 									<th>Leave Type</th>
-									 
+
 									<th>Leave Days</th>
 									<th>Leave Duration</th>
 									<th>Date</th>
-									 
+
 									<th>Leave Status</th>
 
 									<th class="text-center" width="10%">Actions</th>
@@ -284,7 +294,8 @@
 															/* current_status="Pending"; */
 
 															duration = '1st Half Day';
-														}if (v.leaveDuration == 3) {
+														}
+														if (v.leaveDuration == 3) {
 															/* current_status="Pending"; */
 
 															duration = '2nd Half Day';
