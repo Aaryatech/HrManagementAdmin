@@ -39,7 +39,7 @@
 			<!-- Page header -->
 			<div class="page-header page-header-light">
 
-
+<%-- 
 				<div
 					class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
 					<div class="d-flex">
@@ -61,7 +61,7 @@
 					</div>
 
 
-				</div>
+				</div> --%>
 			</div>
 			<!-- /page header -->
 
@@ -81,14 +81,19 @@
 
 
 						<div class="card">
-							<div class="card-header header-elements-inline">
-								<h6 class="card-title">Edit KPI Review</h6>
-								<!-- <div class="header-elements">
-									<div class="list-icons">
-										<a class="list-icons-item" data-action="collapse"></a>
-									</div>
-								</div> -->
-							</div>
+						 <div class="card-header header-elements-inline">
+							<table width="100%">
+							<tr width="100%">
+								<td width="60%"><h5 class="card-title">Edit KPI Review</h5></td>
+								<td width="40%" align="right">
+							  
+								 <a
+									href="${pageContext.request.contextPath}/showAddKpiReview?kpiId=${empInfo.empEmail}"
+									class="breadcrumb-elements-item">
+										<button type="button" class="btn btn-primary">KPI List </button>
+								</a> </td>
+							</tr>
+						</table></div>
 
 							<div class="card-body">
 								<%
