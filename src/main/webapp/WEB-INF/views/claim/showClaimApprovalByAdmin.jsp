@@ -193,7 +193,7 @@
 														style="color: black;"></i></a> <a
 													href="${pageContext.request.contextPath}/approveClaimByAuth?empId=${claimList.exVar1}&claimId=${claimList.circulatedTo}&stat=9&retun=0"
 													title="Reject"><i class="icon-x" style="color: black;"></i></a><a
-													href="${pageContext.request.contextPath}/claimDetailHistory?empId=${claimList.exVar1}&claimId=${claimList.circulatedTo}"
+													href="${pageContext.request.contextPath}/claimDetailHistory?empId=${claimList.exVar1}&claimId=${claimList.circulatedTo}&retun=0"
 													style="color: black"><i class="icon-list-unordered"></i></a>
 												</td>
 											</tr>

@@ -30,7 +30,7 @@
 			<!-- Page header -->
 			<div class="page-header page-header-light">
 
-<%-- 
+				<%-- 
 				<div
 					class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
 					<div class="d-flex">
@@ -72,18 +72,19 @@
 
 						<div class="card">
 							<div class="card-header header-elements-inline">
- 						<table width="100%">
-							<tr width="100%">
-								<td width="60%"><h5 class="card-title">Edit Project </h5></td>
-								<td width="40%" align="right">
-								 <a
-									href="${pageContext.request.contextPath}/showProjectHeaderList"
-									class="breadcrumb-elements-item">
-										<button type="button" class="btn btn-primary"> Project List  </button>
-								</a> </td>
-							</tr>
-						</table>
-					</div>
+								<table width="100%">
+									<tr width="100%">
+										<td width="60%"><h5 class="card-title">Edit Project
+											</h5></td>
+										<td width="40%" align="right"><a
+											href="${pageContext.request.contextPath}/showProjectHeaderList"
+											class="breadcrumb-elements-item">
+												<button type="button" class="btn btn-primary">
+													Project List</button>
+										</a></td>
+									</tr>
+								</table>
+							</div>
 
 							<div class="card-body">
 								<%
@@ -239,7 +240,7 @@
 													<c:choose>
 														<c:when
 															test="${emp.empId == editProjectHeader.projectManagerEmpId}">
-															<option selected value="${emp.empId}">${emp.empSname}${emp.empFname}</option>
+															<option selected value="${emp.empId}">${emp.empSname}&nbsp;${emp.empFname}</option>
 														</c:when>
 														<c:otherwise>
 															<option value="${emp.empId}">${emp.empSname}&nbsp;${emp.empFname}</option>
@@ -296,7 +297,8 @@
 												tabindex="-1" aria-hidden="true">
 												<option value="">Please Select</option>
 
-												<option ${editProjectHeader.exInt1 == '1'  ? 'Selected': '' }
+												<option
+													${editProjectHeader.exInt1 == '1'  ? 'Selected': '' }
 													value="1">Support - Fix Monthly Billable</option>
 												<option ${editProjectHeader.exInt1 == '2' ? 'Selected': '' }
 													value="2">Project Revenue</option>
@@ -407,29 +409,32 @@
 												field is required.</span>
 										</div>
 									</div>
-									
-									
+
+
 									<div class="form-group row">
-										<label class="col-form-label col-lg-2">PO Date
-										  <span style="color: red">* </span> :</label>
+										<label class="col-form-label col-lg-2">PO Date <span
+											style="color: red">* </span> :
+										</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control datepickerclass "
-													value="${editProjectHeader.poDate}" name="poDate" id="poDate">
-												<span class="validation-invalid-label" id="error_poDate"
-												style="display: none;">This field is required.</span>
+												value="${editProjectHeader.poDate}" name="poDate"
+												id="poDate"> <span class="validation-invalid-label"
+												id="error_poDate" style="display: none;">This field
+												is required.</span>
 										</div>
 									</div>
-									
-									
+
+
 									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="poNum">PO Number
-											  <span style="color: red">* </span>:
+										<label class="col-form-label col-lg-2" for="poNum">PO
+											Number <span style="color: red">* </span>:
 										</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control"
-												placeholder="Enter PO Number" id="poNum" 	value="${editProjectHeader.poNumber}"
-												name="poNum" autocomplete="off" onchange="trim(this)">
-											<span class="validation-invalid-label" id="error_poNum"
+												placeholder="Enter PO Number" id="poNum"
+												value="${editProjectHeader.poNumber}" name="poNum"
+												autocomplete="off" onchange="trim(this)"> <span
+												class="validation-invalid-label" id="error_poNum"
 												style="display: none;">This field is required.</span>
 										</div>
 									</div>
@@ -519,8 +524,7 @@
 				} else {
 					$("#error_poNum").hide()
 				}
-				
-				
+
 				if (!$("#poDate").val()) {
 
 					isError = true;
@@ -529,8 +533,8 @@
 					//return false;
 				} else {
 					$("#error_poDate").hide()
-				} 
-				
+				}
+
 				if (!$("#locId").val()) {
 
 					isError = true;

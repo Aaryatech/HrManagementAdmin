@@ -1106,6 +1106,9 @@ public class ClaimApplicationController {
 			String base64encodedString = request.getParameter("claimId");
 			String claimId = FormValidation.DecodeKey(base64encodedString);
 
+			int retun = Integer.parseInt(request.getParameter("retun"));
+			model.addObject("retun", retun);
+			
 			System.out.println("ID: " + claimId);
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("claimId", claimId);
@@ -1197,31 +1200,30 @@ public class ClaimApplicationController {
 			Info view = AcessController.checkAccess("showClaimApprovalByAdmin", "showClaimApprovalByAdmin", 1, 0, 0, 0,
 					newModuleList);
 
-			/*
-			 * if (view.isError() == true) {
-			 * 
-			 * model = new ModelAndView("accessDenied");
-			 * 
-			 * } else {
-			 */
+			if (view.isError() == true) {
 
-			GetClaimApplyAuthwise[] employeeDoc = Constants.getRestTemplate().getForObject(
-					Constants.url + "/getClaimApplyListForPendingForAdmin", GetClaimApplyAuthwise[].class);
+				model = new ModelAndView("accessDenied");
 
-			List<GetClaimApplyAuthwise> claimList = new ArrayList<GetClaimApplyAuthwise>(Arrays.asList(employeeDoc));
+			} else {
 
-			for (int i = 0; i < claimList.size(); i++) {
+				GetClaimApplyAuthwise[] employeeDoc = Constants.getRestTemplate().getForObject(
+						Constants.url + "/getClaimApplyListForPendingForAdmin", GetClaimApplyAuthwise[].class);
 
-				claimList.get(i)
-						.setCirculatedTo(FormValidation.Encrypt(String.valueOf(claimList.get(i).getCaHeadId())));
-				claimList.get(i).setExVar1(FormValidation.Encrypt(String.valueOf(claimList.get(i).getEmpId())));
-				claimList.get(i).setCaFromDt(DateConvertor.convertToDMY(claimList.get(i).getCaFromDt()));
-				claimList.get(i).setCaToDt(DateConvertor.convertToDMY(claimList.get(i).getCaToDt()));
+				List<GetClaimApplyAuthwise> claimList = new ArrayList<GetClaimApplyAuthwise>(
+						Arrays.asList(employeeDoc));
 
+				for (int i = 0; i < claimList.size(); i++) {
+
+					claimList.get(i)
+							.setCirculatedTo(FormValidation.Encrypt(String.valueOf(claimList.get(i).getCaHeadId())));
+					claimList.get(i).setExVar1(FormValidation.Encrypt(String.valueOf(claimList.get(i).getEmpId())));
+					claimList.get(i).setCaFromDt(DateConvertor.convertToDMY(claimList.get(i).getCaFromDt()));
+					claimList.get(i).setCaToDt(DateConvertor.convertToDMY(claimList.get(i).getCaToDt()));
+
+				}
+				model.addObject("claimListForApproval", claimList);
+				model.addObject("list1Count", claimList.size());
 			}
-			model.addObject("claimListForApproval", claimList);
-			model.addObject("list1Count", claimList.size());
-			// }
 
 		} catch (Exception e) {
 			e.printStackTrace();
