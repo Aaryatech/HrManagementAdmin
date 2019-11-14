@@ -1005,7 +1005,7 @@ public class LeaveController {
 	@RequestMapping(value = "/showEmpLeaveHistoryRep", method = RequestMethod.POST)
 	public void showEmpLeaveHistoryRep(HttpServletRequest request, HttpServletResponse response) {
 		List<EmpLeaveHistoryRep> progList = new ArrayList<EmpLeaveHistoryRep>();
-		String reportName = "Employee Leave History Report";
+		String reportName = "Employee Leave Pending Report";
 		List<EmpLeaveHistoryRep> employeeInfoList = new ArrayList<EmpLeaveHistoryRep>();
 		HttpSession session = request.getSession();
 		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
@@ -1023,7 +1023,7 @@ public class LeaveController {
 					.postForObject(Constants.url + "/getLeaveHistoryRep", map, EmpLeaveHistoryRep[].class);
 
 			employeeInfoList = new ArrayList<EmpLeaveHistoryRep>(Arrays.asList(employeeInfo));
-			System.out.println("employeeInfoList" + employeeInfoList.toString());
+		//	System.out.println("employeeInfoList" + employeeInfoList.toString());
 
 			map = new LinkedMultiValueMap<>();
 			map.add("locationId", userObj.getLocationIds());
@@ -1050,7 +1050,7 @@ public class LeaveController {
 				finalList.add(fin);
 			}
 
-			System.out.println("final ****" + finalList.toString());
+			//System.out.println("final ****" + finalList.toString());
 			Document document = new Document(PageSize.A4);
 			document.setMargins(5, 5, 0, 0);
 			document.setMarginMirroring(false);

@@ -248,6 +248,16 @@ public class LeaveApprovalController {
 				employeeInfoList.get(i)
 						.setExVar1(FormValidation.Encrypt(String.valueOf(employeeInfoList.get(i).getLeaveId())));
 			}
+			
+			
+			MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<>();
+			map1.add("empId", empId);
+
+			EmployeeInfo lvEmp = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getEmpInfoById", map1, EmployeeInfo.class);
+			
+			model.addObject("fname", lvEmp.getEmpFname());
+			model.addObject("sname", lvEmp.getEmpSname());
 			model.addObject("leaveHistoryList", employeeInfoList);
 			// model.addObject("empId1",empId1);
 			

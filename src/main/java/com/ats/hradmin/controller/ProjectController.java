@@ -912,11 +912,20 @@ public class ProjectController {
 	public ModelAndView showProjAllotment(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = null;
+		HttpSession session = request.getSession();
+		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+		List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+		Info view = AcessController.checkAccess("showProjAllotment", "showProjAllotment", 1, 0, 0, 0,
+				newModuleList);
+
+		if (view.isError() == true) {
+
+			model = new ModelAndView("accessDenied");
+
+		} else {
 
 		try {
-			HttpSession session = request.getSession();
-			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
-
+ 
 			model = new ModelAndView("project/projectAllotent");
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("companyId", userObj.getCompanyId());
@@ -937,6 +946,7 @@ public class ProjectController {
 			model.addObject("projectHeaderList", projectHeaderList);
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
 		}
 		return model;
 	}

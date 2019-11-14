@@ -50,7 +50,15 @@ public class ClaimStructureAndAllotController {
 		HttpSession session = request.getSession();
 		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 		ModelAndView model = null;
+		List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+		Info view = AcessController.checkAccess("addClaimStructure", "showClaimStructureList", 0, 1, 0, 0,
+				newModuleList);
 
+		if (view.isError() == true) {
+
+			model = new ModelAndView("accessDenied");
+
+		} else {
 		try {
 
 			model = new ModelAndView("claim/add_claim_structure");
@@ -75,7 +83,7 @@ public class ClaimStructureAndAllotController {
 			e.printStackTrace();
 
 		}
-
+		}
 		return model;
 
 	}
@@ -166,11 +174,19 @@ public class ClaimStructureAndAllotController {
 
 	@RequestMapping(value = "/showClaimStructureList", method = RequestMethod.GET)
 	public ModelAndView showClaimStructureList(HttpServletRequest request, HttpServletResponse response) {
-
+		HttpSession session = request.getSession();
 		ModelAndView model = null;
+ 		List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+		Info view = AcessController.checkAccess("showClaimStructureList", "showClaimStructureList", 1, 0, 0, 0,
+				newModuleList);
+
+		if (view.isError() == true) {
+
+			model = new ModelAndView("accessDenied");
+
+		} else {
 		try {
-			HttpSession session = request.getSession();
-			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+ 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
 			model = new ModelAndView("claim/claim_structure_list");
 
@@ -188,9 +204,32 @@ public class ClaimStructureAndAllotController {
 			}
 
 			model.addObject("clmSummarylist", clmSummarylist);
+			
+			Info add = AcessController.checkAccess("showClaimStructureList", "showClaimStructureList", 0, 1, 0, 0,
+					newModuleList);
+			Info edit = AcessController.checkAccess("showClaimStructureList", "showClaimStructureList", 0, 0, 1, 0,
+					newModuleList);
+			Info delete = AcessController.checkAccess("showClaimStructureList", "showClaimStructureList", 0, 0, 0, 1,
+					newModuleList);
+
+			if (add.isError() == false) {
+				System.out.println(" add   Accessable ");
+				model.addObject("addAccess", 0);
+
+			}
+			if (edit.isError() == false) {
+				System.out.println(" edit   Accessable ");
+				model.addObject("editAccess", 0);
+			}
+			if (delete.isError() == false) {
+				System.out.println(" delete   Accessable ");
+				model.addObject("deleteAccess", 0);
+
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
 		}
 		return model;
 	}
@@ -201,9 +240,18 @@ public class ClaimStructureAndAllotController {
 	public ModelAndView editClaimStructure(HttpServletRequest request, HttpServletResponse response) {
 
 		HttpSession session = request.getSession();
-		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
-
 		ModelAndView model = null;
+		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+		List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+		Info view = AcessController.checkAccess("showClaimStructureList", "showClaimStructureList", 0, 0, 1, 0,
+				newModuleList);
+
+		if (view.isError() == true) {
+
+			model = new ModelAndView("accessDenied");
+
+		} else {
+	 
 		try {
 			model = new ModelAndView("claim/edit_claim_structure");
 			String base64encodedString = request.getParameter("clmHeadId");
@@ -232,6 +280,7 @@ public class ClaimStructureAndAllotController {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
 		}
 		return model;
 	}
@@ -337,9 +386,20 @@ public class ClaimStructureAndAllotController {
 
 	@RequestMapping(value = "/deleteClaimStructure", method = RequestMethod.GET)
 	public String deleteClaimStructure(HttpServletRequest request, HttpServletResponse response) {
-
-		HttpSession session = request.getSession();
 		String a = null;
+		HttpSession session = request.getSession();
+ 		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+		List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+		Info view = AcessController.checkAccess("showClaimStructureList", "showClaimStructureList", 0, 0, 0, 1,
+				newModuleList);
+
+		if (view.isError() == true) {
+
+ 			a = "redirect:/accessDenied";
+
+		} else {
+	 
+		
 		try {
 			a = "redirect:/showClaimStructureList";
 			String base64encodedString = request.getParameter("clmHeadId");
@@ -360,6 +420,7 @@ public class ClaimStructureAndAllotController {
 			e.printStackTrace();
 			session.setAttribute("errorMsg", "Failed to Delete");
 		}
+		}
 		return a;
 	}
 	
@@ -368,14 +429,22 @@ public class ClaimStructureAndAllotController {
 	
 	@RequestMapping(value = "/claimStructureAllotment", method = RequestMethod.GET)
 	public ModelAndView leaveStructureAllotment(HttpServletRequest request, HttpServletResponse response) {
+ 
+		ModelAndView model = null;
+		HttpSession session = request.getSession();
+		LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+		List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+		Info view = AcessController.checkAccess("claimStructureAllotment", "claimStructureAllotment", 1, 0, 0, 0,
+				newModuleList);
 
-		ModelAndView model = new ModelAndView("claim/claim_structure_allot_list");
+		if (view.isError() == true) {
 
-		try {
+			model = new ModelAndView("accessDenied");
 
-			HttpSession session = request.getSession();
-			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+		} else {
+		  model = new ModelAndView("claim/claim_structure_allot_list");
 
+		try { 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("companyId", userObj.getCompanyId());
 			ClaimStructureHeader[] lvStrSummery = Constants.getRestTemplate()
@@ -399,6 +468,7 @@ public class ClaimStructureAndAllotController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		}
 		return model;
 	}
 	
@@ -410,7 +480,7 @@ public class ClaimStructureAndAllotController {
 		String dateTime = dateFormat.format(now);
 		
 		List<Integer> empList=null;
-		try {
+		 
 			HttpSession session = request.getSession();
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 			int lvsId = Integer.parseInt(request.getParameter("lvsId"));
@@ -453,9 +523,9 @@ public class ClaimStructureAndAllotController {
 
 				 
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		/*
+		 * catch (Exception e) { e.printStackTrace(); }
+		 */
 
 		return "redirect:/claimStructureAllotment";
 	}
