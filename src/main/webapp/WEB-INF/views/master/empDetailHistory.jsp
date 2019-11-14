@@ -48,11 +48,11 @@
 								<td width="60%"><h5 class="card-title">Leave Trail List</h5></td>
 								<td width="40%" align="right">
 							  
-								 <a
+								<%--  <a
 									href="${pageContext.request.contextPath}/empInfoHistory"
 									class="breadcrumb-elements-item">
 										<button type="button" class="btn btn-primary">Employee Leave History  </button>
-								</a> </td>
+								</a> --%> </td>
 							</tr>
 						</table>
 					</div>

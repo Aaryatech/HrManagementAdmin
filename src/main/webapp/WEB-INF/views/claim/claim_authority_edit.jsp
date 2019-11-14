@@ -70,11 +70,11 @@
 							<tr width="100%">
 								<td width="60%"><h5 class="card-title">Edit Claim Authority</h5></td>
 								<td width="40%" align="right">
-								 <%-- <a
+								 <a
 									href="${pageContext.request.contextPath}/addClaimAuthority"
 									class="breadcrumb-elements-item">
 										<button type="button" class="btn btn-primary">Add Claim Authority </button>
-								</a> --%> </td>
+								</a> </td>
 							</tr>
 						</table>
 					</div>

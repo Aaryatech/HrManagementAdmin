@@ -98,15 +98,7 @@
 
 				<!-- Highlighting rows and columns -->
 				<div class="card">
-					<div class="card-header header-elements-inline">
-						<h5 class="card-title">Leave Authority</h5>
-						<!-- <div class="header-elements">
-							<div class="list-icons">
-								<a class="list-icons-item" data-action="collapse"></a>
-							</div>
-						</div> -->
-					</div>
-					
+					 
 					
 					
 							<div class="card-header header-elements-inline">
@@ -114,12 +106,12 @@
 							<tr width="100%">
 								<td width="60%"><h5 class="card-title">Leave Authority</h5></td>
 								<td width="40%" align="right">
-							  <%-- 
+							  
 								 <a
 									href="${pageContext.request.contextPath}/leaveAuthorityList"
 									class="breadcrumb-elements-item">
 										<button type="button" class="btn btn-primary">Authority List  </button>
-								</a> --%> </td>
+								</a> </td>
 							</tr>
 						</table>
 					</div>
@@ -257,11 +249,11 @@
 								<input type="submit" class="btn btn-primary" value="Add"
 									id="btnAddLeaveAuthority"
 									style="align-content: center; width: 113px; margin-left: 40px;">
-								<a href="${pageContext.request.contextPath}/leaveAuthorityList"><button
+								<%-- <a href="${pageContext.request.contextPath}/leaveAuthorityList"><button
 										type="button" class="btn btn-primary">
 										<i class="${sessionScope.cancelIcon}" aria-hidden="true"></i>&nbsp;&nbsp;
 										Cancel
-									</button></a> <input type="hidden" name="intialChecked"
+									</button></a> --%> <input type="hidden" name="intialChecked"
 									id="intialChecked" 
 									value="0" />
 							</div>
