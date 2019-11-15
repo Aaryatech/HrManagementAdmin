@@ -30,7 +30,7 @@
 			<div class="page-header page-header-light">
 
 
-			<%-- 	<div
+				<%-- 	<div
 					class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
 					<div class="d-flex">
 						<div class="breadcrumb">
@@ -132,36 +132,32 @@
 							<tbody>
 
 								<tr>
-								<td>1</td>
-										<td>${tempList.empSname}&nbsp;${tempList.empFname}</td>
-										<td>${tempList.empCatShortName}-
-											${tempList.empTypeShortName} -
-											${tempList.empDeptShortName}</td>
+									<td>1</td>
+									<td>${tempList.empSname}&nbsp;${tempList.empFname}</td>
+									<td>${tempList.empCatShortName}-
+										${tempList.empTypeShortName} - ${tempList.empDeptShortName}</td>
 
-										<td>${tempList.empEmail}</td>
-										<td>${tempList.empMobile1}</td>
-										<%-- <td>${tempList.empRatePerhr}</td> --%>
-										
-										
-										<td class="text-center">
-											 <a
-											href="${pageContext.request.contextPath}/showClaimApply?empId=${tempList.exVar1}"
-											title="Add Claim"><i class="icon-diff-added"
-												style="color: black;"></i></a> <a
-											href="${pageContext.request.contextPath}/showClaimList?empId=${tempList.exVar1}"
-											title="Claim History"><i class="icon-history"
-												style="color: black;"></i></a>
+									<td>${tempList.empEmail}</td>
+									<td>${tempList.empMobile1}</td>
+									<%-- <td>${tempList.empRatePerhr}</td> --%>
 
-										</td>
-								
+
+									<td class="text-center"><a
+										href="${pageContext.request.contextPath}/showClaimApply?empId=${tempList.exVar1}"
+										title="Add Claim"><i class="icon-diff-added"
+											style="color: black;"></i></a> <a
+										href="${pageContext.request.contextPath}/showClaimList?empId=${tempList.exVar1}"
+										title="Claim History"><i class="icon-history"
+											style="color: black;"></i></a></td>
+
 								</tr>
 								<c:set var="index" value="2"></c:set>
-								<c:forEach items="${empList}" var="lvTypeList"  >
+								<c:forEach items="${empList}" var="lvTypeList">
 									<tr>
 										<td>${index}</td>
 										<c:set var="index" value="${index+1}"></c:set>
-										
-<td>${lvTypeList.empSname}&nbsp;${lvTypeList.empFname}</td>
+
+										<td>${lvTypeList.empSname}&nbsp;${lvTypeList.empFname}</td>
 										<td>${lvTypeList.empCatShortName}-
 											${lvTypeList.empTypeShortName} -
 											${lvTypeList.empDeptShortName}</td>
@@ -169,18 +165,15 @@
 										<td>${lvTypeList.empEmail}</td>
 										<td>${lvTypeList.empMobile1}</td>
 										<%-- <td>${lvTypeList.empRatePerhr}</td> --%>
-										
 
-										<td class="text-center">
-											 <a
+
+										<td class="text-center"><a
 											href="${pageContext.request.contextPath}/showClaimApply?empId=${lvTypeList.exVar1}"
 											title="Add Claim"><i class="icon-diff-added"
 												style="color: black;"></i></a> <a
 											href="${pageContext.request.contextPath}/showClaimList?empId=${lvTypeList.exVar1}"
 											title="Claim History"><i class="icon-history"
-												style="color: black;"></i></a>
-
-										</td>
+												style="color: black;"></i></a></td>
 									</tr>
 								</c:forEach>
 

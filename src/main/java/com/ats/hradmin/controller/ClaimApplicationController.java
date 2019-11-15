@@ -428,10 +428,10 @@ public class ClaimApplicationController {
 			String stat = request.getParameter("stat");
 			int retun = Integer.parseInt(request.getParameter("retun"));
 			model.addObject("empId", empId);
+			model.addObject("empIdEncoded", request.getParameter("empId"));
 			model.addObject("claimId", claimId);
 			model.addObject("stat", stat);
-			System.out.println("empId" + empId);
-
+			 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("claimId", claimId);
 			GetClaimTrailStatus[] employeeDoc = Constants.getRestTemplate().postForObject(
@@ -572,6 +572,8 @@ public class ClaimApplicationController {
 		}
 		if (retun == 0) {
 			return "redirect:/showClaimApprovalByAdmin";
+		}if (retun == 2) {
+			return "redirect:/showClaimList?empId="+FormValidation.Encrypt(request.getParameter("empId"));
 		} else {
 			return "redirect:/showClaimApprovalByAuthority";
 		}
@@ -607,7 +609,11 @@ public class ClaimApplicationController {
 			}
 
 			model.addObject("claimList1", claimList1);
-
+			model.addObject("empId", empId);
+			model.addObject("empIdencode", request.getParameter("empId"));
+			HttpSession session = request.getSession();
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+			model.addObject("loginEmpId", userObj.getEmpId());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

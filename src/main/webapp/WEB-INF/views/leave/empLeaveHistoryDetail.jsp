@@ -27,10 +27,7 @@
 		<div class="content-wrapper">
 
 			<!-- Page header -->
-			<div class="page-header page-header-light">
-
- 
-			</div>
+			<div class="page-header page-header-light"></div>
 			<!-- /page header -->
 
 
@@ -40,19 +37,19 @@
 
 				<!-- Highlighting rows and columns -->
 				<div class="card">
-					 
-					
-							<div class="card-header header-elements-inline">
- 						<table width="100%">
+
+
+					<div class="card-header header-elements-inline">
+						<table width="100%">
 							<tr width="100%">
-								<td width="60%"><h5 class="card-title">Leave Trail List</h5></td>
-								<td width="40%" align="right">
-							  
-								 <a
+								<td width="60%"><h5 class="card-title">Leave Trail
+										List</h5></td>
+								<td width="40%" align="right"><a
 									href="${pageContext.request.contextPath}/showLeaveHistList?empId=${empId1}"
 									class="breadcrumb-elements-item">
-										<button type="button" class="btn btn-primary">Employee Leave History </button>
-								</a> </td>
+										<button type="button" class="btn btn-primary">Employee
+											Leave History</button>
+								</a></td>
 							</tr>
 						</table>
 					</div>
@@ -94,124 +91,129 @@
 							session.removeAttribute("successMsg");
 							}
 						%>
-					
-							<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="compName">Employee Code
-											: </label>
-										<div class="col-lg-6">
-											<input type="text" class="form-control"
-												 Value="${lvEmp.empCode}"
-												name="compName" autocomplete="off" readonly>
-											
-										</div>
-									</div>
-									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="compName">Employee Name
-											: </label>
-										<div class="col-lg-6">
-											<input type="text" class="form-control"
-												 Value="${lvEmp.empName}"
-												name="compName" autocomplete="off" readonly>
-											
-										</div>
-									</div>
-									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="compName">Leave Type
-											: </label>
-										<div class="col-lg-6">
-											<input type="text" class="form-control"
-												 Value="${lvEmp.leaveTitle}"
-												name="compName" autocomplete="off" readonly>
-											
-										</div>
-									</div>
-									
-									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="compName">From date
-											: </label>
-										<div class="col-lg-6">
-											<input type="text" class="form-control"
-												  Value="${lvEmp.leaveFromdt}"
-												name="compName" autocomplete="off" readonly>
-											
-										</div>
-									</div>
-									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="compName">To Date
-											: </label>
-										<div class="col-lg-6">
-											<input type="text" class="form-control"
-											  Value="${lvEmp.leaveTodt}"
-												name="compName" autocomplete="off" readonly>
-											
-										</div>
-									</div>
-						
+
 						<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="compName">No. of Days
-											: </label>
-										<div class="col-lg-6">
-											<input type="text" class="form-control"
-												 Value="${lvEmp.leaveNumDays}"
-												name="compName" autocomplete="off" readonly>
-											
-										</div>
-									</div>
+							<label class="col-form-label col-lg-2" for="compName">Employee
+								Code : </label>
+							<div class="col-lg-6">
+								<input type="text" class="form-control" Value="${lvEmp.empCode}"
+									name="compName" autocomplete="off" readonly>
+
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2" for="compName">Employee
+								Name : </label>
+							<div class="col-lg-6">
+								<input type="text" class="form-control" Value="${lvEmp.empName}"
+									name="compName" autocomplete="off" readonly>
+
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2" for="compName">Leave
+								Type : </label>
+							<div class="col-lg-6">
+								<input type="text" class="form-control"
+									Value="${lvEmp.leaveTitle}" name="compName" autocomplete="off"
+									readonly>
+
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2" for="compName">From
+								date : </label>
+							<div class="col-lg-6">
+								<input type="text" class="form-control"
+									Value="${lvEmp.leaveFromdt}" name="compName" autocomplete="off"
+									readonly>
+
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2" for="compName">To
+								Date : </label>
+							<div class="col-lg-6">
+								<input type="text" class="form-control"
+									Value="${lvEmp.leaveTodt}" name="compName" autocomplete="off"
+									readonly>
+
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2" for="compName">No.
+								of Days : </label>
+							<div class="col-lg-6">
+								<input type="text" class="form-control"
+									Value="${lvEmp.leaveNumDays}" name="compName"
+									autocomplete="off" readonly>
+
+							</div>
+						</div>
 						<table
 							class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic1  datatable-button-print-columns1"
 							id="printtable1">
 							<thead>
 								<tr class="bg-blue">
 									<th width="10%">Sr.no</th>
-									<th>Name</th>								
+									<!-- <th>Name</th> -->
+									<th>Action By</th>
 									<th>Remark</th>
 									<th>Date</th>
-									<th>Action By</th>
+
 									<th>Leave Status</th>
-									
+
 
 								</tr>
 							</thead>
 							<tbody>
 
 
-								<c:forEach items="${employeeList}" var="empTrailList" varStatus="count">
+								<c:forEach items="${employeeList}" var="empTrailList"
+									varStatus="count">
 									<tr>
 										<td>${count.index+1}</td>
-										<td>${empTrailList.empSname} ${empTrailList.empFname}</td>
-									
-										
-										<c:choose>
-										<c:when test="${empTrailList.empRemarks=='null' || empty empTrailList.empRemarks}">
-											<td>-</td>
-										</c:when>
-										<c:otherwise>
-										<td>${empTrailList.empRemarks}</td>
-										</c:otherwise>
-										</c:choose>									
-										<td>${empTrailList.makerEnterDatetime}</td>
+										<%-- <td>${empTrailList.empSname}${empTrailList.empFname}</td> --%>
 										<td>${empTrailList.userName}</td>
-									
+
+										<c:choose>
+											<c:when
+												test="${empTrailList.empRemarks=='null' || empty empTrailList.empRemarks}">
+												<td>-</td>
+											</c:when>
+											<c:otherwise>
+												<td>${empTrailList.empRemarks}</td>
+											</c:otherwise>
+										</c:choose>
+										<td>${empTrailList.makerEnterDatetime}</td>
+
 										<c:if test="${empTrailList.leaveStatus==1}">
-										<td><span class="badge badge-info">Initial Pending</span></td>
+											<td><span class="badge badge-info">Applied</span></td>
 										</c:if>
 										<c:if test="${empTrailList.leaveStatus==2}">
-										<td><span class="badge badge-secondary">Final Pending</span></td>
+											<td><span class="badge badge-secondary">Initial
+													Approved</span></td>
 										</c:if>
-											<c:if test="${empTrailList.leaveStatus==3}">
-										<td><span class="badge badge-success"> Final Approved</span></td>
+										<c:if test="${empTrailList.leaveStatus==3}">
+											<td><span class="badge badge-success"> Final
+													Approved</span></td>
 										</c:if>
-											<c:if test="${empTrailList.leaveStatus==7}">
-										<td><span class="badge badge-danger">Leave Cancelled</span></td>
+										<c:if test="${empTrailList.leaveStatus==7}">
+											<td><span class="badge badge-danger">Leave
+													Cancelled</span></td>
 										</c:if>
-											<c:if test="${empTrailList.leaveStatus==8}">
-										<td><span class="badge badge-danger">Initial Rejected</span></td>
+										<c:if test="${empTrailList.leaveStatus==8}">
+											<td><span class="badge badge-danger">Initial
+													Rejected</span></td>
 										</c:if>
-											<c:if test="${empTrailList.leaveStatus==9}">
-										<td><span class="badge badge-danger"> Final Rejected</span></td>
+										<c:if test="${empTrailList.leaveStatus==9}">
+											<td><span class="badge badge-danger"> Final
+													Rejected</span></td>
 										</c:if>
-	
-									<%-- 	<td class="text-center">
+
+										<%-- 	<td class="text-center">
 											<div class="list-icons">
 												<div class="dropdown">
 													<a href="#" class="list-icons-item" data-toggle="dropdown">

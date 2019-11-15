@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-		<%@ taglib
-	uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -67,7 +66,7 @@
 						<div class="card">
 							<div class="card-header header-elements-inline">
 								<h6 class="card-title"></h6>
-							<!-- 	<div class="header-elements">
+								<!-- 	<div class="header-elements">
 									<div class="list-icons">
 										<a class="list-icons-item" data-action="collapse"></a>
 									</div>
@@ -111,132 +110,137 @@
 									session.removeAttribute("successMsg");
 									}
 								%>
-<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="compName">Employee Code
-											: </label>
-										<div class="col-lg-6">
-											<input type="text" class="form-control"
-												 Value="${lvEmp.empCode}"
-												name="compName" autocomplete="off" readonly>
-											
-										</div>
+								<div class="form-group row">
+									<label class="col-form-label col-lg-2" for="compName">Employee
+										Code : </label>
+									<div class="col-lg-6">
+										<input type="text" class="form-control"
+											Value="${lvEmp.empCode}" name="compName" autocomplete="off"
+											readonly>
+
 									</div>
-									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="compName">Employee Name
-											: </label>
-										<div class="col-lg-6">
-											<input type="text" class="form-control"
-												 Value="${lvEmp.empFname} ${lvEmp.empSname}"
-												name="compName" autocomplete="off" readonly>
-											
-										</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-form-label col-lg-2" for="compName">Employee
+										Name : </label>
+									<div class="col-lg-6">
+										<input type="text" class="form-control"
+											Value="${lvEmp.empFname} ${lvEmp.empSname}" name="compName"
+											autocomplete="off" readonly>
+
 									</div>
-									
-									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="compName">Claim Title
-											: </label>
-										<div class="col-lg-6">
-											<input type="text" class="form-control"
-												 Value="${lvEmp.claimTitle}"
-												name="compName" autocomplete="off" readonly>
-											
-										</div>
+								</div>
+
+								<div class="form-group row">
+									<label class="col-form-label col-lg-2" for="compName">Claim
+										Title : </label>
+									<div class="col-lg-6">
+										<input type="text" class="form-control"
+											Value="${lvEmp.claimTitle}" name="compName"
+											autocomplete="off" readonly>
+
 									</div>
-									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="compName">Claim Date
-											: </label>
-										<div class="col-lg-6">
-											<input type="text" class="form-control"
-												  Value="${lvEmp.caFromDt} to ${lvEmp.caToDt} "
-												name="compName" autocomplete="off" readonly>
-											
-										</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-form-label col-lg-2" for="compName">Claim
+										Date : </label>
+									<div class="col-lg-6">
+										<input type="text" class="form-control"
+											Value="${lvEmp.caFromDt} to ${lvEmp.caToDt} " name="compName"
+											autocomplete="off" readonly>
+
 									</div>
-									
-						
-						<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="compName">Claim Amount
-											: </label>
-										<div class="col-lg-6">
-											<input type="text" class="form-control"
-												 Value="${lvEmp.claimAmount}"
-												name="compName" autocomplete="off" readonly>
-											
-										</div>
-									</div>
-									
-									<div class="form-group row">
-										<label class="col-form-label col-lg-2" for="compName">Project Title
-											: </label>
-										<div class="col-lg-6">
-											<input type="text" class="form-control"
-												 Value="${lvEmp.projectTitle}"
-												name="compName" autocomplete="off" readonly>
-											
-										</div>
-									</div>
-						
-					<h6 class="card-title">Claim Trail History</h6>
-								
-<table
-							class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic1  datatable-button-print-columns1"
-							id="printtable1">
-							<thead>
-								<tr class="bg-blue">
-									<th width="10%">Sr.no</th>
-									<th>Name</th>								
-									<th>Remark</th>
-									<th>Date</th>
-									<th>Action By</th>
-									<th>Claim Status</th>
- 								</tr>
-							</thead>
-							<tbody>
+								</div>
 
 
-								<c:forEach items="${employeeList}" var="empTrailList" varStatus="count">
-									<tr>
-										<td>${count.index+1}</td>
-										<td>${empTrailList.empSname} ${empTrailList.empFname}</td>
-									
-										
-										<c:choose>
-										<c:when test="${empTrailList.empRemarks=='null' || empty empTrailList.empRemarks}">
-											<td>-</td>
-										</c:when>
-										<c:otherwise>
-										<td>${empTrailList.empRemarks}</td>
-										</c:otherwise>
-										</c:choose>									
-										<td>${empTrailList.makerEnterDatetime}</td>
-										<td>${empTrailList.userName}</td>
-										<c:if test="${empTrailList.claimStatus==1}">
-										<td><span class="badge badge-info">Initial Pending</span></td>
-										</c:if>
-										<c:if test="${empTrailList.claimStatus==2}">
-										<td><span class="badge badge-secondary">Final Pending</span></td>
-										</c:if>
-											<c:if test="${empTrailList.claimStatus==3}">
-										<td><span class="badge badge-success">Final Approved</span></td>
-										</c:if>
-											<c:if test="${empTrailList.claimStatus==7}">
-										<td><span class="badge badge-danger">Leave Cancelled</span></td>
-										</c:if>
-											<c:if test="${empTrailList.claimStatus==8}">
-										<td><span class="badge badge-danger">Initial Rejected</span></td>
-										</c:if>
-											<c:if test="${empTrailList.claimStatus==9}">
-										<td><span class="badge badge-danger">Final Reject</span></td>
-										</c:if>
-	
-									
-									</tr>
-								</c:forEach>
+								<div class="form-group row">
+									<label class="col-form-label col-lg-2" for="compName">Claim
+										Amount : </label>
+									<div class="col-lg-6">
+										<input type="text" class="form-control"
+											Value="${lvEmp.claimAmount}" name="compName"
+											autocomplete="off" readonly>
 
-							</tbody>
-						</table>
-						
-								
+									</div>
+								</div>
+
+								<div class="form-group row">
+									<label class="col-form-label col-lg-2" for="compName">Project
+										Title : </label>
+									<div class="col-lg-6">
+										<input type="text" class="form-control"
+											Value="${lvEmp.projectTitle}" name="compName"
+											autocomplete="off" readonly>
+
+									</div>
+								</div>
+
+								<h6 class="card-title">Claim Trail History</h6>
+
+								<table
+									class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic1  datatable-button-print-columns1"
+									id="printtable1">
+									<thead>
+										<tr class="bg-blue">
+											<th width="10%">Sr.no</th>
+											<!-- <th>Name</th> -->
+											<th>Action By</th>
+											<th>Remark</th>
+											<th>Date</th>
+
+											<th>Claim Status</th>
+										</tr>
+									</thead>
+									<tbody>
+
+
+										<c:forEach items="${employeeList}" var="empTrailList"
+											varStatus="count">
+											<tr>
+												<td>${count.index+1}</td>
+												<%-- <td>${empTrailList.empSname}&nbsp;${empTrailList.empFname}</td> --%>
+
+												<td>${empTrailList.userName}</td>
+												<c:choose>
+													<c:when
+														test="${empTrailList.empRemarks=='null' || empty empTrailList.empRemarks}">
+														<td>-</td>
+													</c:when>
+													<c:otherwise>
+														<td>${empTrailList.empRemarks}</td>
+													</c:otherwise>
+												</c:choose>
+												<td>${empTrailList.makerEnterDatetime}</td>
+
+												<c:if test="${empTrailList.claimStatus==1}">
+													<td><span class="badge badge-info">Applied</span></td>
+												</c:if>
+												<c:if test="${empTrailList.claimStatus==2}">
+													<td><span class="badge badge-secondary">Final
+															Pending</span></td>
+												</c:if>
+												<c:if test="${empTrailList.claimStatus==3}">
+													<td><span class="badge badge-success"> Approved</span></td>
+												</c:if>
+												<c:if test="${empTrailList.claimStatus==7}">
+													<td><span class="badge badge-danger"> Cancelled</span></td>
+												</c:if>
+												<c:if test="${empTrailList.claimStatus==8}">
+													<td><span class="badge badge-danger">Initial
+															Rejected</span></td>
+												</c:if>
+												<c:if test="${empTrailList.claimStatus==9}">
+													<td><span class="badge badge-danger"> Rejected</span></td>
+												</c:if>
+
+
+											</tr>
+										</c:forEach>
+
+									</tbody>
+								</table>
+
+
 							</div>
 						</div>
 
@@ -297,7 +301,6 @@
 				var isError = false;
 				var errMsg = "";
 
-				
 				if (!isError) {
 
 					var x = confirm("Do you really want to submit the form?");

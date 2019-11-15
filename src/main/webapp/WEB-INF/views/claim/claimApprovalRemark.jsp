@@ -46,7 +46,13 @@
 
 						<div class="card">
 							<div class="card-header header-elements-inline">
-								<h6 class="card-title"></h6>
+								<h6 class="card-title">
+									<c:choose>
+										<c:when test="${stat==3}">Approve Claim</c:when>
+										<c:when test="${stat==9}">Reject Claim</c:when>
+										<c:when test="${stat==7}">Cancel Claim</c:when>
+									</c:choose>
+								</h6>
 								<!-- 	<div class="header-elements">
 									<div class="list-icons">
 										<a class="list-icons-item" data-action="collapse"></a>
@@ -155,7 +161,7 @@
 
 									</div>
 								</div>
- 
+
 								<h6 class="card-title">Claim Detail</h6>
 								<table
 									class="table table-bordered table-hover datatable-highlight1 datatable-button-html5-basic1  datatable-button-print-columns1"
@@ -263,7 +269,8 @@
 
 									<div class="form-group row">
 										<label class="col-form-label col-lg-2" for="remark">Any
-											Remark:</label>
+											Remark:<c:if test="${stat==7 || stat== 9}">*</c:if>
+										</label>
 										<div class="col-lg-10">
 											<textarea rows="3" cols="3" class="form-control"
 												placeholder="Any Remark" onchange="trim(this)" id="remark"
@@ -290,6 +297,14 @@
 												<c:when test="${retun==0}">
 													<a
 														href="${pageContext.request.contextPath}/showClaimApprovalByAdmin"><button
+															type="button" class="btn bg-blue ml-3 legitRipple"
+															id="cancel">
+															Cancel<i class="icon-paperplane ml-2"></i>
+														</button></a>
+												</c:when>
+												<c:when test="${retun==2}">
+													<a
+														href="${pageContext.request.contextPath}/showClaimList?empId=${empIdEncoded}"><button
 															type="button" class="btn bg-blue ml-3 legitRipple"
 															id="cancel">
 															Cancel<i class="icon-paperplane ml-2"></i>
