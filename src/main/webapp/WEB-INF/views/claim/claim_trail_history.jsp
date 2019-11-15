@@ -77,16 +77,16 @@
 											<a
 												href="${pageContext.request.contextPath}/showClaimApprovalByAdmin"
 												class="breadcrumb-elements-item">
-												<button type="button" class="btn btn-primary">Employee
-													Claim History</button>
+												<button type="button" class="btn btn-primary">
+													Claim List</button>
 											</a>
 										</c:when>
 										<c:otherwise>
 											<a
 												href="${pageContext.request.contextPath}/showClaimApprovalByAuthority"
 												class="breadcrumb-elements-item">
-												<button type="button" class="btn btn-primary">Employee
-													Claim History</button>
+												<button type="button" class="btn btn-primary">
+													Claim List</button>
 											</a>
 										</c:otherwise>
 									</c:choose></td>
