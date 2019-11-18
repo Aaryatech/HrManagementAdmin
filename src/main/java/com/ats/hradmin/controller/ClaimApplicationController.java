@@ -70,73 +70,92 @@ public class ClaimApplicationController {
 			GetEmployeeInfo temp = new GetEmployeeInfo();
 			HttpSession session = request.getSession();
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("showApplyForClaim", "showApplyForClaim", 1, 0, 0, 0,
+					newModuleList);
 
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			if (view.isError() == true) {
 
-			map.add("companyId", userObj.getCompanyId());
-			map.add("empId", userObj.getEmpId());
+				model = new ModelAndView("accessDenied");
 
-			GetEmployeeInfo[] employeeDepartment = Constants.getRestTemplate()
-					.postForObject(Constants.url + "/getEmpInfoClaimAuthWise", map, GetEmployeeInfo[].class);
+			} else {
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 
-			List<GetEmployeeInfo> employeeDepartmentlist = new ArrayList<GetEmployeeInfo>(
-					Arrays.asList(employeeDepartment));
+				map.add("companyId", userObj.getCompanyId());
+				map.add("empId", userObj.getEmpId());
 
-			int flag = 1;
+				GetEmployeeInfo[] employeeDepartment = Constants.getRestTemplate()
+						.postForObject(Constants.url + "/getEmpInfoClaimAuthWise", map, GetEmployeeInfo[].class);
 
-			map = new LinkedMultiValueMap<>();
-			map.add("empId", userObj.getEmpId());
+				List<GetEmployeeInfo> employeeDepartmentlist = new ArrayList<GetEmployeeInfo>(
+						Arrays.asList(employeeDepartment));
 
-			GetEmployeeInfo editEmp = Constants.getRestTemplate().postForObject(Constants.url + "/GetEmployeeInfo", map,
-					GetEmployeeInfo.class);
-			model.addObject("editEmp", editEmp);
+				int flag = 1;
 
-			for (int i = 0; i < employeeDepartmentlist.size(); i++) {
-				if (employeeDepartmentlist.get(i).getEmpId() == userObj.getEmpId()) {
-					flag = 0;
-					System.err.println(" matched");
-					employeeDepartmentlist.remove(i);
-					break;
+				map = new LinkedMultiValueMap<>();
+				map.add("empId", userObj.getEmpId());
+
+				GetEmployeeInfo editEmp = Constants.getRestTemplate().postForObject(Constants.url + "/GetEmployeeInfo",
+						map, GetEmployeeInfo.class);
+				model.addObject("editEmp", editEmp);
+
+				for (int i = 0; i < employeeDepartmentlist.size(); i++) {
+					if (employeeDepartmentlist.get(i).getEmpId() == userObj.getEmpId()) {
+						flag = 0;
+						System.err.println(" matched");
+						employeeDepartmentlist.remove(i);
+						break;
+					}
+
+				}
+				/* if(flag == 1) { */
+				System.err.println("not matched");
+
+				temp.setCompanyId(editEmp.getCompanyId());
+				temp.setCompanyName(editEmp.getCompanyName());
+				temp.setEmpCategory(editEmp.getEmpCategory());
+				temp.setEmpCatId(editEmp.getEmpCatId());
+				temp.setEmpCode(editEmp.getEmpCode());
+				temp.setEmpDept(editEmp.getEmpDept());
+				temp.setEmpDeptId(editEmp.getEmpDeptId());
+				temp.setEmpEmail(editEmp.getEmpEmail());
+				temp.setEmpFname(editEmp.getEmpFname());
+				temp.setEmpId(editEmp.getEmpId());
+				temp.setEmpMname(editEmp.getEmpMname());
+				temp.setEmpMobile1(editEmp.getEmpMobile1());
+				temp.setEmpPrevExpYrs(editEmp.getEmpPrevExpYrs());
+				temp.setEmpRatePerhr(editEmp.getEmpRatePerhr());
+				temp.setEmpSname(editEmp.getEmpSname());
+				temp.setEmpType(editEmp.getEmpType());
+				temp.setEmpTypeId(editEmp.getEmpTypeId());
+				temp.setEmpDeptShortName(editEmp.getEmpDeptShortName());
+				temp.setEmpCatShortName(editEmp.getEmpCatShortName());
+				temp.setEmpTypeShortName(editEmp.getEmpTypeShortName());
+				// employeeDepartmentlist.add(temp);
+				/* } */
+
+				temp.setExVar1(FormValidation.Encrypt(String.valueOf(editEmp.getEmpId())));
+				System.err.println("temp list is claim  " + temp.toString());
+				for (int i = 0; i < employeeDepartmentlist.size(); i++) {
+					// System.out.println("employeeDepartmentlist.get(i).getEmpId()"+employeeDepartmentlist.get(i).getEmpId());
+					employeeDepartmentlist.get(i).setExVar1(
+							FormValidation.Encrypt(String.valueOf(employeeDepartmentlist.get(i).getEmpId())));
+				}
+
+				model.addObject("empList", employeeDepartmentlist);
+				System.err.println("emp list is  " + employeeDepartment.toString());
+				model.addObject("tempList", temp);
+
+				Info add = AcessController.checkAccess("showApplyForClaim", "showApplyForClaim", 0, 1, 0, 0,
+						newModuleList);
+
+				if (add.isError() == false) {
+					System.out.println(" add   Accessable ");
+					model.addObject("addAccess", 0);
+
 				}
 
 			}
-			/* if(flag == 1) { */
-			System.err.println("not matched");
-
-			temp.setCompanyId(editEmp.getCompanyId());
-			temp.setCompanyName(editEmp.getCompanyName());
-			temp.setEmpCategory(editEmp.getEmpCategory());
-			temp.setEmpCatId(editEmp.getEmpCatId());
-			temp.setEmpCode(editEmp.getEmpCode());
-			temp.setEmpDept(editEmp.getEmpDept());
-			temp.setEmpDeptId(editEmp.getEmpDeptId());
-			temp.setEmpEmail(editEmp.getEmpEmail());
-			temp.setEmpFname(editEmp.getEmpFname());
-			temp.setEmpId(editEmp.getEmpId());
-			temp.setEmpMname(editEmp.getEmpMname());
-			temp.setEmpMobile1(editEmp.getEmpMobile1());
-			temp.setEmpPrevExpYrs(editEmp.getEmpPrevExpYrs());
-			temp.setEmpRatePerhr(editEmp.getEmpRatePerhr());
-			temp.setEmpSname(editEmp.getEmpSname());
-			temp.setEmpType(editEmp.getEmpType());
-			temp.setEmpTypeId(editEmp.getEmpTypeId());
-			temp.setEmpDeptShortName(editEmp.getEmpDeptShortName());
-			temp.setEmpCatShortName(editEmp.getEmpCatShortName());
-			temp.setEmpTypeShortName(editEmp.getEmpTypeShortName());
-			// employeeDepartmentlist.add(temp);
-			/* } */
-
-			temp.setExVar1(FormValidation.Encrypt(String.valueOf(editEmp.getEmpId())));
-			System.err.println("temp list is claim  " + temp.toString());
-			for (int i = 0; i < employeeDepartmentlist.size(); i++) {
-				// System.out.println("employeeDepartmentlist.get(i).getEmpId()"+employeeDepartmentlist.get(i).getEmpId());
-				employeeDepartmentlist.get(i)
-						.setExVar1(FormValidation.Encrypt(String.valueOf(employeeDepartmentlist.get(i).getEmpId())));
-			}
-
-			model.addObject("empList", employeeDepartmentlist);
-			System.err.println("emp list is  " + employeeDepartment.toString());
-			model.addObject("tempList", temp);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -431,7 +450,7 @@ public class ClaimApplicationController {
 			model.addObject("empIdEncoded", request.getParameter("empId"));
 			model.addObject("claimId", claimId);
 			model.addObject("stat", stat);
-			 
+
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("claimId", claimId);
 			GetClaimTrailStatus[] employeeDoc = Constants.getRestTemplate().postForObject(
@@ -572,8 +591,9 @@ public class ClaimApplicationController {
 		}
 		if (retun == 0) {
 			return "redirect:/showClaimApprovalByAdmin";
-		}if (retun == 2) {
-			return "redirect:/showClaimList?empId="+FormValidation.Encrypt(request.getParameter("empId"));
+		}
+		if (retun == 2) {
+			return "redirect:/showClaimList?empId=" + FormValidation.Encrypt(request.getParameter("empId"));
 		} else {
 			return "redirect:/showClaimApprovalByAuthority";
 		}

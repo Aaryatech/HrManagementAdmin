@@ -16,12 +16,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.ats.hradmin.common.AcessController;
 import com.ats.hradmin.common.Constants;
 import com.ats.hradmin.common.FormValidation;
 import com.ats.hradmin.leave.model.CalenderYear;
 import com.ats.hradmin.leave.model.GetLeaveApplyAuthwise;
 import com.ats.hradmin.leave.model.GetLeaveStatus;
 import com.ats.hradmin.leave.model.LeaveDetail;
+import com.ats.hradmin.model.AccessRightModule;
 import com.ats.hradmin.model.EmployeDoc;
 import com.ats.hradmin.model.EmployeeInfo;
 import com.ats.hradmin.model.Info;
@@ -207,21 +210,29 @@ public class MasterEmpController {
 		try {
 			HttpSession session = request.getSession();
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
-			
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			map.add("locationId", userObj.getLocationIds());
-			CalenderYear[] calenderYear = Constants.getRestTemplate().getForObject(Constants.url + "/getCalculateYearList",
-					CalenderYear[].class);
-			  List<CalenderYear> calYearList = new ArrayList<CalenderYear>(Arrays.asList(calenderYear));
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("empInfoHistory",
+					"empInfoHistory", 1, 0, 0, 0, newModuleList);
 
-			  
-			  EmployeeInfo[] employeeInfo = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpInfoByLocId",map,
-					  EmployeeInfo[].class);
-			  
-			  List<EmployeeInfo> employeeInfoList = new ArrayList<EmployeeInfo>(Arrays.asList(employeeInfo));
-			  model.addObject("calYearList",calYearList);
-			  model.addObject("employeeInfoList",employeeInfoList);
-			 
+			if (view.isError() == true) {
+
+				model = new ModelAndView("accessDenied");
+
+			} else {
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+				map.add("locationId", userObj.getLocationIds());
+				CalenderYear[] calenderYear = Constants.getRestTemplate().getForObject(Constants.url + "/getCalculateYearList",
+						CalenderYear[].class);
+				  List<CalenderYear> calYearList = new ArrayList<CalenderYear>(Arrays.asList(calenderYear));
+	
+				  
+				  EmployeeInfo[] employeeInfo = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpInfoByLocId",map,
+						  EmployeeInfo[].class);
+				  
+				  List<EmployeeInfo> employeeInfoList = new ArrayList<EmployeeInfo>(Arrays.asList(employeeInfo));
+				  model.addObject("calYearList",calYearList);
+				  model.addObject("employeeInfoList",employeeInfoList);
+			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();

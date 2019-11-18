@@ -429,33 +429,42 @@ public class LeaveStructureController {
 			HttpSession session = request.getSession();
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			map.add("companyId", userObj.getCompanyId());
-			LeaveStructureHeader[] lvStrSummery = Constants.getRestTemplate()
-					.postForObject(Constants.url + "/getStructureList", map, LeaveStructureHeader[].class);
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("leaveStructureAllotment",
+					"leaveStructureAllotment", 1, 0, 0, 0, newModuleList);
 
-			List<LeaveStructureHeader> lSummarylist = new ArrayList<>(Arrays.asList(lvStrSummery));
-			model.addObject("lStrList", lSummarylist);
+			if (view.isError() == true) {
 
-			map = new LinkedMultiValueMap<>();
-			map.add("companyId", userObj.getCompanyId());
-			map.add("locIdList", userObj.getLocationIds());
-			map.add("typeId", 1);
+				model = new ModelAndView("accessDenied");
 
-			GetStructureAllotment[] summary = Constants.getRestTemplate()
-					.postForObject(Constants.url + "/getStructureAllotmentList", map, GetStructureAllotment[].class);
+			} else {
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+				map.add("companyId", userObj.getCompanyId());
+				LeaveStructureHeader[] lvStrSummery = Constants.getRestTemplate()
+						.postForObject(Constants.url + "/getStructureList", map, LeaveStructureHeader[].class);
 
-			List<GetStructureAllotment> leaveSummarylist = new ArrayList<>(Arrays.asList(summary));
-			model.addObject("lvStructureList", leaveSummarylist);
+				List<LeaveStructureHeader> lSummarylist = new ArrayList<>(Arrays.asList(lvStrSummery));
+				model.addObject("lStrList", lSummarylist);
 
-			map = new LinkedMultiValueMap<>();
-			map.add("calYrId", session.getAttribute("currYearId"));
-			LeavesAllotment[] leavesAllotmentArray = Constants.getRestTemplate()
-					.postForObject(Constants.url + "/getLeaveAllotmentByCurrentCalender", map, LeavesAllotment[].class);
+				map = new LinkedMultiValueMap<>();
+				map.add("companyId", userObj.getCompanyId());
+				map.add("locIdList", userObj.getLocationIds());
+				map.add("typeId", 1);
 
-			List<LeavesAllotment> calAllotList = new ArrayList<>(Arrays.asList(leavesAllotmentArray));
-			model.addObject("calAllotList", calAllotList);
+				GetStructureAllotment[] summary = Constants.getRestTemplate().postForObject(
+						Constants.url + "/getStructureAllotmentList", map, GetStructureAllotment[].class);
 
+				List<GetStructureAllotment> leaveSummarylist = new ArrayList<>(Arrays.asList(summary));
+				model.addObject("lvStructureList", leaveSummarylist);
+
+				map = new LinkedMultiValueMap<>();
+				map.add("calYrId", session.getAttribute("currYearId"));
+				LeavesAllotment[] leavesAllotmentArray = Constants.getRestTemplate().postForObject(
+						Constants.url + "/getLeaveAllotmentByCurrentCalender", map, LeavesAllotment[].class);
+
+				List<LeavesAllotment> calAllotList = new ArrayList<>(Arrays.asList(leavesAllotmentArray));
+				model.addObject("calAllotList", calAllotList);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -533,26 +542,59 @@ public class LeaveStructureController {
 			HttpSession session = request.getSession();
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			map.add("companyId", userObj.getCompanyId());
-			map.add("locIdList", userObj.getLocationIds());
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("addLeaveAuthority",
+					"addLeaveAuthority", 1, 0, 0, 0, newModuleList);
 
-			GetEmployeeInfo[] employeeDepartment = Constants.getRestTemplate()
-					.postForObject(Constants.url + "/getEmpInfoList", map, GetEmployeeInfo[].class);
+			if (view.isError() == true) {
 
-			List<GetEmployeeInfo> employeeDepartmentlist = new ArrayList<GetEmployeeInfo>(
-					Arrays.asList(employeeDepartment));
+				model = new ModelAndView("accessDenied");
 
-			model.addObject("empList", employeeDepartmentlist);
+			} else {
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+				map.add("companyId", userObj.getCompanyId());
+				map.add("locIdList", userObj.getLocationIds());
 
-			map = new LinkedMultiValueMap<>();
-			map.add("companyId", userObj.getCompanyId());
-			map.add("locIdList", userObj.getLocationIds());
-			GetEmployeeInfo[] empInfoError = Constants.getRestTemplate()
-					.postForObject(Constants.url + "/getEmpInfoListForLeaveAuth", map, GetEmployeeInfo[].class);
+				GetEmployeeInfo[] employeeDepartment = Constants.getRestTemplate()
+						.postForObject(Constants.url + "/getEmpInfoList", map, GetEmployeeInfo[].class);
 
-			List<GetEmployeeInfo> employeeInfo = new ArrayList<>(Arrays.asList(empInfoError));
-			model.addObject("empListAuth", employeeInfo);
+				List<GetEmployeeInfo> employeeDepartmentlist = new ArrayList<GetEmployeeInfo>(
+						Arrays.asList(employeeDepartment));
+
+				model.addObject("empList", employeeDepartmentlist);
+
+				map = new LinkedMultiValueMap<>();
+				map.add("companyId", userObj.getCompanyId());
+				map.add("locIdList", userObj.getLocationIds());
+				GetEmployeeInfo[] empInfoError = Constants.getRestTemplate()
+						.postForObject(Constants.url + "/getEmpInfoListForLeaveAuth", map, GetEmployeeInfo[].class);
+
+				List<GetEmployeeInfo> employeeInfo = new ArrayList<>(Arrays.asList(empInfoError));
+				model.addObject("empListAuth", employeeInfo);
+				
+				Info add = AcessController.checkAccess("addLeaveAuthority", "addLeaveAuthority", 0, 1, 0, 0,
+						newModuleList);
+				Info edit = AcessController.checkAccess("addLeaveAuthority", "addLeaveAuthority", 0, 0, 1, 0,
+						newModuleList);
+				Info delete = AcessController.checkAccess("addLeaveAuthority", "addLeaveAuthority", 0, 0, 0,
+						1, newModuleList);
+
+				if (add.isError() == false) {
+					System.out.println(" add   Accessable ");
+					model.addObject("addAccess", 0);
+
+				}
+				if (edit.isError() == false) {
+					System.out.println(" edit   Accessable ");
+					model.addObject("editAccess", 0);
+				}
+				if (delete.isError() == false) {
+					System.out.println(" delete   Accessable ");
+					model.addObject("deleteAccess", 0);
+
+				}
+			}
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -646,7 +688,7 @@ public class LeaveStructureController {
 			List<GetLeaveAuthority> empLeaveAuth = new ArrayList<>(Arrays.asList(empInfoError));
 
 			for (int i = 0; i < empLeaveAuth.size(); i++) {
-				System.out.println("i loop for" + i + empLeaveAuth.get(i).getEmpFname());
+				//System.out.println("i loop for" + i + empLeaveAuth.get(i).getEmpFname());
 
 				empLeaveAuth.get(i).setExVar1(FormValidation.Encrypt(String.valueOf(empLeaveAuth.get(i).getEmpId())));
 
@@ -677,6 +719,17 @@ public class LeaveStructureController {
 			}
 
 			model.addObject("empLeaveAuth", empLeaveAuth);
+			 
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			 
+			Info edit = AcessController.checkAccess("addLeaveAuthority", "addLeaveAuthority", 0, 0, 1, 0,
+					newModuleList);
+			  
+			if (edit.isError() == false) {
+				System.out.println(" edit   Accessable ");
+				model.addObject("editAccess", 0);
+			}
+			 
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -797,30 +850,41 @@ public class LeaveStructureController {
 			HttpSession session = request.getSession();
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			map.add("companyId", userObj.getCompanyId());
-			LeaveStructureHeader[] lvStrSummery = Constants.getRestTemplate()
-					.postForObject(Constants.url + "/getStructureList", map, LeaveStructureHeader[].class);
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("leaveStructureAllotmentForProbationary",
+					"leaveStructureAllotmentForProbationary", 1, 0, 0, 0, newModuleList);
 
-			List<LeaveStructureHeader> lSummarylist = new ArrayList<>(Arrays.asList(lvStrSummery));
-			for (int i = 0; i < lSummarylist.size(); i++) {
-				if (lSummarylist.get(i).getLvsId() == 4) {
-					lSummarylist.remove(i);
+			if (view.isError() == true) {
+
+				model = new ModelAndView("accessDenied");
+
+			} else {
+
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+				map.add("companyId", userObj.getCompanyId());
+				LeaveStructureHeader[] lvStrSummery = Constants.getRestTemplate()
+						.postForObject(Constants.url + "/getStructureList", map, LeaveStructureHeader[].class);
+
+				List<LeaveStructureHeader> lSummarylist = new ArrayList<>(Arrays.asList(lvStrSummery));
+				for (int i = 0; i < lSummarylist.size(); i++) {
+					if (lSummarylist.get(i).getLvsId() == 4) {
+						lSummarylist.remove(i);
+
+					}
 
 				}
+				model.addObject("lStrList", lSummarylist);
 
+				map = new LinkedMultiValueMap<>();
+				map.add("companyId", userObj.getCompanyId());
+				map.add("locIdList", userObj.getLocationIds());
+				map.add("typeId", 2);
+				GetStructureAllotment[] summary = Constants.getRestTemplate().postForObject(
+						Constants.url + "/getStructureAllotmentList", map, GetStructureAllotment[].class);
+
+				List<GetStructureAllotment> leaveSummarylist = new ArrayList<>(Arrays.asList(summary));
+				model.addObject("lvStructureList", leaveSummarylist);
 			}
-			model.addObject("lStrList", lSummarylist);
-
-			map = new LinkedMultiValueMap<>();
-			map.add("companyId", userObj.getCompanyId());
-			map.add("locIdList", userObj.getLocationIds());
-			map.add("typeId", 2);
-			GetStructureAllotment[] summary = Constants.getRestTemplate()
-					.postForObject(Constants.url + "/getStructureAllotmentList", map, GetStructureAllotment[].class);
-
-			List<GetStructureAllotment> leaveSummarylist = new ArrayList<>(Arrays.asList(summary));
-			model.addObject("lvStructureList", leaveSummarylist);
 
 		} catch (Exception e) {
 			e.printStackTrace();

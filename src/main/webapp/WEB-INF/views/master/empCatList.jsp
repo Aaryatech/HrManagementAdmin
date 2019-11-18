@@ -27,11 +27,7 @@
 		<div class="content-wrapper">
 
 			<!-- Page header -->
-			<div class="page-header page-header-light">
-
-
-				 
-			</div>
+			<div class="page-header page-header-light"></div>
 			<!-- /page header -->
 
 
@@ -41,19 +37,20 @@
 
 				<!-- Highlighting rows and columns -->
 				<div class="card">
-					 
-					
+
+
 					<div class="card-header header-elements-inline">
- 						<table width="100%">
+						<table width="100%">
 							<tr width="100%">
-								<td width="60%"><h5 class="card-title">Employee Category List</h5></td>
-								<td width="40%" align="right">
-							  
-								 <a
-									href="${pageContext.request.contextPath}/employeeCatAdd"
-									class="breadcrumb-elements-item">
-										<button type="button" class="btn btn-primary">Add Employee Category  </button>
-								</a> </td>
+								<td width="60%"><h5 class="card-title">Employee
+										Category List</h5></td>
+								<td width="40%" align="right"><c:if test="${addAccess==0}">
+										<a href="${pageContext.request.contextPath}/employeeCatAdd"
+											class="breadcrumb-elements-item">
+											<button type="button" class="btn btn-primary">Add
+												Employee Category</button>
+										</a>
+									</c:if></td>
 							</tr>
 						</table>
 					</div>
@@ -118,15 +115,16 @@
 										<td>${count.index+1}</td>
 										<td>${empCatList.empCatName}</td>
 										<td>${empCatList.empCatShortName}</td>
-									
+
 										<c:choose>
-										<c:when test="${empCatList.empCatRemarks=='null' || empty empCatList.empCatRemarks}">
-											<td>-</td>
-										</c:when>
-										<c:otherwise>
-										<td>${empCatList.empCatRemarks}</td>
-										</c:otherwise>
-										</c:choose>	
+											<c:when
+												test="${empCatList.empCatRemarks=='null' || empty empCatList.empCatRemarks}">
+												<td>-</td>
+											</c:when>
+											<c:otherwise>
+												<td>${empCatList.empCatRemarks}</td>
+											</c:otherwise>
+										</c:choose>
 
 										<td class="text-center">
 											<!-- <div class="list-icons">
@@ -139,12 +137,14 @@
 												test="${editAccess == 0}">
 												<a
 													href="${pageContext.request.contextPath}/editEmpCategory?catId=${empCatList.exVar1}"
-													title="Edit"><i class="icon-pencil7" style="color: black;"></i></a>&nbsp;
+													title="Edit"><i class="icon-pencil7"
+													style="color: black;"></i></a>&nbsp;
 											</c:if> <c:if test="${deleteAccess == 0}">
 												<a
 													href="${pageContext.request.contextPath}/deleteEmpCategory?catId=${empCatList.exVar1}"
 													onClick="return confirm('Are you sure want to delete this record');"
-													title="Delete"><i class="icon-trash" style="color: black;"></i> </a>
+													title="Delete"><i class="icon-trash"
+													style="color: black;"></i> </a>
 											</c:if> <!-- </div>
 												</div>
 											</div> -->

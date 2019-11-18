@@ -486,73 +486,92 @@ public class LeaveController {
 			HttpSession session = request.getSession();
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("showApplyForLeave", "showApplyForLeave", 1, 0, 0, 0,
+					newModuleList);
 
-			map.add("companyId", userObj.getCompanyId());
-			map.add("locIdList", userObj.getLocationIds());
-			map.add("empId", userObj.getEmpId());
+			if (view.isError() == true) {
 
-			GetEmployeeInfo[] employeeDepartment = Constants.getRestTemplate()
-					.postForObject(Constants.url + "/getEmpInfoAuthWise", map, GetEmployeeInfo[].class);
+				model = new ModelAndView("accessDenied");
 
-			List<GetEmployeeInfo> employeeDepartmentlist = new ArrayList<GetEmployeeInfo>(
-					Arrays.asList(employeeDepartment));
+			} else {
 
-			int flag = 1;
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 
-			map = new LinkedMultiValueMap<>();
-			map.add("empId", userObj.getEmpId());
+				map.add("companyId", userObj.getCompanyId());
+				map.add("locIdList", userObj.getLocationIds());
+				map.add("empId", userObj.getEmpId());
 
-			GetEmployeeInfo editEmp = Constants.getRestTemplate().postForObject(Constants.url + "/GetEmployeeInfo", map,
-					GetEmployeeInfo.class);
-			model.addObject("editEmp", editEmp);
-			for (int i = 0; i < employeeDepartmentlist.size(); i++) {
-				if (employeeDepartmentlist.get(i).getEmpId() == userObj.getEmpId()) {
-					flag = 0;
-					System.err.println(" matched");
-					employeeDepartmentlist.remove(i);
-					break;
+				GetEmployeeInfo[] employeeDepartment = Constants.getRestTemplate()
+						.postForObject(Constants.url + "/getEmpInfoAuthWise", map, GetEmployeeInfo[].class);
+
+				List<GetEmployeeInfo> employeeDepartmentlist = new ArrayList<GetEmployeeInfo>(
+						Arrays.asList(employeeDepartment));
+
+				int flag = 1;
+
+				map = new LinkedMultiValueMap<>();
+				map.add("empId", userObj.getEmpId());
+
+				GetEmployeeInfo editEmp = Constants.getRestTemplate().postForObject(Constants.url + "/GetEmployeeInfo",
+						map, GetEmployeeInfo.class);
+				model.addObject("editEmp", editEmp);
+				for (int i = 0; i < employeeDepartmentlist.size(); i++) {
+					if (employeeDepartmentlist.get(i).getEmpId() == userObj.getEmpId()) {
+						flag = 0;
+						System.err.println(" matched");
+						employeeDepartmentlist.remove(i);
+						break;
+					}
+
 				}
 
+				/* if (flag == 1) { */
+				// System.err.println("not matched");
+
+				temp.setCompanyId(editEmp.getCompanyId());
+				temp.setCompanyName(editEmp.getCompanyName());
+				temp.setEmpCategory(editEmp.getEmpCategory());
+				temp.setEmpCatId(editEmp.getEmpCatId());
+				temp.setEmpCode(editEmp.getEmpCode());
+				temp.setEmpDept(editEmp.getEmpDept());
+				temp.setEmpDeptShortName(editEmp.getEmpDeptShortName());
+				temp.setEmpCatShortName(editEmp.getEmpCatShortName());
+				temp.setEmpTypeShortName(editEmp.getEmpTypeShortName());
+				temp.setEmpDeptId(editEmp.getEmpDeptId());
+				temp.setEmpEmail(editEmp.getEmpEmail());
+				temp.setEmpFname(editEmp.getEmpFname());
+				temp.setEmpId(editEmp.getEmpId());
+				temp.setEmpMname(editEmp.getEmpMname());
+				temp.setEmpMobile1(editEmp.getEmpMobile1());
+				temp.setEmpPrevExpYrs(editEmp.getEmpPrevExpYrs());
+				temp.setEmpRatePerhr(editEmp.getEmpRatePerhr());
+				temp.setEmpSname(editEmp.getEmpSname());
+				temp.setEmpType(editEmp.getEmpType());
+				temp.setEmpTypeId(editEmp.getEmpTypeId());
+				// employeeDepartmentlist.add(temp);
+				/* } */
+
+				temp.setExVar1(FormValidation.Encrypt(String.valueOf(editEmp.getEmpId())));
+				for (int i = 0; i < employeeDepartmentlist.size(); i++) {
+					// System.out.println("employeeDepartmentlist.get(i).getEmpId()"+employeeDepartmentlist.get(i).getEmpId());
+					employeeDepartmentlist.get(i).setExVar1(
+							FormValidation.Encrypt(String.valueOf(employeeDepartmentlist.get(i).getEmpId())));
+				}
+
+				model.addObject("empList", employeeDepartmentlist);
+				model.addObject("tempList", temp);
+				Info add = AcessController.checkAccess("showApplyForLeave", "showApplyForLeave", 0, 1, 0, 0,
+						newModuleList);
+				 
+
+				if (add.isError() == false) {
+					System.out.println(" add   Accessable ");
+					model.addObject("addAccess", 0);
+
+				}
+				 
 			}
-
-			/* if (flag == 1) { */
-			// System.err.println("not matched");
-
-			temp.setCompanyId(editEmp.getCompanyId());
-			temp.setCompanyName(editEmp.getCompanyName());
-			temp.setEmpCategory(editEmp.getEmpCategory());
-			temp.setEmpCatId(editEmp.getEmpCatId());
-			temp.setEmpCode(editEmp.getEmpCode());
-			temp.setEmpDept(editEmp.getEmpDept());
-			temp.setEmpDeptShortName(editEmp.getEmpDeptShortName());
-			temp.setEmpCatShortName(editEmp.getEmpCatShortName());
-			temp.setEmpTypeShortName(editEmp.getEmpTypeShortName());
-			temp.setEmpDeptId(editEmp.getEmpDeptId());
-			temp.setEmpEmail(editEmp.getEmpEmail());
-			temp.setEmpFname(editEmp.getEmpFname());
-			temp.setEmpId(editEmp.getEmpId());
-			temp.setEmpMname(editEmp.getEmpMname());
-			temp.setEmpMobile1(editEmp.getEmpMobile1());
-			temp.setEmpPrevExpYrs(editEmp.getEmpPrevExpYrs());
-			temp.setEmpRatePerhr(editEmp.getEmpRatePerhr());
-			temp.setEmpSname(editEmp.getEmpSname());
-			temp.setEmpType(editEmp.getEmpType());
-			temp.setEmpTypeId(editEmp.getEmpTypeId());
-			// employeeDepartmentlist.add(temp);
-			/* } */
-
-			temp.setExVar1(FormValidation.Encrypt(String.valueOf(editEmp.getEmpId())));
-			for (int i = 0; i < employeeDepartmentlist.size(); i++) {
-				// System.out.println("employeeDepartmentlist.get(i).getEmpId()"+employeeDepartmentlist.get(i).getEmpId());
-				employeeDepartmentlist.get(i)
-						.setExVar1(FormValidation.Encrypt(String.valueOf(employeeDepartmentlist.get(i).getEmpId())));
-			}
-
-			model.addObject("empList", employeeDepartmentlist);
-			model.addObject("tempList", temp);
-			System.err.println("emp list is  " + employeeDepartment.toString());
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -929,18 +948,28 @@ public class LeaveController {
 			HttpSession session = request.getSession();
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			map.add("locationId", userObj.getLocationIds());
-			CalenderYear[] calenderYear = Constants.getRestTemplate()
-					.getForObject(Constants.url + "/getCalculateYearList", CalenderYear[].class);
-			List<CalenderYear> calYearList = new ArrayList<CalenderYear>(Arrays.asList(calenderYear));
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("empInfoHistoryReport",
+					"empInfoHistoryReport", 1, 0, 0, 0, newModuleList);
 
-			EmployeeInfo[] employeeInfo = Constants.getRestTemplate()
-					.postForObject(Constants.url + "/getEmpInfoByLocId", map, EmployeeInfo[].class);
+			if (view.isError() == true) {
 
-			List<EmployeeInfo> employeeInfoList = new ArrayList<EmployeeInfo>(Arrays.asList(employeeInfo));
-			model.addObject("calYearList", calYearList);
-			model.addObject("employeeInfoList", employeeInfoList);
+				model = new ModelAndView("accessDenied");
+
+			} else {
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+				map.add("locationId", userObj.getLocationIds());
+				CalenderYear[] calenderYear = Constants.getRestTemplate()
+						.getForObject(Constants.url + "/getCalculateYearList", CalenderYear[].class);
+				List<CalenderYear> calYearList = new ArrayList<CalenderYear>(Arrays.asList(calenderYear));
+	
+				EmployeeInfo[] employeeInfo = Constants.getRestTemplate()
+						.postForObject(Constants.url + "/getEmpInfoByLocId", map, EmployeeInfo[].class);
+	
+				List<EmployeeInfo> employeeInfoList = new ArrayList<EmployeeInfo>(Arrays.asList(employeeInfo));
+				model.addObject("calYearList", calYearList);
+				model.addObject("employeeInfoList", employeeInfoList);
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1023,7 +1052,7 @@ public class LeaveController {
 					.postForObject(Constants.url + "/getLeaveHistoryRep", map, EmpLeaveHistoryRep[].class);
 
 			employeeInfoList = new ArrayList<EmpLeaveHistoryRep>(Arrays.asList(employeeInfo));
-		//	System.out.println("employeeInfoList" + employeeInfoList.toString());
+			// System.out.println("employeeInfoList" + employeeInfoList.toString());
 
 			map = new LinkedMultiValueMap<>();
 			map.add("locationId", userObj.getLocationIds());
@@ -1050,7 +1079,7 @@ public class LeaveController {
 				finalList.add(fin);
 			}
 
-			//System.out.println("final ****" + finalList.toString());
+			// System.out.println("final ****" + finalList.toString());
 			Document document = new Document(PageSize.A4);
 			document.setMargins(5, 5, 0, 0);
 			document.setMarginMirroring(false);
@@ -1289,7 +1318,6 @@ public class LeaveController {
 						for (int j = 0; j < finalList.get(i).getRec().size(); j++) {
 							expoExcel = new ExportToExcel();
 							rowData = new ArrayList<String>();
-							
 
 							rowData.add("" + (cnt));
 							if (j == 0) {
@@ -1312,7 +1340,7 @@ public class LeaveController {
 							rowData.add("" + a);
 
 							expoExcel.setRowData(rowData);
-							cnt=cnt+1;
+							cnt = cnt + 1;
 							exportToExcelList.add(expoExcel);
 						}
 

@@ -29,7 +29,7 @@
 			<!-- Page header -->
 			<div class="page-header page-header-light">
 
-<%-- 
+				<%-- 
 				<div
 					class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
 					<div class="d-flex">
@@ -66,23 +66,22 @@
 
 				<!-- Highlighting rows and columns -->
 				<div class="card">
-					 
-					
-							<div class="card-header header-elements-inline">
- 						<table width="100%">
+
+
+					<div class="card-header header-elements-inline">
+						<table width="100%">
 							<tr width="100%">
 								<td width="60%"><h5 class="card-title">Authority List</h5></td>
-								<td width="40%" align="right">
-							  
-								 <a
+								<td width="40%" align="right"><a
 									href="${pageContext.request.contextPath}/addLeaveAuthority"
 									class="breadcrumb-elements-item">
-										<button type="button" class="btn btn-primary">Add Authority</button>
-								</a> </td>
+										<button type="button" class="btn btn-primary">Add
+											Authority</button>
+								</a></td>
 							</tr>
 						</table>
 					</div>
-					
+
 
 					<div class="card-body">
 
@@ -173,10 +172,13 @@
 														<i class="icon-menu9"></i>
 													</a>
 
-													<div class="dropdown-menu dropdown-menu-right"> --> <a
-											href="${pageContext.request.contextPath}/editLeaveAuthority?empId=${leaveAuth.exVar1}"
-											title="Edit"><i class="icon-pencil7"
-												style="color: black;"></i></a> <!-- </div>
+													<div class="dropdown-menu dropdown-menu-right"> --> <c:if
+												test="${editAccess == 0}">
+												<a
+													href="${pageContext.request.contextPath}/editLeaveAuthority?empId=${leaveAuth.exVar1}"
+													title="Edit"><i class="icon-pencil7"
+													style="color: black;"></i></a>
+											</c:if> <!-- </div>
 												</div>
 											</div> -->
 										</td>

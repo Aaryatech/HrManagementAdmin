@@ -75,11 +75,11 @@
 								<td width="60%">	<h5 class="card-title">Leave Limit</h5></td>
 								<td width="40%" align="right">
 							  
-								 <a
+								<%--  <a
 									href="${pageContext.request.contextPath}/addWeeklyOff"
 									class="breadcrumb-elements-item">
 										<button type="button" class="btn btn-primary"> Add Weekly Off </button>
-								</a> </td>
+								</a> --%> </td>
 							</tr>
 						</table>
 					</div>

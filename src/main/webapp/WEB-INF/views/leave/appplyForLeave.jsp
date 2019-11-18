@@ -29,7 +29,7 @@
 			<!-- Page header -->
 			<div class="page-header page-header-light">
 
-<%-- 
+				<%-- 
 				<div
 					class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
 					<div class="d-flex">
@@ -167,13 +167,16 @@
 										<td>${lvTypeList.empEmail}</td>
 										<td>${lvTypeList.empMobile1}</td>
 
-										<td class="text-center"><a
-											href="${pageContext.request.contextPath}/leaveApply?empId=${lvTypeList.exVar1}"
-											title="Add Leave" class=" "><i class="fas fa-walking"
-												style="color: black;"></i></a> <a
-											href="${pageContext.request.contextPath}/showLeaveHistList?empId=${lvTypeList.exVar1}"
-											title="Leave History"><i class="icon-history"
-												style="color: black;"></i></a></td>
+										<td class="text-center"><c:if test="${addAccess == 0}">
+												<a
+													href="${pageContext.request.contextPath}/leaveApply?empId=${lvTypeList.exVar1}"
+													title="Add Leave" class=" "><i class="fas fa-walking"
+													style="color: black;"></i></a>
+												<a
+													href="${pageContext.request.contextPath}/showLeaveHistList?empId=${lvTypeList.exVar1}"
+													title="Leave History"><i class="icon-history"
+													style="color: black;"></i></a>
+											</c:if></td>
 									</tr>
 								</c:forEach>
 

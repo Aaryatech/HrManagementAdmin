@@ -27,10 +27,7 @@
 		<div class="content-wrapper">
 
 			<!-- Page header -->
-			<div class="page-header page-header-light">
-
- 
-			</div>
+			<div class="page-header page-header-light"></div>
 			<!-- /page header -->
 
 
@@ -40,20 +37,22 @@
 
 				<!-- Highlighting rows and columns -->
 				<div class="card">
-					 
-					
-					
-							<div class="card-header header-elements-inline">
- 						<table width="100%">
+
+
+
+					<div class="card-header header-elements-inline">
+						<table width="100%">
 							<tr width="100%">
-								<td width="60%"><h5 class="card-title">Leave Structure List</h5></td>
-								<td width="40%" align="right">
-							  
-								 <a
-									href="${pageContext.request.contextPath}/addLeaveStructure"
-									class="breadcrumb-elements-item">
-										<button type="button" class="btn btn-primary"> Add Leave Structure </button>
-								</a> </td>
+								<td width="60%"><h5 class="card-title">Leave Structure
+										List</h5></td>
+								<td width="40%" align="right"><c:if
+										test="${addAccess == 0}">
+										<a href="${pageContext.request.contextPath}/addLeaveStructure"
+											class="breadcrumb-elements-item">
+											<button type="button" class="btn btn-primary">Add
+												Leave Structure</button>
+										</a>
+									</c:if></td>
 							</tr>
 						</table>
 					</div>
@@ -117,17 +116,19 @@
 
 										<td>${structure.lvsName}</td>
 
-										<td class="text-center">
-											
-														<a
-															href="${pageContext.request.contextPath}/editLeaveStructure?lvsId=${structure.exVar1}"
-															 title="Edit leave Structure"><i class="icon-pencil7" style="color: black;"></i></a>	<a
-															href="${pageContext.request.contextPath}/deleteLeaveStructure?lvsId=${structure.exVar1}"
-															onClick="return confirm('Are you sure want to delete this record');"
-															title="Delete leave Structure"><i class="icon-trash" style="color: black;"></i>
-															</a>
-												
-										</td>
+										<td class="text-center"><c:if test="${editAccess == 0}">
+												<a
+													href="${pageContext.request.contextPath}/editLeaveStructure?lvsId=${structure.exVar1}"
+													title="Edit leave Structure"><i class="icon-pencil7"
+													style="color: black;"></i></a>
+											</c:if>
+											<c:if test="${deleteAccess == 0}">
+												<a
+													href="${pageContext.request.contextPath}/deleteLeaveStructure?lvsId=${structure.exVar1}"
+													onClick="return confirm('Are you sure want to delete this record');"
+													title="Delete leave Structure"><i class="icon-trash"
+													style="color: black;"></i> </a>
+											</c:if></td>
 									</tr>
 								</c:forEach>
 

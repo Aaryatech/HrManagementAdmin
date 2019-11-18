@@ -167,13 +167,16 @@
 										<%-- <td>${lvTypeList.empRatePerhr}</td> --%>
 
 
-										<td class="text-center"><a
-											href="${pageContext.request.contextPath}/showClaimApply?empId=${lvTypeList.exVar1}"
-											title="Add Claim"><i class="icon-diff-added"
-												style="color: black;"></i></a> <a
-											href="${pageContext.request.contextPath}/showClaimList?empId=${lvTypeList.exVar1}"
-											title="Claim History"><i class="icon-history"
-												style="color: black;"></i></a></td>
+										<td class="text-center"><c:if test="${addAccess == 0}">
+												<a
+													href="${pageContext.request.contextPath}/showClaimApply?empId=${lvTypeList.exVar1}"
+													title="Add Claim"><i class="icon-diff-added"
+													style="color: black;"></i></a>
+												<a
+													href="${pageContext.request.contextPath}/showClaimList?empId=${lvTypeList.exVar1}"
+													title="Claim History"><i class="icon-history"
+													style="color: black;"></i></a>
+											</c:if></td>
 									</tr>
 								</c:forEach>
 

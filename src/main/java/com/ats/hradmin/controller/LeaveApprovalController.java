@@ -19,12 +19,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ats.hradmin.common.AcessController;
 import com.ats.hradmin.common.Constants;
 import com.ats.hradmin.common.DateConvertor;
 import com.ats.hradmin.common.FormValidation;
 import com.ats.hradmin.leave.model.GetLeaveApplyAuthwise;
 import com.ats.hradmin.leave.model.GetLeaveStatus;
 import com.ats.hradmin.leave.model.LeaveDetail;
+import com.ats.hradmin.model.AccessRightModule;
 import com.ats.hradmin.model.EmployeeInfo;
 import com.ats.hradmin.model.Info;
 import com.ats.hradmin.model.LeaveTrail;
@@ -43,53 +45,65 @@ public class LeaveApprovalController {
 		try {
 			HttpSession session = request.getSession();
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			map.add("empId", userObj.getEmpId());
-			map.add("currYrId", session.getAttribute("currYearId"));
 
-			GetLeaveApplyAuthwise[] employeeDoc = Constants.getRestTemplate()
-					.postForObject(Constants.url + "/getLeaveApplyListForPending", map, GetLeaveApplyAuthwise[].class);
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("showLeaveApprovalByAuthority", "showLeaveApprovalByAuthority", 1, 0, 0, 0,
+					newModuleList);
 
-			List<GetLeaveApplyAuthwise> leaveList = new ArrayList<GetLeaveApplyAuthwise>(Arrays.asList(employeeDoc));
+			if (view.isError() == true) {
 
-			for (int i = 0; i < leaveList.size(); i++) {
+				model = new ModelAndView("accessDenied");
 
-				leaveList.get(i).setCirculatedTo(FormValidation.Encrypt(String.valueOf(leaveList.get(i).getLeaveId())));
-				leaveList.get(i).setLeaveTypeName(FormValidation.Encrypt(String.valueOf(leaveList.get(i).getEmpId())));
-				leaveList.get(i).setLeaveFromdt(DateConvertor.convertToDMY(leaveList.get(i).getLeaveFromdt()));
-				leaveList.get(i).setLeaveTodt(DateConvertor.convertToDMY(leaveList.get(i).getLeaveTodt()));
+			} else {
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+				map.add("empId", userObj.getEmpId());
+				map.add("currYrId", session.getAttribute("currYearId"));
+
+				GetLeaveApplyAuthwise[] employeeDoc = Constants.getRestTemplate().postForObject(
+						Constants.url + "/getLeaveApplyListForPending", map, GetLeaveApplyAuthwise[].class);
+
+				List<GetLeaveApplyAuthwise> leaveList = new ArrayList<GetLeaveApplyAuthwise>(
+						Arrays.asList(employeeDoc));
+
+				for (int i = 0; i < leaveList.size(); i++) {
+
+					leaveList.get(i)
+							.setCirculatedTo(FormValidation.Encrypt(String.valueOf(leaveList.get(i).getLeaveId())));
+					leaveList.get(i)
+							.setLeaveTypeName(FormValidation.Encrypt(String.valueOf(leaveList.get(i).getEmpId())));
+					leaveList.get(i).setLeaveFromdt(DateConvertor.convertToDMY(leaveList.get(i).getLeaveFromdt()));
+					leaveList.get(i).setLeaveTodt(DateConvertor.convertToDMY(leaveList.get(i).getLeaveTodt()));
+				}
+				model.addObject("leaveListForApproval", leaveList);
+				model.addObject("list1Count", leaveList.size());
+
+				// for Info
+
+				model.addObject("empIdOrig", userObj.getEmpId());
+
+				map = new LinkedMultiValueMap<>();
+				map.add("empId", userObj.getEmpId());
+
+				map.add("currYrId", session.getAttribute("currYearId"));
+				GetLeaveApplyAuthwise[] employeeDoc1 = Constants.getRestTemplate().postForObject(
+						Constants.url + "/getLeaveApplyListForInformation", map, GetLeaveApplyAuthwise[].class);
+
+				List<GetLeaveApplyAuthwise> leaveList1 = new ArrayList<GetLeaveApplyAuthwise>(
+						Arrays.asList(employeeDoc1));
+
+				for (int i = 0; i < leaveList1.size(); i++) {
+
+					leaveList1.get(i)
+							.setCirculatedTo(FormValidation.Encrypt(String.valueOf(leaveList1.get(i).getLeaveId())));
+					leaveList1.get(i)
+							.setLeaveTypeName(FormValidation.Encrypt(String.valueOf(leaveList1.get(i).getEmpId())));
+					leaveList1.get(i).setLeaveFromdt(DateConvertor.convertToDMY(leaveList1.get(i).getLeaveFromdt()));
+					leaveList1.get(i).setLeaveTodt(DateConvertor.convertToDMY(leaveList1.get(i).getLeaveTodt()));
+				}
+ 
+				model.addObject("list2Count", leaveList1.size());
+				model.addObject("leaveListForApproval1", leaveList1);
 			}
-			model.addObject("leaveListForApproval", leaveList);
-			model.addObject("list1Count", leaveList.size());
-
-			// for Info
-
-			model.addObject("empIdOrig", userObj.getEmpId());
-
-			map = new LinkedMultiValueMap<>();
-			map.add("empId", userObj.getEmpId());
-
-			map.add("currYrId", session.getAttribute("currYearId"));
-			GetLeaveApplyAuthwise[] employeeDoc1 = Constants.getRestTemplate().postForObject(
-					Constants.url + "/getLeaveApplyListForInformation", map, GetLeaveApplyAuthwise[].class);
-
-			List<GetLeaveApplyAuthwise> leaveList1 = new ArrayList<GetLeaveApplyAuthwise>(Arrays.asList(employeeDoc1));
-
-			for (int i = 0; i < leaveList1.size(); i++) {
-
-				leaveList1.get(i)
-						.setCirculatedTo(FormValidation.Encrypt(String.valueOf(leaveList1.get(i).getLeaveId())));
-				leaveList1.get(i)
-						.setLeaveTypeName(FormValidation.Encrypt(String.valueOf(leaveList1.get(i).getEmpId())));
-				leaveList1.get(i).setLeaveFromdt(DateConvertor.convertToDMY(leaveList1.get(i).getLeaveFromdt()));
-				leaveList1.get(i).setLeaveTodt(DateConvertor.convertToDMY(leaveList1.get(i).getLeaveTodt()));
-			}
-
-			System.out.println("lv leaveList list1 info " + leaveList1.toString());
-			System.out.println("lv leaveList list pending " + leaveList.toString());
-
-			model.addObject("list2Count", leaveList1.size());
-			model.addObject("leaveListForApproval1", leaveList1);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -239,8 +253,8 @@ public class LeaveApprovalController {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("empId", empId);
 
-			LeaveDetail[] employeeInfo = Constants.getRestTemplate().postForObject(Constants.url + "/getLeaveListByEmpId",
-					map, LeaveDetail[].class);
+			LeaveDetail[] employeeInfo = Constants.getRestTemplate()
+					.postForObject(Constants.url + "/getLeaveListByEmpId", map, LeaveDetail[].class);
 
 			employeeInfoList = new ArrayList<LeaveDetail>(Arrays.asList(employeeInfo));
 			for (int i = 0; i < employeeInfoList.size(); i++) {
@@ -248,21 +262,20 @@ public class LeaveApprovalController {
 				employeeInfoList.get(i)
 						.setExVar1(FormValidation.Encrypt(String.valueOf(employeeInfoList.get(i).getLeaveId())));
 			}
-			
-			
+
 			MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<>();
 			map1.add("empId", empId);
 
-			EmployeeInfo lvEmp = Constants.getRestTemplate()
-					.postForObject(Constants.url + "/getEmpInfoById", map1, EmployeeInfo.class);
-			
+			EmployeeInfo lvEmp = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpInfoById", map1,
+					EmployeeInfo.class);
+
 			model.addObject("fname", lvEmp.getEmpFname());
 			model.addObject("sname", lvEmp.getEmpSname());
 			model.addObject("leaveHistoryList", employeeInfoList);
 			// model.addObject("empId1",empId1);
-			
+
 			model.addObject("empId", empId);
-			
+
 			HttpSession session = request.getSession();
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 			model.addObject("loginEmpId", userObj.getEmpId());

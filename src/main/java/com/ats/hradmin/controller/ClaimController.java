@@ -632,29 +632,37 @@ try {
 		try {
 			HttpSession session = request.getSession();
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("addClaimAuthority", "addClaimAuthority", 1, 0, 0, 0, newModuleList);
 
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			map.add("companyId", userObj.getCompanyId());
-			map.add("locIdList", userObj.getLocationIds());
+			if (view.isError() == true) {
 
-			GetEmployeeInfo[] employeeDepartment = Constants.getRestTemplate()
-					.postForObject(Constants.url + "/getEmpInfoList", map, GetEmployeeInfo[].class);
+				model = new ModelAndView("accessDenied");
 
-			List<GetEmployeeInfo> employeeDepartmentlist = new ArrayList<GetEmployeeInfo>(
-					Arrays.asList(employeeDepartment));
-
-			model.addObject("empList", employeeDepartmentlist);
-
-			map = new LinkedMultiValueMap<>();
-			map.add("companyId", userObj.getCompanyId());
-			map.add("locIdList", userObj.getLocationIds());
-
-			GetEmployeeInfo[] empInfoError = Constants.getRestTemplate()
-					.postForObject(Constants.url + "/getEmpInfoListForClaimAuth", map, GetEmployeeInfo[].class);
-
-			List<GetEmployeeInfo> employeeInfo = new ArrayList<>(Arrays.asList(empInfoError));
-			model.addObject("empListAuth", employeeInfo);
-
+			} else {
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+				map.add("companyId", userObj.getCompanyId());
+				map.add("locIdList", userObj.getLocationIds());
+	
+				GetEmployeeInfo[] employeeDepartment = Constants.getRestTemplate()
+						.postForObject(Constants.url + "/getEmpInfoList", map, GetEmployeeInfo[].class);
+	
+				List<GetEmployeeInfo> employeeDepartmentlist = new ArrayList<GetEmployeeInfo>(
+						Arrays.asList(employeeDepartment));
+	
+				model.addObject("empList", employeeDepartmentlist);
+	
+				map = new LinkedMultiValueMap<>();
+				map.add("companyId", userObj.getCompanyId());
+				map.add("locIdList", userObj.getLocationIds());
+	
+				GetEmployeeInfo[] empInfoError = Constants.getRestTemplate()
+						.postForObject(Constants.url + "/getEmpInfoListForClaimAuth", map, GetEmployeeInfo[].class);
+	
+				List<GetEmployeeInfo> employeeInfo = new ArrayList<>(Arrays.asList(empInfoError));
+				model.addObject("empListAuth", employeeInfo);
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -755,6 +763,19 @@ try {
 			}
 
 			model.addObject("empLeaveAuth", empLeaveAuth);
+			
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			 
+			Info edit = AcessController.checkAccess("addClaimAuthority", "addClaimAuthority", 0, 0, 1, 0,
+					newModuleList);
+			 
+
+			 
+			if (edit.isError() == false) {
+				System.out.println(" edit   Accessable ");
+				model.addObject("editAccess", 0);
+			}
+			 
 
 		} catch (Exception e) {
 			e.printStackTrace();

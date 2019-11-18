@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.hradmin.claim.ClaimType;
+import com.ats.hradmin.common.AcessController;
 import com.ats.hradmin.common.Constants;
 import com.ats.hradmin.common.DateConvertor;
 import com.ats.hradmin.common.ExceUtil;
@@ -38,11 +39,13 @@ import com.ats.hradmin.common.ReportCostants;
 import com.ats.hradmin.leave.model.CalenderYear;
 import com.ats.hradmin.leave.model.EmpLeaveHistoryRep;
 import com.ats.hradmin.leave.model.LeaveHistTemp;
+import com.ats.hradmin.model.AccessRightModule;
 import com.ats.hradmin.model.ClientWiseClaimReport;
 import com.ats.hradmin.model.DocList;
 import com.ats.hradmin.model.EmployeeInfo;
 import com.ats.hradmin.model.EmployeeWithClaim;
 import com.ats.hradmin.model.GetProjectHeader;
+import com.ats.hradmin.model.Info;
 import com.ats.hradmin.model.LoginResponse;
 import com.ats.hradmin.util.ItextPageEvent;
 import com.itextpdf.text.BaseColor;
@@ -75,35 +78,44 @@ public class ClaimReportController {
 		String mav = "claimreport/emptypewisereport";
 
 		try {
-
-			date = request.getParameter("date");
 			HttpSession session = request.getSession();
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
 
-			if (date != null) {
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("emptypewisereport", "emptypewisereport", 1, 0, 0, 0,
+					newModuleList);
 
-				System.out.println(date);
-				String[] dates = date.split(" to ");
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-				map.add("locationId", userObj.getLocationIds());
-				map.add("fromDate", DateConvertor.convertToYMD(dates[0]));
-				map.add("toDate", DateConvertor.convertToYMD(dates[1]));
+			if (view.isError() == true) {
 
-				EmployeeWithClaim[] employeeWithClaim = Constants.getRestTemplate()
-						.postForObject(Constants.url + "/employeeTypeWiseClaimReport", map, EmployeeWithClaim[].class);
+				mav = "accessDenied";
 
-				list = new ArrayList<>(Arrays.asList(employeeWithClaim));
+			} else {
+				date = request.getParameter("date");
+				if (date != null) {
 
-				map = new LinkedMultiValueMap<>();
-				map.add("companyId", userObj.getCompanyId());
-				ClaimType[] claimTypeListArray = Constants.getRestTemplate()
-						.postForObject(Constants.url + "/getClaimListByCompanyId", map, ClaimType[].class);
+					System.out.println(date);
+					String[] dates = date.split(" to ");
+					MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+					map.add("locationId", userObj.getLocationIds());
+					map.add("fromDate", DateConvertor.convertToYMD(dates[0]));
+					map.add("toDate", DateConvertor.convertToYMD(dates[1]));
 
-				claimTypelist = new ArrayList<ClaimType>(Arrays.asList(claimTypeListArray));
+					EmployeeWithClaim[] employeeWithClaim = Constants.getRestTemplate().postForObject(
+							Constants.url + "/employeeTypeWiseClaimReport", map, EmployeeWithClaim[].class);
 
-				model.addAttribute("date", date);
-				model.addAttribute("list", list);
-				model.addAttribute("claimTypelist", claimTypelist);
+					list = new ArrayList<>(Arrays.asList(employeeWithClaim));
+
+					map = new LinkedMultiValueMap<>();
+					map.add("companyId", userObj.getCompanyId());
+					ClaimType[] claimTypeListArray = Constants.getRestTemplate()
+							.postForObject(Constants.url + "/getClaimListByCompanyId", map, ClaimType[].class);
+
+					claimTypelist = new ArrayList<ClaimType>(Arrays.asList(claimTypeListArray));
+
+					model.addAttribute("date", date);
+					model.addAttribute("list", list);
+					model.addAttribute("claimTypelist", claimTypelist);
+				}
 			}
 
 		} catch (Exception e) {
@@ -235,30 +247,39 @@ public class ClaimReportController {
 			date1 = request.getParameter("date");
 			HttpSession session = request.getSession();
 			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("empProjectwisereport", "empProjectwisereport", 1, 0, 0, 0,
+					newModuleList);
 
-			if (date1 != null) {
+			if (view.isError() == true) {
 
-				String[] dates = date1.split(" to ");
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-				map.add("locationId", userObj.getLocationIds());
-				map.add("fromDate", DateConvertor.convertToYMD(dates[0]));
-				map.add("toDate", DateConvertor.convertToYMD(dates[1]));
+				mav = "accessDenied";
 
-				EmployeeWithClaim[] employeeWithClaim = Constants.getRestTemplate().postForObject(
-						Constants.url + "/employeeProjectWiseClaimReport", map, EmployeeWithClaim[].class);
+			} else {
+				if (date1 != null) {
 
-				projectWiseList = new ArrayList<>(Arrays.asList(employeeWithClaim));
+					String[] dates = date1.split(" to ");
+					MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+					map.add("locationId", userObj.getLocationIds());
+					map.add("fromDate", DateConvertor.convertToYMD(dates[0]));
+					map.add("toDate", DateConvertor.convertToYMD(dates[1]));
 
-				map = new LinkedMultiValueMap<>();
-				map.add("companyId", userObj.getCompanyId());
+					EmployeeWithClaim[] employeeWithClaim = Constants.getRestTemplate().postForObject(
+							Constants.url + "/employeeProjectWiseClaimReport", map, EmployeeWithClaim[].class);
 
-				GetProjectHeader[] proHeaderArray = Constants.getRestTemplate()
-						.postForObject(Constants.url + "/getProjectAllListByCompanyId", map, GetProjectHeader[].class);
-				projectHeaderList = new ArrayList<GetProjectHeader>(Arrays.asList(proHeaderArray));
+					projectWiseList = new ArrayList<>(Arrays.asList(employeeWithClaim));
 
-				model.addAttribute("date", date1);
-				model.addAttribute("list", projectWiseList);
-				model.addAttribute("projectHeaderList", projectHeaderList);
+					map = new LinkedMultiValueMap<>();
+					map.add("companyId", userObj.getCompanyId());
+
+					GetProjectHeader[] proHeaderArray = Constants.getRestTemplate().postForObject(
+							Constants.url + "/getProjectAllListByCompanyId", map, GetProjectHeader[].class);
+					projectHeaderList = new ArrayList<GetProjectHeader>(Arrays.asList(proHeaderArray));
+
+					model.addAttribute("date", date1);
+					model.addAttribute("list", projectWiseList);
+					model.addAttribute("projectHeaderList", projectHeaderList);
+				}
 			}
 
 		} catch (Exception e) {
@@ -391,22 +412,33 @@ public class ClaimReportController {
 		String mav = "claimreport/clientWiseClaimReport";
 
 		try {
+			HttpSession session = request.getSession();
+			LoginResponse userObj = (LoginResponse) session.getAttribute("UserDetail");
+			List<AccessRightModule> newModuleList = (List<AccessRightModule>) session.getAttribute("moduleJsonList");
+			Info view = AcessController.checkAccess("clientWiseClaimReport", "clientWiseClaimReport", 1, 0, 0, 0,
+					newModuleList);
 
-			date3 = request.getParameter("date");
+			if (view.isError() == true) {
 
-			if (date3 != null) {
+				mav = "accessDenied";
 
-				String[] dates = date3.split(" to ");
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-				map.add("fromDate", DateConvertor.convertToYMD(dates[0]));
-				map.add("toDate", DateConvertor.convertToYMD(dates[1]));
-				ClientWiseClaimReport[] employeeWithClaim = Constants.getRestTemplate()
-						.postForObject(Constants.url + "/clientWiseClaimReport", map, ClientWiseClaimReport[].class);
+			} else {
+				date3 = request.getParameter("date");
 
-				clientwisereportlist = new ArrayList<>(Arrays.asList(employeeWithClaim));
+				if (date3 != null) {
 
-				model.addAttribute("date", date3);
-				model.addAttribute("clientwisereportlist", clientwisereportlist);
+					String[] dates = date3.split(" to ");
+					MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+					map.add("fromDate", DateConvertor.convertToYMD(dates[0]));
+					map.add("toDate", DateConvertor.convertToYMD(dates[1]));
+					ClientWiseClaimReport[] employeeWithClaim = Constants.getRestTemplate().postForObject(
+							Constants.url + "/clientWiseClaimReport", map, ClientWiseClaimReport[].class);
+
+					clientwisereportlist = new ArrayList<>(Arrays.asList(employeeWithClaim));
+
+					model.addAttribute("date", date3);
+					model.addAttribute("clientwisereportlist", clientwisereportlist);
+				}
 			}
 
 		} catch (Exception e) {
@@ -436,9 +468,9 @@ public class ClaimReportController {
 
 			int cnt = 1;
 			float empTotal = 0;
-			
+
 			for (int i = 0; i < clientwisereportlist.size(); i++) {
- 
+
 				expoExcel = new ExportToExcel();
 				rowData = new ArrayList<String>();
 				rowData.add("" + cnt);
@@ -455,7 +487,7 @@ public class ClaimReportController {
 			rowData = new ArrayList<String>();
 
 			rowData.add("-");
-			rowData.add("Total");  
+			rowData.add("Total");
 			rowData.add("" + empTotal);
 
 			expoExcel.setRowData(rowData);
