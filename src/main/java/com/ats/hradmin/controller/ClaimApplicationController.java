@@ -184,7 +184,7 @@ public class ClaimApplicationController {
 
 			List<GetEmployeeClaimStrudt> claimTypeList = new ArrayList<GetEmployeeClaimStrudt>(
 					Arrays.asList(employeeDoc));
-			System.out.println("claimTypeList list " + claimTypeList.toString());
+			//System.out.println("claimTypeList list " + claimTypeList.toString());
 			model.addObject("claimTypeList", claimTypeList);
 			map = new LinkedMultiValueMap<>();
 			map.add("empId", empId);
@@ -192,7 +192,7 @@ public class ClaimApplicationController {
 			EmployeeInfo editEmp = Constants.getRestTemplate().postForObject(Constants.url + "/getEmpInfoById", map,
 					EmployeeInfo.class);
 			model.addObject("editEmp", editEmp);
-			System.out.println("empInfo list " + editEmp.toString());
+			//System.out.println("empInfo list " + editEmp.toString());
 
 			map = new LinkedMultiValueMap<>();
 			map.add("companyId", userObj.getCompanyId());
@@ -210,7 +210,7 @@ public class ClaimApplicationController {
 					.postForObject(Constants.url + "/getAuthorityInfoByEmpId", map, AuthorityInformation.class);
 			model.addObject("authorityInformation", authorityInformation);
 
-			System.err.println("authorityInformation is  " + authorityInformation.toString());
+			//System.err.println("authorityInformation is  " + authorityInformation.toString());
 
 		} catch (Exception e) {
 			e.printStackTrace();
