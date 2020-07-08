@@ -1049,7 +1049,7 @@ public class LeaveController {
 			map.add("calYrId", calYrId);
 
 			EmpLeaveHistoryRep[] employeeInfo = Constants.getRestTemplate()
-					.postForObject(Constants.url + "/getLeaveHistoryRep", map, EmpLeaveHistoryRep[].class);
+					.postForObject(Constants.url + "/getLeaveHistoryReportForPdf", map, EmpLeaveHistoryRep[].class);
 
 			employeeInfoList = new ArrayList<EmpLeaveHistoryRep>(Arrays.asList(employeeInfo));
 			// System.out.println("employeeInfoList" + employeeInfoList.toString());
